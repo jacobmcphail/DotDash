@@ -9,14 +9,22 @@
 window.onload = function(){
     
 var container = document.getElementById("wrapper");
-    
-var main = document.createElement("div");
-main.className = "ui-grid-b gamegrid center";
-container.appendChild(main);
-
     var dotArray = [];
-    var numRows = 3;
-    var numCols = 3;
+    //Maximum number of rows: 5
+    var numRows = 5;
+    //Maximum number of columns: 4
+    var numCols = 4;
+
+var main = document.createElement("div");
+
+    if (numCols==3){
+        main.className = "ui-grid-b gamegrid center";
+    }
+    else if(numCols==4){
+        main.className = "ui-grid-c gamegrid center";
+    }
+
+    container.appendChild(main);
     
     main = createGrid(main,numRows,numCols);
     dotArray = make_2D_Array(dotArray,numRows,numCols);            
@@ -42,33 +50,44 @@ container.appendChild(main);
     
 }
 
+function nextChar(c) {
+    return String.fromCharCode(c.charCodeAt(0) + 1);
+}
 
-    /*Create the grid that dots will populate
-    As of now, this function assumes numCols is always going to be 3
-    */
-    
-    function createGrid(cont,numRows,numCols){
+/*
+ Create the grid that dots will populate
+ As of now, this function assumes numCols is always going to be 3
+ */
+function createGrid(cont, numRows, numCols){
         
     var totalDots = numRows * numCols;
     var dotID = 1;
-    for(var i = 0; i < totalDots; i++) {
-        var gridElement = document.createElement("div");
-    //How to accommodate numCols >3
-        if(i%numCols==0){
-            gridElement.className = "ui-block-a box";
-        } else if (i%numCols==1) {
-            gridElement.className = "ui-block-b box";
-        } else if (i%numCols==2) {
-            gridElement.className = "ui-block-c box";
+
+    for(var i = 0; i < numRows; i++) {
+        var ch = 'a';
+        for(var j=0;j<numCols;j++) {
+            var gridElement = document.createElement("div");
+            gridElement.className = "ui-block-" +ch+ " box";
+            console.log(ch);
+            ch = String.fromCharCode(ch.charCodeAt(0)+1);
+            console.log(ch);
+
+            /*
+             if(i%numCols==0){
+             gridElement.className = "ui-block-a box";
+             } else if (i%numCols==1) {
+             gridElement.className = "ui-block-b box";
+             } else if (i%numCols==2) {
+             gridElement.className = "ui-block-c box";
+             }*/
+
+            gridElement.id = "block" + (dotID);
+            dotID++;
+
+            //Takes a container to hold the grid in as an argument and returns the updated grid.
+            cont.appendChild(gridElement);
         }
-        
-        gridElement.id = "block"+(dotID);
-        dotID++;
-        
-        //Takes a container to hold the grid in as an argument and returns the updated grid.
-        cont.appendChild(gridElement);
-        
-        }
+    }
         return cont;
     }
 
