@@ -119,6 +119,7 @@ window.onload = function() {
             console.clear();
             resetVals();
         }
+
     //helper function that resets things
         function resetVals(){
         noErrorsYet = true;
@@ -127,20 +128,7 @@ window.onload = function() {
         }
     });
 
-    //Turns all dots into Steve heads. If you tap them, they turn angry. You can't untap them.
-//You must clear the board to appease them.
-//You cannot unSteve the board unless you refresh the page
-    $(function(){
-        $(".steveButton").bind("tap", steveify);
-        function steveify(event){
-            $(".dot").addClass("steve black");
-            $(".dot").bind("tap", steveTap);
-            function steveTap(event){
-                $(event.target).removeClass("steve");
-                $(event.target).addClass("tapped_steve");
-            }
-        }
-    });
+    //stevify transplantd into index.html
     /*
      Create the grid that dots will populate
      As of now, this function assumes numCols is always going to be 3

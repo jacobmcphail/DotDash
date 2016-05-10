@@ -6,7 +6,16 @@
     <script src="js/jquery-2.2.3.min.js"></script>
     <script src="js/jquery.mobile-1.4.5.min.js"></script>
 
-    <link rel="stylesheet" href="css/jquery.mobile-1.4.5.min.css" />
+    <!--TRY USING THE NON-MINIFIED VERSION OF THE CSS FILE. THAT COULD BE IT.
+    there is definitely something in this css file that is neessary for the option buttons to work
+    as well as the grids that the dots are placed in.
+    -->
+
+    <!--<link rel="stylesheet" href="css/jquery.mobile-1.4.5.min.css" />
+    LeafBunny: Added the modified sheet-->
+    <link rel="stylesheet" href="css/jquery.mobile.MOD-1.4.5.css" />
+
+
     <link rel="stylesheet" type="text/css" href="css/cawStyle.css"/>
     <link rel="stylesheet" type="text/css" href="css/myStyle.css"/>
 
@@ -58,13 +67,47 @@ function play() {
     document.getElementById('title').style.display = 'none';
     document.getElementById('game-screen').style.display = 'block';
 }
-function steveMode() {
+//Renamed steveMode() as caw()
+function caw() {
     if (steveModeEnabled == true) {
         var sound = document.getElementById("audio");
         sound.play()
     }
 }
-function enableSteveMode() {
+
+//Test whether SteveButton has been toggled
+
+
+$(document).ready(function(){
+    $(".steveButton").click(function(){
+        var check = $(this).prop('checked');
+        console.log(check);
+    });
+});
+
+//Turns all dots into Steve heads. If you tap them, they turn angry.
+//How to make this option be triggered by button press
+$(function(){
+    $(".steveButton").bind("click", steveify);
+    function steveify(event){
+        //added class steveButton to option button. Saved but not tested.
+        $(".dot").addClass("steve black");
+        $(".dot").bind("tap", steveTap);
+        function steveTap(event){
+            if($(event.target).hasClass("tapped_steve")){
+                $(event.target).removeClass("tapped_steve");
+                $(event.target).addClass("steve");
+            }else{
+                $(event.target).removeClass("steve");
+                $(event.target).addClass("tapped_steve");
+            }
+
+        }
+    }
+});
+
+//Renamed enableSteveMode() as toggleSteveMode()
+function toggleSteveMode() {
     if (steveModeEnabled == false) {
         steveModeEnabled = true;
     } else {
@@ -120,8 +163,9 @@ function enableSteveMode() {
         </div>
         <h2 class="option-header">Steve Mode</h2>
         <div class="option-slider">
-        <input type="checkbox" onclick="enableSteveMode()" value="None" id="option-4" name="check" />
-        <label for="option-4"></label>
+            <!--renamed option-4 as steve-option-->
+        <input type="checkbox" onclick="toggleSteveMode()" value="None" id="steve-option" class="steveButton" name="check" />
+        <label for="steve-option"></label>
         </div>
         </div>
     </div>
@@ -157,7 +201,7 @@ function enableSteveMode() {
         <img src="images/dot-purple.png"/>
         <p>A Sponge</p><br/>
         <audio id="audio" src="http://www.soundjay.com/button/beep-07.wav" autostart="false" ></audio>
-        <button onclick="steveMode()" id="steve-button"><img src="images/crow.png" width="60" height="60"/></button>
+        <button onclick="caw()" id="steve-button"><img src="images/crow.png" width="60" height="60"/></button>
         </div>
     </div>
 
