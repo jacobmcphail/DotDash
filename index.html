@@ -31,7 +31,7 @@
         function openBadges() {
             document.getElementById('scores-screen').style.display = 'none';
             document.getElementById('badges-screen').style.display = "block";
-            document.getElementById('badge-return').style.display = "block";
+            document.getElementById('badge-return-button').style.display = "block";
             document.getElementById('return-button').style.display = "none";
             document.getElementById('title').innerHTML = "Badges._"
 
@@ -74,6 +74,10 @@
                 steveModeEnabled = false;
             }
 
+        }
+
+        function badge1() {
+            window.alert("get this badge by playing for 100000 hours");
         }
 
     </script>
@@ -193,7 +197,7 @@
             left: 70px;
         }
 
-        #credz-button {
+        #credits-button {
             right: 5px;
         }
 
@@ -219,7 +223,7 @@
             display: none;
         }
 
-        #options-container {
+        .container {
             margin-top: 100px;
             margin-left: auto;
             margin-right: auto;
@@ -249,9 +253,9 @@
             border-radius: 50px;
             position: relative;
 
-            -webkit-box-shadow: inset 0px 1px 1px rgba(0,0,0,0.5), 0px 1px 0px rgba(255,255,255,0.2);
-            -moz-box-shadow: inset 0px 1px 1px rgba(0,0,0,0.5), 0px 1px 0px rgba(255,255,255,0.2);
-            box-shadow: inset 0px 1px 1px rgba(0,0,0,0.5), 0px 1px 0px rgba(255,255,255,0.2);
+            -webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,0.5), 0 1px 0 rgba(255,255,255,0.2);
+            -moz-box-shadow: inset 0 1px 1px rgba(0,0,0,0.5), 0 1px 0 rgba(255,255,255,0.2);
+            box-shadow: inset 0 1px 1px rgba(0,0,0,0.5), 0 1px 0 rgba(255,255,255,0.2);
         }
 
         .option-slider:after {
@@ -322,6 +326,20 @@
             display:none;
         }
 
+        .badge-icons {
+            margin: 40px auto 0 auto;
+            padding: 10px;
+            width: 90%;
+            border: 1px solid white;
+            border-radius: 5px;
+        }
+
+        .badge-button {
+            background-color: transparent;
+            border: none;
+            padding: 0;
+        }
+
         #credits-screen {
             display:none;
         }
@@ -376,13 +394,10 @@
         #dot-container {
             height: 400px;
             width: 300px;
-            margin: auto;
-            margin-top: 100px;
-            background-color: darkgrey;
         }
 
         #steve-button {
-            background-color: black;
+            background-color: transparent;
             border: none;
         }
 
@@ -393,10 +408,7 @@
             font-size: 75%;
         }
 
-        #cred-box {
-            width: 70%;
-            margin: auto;
-            margin-top: 100px;
+        #credits-container {
             text-align: center;
         }
 
@@ -435,15 +447,14 @@
 
                 <button onclick="openOptions()" class="nongameplay-buttons" id="options-button"><img src="images/gear.png"></button>
                 <button onclick="openScores()" class="nongameplay-buttons" id="scores-button"><img src="images/trophy.png"></button>
-                <button onclick="openCredits()" class="nongameplay-buttons" id="credz-button"><img src="images/exclamation.png"></button>
+                <button onclick="openCredits()" class="nongameplay-buttons" id="credits-button"><img src="images/exclamation.png"></button>
             </div>
 
             <!-- common button used to return to the main menu -->
             <button onclick="openMainMenu()" class="nongameplay-buttons" id="return-button"><img src="images/backward.png"/></button>
 
             <div id="options-screen">
-                <div id="options-container">
-
+                <div class="container">
                     <h2 class="option-header">Music</h2>
                     <div class="option-slider">
                             <input type="checkbox" value="None" id="option-1" name="check" />
@@ -479,15 +490,31 @@
             </div>
 
             <div id="badges-screen">
-                <br/>
-                <br/>
-                <br/>
-                <p style="color:white">badges</p>
+                <div class="container">
+                    <h2>Unlock badges by playing the game right, wethead.</h2>
+                    <div class="badge-icons">
+                        <button onclick="badge1()" class="badge-button" id="badge-1-button"><img src="images/locked.png"/></button>
+                        <img src="images/locked.png"/>
+                        <img src="images/locked.png"/>
+                        <img src="images/locked.png"/>
+                        <img src="images/locked.png"/>
+                        <img src="images/locked.png"/>
+                        <img src="images/locked.png"/>
+                        <img src="images/locked.png"/>
+                        <img src="images/locked.png"/>
+                        <img src="images/locked.png"/>
+                    </div>
+
+                    <div class="container" id="hint-box">
+                        <h2>Hint:"What the hell is water?" </h2>
+                    </div>
+
+                </div>
                 <button onclick="openScores()" class="nongameplay-buttons" id="badge-return-button"><img src="images/backward.png"/></button>
             </div>
 
             <div id="credits-screen">
-                <div id="cred-box">
+                <div class="container" id="credits-container">
                     <h2>created by:</h2>
                     <h2><b>THE SURVEYORS</b></h2>
                     <img src="images/dot-magenta.png"/>
@@ -520,7 +547,7 @@
                     <p>999 999</p>
                 </div>
 
-                <div id="dot-container">
+                <div class="container" id="dot-container">
                 </div>
             </div>
             <div>
