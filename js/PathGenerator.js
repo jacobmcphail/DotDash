@@ -173,11 +173,3 @@ function runPathFinder(gamegrid, length, mode) {
     }
    return array;
 }
-
-//FOR TESTING
-function testPathing(x, y, length, mode){
-    var gamegrid = new Grid(x, y);
-    var array = runPathFinder(gamegrid, length, mode);
-    console.log(array.length);
-    printPath(array);
-}
