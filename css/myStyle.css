@@ -1,0 +1,105 @@
+div.box {
+width: 50px;
+height: 50px;
+margin-bottom: 20px;
+border-style: solid;
+border-width: thin;
+}
+div.dot {
+width: 50px;
+height: 50px;
+-moz-border-radius: 25px;
+-webkit-border-radius: 25px;
+border-radius: 25px;
+background: white;
+margin-top: 10%;
+margin-left:15%;
+}
+div.dot.selected {
+border-style: ridge;
+border-color: darkred;
+border-width: medium;
+}
+.center{
+position: absolute;
+background:green;
+left:calc(50% - 240px/2); /* width divided by 2*/
+top:calc(50% - 320px/2); /* height divided by 2*/
+}
+.gamegrid{
+background-color:#000;
+width: 240px;
+height: 320px;
+-webkit-border-radius: 15px;
+-moz-border-radius: 15px;
+border-radius: 15px;
+overflow:hidden;
+}
+.steveButton {
+width: 50%;
+}
+.clearButton {
+width: 50%;
+}
+div.dot.blue {
+background: dodgerblue;
+}
+div.dot.green {
+background: green;
+}
+div.dot.orange {
+background: orangered;
+}
+div.dot.magenta {
+background: magenta;
+}
+div.dot.black{
+background: black;
+}
+div.dot.steve{
+background-image: url("../steve.png");
+background-repeat: no-repeat;
+background-position: 7px -3px;
+background-size: 40px;
+}
+div.dot.tapped_steve{
+background-image: url("../madsteve.png");
+background-repeat: no-repeat;
+background-position: 7px -3px;
+background-size: 40px;
+}
+.dot.touched{
+width: 50px;
+height: 50px;
+background: blue;
+-moz-border-radius: 25px;
+-webkit-border-radius: 25px;
+border-radius: 25px;
+display:block;
+}
+div.dot.correct {
+background: lawngreen;
+border-style: solid;
+border-color: yellow;
+border-width: thick;
+}
+body{
+background-color:#000;
+}
+/*Maintain aspect ratios:*/
+#wrapper {
+background-color:#000;
+width: 100%;
+padding-bottom: 75%;
+}
+/*
+.dot{
+width: 50px;
+height: 50px;
+background: red;
+-moz-border-radius: 25px;
+-webkit-border-radius: 25px;
+border-radius: 25px;
+display:block;
+}
+*/
