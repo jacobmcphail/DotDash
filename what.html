@@ -12,7 +12,7 @@
 
             document.getElementById('main-screen').style.display = 'none';
             document.getElementById('options-screen').style.display = "block";
-            document.getElementById('return').style.display = "block";
+            document.getElementById('return-button').style.display = "block";
             document.getElementById('title').innerHTML = "Options._"
 
         }
@@ -21,8 +21,8 @@
             document.getElementById('main-screen').style.display = 'none';
             document.getElementById('badges-screen').style.display = 'none';
             document.getElementById('scores-screen').style.display = "block";
-            document.getElementById('return').style.display = "block";
-            document.getElementById('badges').style.display = "block";
+            document.getElementById('return-button').style.display = "block";
+            document.getElementById('badges-button').style.display = "block";
             document.getElementById('title').innerHTML = "Scores._"
         }
 
@@ -30,7 +30,7 @@
             document.getElementById('scores-screen').style.display = 'none';
             document.getElementById('badges-screen').style.display = "block";
             document.getElementById('badge-return').style.display = "block";
-            document.getElementById('return').style.display = "none";
+            document.getElementById('return-button').style.display = "none";
             document.getElementById('title').innerHTML = "Badges._"
 
         }
@@ -38,7 +38,7 @@
         function openCredits() {
             document.getElementById('main-screen').style.display = 'none';
             document.getElementById('credits-screen').style.display = "block";
-            document.getElementById('return').style.display = "block";
+            document.getElementById('return-button').style.display = "block";
             document.getElementById('title').innerHTML = "DotDash._"
         }
 
@@ -46,9 +46,17 @@
             document.getElementById('options-screen').style.display = 'none';
             document.getElementById('scores-screen').style.display = 'none';
             document.getElementById('credits-screen').style.display = 'none';
-            document.getElementById('return').style.display = 'none';
+            document.getElementById('return-button').style.display = 'none';
             document.getElementById('main-screen').style.display = 'block';
             document.getElementById('title').innerHTML = "DotDash._"
+        }
+
+        function play() {
+            document.getElementById('main-screen').style.display = 'none';
+            document.getElementById('title').style.display = 'none';
+            document.getElementById('game-screen').style.display = 'block';
+
+
 
         }
     </script>
@@ -80,7 +88,7 @@
 
         }
 
-        #gameframe {
+        #screen {
             border: 4px solid white;
             background-color: black;
             width: 400px;
@@ -96,6 +104,7 @@
             font-size: 50px;
             position: absolute;
             top: 10px;
+            left: 5px;
             display: block;
         }
 
@@ -149,36 +158,44 @@
 
         }
 
-        #left-arrow {
+        #left-arrow-button {
             bottom: 30%;
             left: 15%;
         }
 
-        #right-arrow {
+        #right-arrow-button {
             bottom: 30%;
             right: 15%;
         }
 
-        #options {
+        #options-button {
             left: 5px;
         }
 
-        #scores {
+        #scores-button {
             left: 70px;
         }
 
-        #credz {
+        #credz-button {
             right: 5px;
         }
 
-        #return {
+        #return-button {
             display: none;
         }
 
-        #badges {
+        #badges-button {
             display:none;
             right: 5px;
+        }
 
+        #pause-button {
+            right: 5px;
+        }
+
+        #tutorial-button {
+            right: 75px;
+            bottom: 9px;
         }
 
         #options-screen {
@@ -195,6 +212,61 @@
 
         #credits-screen {
             display:none;
+        }
+
+        #game-screen {
+            display:none;
+        }
+
+        #lives-bar {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+        }
+
+        #lives-bar img {
+            width:35px;
+            height:30px;
+        }
+
+        #timer-bar {
+            float: right;
+            background-color: #32CD32;
+            width: 40%;
+            height: 30px;
+            text-align: center;
+            position: absolute;
+            top: 10px;
+            right: 10px;
+        }
+
+        #timer-bar p {
+            font-size: 150%;
+            color: black;
+        }
+
+        #score-bar {
+            position: absolute;
+            bottom: 5px;
+            margin-left: 10px;
+            background-color: #32CD32;
+            width: 200px;
+            height: 45px;
+            text-align: center;
+        }
+
+        #score-bar p {
+            color: black;
+            font-size: 220%;
+
+        }
+
+        #dot-container {
+            height: 400px;
+            width: 300px;
+            margin: auto;
+            margin-top: 100px;
+            background-color: darkgrey;
         }
 
         #steve-button {
@@ -234,7 +306,7 @@
 
     <div id="wrapper">
         <br/>
-        <div id="gameframe">
+        <div id="screen">
             <div id="title">DotDash._&nbsp </div>
 
             <!-- buttons and elements used in the main menu screen ----------------------------------------->
@@ -242,20 +314,20 @@
 
                 <div id="mode-selection-container">
                     <button class="mode-select" id="mode-1">MODE1</button>
-                    <button class="mode-select" id="mode-2">MODE2</button>
+                    <button onclick="play()" class="mode-select" id="mode-2">MODE2</button>
                     <button class="mode-select" id="mode-3">MODE3</button>
 
-                    <button class="nongameplay-buttons" id="left-arrow"><img src="images/arrowLeft.png"/></button>
-                    <button class="nongameplay-buttons" id="right-arrow"><img src="images/arrowRight.png"/></button>
+                    <button class="nongameplay-buttons" id="left-arrow-button"><img src="images/arrowLeft.png"/></button>
+                    <button class="nongameplay-buttons" id="right-arrow-button"><img src="images/arrowRight.png"/></button>
                 </div>
 
-                <button onclick="openOptions()" class="nongameplay-buttons" id="options"><img src="images/gear.png"></button>
-                <button onclick="openScores()" class="nongameplay-buttons" id="scores"><img src="images/trophy.png"></button>
-                <button onclick="openCredits()" class="nongameplay-buttons" id="credz"><img src="images/exclamation.png"></button>
+                <button onclick="openOptions()" class="nongameplay-buttons" id="options-button"><img src="images/gear.png"></button>
+                <button onclick="openScores()" class="nongameplay-buttons" id="scores-button"><img src="images/trophy.png"></button>
+                <button onclick="openCredits()" class="nongameplay-buttons" id="credz-button"><img src="images/exclamation.png"></button>
             </div>
 
             <!-- common button used to return to the main menu -->
-            <button onclick="openMainMenu()" class="nongameplay-buttons" id="return"><img src="images/backward.png"/></button>
+            <button onclick="openMainMenu()" class="nongameplay-buttons" id="return-button"><img src="images/backward.png"/></button>
 
             <div id="options-screen">
                 <br/>
@@ -269,7 +341,7 @@
                 <br/>
                 <br/>
                 <p style="color:white">highscorez</p>
-                <button onclick="openBadges()" class="nongameplay-buttons" id="badges"><img src="images/forward.png"/></button>
+                <button onclick="openBadges()" class="nongameplay-buttons" id="badges-button"><img src="images/medal2.png"/></button>
             </div>
 
             <div id="badges-screen">
@@ -277,7 +349,7 @@
                 <br/>
                 <br/>
                 <p style="color:white">badges</p>
-                <button onclick="openScores()" class="nongameplay-buttons" id="badge-return"><img src="images/backward.png"/></button>
+                <button onclick="openScores()" class="nongameplay-buttons" id="badge-return-button"><img src="images/backward.png"/></button>
             </div>
 
             <div id="credits-screen">
@@ -296,6 +368,28 @@
                     <p>A Sponge</p><br/>
                     <button onclick="steveMode()" id="steve-button"><img src="images/crow.png" width="60" height="60"/></button>
                 </div>
+            </div>
+
+            <div id="game-screen">
+                <div id="lives-bar">
+                    <img src="images/hud_heartFull.png"/>
+                    <img src="images/hud_heartFull.png"/>
+                    <img src="images/hud_heartFull.png"/>
+                </div>
+                <div id="timer-bar">
+                    <p>0:00</p>
+                </div>
+                <button class="nongameplay-buttons" id="pause-button"><img src="images/pause.png"></button>
+                <button class="nongameplay-buttons" id="tutorial-button"><img src="images/question.png"></button>
+                <div id="score-bar">
+                    <p>999 999</p>
+                </div>
+
+                <div id="dot-container">
+                </div>
+            </div>
+            <div>
+
             </div>
         </div>
         <br/>
