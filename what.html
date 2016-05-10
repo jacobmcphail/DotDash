@@ -3,6 +3,8 @@
     <title>What</title>
     <script type="text/javascript">
 
+        var steveModeEnabled = false;
+
         function openOptions() {
             /*var elements = document.getElementsByClassName('main-screen');
             for (var i = 0, length = elements.length; i < length; i++) {
@@ -55,10 +57,25 @@
             document.getElementById('main-screen').style.display = 'none';
             document.getElementById('title').style.display = 'none';
             document.getElementById('game-screen').style.display = 'block';
+        }
 
-
+        function steveMode() {
+            if (steveModeEnabled == true) {
+                var sound = document.getElementById("audio");
+                sound.play()
+            }
 
         }
+
+        function enableSteveMode() {
+            if (steveModeEnabled == false) {
+                steveModeEnabled = true;
+            } else {
+                steveModeEnabled = false;
+            }
+
+        }
+
     </script>
     <style>
 
@@ -202,6 +219,101 @@
             display: none;
         }
 
+        #options-container {
+            margin-top: 100px;
+            margin-left: auto;
+            margin-right: auto;
+            width: 300px;
+        }
+
+        .option-header {
+            float: left;
+            padding-right: 50px;
+        }
+
+
+        /* style for option buttons */
+        input[type=checkbox] {
+            visibility: hidden;
+        }
+
+        .option-slider {
+            width: 80px;
+            height: 26px;
+            background: #333;
+            margin: 20px;
+            margin-left: 200px;
+
+            -webkit-border-radius: 50px;
+            -moz-border-radius: 50px;
+            border-radius: 50px;
+            position: relative;
+
+            -webkit-box-shadow: inset 0px 1px 1px rgba(0,0,0,0.5), 0px 1px 0px rgba(255,255,255,0.2);
+            -moz-box-shadow: inset 0px 1px 1px rgba(0,0,0,0.5), 0px 1px 0px rgba(255,255,255,0.2);
+            box-shadow: inset 0px 1px 1px rgba(0,0,0,0.5), 0px 1px 0px rgba(255,255,255,0.2);
+        }
+
+        .option-slider:after {
+            content: 'OFF';
+            font: 12px/26px Arial, sans-serif;
+            color: #000;
+            position: absolute;
+            right: 10px;
+            z-index: 0;
+            font-weight: bold;
+            text-shadow: 1px 1px 0px rgba(255,255,255,.15);
+        }
+
+        .option-slider:before {
+            content: 'ON';
+            font: 12px/26px Arial, sans-serif;
+            color: #00bf00;
+            position: absolute;
+            left: 10px;
+            z-index: 0;
+            font-weight: bold;
+        }
+
+        .option-slider label {
+            display: block;
+            width: 34px;
+            height: 20px;
+
+            -webkit-border-radius: 50px;
+            -moz-border-radius: 50px;
+            border-radius: 50px;
+
+            -webkit-transition: all .4s ease;
+            -moz-transition: all .4s ease;
+            -o-transition: all .4s ease;
+            -ms-transition: all .4s ease;
+            transition: all .4s ease;
+            cursor: pointer;
+            position: absolute;
+            top: 3px;
+            left: 3px;
+            z-index: 1;
+
+            -webkit-box-shadow: 0px 2px 5px 0px rgba(0,0,0,0.3);
+            -moz-box-shadow: 0px 2px 5px 0px rgba(0,0,0,0.3);
+            box-shadow: 0px 2px 5px 0px rgba(0,0,0,0.3);
+            background: #fcfff4;
+
+            background: -webkit-linear-gradient(top, #fcfff4 0%, #dfe5d7 40%, #b3bead 100%);
+            background: -moz-linear-gradient(top, #fcfff4 0%, #dfe5d7 40%, #b3bead 100%);
+            background: -o-linear-gradient(top, #fcfff4 0%, #dfe5d7 40%, #b3bead 100%);
+            background: -ms-linear-gradient(top, #fcfff4 0%, #dfe5d7 40%, #b3bead 100%);
+            background: linear-gradient(top, #fcfff4 0%, #dfe5d7 40%, #b3bead 100%);
+            filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#fcfff4', endColorstr='#b3bead',GradientType=0 );
+        }
+
+        .option-slider input[type=checkbox]:checked + label {
+            left: 43px;
+        }
+
+        /* end for option buttons */
+
         #scores-screen {
             display:none;
         }
@@ -330,10 +442,32 @@
             <button onclick="openMainMenu()" class="nongameplay-buttons" id="return-button"><img src="images/backward.png"/></button>
 
             <div id="options-screen">
-                <br/>
-                <br/>
-                <br/>
-                <p style="color:white">options page</p>
+                <div id="options-container">
+
+                    <h2 class="option-header">Music</h2>
+                    <div class="option-slider">
+                            <input type="checkbox" value="None" id="option-1" name="check" />
+                            <label for="option-1"></label>
+                    </div>
+
+                    <h2 class="option-header">Sound Effects</h2>
+                    <div class="option-slider">
+                        <input type="checkbox" value="None" id="option-2" name="check" />
+                        <label for="option-2"></label>
+                    </div>
+
+                    <h2 class="option-header">Colour</h2>
+                    <div class="option-slider">
+                        <input type="checkbox" value="None" id="option-3" name="check" />
+                        <label for="option-3"></label>
+                    </div>
+
+                    <h2 class="option-header">Steve Mode</h2>
+                    <div class="option-slider">
+                        <input type="checkbox" onclick="enableSteveMode()" value="None" id="option-4" name="check" />
+                        <label for="option-4"></label>
+                    </div>
+                </div>
             </div>
 
             <div id="scores-screen">
@@ -366,6 +500,7 @@
                     <p>ZIA</p>
                     <img src="images/dot-purple.png"/>
                     <p>A Sponge</p><br/>
+                    <audio id="audio" src="http://www.soundjay.com/button/beep-07.wav" autostart="false" ></audio>
                     <button onclick="steveMode()" id="steve-button"><img src="images/crow.png" width="60" height="60"/></button>
                 </div>
             </div>
