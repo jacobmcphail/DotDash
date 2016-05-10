@@ -11,14 +11,15 @@ height: 50px;
 -moz-border-radius: 25px;
 -webkit-border-radius: 25px;
 border-radius: 25px;
-background: white;
+background: blue;
 margin-top: 10%;
 margin-left:15%;
 }
 div.dot.selected {
-border-style: ridge;
+/*border-style: ridge;
 border-color: darkred;
-border-width: medium;
+border-width: medium;*/
+    background: yellow;
 }
 .center{
 position: absolute;
@@ -83,16 +84,19 @@ border-style: solid;
 border-color: yellow;
 border-width: thick;
 }
+
+
+/*
 body{
 background-color:#000;
 }
-/*Maintain aspect ratios:*/
-#wrapper {
+
+Maintain aspect ratios:
+#dot-container {
 background-color:#000;
 width: 100%;
 padding-bottom: 75%;
 }
-/*
 .dot{
 width: 50px;
 height: 50px;

@@ -1,8 +1,10 @@
-/*mygrid.js*/
+/*myScript.js
+*
+* */
 
 window.onload = function() {
     //Container that holds everything.
-    var container = document.getElementById("wrapper");
+    var container = document.getElementById("dot-container");
     //Array that holds references to all the dot-containing div elements
     var dotArray = [];
     //Point constructor
@@ -25,6 +27,7 @@ window.onload = function() {
     container.appendChild(main);
     main = createGrid(main,numRows,numCols);
     dotArray = make_2D_Array(dotArray,numRows,numCols);
+
     /* Create div elements containing dots and populate main with them.
     Fill dotArray with these dot-containing divs. */
     var dotID = 1;
@@ -124,83 +127,72 @@ window.onload = function() {
         }
     });
 
-}
-//End of the function called by window.onload
-//Turns all dots into Steve heads. If you tap them, they turn angry. You can't untap them.
+    //Turns all dots into Steve heads. If you tap them, they turn angry. You can't untap them.
 //You must clear the board to appease them.
 //You cannot unSteve the board unless you refresh the page
-$(function(){
-$(".steveButton").bind("tap", steveify);
-function steveify(event){
-$(".dot").addClass("steve black");
-$(".dot").bind("tap", steveTap);
-function steveTap(event){
-$(event.target).removeClass("steve");
-$(event.target).addClass("tapped_steve");
-}
-}
-});
-/*
-Create the grid that dots will populate
-As of now, this function assumes numCols is always going to be 3
-*/
-function createGrid(cont, numRows, numCols){
-var totalDots = numRows * numCols;
-var dotID = 1;
-for(var i = 0; i < numRows; i++) {
-var ch = 'a';
-for(var j=0;j<numCols;j++) {
-var gridElement = document.createElement("div");
-gridElement.className = "ui-block-" +ch+ " box";
-ch = String.fromCharCode(ch.charCodeAt(0)+1);
-gridElement.id = "block" + (dotID);
-dotID++;
-//Takes a container to hold the grid in as an argument and returns the updated grid.
-cont.appendChild(gridElement);
-}
-}
-return cont;
-}
-/*Creates 9 button-containing objects
-Fill up each array with an array*/
-function make_2D_Array(array, nRows, nCols) {
-var i, j;
-var dotID = 1;
-for(i=0;i<nRows;i++){
-var newArray = [];
-array[i] = newArray;
-for(j=0;j<nCols;j++){
-var newDot = document.createElement("div");
-newDot.className = "dot";
-newDot.id = "dot" + dotID;
-dotID++;
-newArray[j] = newDot;
-//Add custom properties to objects
-newDot.setAttribute('isVisited','false');
-newDot.setAttribute('x',i);
-newDot.setAttribute('y',j);
-// console.log("x: " + newDot.getAttribute('x') + "; y: " + newDot.getAttribute('y'));
-}
-}
-return array;
-}
+    $(function(){
+        $(".steveButton").bind("tap", steveify);
+        function steveify(event){
+            $(".dot").addClass("steve black");
+            $(".dot").bind("tap", steveTap);
+            function steveTap(event){
+                $(event.target).removeClass("steve");
+                $(event.target).addClass("tapped_steve");
+            }
+        }
+    });
+    /*
+     Create the grid that dots will populate
+     As of now, this function assumes numCols is always going to be 3
+     */
+    function createGrid(cont, numRows, numCols){
+        var totalDots = numRows * numCols;
+        var dotID = 1;
+        for(var i = 0; i < numRows; i++) {
+            var ch = 'a';
+            for(var j=0;j<numCols;j++) {
+                var gridElement = document.createElement("div");
+                gridElement.className = "ui-block-" +ch+ " box";
+                ch = String.fromCharCode(ch.charCodeAt(0)+1);
+                gridElement.id = "block" + (dotID);
+                dotID++;
+                //Takes a container to hold the grid in as an argument and returns the updated grid.
+                cont.appendChild(gridElement);
+            }
+        }
+        return cont;
+    }
+    /*Creates 9 button-containing objects
+     Fill up each array with an array*/
+    function make_2D_Array(array, nRows, nCols) {
+        var i, j;
+        for(i=0;i<nRows;i++){
+            var newArray = [];
+            array[i] = newArray;
+            for(j=0;j<nCols;j++){
+                var newDot = document.createElement("div");
+                newDot.className = "dot";
+                newArray[j] = newDot;
+                //Add custom properties to objects
+                newDot.setAttribute('isVisited','false');
+                newDot.setAttribute('x',i);
+                newDot.setAttribute('y',j);
+                // console.log("x: " + newDot.getAttribute('x') + "; y: " + newDot.getAttribute('y'));
+            }
+        }
+        return array;
+    }
 //Returns whether a dot has been visited
-function getIsVisited(element) {
-return element.getAttribute('isVisited');
+    function getIsVisited(element) {
+        return element.getAttribute('isVisited');
+    }
+    function ifVisited(element) {
+        return element=='false';
+    }
 }
-//String comparison: OH MY GOD IT FINALLY WORKED
-function ifVisited(element) {
-return element=='false';
-}
-//Returns the IDs of each dot in an array
-function toStringIds(arr) {
-var i;
-var str = "";
-for(i=0;i<arr.length;i++){
-str = str.concat(arr[i].id + " ");
-}
-return str;
-}
+//End of the function called by window.onload
+
+
 //TODO
 //Function that generates path that the user must replicate
 //Illuminate each dot in this game-generated path in sequence
