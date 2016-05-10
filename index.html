@@ -1,305 +1,437 @@
 <html>
 <head>
-    <title>What</title>
-    <script type="text/javascript">
-
-        function openOptions() {
-            /*var elements = document.getElementsByClassName('main-screen');
-            for (var i = 0, length = elements.length; i < length; i++) {
-                elements[i].style.display = 'none';
-            }
-            */
-
-            document.getElementById('main-screen').style.display = 'none';
-            document.getElementById('options-screen').style.display = "block";
-            document.getElementById('return').style.display = "block";
-            document.getElementById('title').innerHTML = "Options._"
-
-        }
-
-        function openScores() {
-            document.getElementById('main-screen').style.display = 'none';
-            document.getElementById('badges-screen').style.display = 'none';
-            document.getElementById('scores-screen').style.display = "block";
-            document.getElementById('return').style.display = "block";
-            document.getElementById('badges').style.display = "block";
-            document.getElementById('title').innerHTML = "Scores._"
-        }
-
-        function openBadges() {
-            document.getElementById('scores-screen').style.display = 'none';
-            document.getElementById('badges-screen').style.display = "block";
-            document.getElementById('badge-return').style.display = "block";
-            document.getElementById('return').style.display = "none";
-            document.getElementById('title').innerHTML = "Badges._"
-
-        }
-
-        function openCredits() {
-            document.getElementById('main-screen').style.display = 'none';
-            document.getElementById('credits-screen').style.display = "block";
-            document.getElementById('return').style.display = "block";
-            document.getElementById('title').innerHTML = "DotDash._"
-        }
-
-        function openMainMenu() {
-            document.getElementById('options-screen').style.display = 'none';
-            document.getElementById('scores-screen').style.display = 'none';
-            document.getElementById('credits-screen').style.display = 'none';
-            document.getElementById('return').style.display = 'none';
-            document.getElementById('main-screen').style.display = 'block';
-            document.getElementById('title').innerHTML = "DotDash._"
-
-        }
-    </script>
-    <style>
-
-        body {
-            background-image: url(http://67.media.tumblr.com/7c3666d39c96411c9afe9fb9f3f8f1c6/tumblr_nx9v0ljA5W1ukkmqvo1_1280.jpg);
-        }
-
-        header {
-            width: 80%;
-            margin: auto;
-            background-color: #32CD32;
-            border-bottom-right-radius: 5px;
-            border-bottom-left-radius: 5px;
-
-        }
-
-        h1 {
-            font-family: "Consolas";
-            text-align: center;
-            padding-bottom: 5px;
-        }
-
-        #wrapper {
-            width: 80%;
-            margin: auto;
-            background-color: mediumslateblue;
-
-        }
-
-        #gameframe {
-            border: 4px solid white;
-            background-color: black;
-            width: 400px;
-            height: 600px;
-            margin: auto;
-            position: relative;
-            overflow: hidden;
-        }
-
-        #title {
-            color: #32CD32;
-            font-family: "Consolas";
-            font-size: 50px;
-            position: absolute;
-            top: 10px;
-            display: block;
-        }
-
-        #mode-selection-container {
-            margin-top: 40%;
-            height: 200px;
-            background-color: black;
-        }
-
-        .mode-select {
-            width: 210px;
-            height: 210px;
-            margin: auto;
-            border: 15px solid black;
-            border-radius: 50%;
-        }
-
-
-        #mode-1 {
-            background: dodgerblue;
-            float: left;
-            margin-left: -120px;
-
-        }
-
-        #mode-2 {
-            background: magenta;
-        }
-
-        #mode-3 {
-            background: yellow;
-            float: right;
-            margin-right: -120px;
-        }
-
-        #mode-2:hover {
-            transform:scale(1.05,1.05);
-
-        }
-
-        .nongameplay-buttons {
-            background-color: black;
-            border: none;
-            display: inline-block;
-            position: absolute;
-            bottom: 5px;
-        }
-
-        .nongameplay-buttons:hover {
-            transform:scale(1.2,1.2);
-
-        }
-
-        #left-arrow {
-            bottom: 30%;
-            left: 15%;
-        }
-
-        #right-arrow {
-            bottom: 30%;
-            right: 15%;
-        }
-
-        #options {
-            left: 5px;
-        }
-
-        #scores {
-            left: 70px;
-        }
-
-        #credz {
-            right: 5px;
-        }
-
-        #return {
-            display: none;
-        }
-
-        #badges {
-            display:none;
-            right: 5px;
-
-        }
-
-        #options-screen {
-            display: none;
-        }
-
-        #scores-screen {
-            display:none;
-        }
-
-        #badges-screen {
-            display:none;
-        }
-
-        #credits-screen {
-            display:none;
-        }
-
-        #steve-button {
-            background-color: black;
-            border: none;
-        }
-
-        p {
-            color: white;
-            font-family: "Consolas";
-            margin: 0;
-            font-size: 75%;
-        }
-
-        #cred-box {
-            width: 70%;
-            margin: auto;
-            margin-top: 100px;
-            text-align: center;
-        }
-
-        h2 {
-            color: white;
-            text-align: center;
-            font-family: "Consolas";
-            margin: 0;
-        }
-
-    </style>
+<title>What</title>
+<script type="text/javascript">
+var steveModeEnabled = false;
+function openOptions() {
+/*var elements = document.getElementsByClassName('main-screen');
+for (var i = 0, length = elements.length; i < length; i++) {
+elements[i].style.display = 'none';
+}
+*/
+document.getElementById('main-screen').style.display = 'none';
+document.getElementById('options-screen').style.display = "block";
+document.getElementById('return-button').style.display = "block";
+document.getElementById('title').innerHTML = "Options._"
+}
+function openScores() {
+document.getElementById('main-screen').style.display = 'none';
+document.getElementById('badges-screen').style.display = 'none';
+document.getElementById('scores-screen').style.display = "block";
+document.getElementById('return-button').style.display = "block";
+document.getElementById('badges-button').style.display = "block";
+document.getElementById('title').innerHTML = "Scores._"
+}
+function openBadges() {
+document.getElementById('scores-screen').style.display = 'none';
+document.getElementById('badges-screen').style.display = "block";
+document.getElementById('badge-return').style.display = "block";
+document.getElementById('return-button').style.display = "none";
+document.getElementById('title').innerHTML = "Badges._"
+}
+function openCredits() {
+document.getElementById('main-screen').style.display = 'none';
+document.getElementById('credits-screen').style.display = "block";
+document.getElementById('return-button').style.display = "block";
+document.getElementById('title').innerHTML = "DotDash._"
+}
+function openMainMenu() {
+document.getElementById('options-screen').style.display = 'none';
+document.getElementById('scores-screen').style.display = 'none';
+document.getElementById('credits-screen').style.display = 'none';
+document.getElementById('return-button').style.display = 'none';
+document.getElementById('main-screen').style.display = 'block';
+document.getElementById('title').innerHTML = "DotDash._"
+}
+function play() {
+document.getElementById('main-screen').style.display = 'none';
+document.getElementById('title').style.display = 'none';
+document.getElementById('game-screen').style.display = 'block';
+}
+function steveMode() {
+if (steveModeEnabled == true) {
+var sound = document.getElementById("audio");
+sound.play()
+}
+}
+function enableSteveMode() {
+if (steveModeEnabled == false) {
+steveModeEnabled = true;
+} else {
+steveModeEnabled = false;
+}
+}
+</script>
+<style>
+body {
+background-image: url(http://67.media.tumblr.com/7c3666d39c96411c9afe9fb9f3f8f1c6/tumblr_nx9v0ljA5W1ukkmqvo1_1280.jpg);
+}
+header {
+width: 80%;
+margin: auto;
+background-color: #32CD32;
+border-bottom-right-radius: 5px;
+border-bottom-left-radius: 5px;
+}
+h1 {
+font-family: "Consolas";
+text-align: center;
+padding-bottom: 5px;
+}
+#wrapper {
+width: 80%;
+margin: auto;
+background-color: mediumslateblue;
+}
+#screen {
+border: 4px solid white;
+background-color: black;
+width: 400px;
+height: 600px;
+margin: auto;
+position: relative;
+overflow: hidden;
+}
+#title {
+color: #32CD32;
+font-family: "Consolas";
+font-size: 50px;
+position: absolute;
+top: 10px;
+left: 5px;
+display: block;
+}
+#mode-selection-container {
+margin-top: 40%;
+height: 200px;
+background-color: black;
+}
+.mode-select {
+width: 210px;
+height: 210px;
+margin: auto;
+border: 15px solid black;
+border-radius: 50%;
+}
+#mode-1 {
+background: dodgerblue;
+float: left;
+margin-left: -120px;
+}
+#mode-2 {
+background: magenta;
+}
+#mode-3 {
+background: yellow;
+float: right;
+margin-right: -120px;
+}
+#mode-2:hover {
+transform:scale(1.05,1.05);
+}
+.nongameplay-buttons {
+background-color: black;
+border: none;
+display: inline-block;
+position: absolute;
+bottom: 5px;
+}
+.nongameplay-buttons:hover {
+transform:scale(1.2,1.2);
+}
+#left-arrow-button {
+bottom: 30%;
+left: 15%;
+}
+#right-arrow-button {
+bottom: 30%;
+right: 15%;
+}
+#options-button {
+left: 5px;
+}
+#scores-button {
+left: 70px;
+}
+#credz-button {
+right: 5px;
+}
+#return-button {
+display: none;
+}
+#badges-button {
+display:none;
+right: 5px;
+}
+#pause-button {
+right: 5px;
+}
+#tutorial-button {
+right: 75px;
+bottom: 9px;
+}
+#options-screen {
+display: none;
+}
+#options-container {
+margin-top: 100px;
+margin-left: auto;
+margin-right: auto;
+width: 300px;
+}
+.option-header {
+float: left;
+padding-right: 50px;
+}
+/* style for option buttons */
+input[type=checkbox] {
+visibility: hidden;
+}
+.option-slider {
+width: 80px;
+height: 26px;
+background: #333;
+margin: 20px;
+margin-left: 200px;
+-webkit-border-radius: 50px;
+-moz-border-radius: 50px;
+border-radius: 50px;
+position: relative;
+-webkit-box-shadow: inset 0px 1px 1px rgba(0,0,0,0.5), 0px 1px 0px rgba(255,255,255,0.2);
+-moz-box-shadow: inset 0px 1px 1px rgba(0,0,0,0.5), 0px 1px 0px rgba(255,255,255,0.2);
+box-shadow: inset 0px 1px 1px rgba(0,0,0,0.5), 0px 1px 0px rgba(255,255,255,0.2);
+}
+.option-slider:after {
+content: 'OFF';
+font: 12px/26px Arial, sans-serif;
+color: #000;
+position: absolute;
+right: 10px;
+z-index: 0;
+font-weight: bold;
+text-shadow: 1px 1px 0px rgba(255,255,255,.15);
+}
+.option-slider:before {
+content: 'ON';
+font: 12px/26px Arial, sans-serif;
+color: #00bf00;
+position: absolute;
+left: 10px;
+z-index: 0;
+font-weight: bold;
+}
+.option-slider label {
+display: block;
+width: 34px;
+height: 20px;
+-webkit-border-radius: 50px;
+-moz-border-radius: 50px;
+border-radius: 50px;
+-webkit-transition: all .4s ease;
+-moz-transition: all .4s ease;
+-o-transition: all .4s ease;
+-ms-transition: all .4s ease;
+transition: all .4s ease;
+cursor: pointer;
+position: absolute;
+top: 3px;
+left: 3px;
+z-index: 1;
+-webkit-box-shadow: 0px 2px 5px 0px rgba(0,0,0,0.3);
+-moz-box-shadow: 0px 2px 5px 0px rgba(0,0,0,0.3);
+box-shadow: 0px 2px 5px 0px rgba(0,0,0,0.3);
+background: #fcfff4;
+background: -webkit-linear-gradient(top, #fcfff4 0%, #dfe5d7 40%, #b3bead 100%);
+background: -moz-linear-gradient(top, #fcfff4 0%, #dfe5d7 40%, #b3bead 100%);
+background: -o-linear-gradient(top, #fcfff4 0%, #dfe5d7 40%, #b3bead 100%);
+background: -ms-linear-gradient(top, #fcfff4 0%, #dfe5d7 40%, #b3bead 100%);
+background: linear-gradient(top, #fcfff4 0%, #dfe5d7 40%, #b3bead 100%);
+filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#fcfff4', endColorstr='#b3bead',GradientType=0 );
+}
+.option-slider input[type=checkbox]:checked + label {
+left: 43px;
+}
+/* end for option buttons */
+#scores-screen {
+display:none;
+}
+#badges-screen {
+display:none;
+}
+#credits-screen {
+display:none;
+}
+#game-screen {
+display:none;
+}
+#lives-bar {
+position: absolute;
+top: 10px;
+left: 10px;
+}
+#lives-bar img {
+width:35px;
+height:30px;
+}
+#timer-bar {
+float: right;
+background-color: #32CD32;
+width: 40%;
+height: 30px;
+text-align: center;
+position: absolute;
+top: 10px;
+right: 10px;
+}
+#timer-bar p {
+font-size: 150%;
+color: black;
+}
+#score-bar {
+position: absolute;
+bottom: 5px;
+margin-left: 10px;
+background-color: #32CD32;
+width: 200px;
+height: 45px;
+text-align: center;
+}
+#score-bar p {
+color: black;
+font-size: 220%;
+}
+#dot-container {
+height: 400px;
+width: 300px;
+margin: auto;
+margin-top: 100px;
+background-color: darkgrey;
+}
+#steve-button {
+background-color: black;
+border: none;
+}
+p {
+color: white;
+font-family: "Consolas";
+margin: 0;
+font-size: 75%;
+}
+#cred-box {
+width: 70%;
+margin: auto;
+margin-top: 100px;
+text-align: center;
+}
+h2 {
+color: white;
+text-align: center;
+font-family: "Consolas";
+margin: 0;
+}
+</style>
 </head>
 <body>
-
-    <header>
-        <br/>
-        <h1>DotDash Prototype</h1>
-    </header>
-
-    <div id="wrapper">
-        <br/>
-        <div id="gameframe">
-            <div id="title">DotDash._&nbsp </div>
-
-            <!-- buttons and elements used in the main menu screen ----------------------------------------->
-            <div id="main-screen">
-
-                <div id="mode-selection-container">
-                    <button class="mode-select" id="mode-1">MODE1</button>
-                    <button class="mode-select" id="mode-2">MODE2</button>
-                    <button class="mode-select" id="mode-3">MODE3</button>
-
-                    <button class="nongameplay-buttons" id="left-arrow"><img src="images/arrowLeft.png"/></button>
-                    <button class="nongameplay-buttons" id="right-arrow"><img src="images/arrowRight.png"/></button>
-                </div>
-
-                <button onclick="openOptions()" class="nongameplay-buttons" id="options"><img src="images/gear.png"></button>
-                <button onclick="openScores()" class="nongameplay-buttons" id="scores"><img src="images/trophy.png"></button>
-                <button onclick="openCredits()" class="nongameplay-buttons" id="credz"><img src="images/exclamation.png"></button>
-            </div>
-
-            <!-- common button used to return to the main menu -->
-            <button onclick="openMainMenu()" class="nongameplay-buttons" id="return"><img src="images/backward.png"/></button>
-
-            <div id="options-screen">
-                <br/>
-                <br/>
-                <br/>
-                <p style="color:white">options page</p>
-            </div>
-
-            <div id="scores-screen">
-                <br/>
-                <br/>
-                <br/>
-                <p style="color:white">highscorez</p>
-                <button onclick="openBadges()" class="nongameplay-buttons" id="badges"><img src="images/forward.png"/></button>
-            </div>
-
-            <div id="badges-screen">
-                <br/>
-                <br/>
-                <br/>
-                <p style="color:white">badges</p>
-                <button onclick="openScores()" class="nongameplay-buttons" id="badge-return"><img src="images/backward.png"/></button>
-            </div>
-
-            <div id="credits-screen">
-                <div id="cred-box">
-                    <h2>created by:</h2>
-                    <h2><b>THE SURVEYORS</b></h2>
-                    <img src="images/dot-magenta.png"/>
-                    <p>Jake Superior</p>
-                    <img src="images/dot-yellow.png"/>
-                    <p>Frisky Dingo</p>
-                    <img src="images/dot-green.png"/>
-                    <p>Jenkinz</p>
-                    <img src="images/dot-blue.png"/>
-                    <p>ZIA</p>
-                    <img src="images/dot-purple.png"/>
-                    <p>A Sponge</p><br/>
-                    <button onclick="steveMode()" id="steve-button"><img src="images/crow.png" width="60" height="60"/></button>
-                </div>
-            </div>
-        </div>
-        <br/>
-
-    </div>
+<header>
+<br/>
+<h1>DotDash Prototype</h1>
+</header>
+<div id="wrapper">
+<br/>
+<div id="screen">
+<div id="title">DotDash._&nbsp </div>
+<!-- buttons and elements used in the main menu screen ----------------------------------------->
+<div id="main-screen">
+<div id="mode-selection-container">
+<button class="mode-select" id="mode-1">MODE1</button>
+<button onclick="play()" class="mode-select" id="mode-2">MODE2</button>
+<button class="mode-select" id="mode-3">MODE3</button>
+<button class="nongameplay-buttons" id="left-arrow-button"><img src="images/arrowLeft.png"/></button>
+<button class="nongameplay-buttons" id="right-arrow-button"><img src="images/arrowRight.png"/></button>
+</div>
+<button onclick="openOptions()" class="nongameplay-buttons" id="options-button"><img src="images/gear.png"></button>
+<button onclick="openScores()" class="nongameplay-buttons" id="scores-button"><img src="images/trophy.png"></button>
+<button onclick="openCredits()" class="nongameplay-buttons" id="credz-button"><img src="images/exclamation.png"></button>
+</div>
+<!-- common button used to return to the main menu -->
+<button onclick="openMainMenu()" class="nongameplay-buttons" id="return-button"><img src="images/backward.png"/></button>
+<div id="options-screen">
+<div id="options-container">
+<h2 class="option-header">Music</h2>
+<div class="option-slider">
+<input type="checkbox" value="None" id="option-1" name="check" />
+<label for="option-1"></label>
+</div>
+<h2 class="option-header">Sound Effects</h2>
+<div class="option-slider">
+<input type="checkbox" value="None" id="option-2" name="check" />
+<label for="option-2"></label>
+</div>
+<h2 class="option-header">Colour</h2>
+<div class="option-slider">
+<input type="checkbox" value="None" id="option-3" name="check" />
+<label for="option-3"></label>
+</div>
+<h2 class="option-header">Steve Mode</h2>
+<div class="option-slider">
+<input type="checkbox" onclick="enableSteveMode()" value="None" id="option-4" name="check" />
+<label for="option-4"></label>
+</div>
+</div>
+</div>
+<div id="scores-screen">
+<br/>
+<br/>
+<br/>
+<p style="color:white">highscorez</p>
+<button onclick="openBadges()" class="nongameplay-buttons" id="badges-button"><img src="images/medal2.png"/></button>
+</div>
+<div id="badges-screen">
+<br/>
+<br/>
+<br/>
+<p style="color:white">badges</p>
+<button onclick="openScores()" class="nongameplay-buttons" id="badge-return-button"><img src="images/backward.png"/></button>
+</div>
+<div id="credits-screen">
+<div id="cred-box">
+<h2>created by:</h2>
+<h2><b>THE SURVEYORS</b></h2>
+<img src="images/dot-magenta.png"/>
+<p>Jake Superior</p>
+<img src="images/dot-yellow.png"/>
+<p>Frisky Dingo</p>
+<img src="images/dot-green.png"/>
+<p>Jenkinz</p>
+<img src="images/dot-blue.png"/>
+<p>ZIA</p>
+<img src="images/dot-purple.png"/>
+<p>A Sponge</p><br/>
+<audio id="audio" src="http://www.soundjay.com/button/beep-07.wav" autostart="false" ></audio>
+<button onclick="steveMode()" id="steve-button"><img src="images/crow.png" width="60" height="60"/></button>
+</div>
+</div>
+<div id="game-screen">
+<div id="lives-bar">
+<img src="images/hud_heartFull.png"/>
+<img src="images/hud_heartFull.png"/>
+<img src="images/hud_heartFull.png"/>
+</div>
+<div id="timer-bar">
+<p>0:00</p>
+</div>
+<button class="nongameplay-buttons" id="pause-button"><img src="images/pause.png"></button>
+<button class="nongameplay-buttons" id="tutorial-button"><img src="images/question.png"></button>
+<div id="score-bar">
+<p>999 999</p>
+</div>
+<div id="dot-container">
+</div>
+</div>
+<div>
+</div>
+</div>
+<br/>
+</div>
 </body>
 </html>
