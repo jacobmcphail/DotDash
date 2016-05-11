@@ -109,7 +109,7 @@ window.onload = function() {
             }
         }
     });
-
+/*
     $(function(){
         $(".clearButton").bind("tap", clearAll);
         function clearAll(event){
@@ -127,7 +127,7 @@ window.onload = function() {
         index = 0;
         }
     });
-
+*/
     //stevify transplantd into index.html
     /*
      Create the grid that dots will populate

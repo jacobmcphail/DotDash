@@ -63,16 +63,21 @@
             document.getElementById('game-screen').style.display = 'block';
         }
         <!--LeafBunny: SteveMode functions-->
+        //The event seems to fire twice. First it goes Tapped then Untapped
         function steveTap(event) {
             if ($(event.target).hasClass("tapped_steve")) {
                 $(event.target).removeClass("tapped_steve");
                 $(event.target).addClass("steve");
+                console.log("Untapped");
             } else {
                 $(event.target).removeClass("steve");
                 $(event.target).addClass("tapped_steve");
+                console.log("Tapped");
             }
         }
         //Turns all dots into Steve heads. If you tap them, they turn angry.
+        //Why does tapping the Caw button twice make steveTap not work? He doesn't get angry when tapped.
+        //Tap a third time and it's okay. WHY.
         $(document).ready(function(){
             $(".cawButton").click(function(){
                 if (steveModeEnabled == true) {
@@ -80,7 +85,10 @@
                     sound.play();
                     $(function(){
                         $(".dot").addClass("steve black");
-                        $(".dot").bind("tap", steveTap);
+                        if(!$(".dot").hasClass("bound")){
+                            $(".dot").bind("tap", steveTap);
+                            $(".dot").addClass("bound");
+                        }
                     });
                 }
                 console.log("steveModeEnabled: " + steveModeEnabled);
@@ -91,9 +99,10 @@
                 steveModeEnabled = true;
             } else {
                 steveModeEnabled = false;
-                $(".dot").removeClass("steve tapped_steve black");
+                $(".dot").removeClass("steve tapped_steve black bound");
                 $(".dot").unbind("tap", steveTap);
             }
+            console.log("steve-option touched");
         }
         function resetGrid(){
             console.clear();
