@@ -1,120 +1,21 @@
-<html>
-<head>
-    <title>What</title>
-    <!--LeafBunny: myScript.js, jquery (breaks the css formatting), jquery.mobile, myStyle-->
-    <script src="js/myScript.js"></script>
-    <script src="js/jquery-2.2.3.min.js"></script>
-    <script src="js/jquery.mobile-1.4.5.min.js"></script>
-    <!--
-    there is definitely something in this css file that is necessary for the option buttons to work
-    as well as the grids that the dots are placed in.
-    -->
-    <!--<link rel="stylesheet" href="css/jquery.mobile-1.4.5.min.css" />
-    LeafBunny: Added the modified sheet-->
-    <link rel="stylesheet" href="css/jquery.mobile.MOD-1.4.5.css" />
-    <link rel="stylesheet" type="text/css" href="css/cawStyle.css"/>
-    <link rel="stylesheet" type="text/css" href="css/myStyle.css"/>
-    <script type="text/javascript">
-        var steveModeEnabled = false;
-        function openOptions() {
-            /*var elements = document.getElementsByClassName('main-screen');
-             for (var i = 0, length = elements.length; i < length; i++) {
-             elements[i].style.display = 'none';
-             }*/
-            document.getElementById('main-screen').style.display = 'none';
-            document.getElementById('options-screen').style.display = "block";
-            document.getElementById('return-button').style.display = "block";
-            document.getElementById('title').innerHTML = "Options._"
-        }
-        function openScores() {
-            document.getElementById('main-screen').style.display = 'none';
-            document.getElementById('badges-screen').style.display = 'none';
-            document.getElementById('scores-screen').style.display = "block";
-            document.getElementById('return-button').style.display = "block";
-            document.getElementById('badges-button').style.display = "block";
-            document.getElementById('title').innerHTML = "Scores._"
-        }
-        function openBadges() {
-            document.getElementById('scores-screen').style.display = 'none';
-            document.getElementById('badges-screen').style.display = "block";
-            document.getElementById('badge-return').style.display = "block";
-            document.getElementById('return-button').style.display = "none";
-            document.getElementById('title').innerHTML = "Badges._"
-        }
-        function openCredits() {
-            document.getElementById('main-screen').style.display = 'none';
-            document.getElementById('credits-screen').style.display = "block";
-            document.getElementById('return-button').style.display = "block";
-            document.getElementById('title').innerHTML = "DotDash._"
-        }
-        function openMainMenu() {
-            document.getElementById('options-screen').style.display = 'none';
-            document.getElementById('scores-screen').style.display = 'none';
-            document.getElementById('credits-screen').style.display = 'none';
-            document.getElementById('return-button').style.display = 'none';
-            document.getElementById('title').style.display = "block";
-            document.getElementById('game-screen').style.display = 'none';
-            document.getElementById('main-screen').style.display = 'block';
-            document.getElementById('title').innerHTML = "DotDash._"
-        }
-        function play() {
-            document.getElementById('main-screen').style.display = 'none';
-            document.getElementById('title').style.display = 'none';
-            document.getElementById('game-screen').style.display = 'block';
-        }
-        <!--LeafBunny: SteveMode functions-->
-        //The event seems to fire twice. First it goes Tapped then Untapped
-        function steveTap(event) {
-            if ($(event.target).hasClass("tapped_steve")) {
-                $(event.target).removeClass("tapped_steve");
-                $(event.target).addClass("steve");
-                console.log("Untapped");
-            } else {
-                $(event.target).removeClass("steve");
-                $(event.target).addClass("tapped_steve");
-                console.log("Tapped");
-            }
-        }
-        //Turns all dots into Steve heads. If you tap them, they turn angry.
-        //Why does tapping the Caw button twice make steveTap not work? He doesn't get angry when tapped.
-        //Tap a third time and it's okay. WHY.
-        $(document).ready(function(){
-            $(".cawButton").click(function(){
-                if (steveModeEnabled == true) {
-                    var sound = document.getElementById("audio");
-                    sound.play();
-                    $(function(){
-                        $(".dot").addClass("steve black");
-                        if(!$(".dot").hasClass("bound")){
-                            $(".dot").bind("tap", steveTap);
-                            $(".dot").addClass("bound");
-                        }
-                    });
-                }
-                console.log("steveModeEnabled: " + steveModeEnabled);
-            });
-        });
-        function enableSteveMode() {
-            if (steveModeEnabled == false) {
-                steveModeEnabled = true;
-            } else {
-                steveModeEnabled = false;
-                $(".dot").removeClass("steve tapped_steve black bound");
-                $(".dot").unbind("tap", steveTap);
-            }
-            console.log("steve-option touched");
-        }
-        function resetGrid(){
-            console.clear();
-            openMainMenu();
-            $(".dot").removeClass("selected");
-            if($(".dot").hasClass("tapped_steve")){
-                $(".dot").removeClass("tapped_steve");
-                $(".dot").addClass("steve");
-            }
-        }
-    </script>
-</head>
+<!--Transplant everything in index.html here because the slidey things work here.-->
+
+<meta charset="UTF-8">
+    <html>
+    <head>
+        <!--jquery things; jquery.mobile-1.4.5 misaligns text on buttons. Solution: "click" instead of "tap"-->
+        <script src = "js/jquery-1.12.3.js"></script>
+        <link rel="stylesheet" type="text/css" href="jquery.mobile-1.4.5/jquery.mobile-1.4.5.css"/>
+
+        <!--Stylesheets and scripts we made-->
+        <link rel="stylesheet" type="text/css" href="css/teahStyle.css"/>
+        <link rel="stylesheet" type="text/css" href="css/myStyle.css"/>
+
+        <script src="js/everythingScript.js"></script>
+
+        <title>DotDash._</title>
+    </head>
+
 <body>
 <header>
     <br/>
@@ -124,6 +25,7 @@
     <br/>
     <div id="screen">
         <div id="title">DotDash._&nbsp </div>
+
         <!-- buttons and elements used in the main menu screen ----------------------------------------->
         <div id="main-screen">
             <div id="mode-selection-container">
@@ -135,12 +37,13 @@
             </div>
             <button onclick="openOptions()" class="nongameplay-buttons" id="options-button"><img src="images/gear.png"></button>
             <button onclick="openScores()" class="nongameplay-buttons" id="scores-button"><img src="images/trophy.png"></button>
-            <button onclick="openCredits()" class="nongameplay-buttons" id="credz-button"><img src="images/exclamation.png"></button>
+            <button onclick="openCredits()" class="nongameplay-buttons" id="credits-button"><img src="images/exclamation.png"></button>
         </div>
+
         <!-- common button used to return to the main menu -->
         <button onclick="openMainMenu()" class="nongameplay-buttons" id="return-button"><img src="images/backward.png"/></button>
         <div id="options-screen">
-            <div id="options-container">
+            <div class="container">
                 <h2 class="option-header">Music</h2>
                 <div class="option-slider">
                     <input type="checkbox" value="None" id="option-1" name="check" />
@@ -158,9 +61,8 @@
                 </div>
                 <h2 class="option-header">Steve Mode</h2>
                 <div class="option-slider">
-                    <!--LeafBunny: renamed option-4 as steve-option-->
-                    <input type="checkbox" onclick="enableSteveMode()" value="None" id="steve-option" name="check" />
-                    <label for="steve-option"></label>
+                    <input type="checkbox" onclick="enableSteveMode()" value="None" id="option-4" name="check" />
+                    <label for="option-4"></label>
                 </div>
             </div>
         </div>
@@ -172,14 +74,28 @@
             <button onclick="openBadges()" class="nongameplay-buttons" id="badges-button"><img src="images/medal2.png"/></button>
         </div>
         <div id="badges-screen">
-            <br/>
-            <br/>
-            <br/>
-            <p style="color:white">badges</p>
+            <div class="container">
+                <h2>Unlock badges by playing the game right, wethead.</h2>
+                <div class="badge-icons">
+                    <button onclick="badge1()" class="badge-button" id="badge-1-button"><img src="images/locked.png"/></button>
+                    <img src="images/locked.png"/>
+                    <img src="images/locked.png"/>
+                    <img src="images/locked.png"/>
+                    <img src="images/locked.png"/>
+                    <img src="images/locked.png"/>
+                    <img src="images/locked.png"/>
+                    <img src="images/locked.png"/>
+                    <img src="images/locked.png"/>
+                    <img src="images/locked.png"/>
+                </div>
+                <div class="container" id="hint-box">
+                    <h2>Hint:"What the hell is water?" </h2>
+                </div>
+            </div>
             <button onclick="openScores()" class="nongameplay-buttons" id="badge-return-button"><img src="images/backward.png"/></button>
         </div>
         <div id="credits-screen">
-            <div id="cred-box">
+            <div class="container" id="credits-container">
                 <h2>created by:</h2>
                 <h2><b>THE SURVEYORS</b></h2>
                 <img src="images/dot-magenta.png"/>
@@ -193,11 +109,9 @@
                 <img src="images/dot-purple.png"/>
                 <p>A Sponge</p><br/>
                 <audio id="audio" src="http://www.soundjay.com/button/beep-07.wav" autostart="false" ></audio>
-                <!--onclick="caw()"-->
                 <button id="steve-button" class="cawButton"><img src="images/crow.png" width="60" height="60"/></button>
             </div>
         </div>
-        <!--INSERT MY GARBAGE HERE-->
         <div id="game-screen">
             <div id="lives-bar">
                 <img src="images/hud_heartFull.png"/>
@@ -207,14 +121,12 @@
             <div id="timer-bar">
                 <p>0:00</p>
             </div>
-            <!--LeafBunny: Temporarily for testing: make pause button link back to menu screen-->
-            <button class="nongameplay-buttons" id="pause-button" onclick="resetGrid()"><img src="images/pause.png"></button>
+            <button class="nongameplay-buttons" onclick="resetGrid()" id="pause-button"><img src="images/pause.png"></button>
             <button class="nongameplay-buttons" id="tutorial-button"><img src="images/question.png"></button>
             <div id="score-bar">
                 <p>999 999</p>
             </div>
-
-            <div id="dot-container">
+            <div class="container" id="dot-container">
             </div>
         </div>
         <div>
