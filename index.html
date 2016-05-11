@@ -95,31 +95,15 @@
                 $(".dot").unbind("tap", steveTap);
             }
         }
-        console.log("steveModeEnabled: " + steveModeEnabled);
-    });
-});
-
-function enableSteveMode() {
-    if (steveModeEnabled == false) {
-        steveModeEnabled = true;
-    } else {
-        steveModeEnabled = false;
-        $(".dot").removeClass("steve tapped_steve black");
-        $(".dot").unbind("tap", steveTap);
-    }
-}
-function resetGrid(){
-    console.clear();
-    openMainMenu();
-    $(".dot").removeClass("selected");
-    if($(".dot").hasClass("tapped_steve")){
-        $(".dot").removeClass("tapped_steve");
-        $(".dot").addClass("steve");
-    }
-}
-</script>
-
-
+        function resetGrid(){
+            console.clear();
+            openMainMenu();
+            $(".dot").removeClass("selected");
+            if($(".dot").hasClass("tapped_steve")){
+                $(".dot").removeClass("tapped_steve");
+                $(".dot").addClass("steve");
+            }
+        }
     </script>
 </head>
 <body>
@@ -130,97 +114,101 @@ function resetGrid(){
 <div id="wrapper">
     <br/>
     <div id="screen">
+        <div id="title">DotDash._&nbsp </div>
+        <!-- buttons and elements used in the main menu screen ----------------------------------------->
+        <div id="main-screen">
+            <div id="mode-selection-container">
+                <button class="mode-select" id="mode-1">MODE1</button>
+                <button onclick="play()" class="mode-select" id="mode-2">MODE2</button>
+                <button class="mode-select" id="mode-3">MODE3</button>
+                <button class="nongameplay-buttons" id="left-arrow-button"><img src="images/arrowLeft.png"/></button>
+                <button class="nongameplay-buttons" id="right-arrow-button"><img src="images/arrowRight.png"/></button>
+            </div>
+            <button onclick="openOptions()" class="nongameplay-buttons" id="options-button"><img src="images/gear.png"></button>
+            <button onclick="openScores()" class="nongameplay-buttons" id="scores-button"><img src="images/trophy.png"></button>
+            <button onclick="openCredits()" class="nongameplay-buttons" id="credz-button"><img src="images/exclamation.png"></button>
         </div>
+        <!-- common button used to return to the main menu -->
+        <button onclick="openMainMenu()" class="nongameplay-buttons" id="return-button"><img src="images/backward.png"/></button>
+        <div id="options-screen">
+            <div id="options-container">
+                <h2 class="option-header">Music</h2>
+                <div class="option-slider">
+                    <input type="checkbox" value="None" id="option-1" name="check" />
+                    <label for="option-1"></label>
+                </div>
+                <h2 class="option-header">Sound Effects</h2>
+                <div class="option-slider">
+                    <input type="checkbox" value="None" id="option-2" name="check" />
+                    <label for="option-2"></label>
+                </div>
+                <h2 class="option-header">Colour</h2>
+                <div class="option-slider">
+                    <input type="checkbox" value="None" id="option-3" name="check" />
+                    <label for="option-3"></label>
+                </div>
+                <h2 class="option-header">Steve Mode</h2>
+                <div class="option-slider">
+                    <!--LeafBunny: renamed option-4 as steve-option-->
+                    <input type="checkbox" onclick="enableSteveMode()" value="None" id="steve-option" name="check" />
+                    <label for="steve-option"></label>
+                </div>
+            </div>
+        </div>
+        <div id="scores-screen">
+            <br/>
+            <br/>
+            <br/>
+            <p style="color:white">highscorez</p>
+            <button onclick="openBadges()" class="nongameplay-buttons" id="badges-button"><img src="images/medal2.png"/></button>
+        </div>
+        <div id="badges-screen">
+            <br/>
+            <br/>
+            <br/>
+            <p style="color:white">badges</p>
+            <button onclick="openScores()" class="nongameplay-buttons" id="badge-return-button"><img src="images/backward.png"/></button>
+        </div>
+        <div id="credits-screen">
+            <div id="cred-box">
+                <h2>created by:</h2>
+                <h2><b>THE SURVEYORS</b></h2>
+                <img src="images/dot-magenta.png"/>
+                <p>Jake Superior</p>
+                <img src="images/dot-yellow.png"/>
+                <p>Frisky Dingo</p>
+                <img src="images/dot-green.png"/>
+                <p>Jenkinz</p>
+                <img src="images/dot-blue.png"/>
+                <p>ZIA</p>
+                <img src="images/dot-purple.png"/>
+                <p>A Sponge</p><br/>
+                <audio id="audio" src="http://www.soundjay.com/button/beep-07.wav" autostart="false" ></audio>
+                <!--onclick="caw()"-->
+                <button id="steve-button" class="cawButton"><img src="images/crow.png" width="60" height="60"/></button>
+            </div>
+        </div>
+        <!--INSERT MY GARBAGE HERE-->
+        <div id="game-screen">
+            <div id="lives-bar">
+                <img src="images/hud_heartFull.png"/>
+                <img src="images/hud_heartFull.png"/>
+                <img src="images/hud_heartFull.png"/>
+            </div>
+            <div id="timer-bar">
+                <p>0:00</p>
+            </div>
+            <!--LeafBunny: Temporarily for testing: make pause button link back to menu screen-->
+            <button class="nongameplay-buttons" id="pause-button" onclick="resetGrid()"><img src="images/pause.png"></button>
+            <button class="nongameplay-buttons" id="tutorial-button"><img src="images/question.png"></button>
+            <div id="score-bar">
+                <p>999 999</p>
+            </div>
 
-        <button onclick="openOptions()" class="nongameplay-buttons" id="options-button"><img src="images/gear.png"></button>
-        <button onclick="openScores()" class="nongameplay-buttons" id="scores-button"><img src="images/trophy.png"></button>
-        <button onclick="openCredits()" class="nongameplay-buttons" id="credz-button"><img src="images/exclamation.png"></button>
-    </div>
-    <!-- common button used to return to the main menu -->
-    <button onclick="openMainMenu()" class="nongameplay-buttons" id="return-button"><img src="images/backward.png"/></button>
-
-    <div id="options-screen">
-        <div id="options-container">
-        <h2 class="option-header">Music</h2>
-        <div class="option-slider">
-        <input type="checkbox" value="None" id="option-1" name="check" />
-        <label for="option-1"></label>
+            <div id="dot-container">
+            </div>
         </div>
-        <h2 class="option-header">Sound Effects</h2>
-        <div class="option-slider">
-        <input type="checkbox" value="None" id="option-2" name="check" />
-        <label for="option-2"></label>
-        </div>
-        <h2 class="option-header">Colour</h2>
-        <div class="option-slider">
-        <input type="checkbox" value="None" id="option-3" name="check" />
-        <label for="option-3"></label>
-        </div>
-        <h2 class="option-header">Steve Mode</h2>
-        <div class="option-slider">
-            <!--LeafBunny: renamed option-4 as steve-option-->
-        <input type="checkbox" onclick="enableSteveMode()" value="None" id="steve-option" name="check" />
-        <label for="steve-option"></label>
-        </div>
-        </div>
-    </div>
-
-    <div id="scores-screen">
-        <br/>
-        <br/>
-        <br/>
-        <p style="color:white">highscorez</p>
-        <button onclick="openBadges()" class="nongameplay-buttons" id="badges-button"><img src="images/medal2.png"/></button>
-    </div>
-
-    <div id="badges-screen">
-        <br/>
-        <br/>
-        <br/>
-        <p style="color:white">badges</p>
-        <button onclick="openScores()" class="nongameplay-buttons" id="badge-return-button"><img src="images/backward.png"/></button>
-    </div>
-
-    <div id="credits-screen">
-        <div id="cred-box">
-        <h2>created by:</h2>
-        <h2><b>THE SURVEYORS</b></h2>
-        <img src="images/dot-magenta.png"/>
-        <p>Jake Superior</p>
-        <img src="images/dot-yellow.png"/>
-        <p>Frisky Dingo</p>
-        <img src="images/dot-green.png"/>
-        <p>Jenkinz</p>
-        <img src="images/dot-blue.png"/>
-        <p>ZIA</p>
-        <img src="images/dot-purple.png"/>
-        <p>A Sponge</p><br/>
-        <audio id="audio" src="http://www.soundjay.com/button/beep-07.wav" autostart="false" ></audio>
-            <!--onclick="caw()"-->
-        <button id="steve-button" class="cawButton"><img src="images/crow.png" width="60" height="60"/></button>
-        </div>
-    </div>
-
-<!--INSERT MY GARBAGE HERE-->
-    <div id="game-screen">
-        <div id="lives-bar">
-        <img src="images/hud_heartFull.png"/>
-        <img src="images/hud_heartFull.png"/>
-        <img src="images/hud_heartFull.png"/>
-        </div>
-        <div id="timer-bar">
-        <p>0:00</p>
-        </div>
-
-        <!--LeafBunny: Temporarily for testing: make pause button link back to menu screen-->
-        <button class="nongameplay-buttons" id="pause-button" onclick="resetGrid()"><img src="images/pause.png"></button>
-        <button class="nongameplay-buttons" id="tutorial-button"><img src="images/question.png"></button>
-        <div id="score-bar">
-        <p>999 999</p>
-        </div>
-
-        <!--LeafBunny: FUCK why wont it load!!-->
-        <div id="dot-container">
+        <div>
         </div>
     </div>
     <br/>
