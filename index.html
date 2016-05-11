@@ -1,94 +1,99 @@
 <html>
 <head>
-<title>What</title>
+    <title>What</title>
     <!--LeafBunny: myScript.js, jquery (breaks the css formatting), jquery.mobile, myStyle-->
     <script src="js/myScript.js"></script>
     <script src="js/jquery-2.2.3.min.js"></script>
     <script src="js/jquery.mobile-1.4.5.min.js"></script>
-
     <!--
     there is definitely something in this css file that is necessary for the option buttons to work
     as well as the grids that the dots are placed in.
     -->
-
     <!--<link rel="stylesheet" href="css/jquery.mobile-1.4.5.min.css" />
     LeafBunny: Added the modified sheet-->
     <link rel="stylesheet" href="css/jquery.mobile.MOD-1.4.5.css" />
-
-
     <link rel="stylesheet" type="text/css" href="css/cawStyle.css"/>
     <link rel="stylesheet" type="text/css" href="css/myStyle.css"/>
-
     <script type="text/javascript">
-var steveModeEnabled = false;
-
-function openOptions() {
-/*var elements = document.getElementsByClassName('main-screen');
-for (var i = 0, length = elements.length; i < length; i++) {
-elements[i].style.display = 'none';
-}*/
-    document.getElementById('main-screen').style.display = 'none';
-    document.getElementById('options-screen').style.display = "block";
-    document.getElementById('return-button').style.display = "block";
-    document.getElementById('title').innerHTML = "Options._"
-}
-function openScores() {
-    document.getElementById('main-screen').style.display = 'none';
-    document.getElementById('badges-screen').style.display = 'none';
-    document.getElementById('scores-screen').style.display = "block";
-    document.getElementById('return-button').style.display = "block";
-    document.getElementById('badges-button').style.display = "block";
-    document.getElementById('title').innerHTML = "Scores._"
-}
-function openBadges() {
-    document.getElementById('scores-screen').style.display = 'none';
-    document.getElementById('badges-screen').style.display = "block";
-    document.getElementById('badge-return').style.display = "block";
-    document.getElementById('return-button').style.display = "none";
-    document.getElementById('title').innerHTML = "Badges._"
-}
-function openCredits() {
-    document.getElementById('main-screen').style.display = 'none';
-    document.getElementById('credits-screen').style.display = "block";
-    document.getElementById('return-button').style.display = "block";
-    document.getElementById('title').innerHTML = "DotDash._"
-}
-function openMainMenu() {
-    document.getElementById('options-screen').style.display = 'none';
-    document.getElementById('scores-screen').style.display = 'none';
-    document.getElementById('credits-screen').style.display = 'none';
-    document.getElementById('return-button').style.display = 'none';
-    document.getElementById('title').style.display = "block";
-    document.getElementById('game-screen').style.display = 'none';
-    document.getElementById('main-screen').style.display = 'block';
-    document.getElementById('title').innerHTML = "DotDash._"
-}
-function play() {
-    document.getElementById('main-screen').style.display = 'none';
-    document.getElementById('title').style.display = 'none';
-    document.getElementById('game-screen').style.display = 'block';
-}
-
-<!--LeafBunny: SteveMode functions-->
-function steveTap(event) {
-    if ($(event.target).hasClass("tapped_steve")) {
-        $(event.target).removeClass("tapped_steve");
-        $(event.target).addClass("steve");
-    } else {
-        $(event.target).removeClass("steve");
-        $(event.target).addClass("tapped_steve");
-    }
-}
-//Turns all dots into Steve heads. If you tap them, they turn angry.
-$(document).ready(function(){
-    $(".cawButton").click(function(){
-        if (steveModeEnabled == true) {
-            var sound = document.getElementById("audio");
-            sound.play();
-            $(function(){
-                $(".dot").addClass("steve black");
-                $(".dot").bind("tap", steveTap);
+        var steveModeEnabled = false;
+        function openOptions() {
+            /*var elements = document.getElementsByClassName('main-screen');
+             for (var i = 0, length = elements.length; i < length; i++) {
+             elements[i].style.display = 'none';
+             }*/
+            document.getElementById('main-screen').style.display = 'none';
+            document.getElementById('options-screen').style.display = "block";
+            document.getElementById('return-button').style.display = "block";
+            document.getElementById('title').innerHTML = "Options._"
+        }
+        function openScores() {
+            document.getElementById('main-screen').style.display = 'none';
+            document.getElementById('badges-screen').style.display = 'none';
+            document.getElementById('scores-screen').style.display = "block";
+            document.getElementById('return-button').style.display = "block";
+            document.getElementById('badges-button').style.display = "block";
+            document.getElementById('title').innerHTML = "Scores._"
+        }
+        function openBadges() {
+            document.getElementById('scores-screen').style.display = 'none';
+            document.getElementById('badges-screen').style.display = "block";
+            document.getElementById('badge-return').style.display = "block";
+            document.getElementById('return-button').style.display = "none";
+            document.getElementById('title').innerHTML = "Badges._"
+        }
+        function openCredits() {
+            document.getElementById('main-screen').style.display = 'none';
+            document.getElementById('credits-screen').style.display = "block";
+            document.getElementById('return-button').style.display = "block";
+            document.getElementById('title').innerHTML = "DotDash._"
+        }
+        function openMainMenu() {
+            document.getElementById('options-screen').style.display = 'none';
+            document.getElementById('scores-screen').style.display = 'none';
+            document.getElementById('credits-screen').style.display = 'none';
+            document.getElementById('return-button').style.display = 'none';
+            document.getElementById('title').style.display = "block";
+            document.getElementById('game-screen').style.display = 'none';
+            document.getElementById('main-screen').style.display = 'block';
+            document.getElementById('title').innerHTML = "DotDash._"
+        }
+        function play() {
+            document.getElementById('main-screen').style.display = 'none';
+            document.getElementById('title').style.display = 'none';
+            document.getElementById('game-screen').style.display = 'block';
+        }
+        <!--LeafBunny: SteveMode functions-->
+        function steveTap(event) {
+            if ($(event.target).hasClass("tapped_steve")) {
+                $(event.target).removeClass("tapped_steve");
+                $(event.target).addClass("steve");
+            } else {
+                $(event.target).removeClass("steve");
+                $(event.target).addClass("tapped_steve");
+            }
+        }
+        //Turns all dots into Steve heads. If you tap them, they turn angry.
+        $(document).ready(function(){
+            $(".cawButton").click(function(){
+                if (steveModeEnabled == true) {
+                    var sound = document.getElementById("audio");
+                    sound.play();
+                    $(function(){
+                        $(".dot").addClass("steve black");
+                        $(".dot").bind("tap", steveTap);
+                    });
+                }
+                console.log("steveModeEnabled: " + steveModeEnabled);
             });
+        });
+        function enableSteveMode() {
+            if (steveModeEnabled == false) {
+                steveModeEnabled = true;
+            } else {
+                steveModeEnabled = false;
+                $(".dot").removeClass("steve tapped_steve black");
+                $(".dot").unbind("tap", steveTap);
+            }
         }
         console.log("steveModeEnabled: " + steveModeEnabled);
     });
@@ -115,24 +120,16 @@ function resetGrid(){
 </script>
 
 
+    </script>
 </head>
 <body>
 <header>
-<br/>
-<h1>DotDash Prototype</h1>
+    <br/>
+    <h1>DotDash Prototype</h1>
 </header>
 <div id="wrapper">
     <br/>
     <div id="screen">
-    <div id="title">DotDash._&nbsp </div>
-    <!-- buttons and elements used in the main menu screen ----------------------------------------->
-    <div id="main-screen">
-        <div id="mode-selection-container">
-        <button class="mode-select" id="mode-1">MODE1</button>
-        <button onclick="play()" class="mode-select" id="mode-2">MODE2</button>
-        <button class="mode-select" id="mode-3">MODE3</button>
-        <button class="nongameplay-buttons" id="left-arrow-button"><img src="images/arrowLeft.png"/></button>
-        <button class="nongameplay-buttons" id="right-arrow-button"><img src="images/arrowRight.png"/></button>
         </div>
 
         <button onclick="openOptions()" class="nongameplay-buttons" id="options-button"><img src="images/gear.png"></button>
@@ -225,13 +222,8 @@ function resetGrid(){
         <!--LeafBunny: FUCK why wont it load!!-->
         <div id="dot-container">
         </div>
-
     </div>
-
-    <div>
-    </div>
-    </div>
-<br/>
+    <br/>
 </div>
 </body>
 </html>
