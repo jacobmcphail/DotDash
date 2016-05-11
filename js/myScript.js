@@ -128,7 +128,7 @@ window.onload = function() {
         }
     });
 
-    //stevify transplantd into index.html
+    //stevify transplantd into index.html. Why did I cut and paste instead of copying.
     /*
      Create the grid that dots will populate
      As of now, this function assumes numCols is always going to be 3
