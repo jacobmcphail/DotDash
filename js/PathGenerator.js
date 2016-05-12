@@ -149,7 +149,7 @@ function generatePath(gamegrid, length) {
 }
 
 //Resets grid
-function reset(gamegrid){
+function resetPG(gamegrid){
     for(var x = 0; x < gamegrid.grid.length; x++) {
         for(var y= 0; y < gamegrid.grid[x].length; y++) {
             unvisit(gamegrid.grid[x][y]);
@@ -169,7 +169,7 @@ function runPathFinder(gamegrid, length, mode) {
         if (array.length == length) {
             break;
         }
-        reset(gamegrid);
+        resetPG(gamegrid);
     }
    return array;
 }

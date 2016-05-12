@@ -3570,7 +3570,7 @@ div.ui-slider-switch {
 	width: 5.8em;
 	top: 0;
 }
-/* reset the clearfix */
+/* resetPG the clearfix */
 div.ui-slider-switch:before,
 div.ui-slider-switch:after {
 	display: none;
