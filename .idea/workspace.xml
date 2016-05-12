@@ -52,6 +52,7 @@
         <option value="$PROJECT_DIR$/why.html" />
         <option value="$PROJECT_DIR$/css/myStyle.css" />
         <option value="$PROJECT_DIR$/js/myScript.js" />
+        <option value="$PROJECT_DIR$/js/PathGenerator.js" />
       </list>
     </option>
   </component>
@@ -206,7 +207,7 @@
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="1855000" />
+    <option name="totallyTimeSpent" value="1994000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1382" height="744" extended-state="6" />
