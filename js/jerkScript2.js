@@ -16,6 +16,8 @@ var noErrorsYet = true;
 var notComplete = true;
 var index = 0;
 var socks;
+var playerScore = 0;
+var currentRound = 1;
 var numRows = 3;
 var numCols = 3;
 var container;
@@ -69,6 +71,9 @@ $(document).ready(function(){
 function initialize(gameMode, newRound, removeDots){
     console.log("Entered initialize()");
     container = document.getElementById("dot-container");
+    playerScore = 0;
+    currentRound = 1;
+    updateScore();
     //Score
     //pathLength
     //difficulty
@@ -87,6 +92,11 @@ function initialize(gameMode, newRound, removeDots){
 
 
     newRound(generateGrid);
+}
+
+function updateScore() {
+    var score = playerScore.toString();
+    $('#playerScore').text(score);
 }
 
 //Start a new round with all dots not selected + a new sequence
@@ -177,6 +187,9 @@ function validate(array, userFeedback, dArray){
                         if (index >= array.length) {
                             console.log("All correct!");
                             notComplete = false;
+                            playerScore += currentRound;
+                            updateScore();
+                            currentRound++;
                             userFeedback(true, dArray[ex][wai]);
                         }
                     }
