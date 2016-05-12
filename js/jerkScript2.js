@@ -22,6 +22,7 @@ var lifePoints = 3;
 var numRows = 3;
 var numCols = 3;
 var container;
+var highscores = ["-----", "scrumcake", "-------", "-------", "-------", "-------", "-------", "-------", "-------"];
 
 $.getScript("js/nuggetScript2.js", function(){
 //        alert("ALL YOUR MEAT BYPRODUCTS COMBINED");
@@ -40,25 +41,24 @@ arrayToRepeat.push(new Point(2,0));
 
 
 $(document).ready(function(){
-/*
-    $(".cawButton").click(function(){
-        if (steveModeEnabled == true) {
-            var sound = document.getElementById("audio");
-            sound.play();
-//This does nothing because there are no dot objects at the beginning. FIX THIS.
-            if(steveModeEnabled){
-                $(function(){
-                    $(".dot").addClass("steve black");
-                    if(!$(".dot").hasClass("bound")){
-                        $(".dot").bind("click", steveTap);
-                        $(".dot").addClass("bound");
-                    }
-                });
-            }
+    
+    updateHighScores();
+
+    //update high scores
+    function updateHighScores() {
+        var scoreSpaces = document.getElementsByClassName("score-text");
+        for (var i = 0; i < highscores.length; i++) {
+            scoreSpaces[i].innerHTML = highscores[i];
         }
-        console.log("steveModeEnabled: " + steveModeEnabled);
-    });
-*/
+    }
+
+    //return scores to normal after steve mode is disabled
+    document.getElementById('option-4').onchange = function() {
+        if ( document.getElementById('option-4').checked === false ) {
+            updateHighScores();
+        }
+    };
+    
     $(".mode-select").click(function(){
         var mode = this.id;
         console.log("mode selected: " + mode);
@@ -348,10 +348,16 @@ function ifVisited(element) {
 $(document).ready(function(){
 
     $(".cawButton").click(function(){
-        if (steveModeEnabled == true) {
+        if (steveModeEnabled) {
             var sound = document.getElementById("audio");
             sound.play();
 
+            // change scores to "Steve"
+            var curScores = document.getElementsByClassName("score-text");
+            for (var i = 0; i < curScores.length; i++) {
+                curScores[i].innerHTML = "Steve";
+            }
+            
             if(steveModeEnabled){
                 $(function(){
                     $(".dot").addClass("steve black");
