@@ -16,6 +16,9 @@ var noErrorsYet = true;
 var notComplete = true;
 var index = 0;
 var socks;
+var playerScore = 0;
+var currentRound = 1;
+var lifePoints = 3;
 var numRows = 3;
 var numCols = 3;
 var container;
@@ -69,6 +72,11 @@ $(document).ready(function(){
 function initialize(gameMode, newRound, removeDots){
     console.log("Entered initialize()");
     container = document.getElementById("dot-container");
+    playerScore = 0;
+    currentRound = 1;
+    lifePoints = 3;
+    updateLives();
+    updateScore();
     //Score
     //pathLength
     //difficulty
@@ -87,6 +95,19 @@ function initialize(gameMode, newRound, removeDots){
 
 
     newRound(generateGrid);
+}
+
+function updateScore() {
+    var score = playerScore.toString();
+    $('#playerScore').text(score);
+}
+
+function updateLives() {
+    var lifeString = '';
+    for (var life = lifePoints; life > 0; life--) {
+        lifeString += '<img src="images/hud_heartFull.png"/>';
+    }
+    $('#lives-bar').html(lifeString);
 }
 
 //Start a new round with all dots not selected + a new sequence
@@ -177,12 +198,17 @@ function validate(array, userFeedback, dArray){
                         if (index >= array.length) {
                             console.log("All correct!");
                             notComplete = false;
+                            playerScore += currentRound;
+                            updateScore();
+                            currentRound++;
                             userFeedback(true, dArray[ex][wai]);
                         }
                     }
                 } else {
                     console.log("Incorrect");
                     noErrorsYet = false;
+                    lifePoints--;
+                    updateLives();
                     userFeedback(false, dArray[ex][wai]);
                 }
             }
