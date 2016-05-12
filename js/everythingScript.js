@@ -39,7 +39,7 @@ function openMainMenu() {
     document.getElementById('credits-screen').style.display = 'none';
     document.getElementById('return-button').style.display = 'none';
     document.getElementById('main-screen').style.display = 'block';
-    document.getElementById('title').innerHTML = "DotDash._"
+    document.getElementById('title').innerHTML = "DotDash._";
 //LeafBunny: hide pause and tutorial buttons when returning to Main Manu
     document.getElementById('game-screen').style.display = 'none';
     document.getElementById('title').style.display = 'block';
@@ -93,6 +93,38 @@ function resetVals(){
     index = 0;
 }
 
+//Displays feedback to user if they got round correct or incorrect.
+function feedback(bool, lastNode) {
+    var dot;
+    if (bool) {
+        dot = "correct";
+    } else {
+        dot = "incorrect";
+    }
+    if (steveModeEnabled) {
+        $(".dot").removeClass("tapped_steve");
+    } else {
+        $(".dot").removeClass("selected");
+    }
+    $(".dot").addClass(dot);
+    if (bool) {
+        $(".dot").addClass("good_dot");
+    }
+    if (lastNode != null) {
+        $(lastNode).addClass("wrong_dot");
+    }
+    setTimeout(function(){
+        if (bool) {
+            $(".dot").removeClass("good_dot");
+        } else {
+            $(".dot").removeClass("wrong_dot");
+        }
+        $(".dot").removeClass(dot);
+        if(steveModeEnabled) {
+            $(".dot").addClass("steve");
+        }
+    },1500);
+}
 
 window.onload = function() {
 
@@ -198,11 +230,13 @@ window.onload = function() {
                         if(index>=arrayToRepeat.length){
                             console.log("All correct!");
                             notComplete = false;
+                            feedback(true, null);
                         }
                     }
                 }else{
                     console.log("Incorrect");
                     noErrorsYet = false;
+                    feedback(false, dotArray[ex][wai]);
                 }
                 //Not necessary in final version. Just for testing.
             } else if (!noErrorsYet) {
@@ -290,6 +324,5 @@ window.onload = function() {
     function ifVisited(element) {
         return element=='false';
     }
-
 
 }
