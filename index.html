@@ -17,10 +17,6 @@
     </head>
 
 <body>
-<header>
-    <br/>
-    <h1>DotDash Prototype</h1>
-</header>
 <div id="wrapper">
     <br/>
     <div id="screen">
@@ -46,17 +42,17 @@
             <div class="container">
                 <h2 class="option-header">Music</h2>
                 <div class="option-slider">
-                    <input type="checkbox" value="None" id="option-1" name="check" />
+                    <input type="checkbox" value="None" id="option-1" name="check" checked="checked"/>
                     <label for="option-1"></label>
                 </div>
                 <h2 class="option-header">Sound Effects</h2>
                 <div class="option-slider">
-                    <input type="checkbox" value="None" id="option-2" name="check" />
+                    <input type="checkbox" value="None" id="option-2" name="check" checked="checked"/>
                     <label for="option-2"></label>
                 </div>
                 <h2 class="option-header">Colour</h2>
                 <div class="option-slider">
-                    <input type="checkbox" value="None" id="option-3" name="check" />
+                    <input type="checkbox" value="None" id="option-3" name="check" checked="checked"/>
                     <label for="option-3"></label>
                 </div>
                 <h2 class="option-header">Steve Mode</h2>
@@ -67,10 +63,53 @@
             </div>
         </div>
         <div id="scores-screen">
-            <br/>
-            <br/>
-            <br/>
-            <p style="color:white">highscorez</p>
+            <div class="container">
+                <h2>Marathon Mode</h2>
+                <table>
+                    <tr>
+                        <td id="score-mar-1">1.</td>
+                        <td class="score-text"></td>
+                    </tr>
+                    <tr>
+                        <td id="score-mar-2">2.</td>
+                        <td class="score-text"></td>
+                    </tr>
+                    <tr>
+                        <td id="score-mar-3">3.</td>
+                        <td class="score-text"></td>
+                    </tr>
+                </table><br/>
+                <h2>TimeAttack Mode</h2>
+                <table>
+                    <tr>
+                        <td id="score-attack-1">1.</td>
+                        <td class="score-text"></td>
+                    </tr>
+                    <tr>
+                        <td id="score-attack-2">2.</td>
+                        <td class="score-text"></td>
+                    </tr>
+                    <tr>
+                        <td id="score-attack-3">3.</td>
+                        <td class="score-text"></td>
+                    </tr>
+                </table><br/>
+                <h2>Untimed Mode</h2>
+                <table>
+                    <tr>
+                        <td id="score-untimed-1">1.</td>
+                        <td class="score-text"></td>
+                    </tr>
+                    <tr>
+                        <td id="score-untimed-2">2.</td>
+                        <td class="score-text"></td>
+                    </tr>
+                    <tr>
+                        <td id="score-untimed-3">3.</td>
+                        <td class="score-text"></td>
+                    </tr>
+                </table>
+            </div>
             <button onclick="openBadges()" class="nongameplay-buttons" id="badges-button"><img src="images/medal2.png"/></button>
         </div>
         <div id="badges-screen">
