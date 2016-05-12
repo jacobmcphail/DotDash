@@ -76,7 +76,20 @@ function steveTap(event) {
         console.log("Tapped");
     }
 }
+function resetGrid(){
+    console.log("Entered resetGrid()");
+    reset(removeDots);
+    /*$(".dot").removeClass("selected");
+     if($(".dot").hasClass("tapped_steve")){
+     $(".dot").removeClass("tapped_steve");
+     $(".dot").addClass("steve");
+     }*/
+    openMainMenu();
 
+}
+
+
+/*
 function resetGrid(){
     console.clear();
     openMainMenu();
@@ -86,7 +99,7 @@ function resetGrid(){
         $(".dot").removeClass("tapped_steve");
         $(".dot").addClass("steve");
     }
-}
+}*/
 //Just for testing. May be able to repurpose for pause
 function resetVals(){
     noErrorsYet = true;

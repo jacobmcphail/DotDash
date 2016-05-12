@@ -16,8 +16,11 @@ var noErrorsYet = true;
 var notComplete = true;
 var index = 0;
 var socks;
+var numRows = 3;
+var numCols = 3;
+var container;
 
-$.getScript("js/nuggetScript.js", function(){
+$.getScript("js/nuggetScript2.js", function(){
 //        alert("ALL YOUR MEAT BYPRODUCTS COMBINED");
 //          console.log("ALL YOUR MEAT BYPRODUCTS COMBINED");
 });
@@ -32,8 +35,9 @@ arrayToRepeat.push(new Point(2,2));
 arrayToRepeat.push(new Point(2,0));
 */
 
-$(document).ready(function(){
 
+$(document).ready(function(){
+/*
     $(".cawButton").click(function(){
         if (steveModeEnabled == true) {
             var sound = document.getElementById("audio");
@@ -51,22 +55,37 @@ $(document).ready(function(){
         }
         console.log("steveModeEnabled: " + steveModeEnabled);
     });
-
+*/
     $(".mode-select").click(function(){
         var mode = this.id;
         console.log("mode selected: " + mode);
 
-        initialize(mode, newRound);
+        initialize(mode, newRound, removeDots);
     });
 
 });
 
 //Initialize global variables depending on mode
-function initialize(gameMode, newRound){
+function initialize(gameMode, newRound, removeDots){
     console.log("Entered initialize()");
+    container = document.getElementById("dot-container");
     //Score
     //pathLength
     //difficulty
+    //Should initialize Socks
+    if($('#socksID').length === 0){
+        socks = document.createElement("div");
+        socks.id = "socksID";
+        socks.className = "ui-grid-b gamegrid center";
+        container.appendChild(socks);
+    }
+
+    if(socks.hasChildNodes()){
+            console.log("Socks has children. Must exterminate");
+            removeDots();
+        }
+
+
     newRound(generateGrid);
 }
 
@@ -86,20 +105,7 @@ function generateGrid(createGrid, make_2D_Array, validate){
     console.log("Entered generateGrid()");
 
 
-    var container = document.getElementById("dot-container");
     var dotArray = [];
-    //Hard-coded grid dimensions; later, let these be determined
-    // by some other function
-    var numRows = 3;
-    var numCols = 3;
-
-    if($('#socksID').length === 0){
-        socks = document.createElement("div");
-        socks.id = "socksID";
-        socks.className = "ui-grid-b gamegrid center";
-
-        container.appendChild(socks);
-    }
     //main =
         createGrid(socks,numRows,numCols);
 
@@ -113,8 +119,9 @@ function generateGrid(createGrid, make_2D_Array, validate){
         }*/
 
     dotArray = make_2D_Array(dotArray,numRows,numCols);
-    console.log("New array created: " + dotArray);
 
+    //Place dots generated in make_2D_Array on grid ONLY IF
+    //Socks is empty
     var dotID = 1;
     for(var i=0;i<numRows;i++){
         for(var j=0;j<numCols;j++){
@@ -122,7 +129,6 @@ function generateGrid(createGrid, make_2D_Array, validate){
             dotID++;
         }
     }
-    console.log("Dots appended to grid");
 
     var someGrid = new Grid(3,3);
     var arrayToRepeat = runPathFinder(someGrid, 4, 0);
@@ -236,22 +242,24 @@ function userFeedback(bool, lastNode) {
 * */
 function adjustStats(reset){
     console.log("Entered adjustStats()");
-    reset();
+    reset(removeDots);
 }
 
 /**/
-function reset() {
+function reset(removeDots) {
     console.log("Entered reset()");
     removeDots();
     resetVals();
     newRound(generateGrid);
 }
 
+
 /* Remove all the child elements of socks
  * */
 function removeDots(){
     console.log("Entered removeDots()");
     while(socks.hasChildNodes()){
+        console.log("Number of elements in socks: " + socks.childNodes.length);
         socks.removeChild(socks.lastChild);
     }
 }
@@ -311,3 +319,23 @@ function ifVisited(element) {
 }
 
 
+$(document).ready(function(){
+
+    $(".cawButton").click(function(){
+        if (steveModeEnabled == true) {
+            var sound = document.getElementById("audio");
+            sound.play();
+
+            if(steveModeEnabled){
+                $(function(){
+                    $(".dot").addClass("steve black");
+                    if(!$(".dot").hasClass("bound")){
+                        $(".dot").bind("click", steveTap);
+                        $(".dot").addClass("bound");
+                    }
+                });
+            }
+        }
+        console.log("steveModeEnabled: " + steveModeEnabled);
+    });
+});
