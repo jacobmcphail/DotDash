@@ -48,20 +48,18 @@ div.dot.tapped_steve{
 
 div.dot.correct {
     background: green;
-  /*  border-style: solid; */
-  /*  border-color: ghostwhite; */
-  /*   border-width: thick; */
 }
 
 div.dot.incorrect {
     background: red;
- /*   border-style: solid; /*
- /*   border-color: ghostwhite; */
- /*   border-width: thick; */
 }
 
 div.dot.wrong_dot {
     background-image: url("../images/cross.png");
+}
+
+div.dot.good_dot {
+    background-image: url("../images/checkmark.png");
 }
 
 .center{

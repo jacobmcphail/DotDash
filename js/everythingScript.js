@@ -107,11 +107,18 @@ function feedback(bool, lastNode) {
         $(".dot").removeClass("selected");
     }
     $(".dot").addClass(dot);
+    if (bool) {
+        $(".dot").addClass("good_dot");
+    }
     if (lastNode != null) {
         $(lastNode).addClass("wrong_dot");
     }
     setTimeout(function(){
-        $(".dot").removeClass("wrong_dot");
+        if (bool) {
+            $(".dot").removeClass("good_dot");
+        } else {
+            $(".dot").removeClass("wrong_dot");
+        }
         $(".dot").removeClass(dot);
         if(steveModeEnabled) {
             $(".dot").addClass("steve");
