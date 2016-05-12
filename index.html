@@ -1,0 +1,145 @@
+<!--New branch Chartreuse-->
+
+<meta charset="UTF-8">
+    <html>
+    <head>
+        <!--jquery things; jquery.mobile-1.4.5 misaligns text on buttons. Solution: "click" instead of "tap"-->
+        <script src = "js/jquery-1.12.3.js"></script>
+        <link rel="stylesheet" type="text/css" href="jquery.mobile-1.4.5/jquery.mobile-1.4.5.css"/>
+
+        <!--Stylesheets and scripts we made-->
+        <link rel="stylesheet" type="text/css" href="css/teahStyle.css"/>
+        <link rel="stylesheet" type="text/css" href="css/myStyle.css"/>
+
+        <script src="js/jerkScript2.js"></script>
+
+        <title>DotDash._</title>
+    </head>
+
+<body>
+<header>
+    <br/>
+    <h1>DotDash Prototype</h1>
+</header>
+<div id="wrapper">
+    <br/>
+    <div id="screen">
+        <div id="title">DotDash._&nbsp </div>
+
+        <!-- buttons and elements used in the main menu screen ----------------------------------------->
+        <div id="main-screen">
+            <div id="mode-selection-container">
+                <button class="mode-select" id="mode-1">MODE1</button>
+                <button onclick="play()" class="mode-select" id="mode-2">MODE2</button>
+                <button class="mode-select" id="mode-3">MODE3</button>
+                <button class="nongameplay-buttons" id="left-arrow-button"><img src="images/arrowLeft.png"/></button>
+                <button class="nongameplay-buttons" id="right-arrow-button"><img src="images/arrowRight.png"/></button>
+            </div>
+            <button onclick="openOptions()" class="nongameplay-buttons" id="options-button"><img src="images/gear.png"></button>
+            <button onclick="openScores()" class="nongameplay-buttons" id="scores-button"><img src="images/trophy.png"></button>
+            <button onclick="openCredits()" class="nongameplay-buttons" id="credits-button"><img src="images/exclamation.png"></button>
+        </div>
+
+        <!-- common button used to return to the main menu -->
+        <button onclick="openMainMenu()" class="nongameplay-buttons" id="return-button"><img src="images/backward.png"/></button>
+        <div id="options-screen">
+            <div class="container">
+                <h2 class="option-header">Music</h2>
+                <div class="option-slider">
+                    <input type="checkbox" value="None" id="option-1" name="check" />
+                    <label for="option-1"></label>
+                </div>
+                <h2 class="option-header">Sound Effects</h2>
+                <div class="option-slider">
+                    <input type="checkbox" value="None" id="option-2" name="check" />
+                    <label for="option-2"></label>
+                </div>
+                <h2 class="option-header">Colour</h2>
+                <div class="option-slider">
+                    <input type="checkbox" value="None" id="option-3" name="check" />
+                    <label for="option-3"></label>
+                </div>
+                <h2 class="option-header">Steve Mode</h2>
+                <div class="option-slider">
+                    <input type="checkbox" onclick="enableSteveMode()" value="None" id="option-4" name="check" />
+                    <label for="option-4"></label>
+                </div>
+            </div>
+        </div>
+        <div id="scores-screen">
+            <br/>
+            <br/>
+            <br/>
+            <p style="color:white">highscorez</p>
+            <button onclick="openBadges()" class="nongameplay-buttons" id="badges-button"><img src="images/medal2.png"/></button>
+        </div>
+        <div id="badges-screen">
+            <div class="container">
+                <h2>Unlock badges by playing the game right, wethead.</h2>
+                <div class="badge-icons">
+                    <button onclick="badge1()" class="badge-button" id="badge-1-button"><img src="images/locked.png"/></button>
+                    <img src="images/locked.png"/>
+                    <img src="images/locked.png"/>
+                    <img src="images/locked.png"/>
+                    <img src="images/locked.png"/>
+                    <img src="images/locked.png"/>
+                    <img src="images/locked.png"/>
+                    <img src="images/locked.png"/>
+                    <img src="images/locked.png"/>
+                    <img src="images/locked.png"/>
+                </div>
+                <div class="container" id="hint-box">
+                    <h2>Hint:"What the hell is water?" </h2>
+                </div>
+            </div>
+            <button onclick="openScores()" class="nongameplay-buttons" id="badge-return-button"><img src="images/backward.png"/></button>
+        </div>
+        <div id="credits-screen">
+            <div class="container" id="credits-container">
+                <h2>created by:</h2>
+                <h2><b>THE SURVEYORS</b></h2>
+                <img src="images/dot-magenta.png"/>
+                <p>Jake Superior</p>
+                <img src="images/dot-yellow.png"/>
+                <p>Frisky Dingo</p>
+                <img src="images/dot-green.png"/>
+                <p>Jenkinz</p>
+                <img src="images/dot-blue.png"/>
+                <p>ZIA</p>
+                <img src="images/dot-purple.png"/>
+                <p>A Sponge</p><br/>
+                <audio id="audio" src="http://www.soundjay.com/button/beep-07.wav" autostart="false" ></audio>
+                <button id="steve-button" class="cawButton"><img src="images/crow.png" width="60" height="60"/></button>
+            </div>
+        </div>
+        <div id="game-screen">
+            <div id="lives-bar">
+                <img src="images/hud_heartFull.png"/>
+                <img src="images/hud_heartFull.png"/>
+                <img src="images/hud_heartFull.png"/>
+            </div>
+            <div id="timer-bar">
+                <p>0:00</p>
+            </div>
+            <button class="nongameplay-buttons" onclick="resetGrid()" id="pause-button"><img src="images/pause.png"></button>
+            <button class="nongameplay-buttons" id="tutorial-button"><img src="images/question.png"></button>
+            <div id="score-bar">
+                <p>999 999</p>
+            </div>
+            <div class="container" id="dot-container">
+            </div>
+        </div>
+        <div>
+        </div>
+    </div>
+    <br/>
+</div>
+<!--added preloader-->
+<div id="preload">
+    <img src="images/cross.png" width="1" height="1" alt="Cross" />
+    <img src="images/checkmark.png" width="1" height="1" alt="Checkmark" />
+    <img src="images/steve.png" width="1" height="1" alt="Steve" />
+    <img src="images/madsteve.png" width="1" height="1" alt="Madsteve" />
+</div>
+</body>
+</html>
