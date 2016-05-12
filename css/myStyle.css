@@ -1,3 +1,5 @@
+div#preload { display: none; }
+
 div.dot {
     width: 50px;
     height: 50px;
@@ -39,15 +41,9 @@ div.dot.black{
 }
 div.dot.steve{
     background-image: url("../images/steve.png");
-    background-repeat: no-repeat;
-    background-position: 7px -3px;
-    background-size: 40px;
 }
 div.dot.tapped_steve{
     background-image: url("../images/madsteve.png");
-    background-repeat: no-repeat;
-    background-position: 7px -3px;
-    background-size: 40px;
 }
 
 div.dot.correct {
@@ -65,10 +61,7 @@ div.dot.incorrect {
 }
 
 div.dot.wrong_dot {
-    width: 50px;
-    height: 50px;
     background-image: url("../images/cross.png");
-    background-repeat: no-repeat;
 }
 
 .center{

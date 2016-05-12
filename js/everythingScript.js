@@ -39,7 +39,7 @@ function openMainMenu() {
     document.getElementById('credits-screen').style.display = 'none';
     document.getElementById('return-button').style.display = 'none';
     document.getElementById('main-screen').style.display = 'block';
-    document.getElementById('title').innerHTML = "DotDash._"
+    document.getElementById('title').innerHTML = "DotDash._";
 //LeafBunny: hide pause and tutorial buttons when returning to Main Manu
     document.getElementById('game-screen').style.display = 'none';
     document.getElementById('title').style.display = 'block';
