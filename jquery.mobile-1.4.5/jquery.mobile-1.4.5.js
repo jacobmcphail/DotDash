@@ -1203,7 +1203,7 @@ $.Widget.prototype = {
 			type :
 			this.widgetEventPrefix + type ).toLowerCase();
 		// the original event may come from any element
-		// so we need to reset the target on the new event
+		// so we need to resetPG the target on the new event
 		event.target = this.element[ 0 ];
 
 		// copy original event properties over to the new event
@@ -2994,7 +2994,7 @@ if ( !$.support.boxShadow ) {
 
 			// Here we prevent the next hash change or popstate event from doing any
 			// history management. In the case of hashchange we don't swallow it
-			// if there will be no hashchange fired (since that won't reset the value)
+			// if there will be no hashchange fired (since that won't resetPG the value)
 			// and will swallow the following hashchange
 			if ( noEvents && hash !== path.stripHash(path.parseLocation().hash) ) {
 				this.preventNextHashChange = noEvents;
@@ -3802,7 +3802,7 @@ if ( eventCaptureSupported ) {
 					if ( ( ele === target && Math.abs( o.x - x ) < threshold && Math.abs( o.y - y ) < threshold ) ||
 								$.data( ele, touchTargetPropertyName ) === o.touchID ) {
 						// XXX: We may want to consider removing matches from the block list
-						//      instead of waiting for the reset timer to fire.
+						//      instead of waiting for the resetPG timer to fire.
 						e.preventDefault();
 						e.stopPropagation();
 						return;
@@ -5225,7 +5225,7 @@ $.widget( "mobile.page", {
 			}
 
 			// Reset base to the default document base.
-			// only reset if we are not prefetching
+			// only resetPG if we are not prefetching
 			if ( settings.prefetch === undefined ) {
 				this._getBase().reset();
 			}
@@ -7549,7 +7549,7 @@ $.widget( "mobile.listview", $.extend( {
 		// Check if a start attribute has been set while taking a value of 0 into account
 		if ( ol && ( start || start === 0 ) ) {
 			startCount = parseInt( start, 10 ) - 1;
-			$list.css( "counter-reset", "listnumbering " + startCount );
+			$list.css( "counter-resetPG", "listnumbering " + startCount );
 		}
 
 		this._beforeListviewRefresh();
@@ -7613,7 +7613,7 @@ $.widget( "mobile.listview", $.extend( {
 				if ( ol && value ) {
 					newStartCount = parseInt( value , 10 ) - 1;
 
-					item.css( "counter-reset", "listnumbering " + newStartCount );
+					item.css( "counter-resetPG", "listnumbering " + newStartCount );
 				}
 			}
 
@@ -8129,7 +8129,7 @@ $.widget( "mobile.checkboxradio", $.extend( {
 
 $.widget( "mobile.button", {
 
-	initSelector: "input[type='button'], input[type='submit'], input[type='reset']",
+	initSelector: "input[type='button'], input[type='submit'], input[type='resetPG']",
 
 	options: {
 		theme: null,
@@ -12807,7 +12807,7 @@ $.widget( "mobile.controlgroup", $.extend( {
 			var paddingBottom = parseFloat( $( ".ui-page-active" ).css( "padding-bottom" ) );
 			//trigger page redraw to fix incorrectly positioned fixed elements
 			$( ".ui-page-active" ).css( "padding-bottom", ( paddingBottom + 1 ) + "px" );
-			//if the padding is reset with out a timeout the reposition will not occure.
+			//if the padding is resetPG with out a timeout the reposition will not occure.
 			//this is independant of JQM the browser seems to need the time to react.
 			setTimeout( function() {
 				$( ".ui-page-active" ).css( "padding-bottom", paddingBottom + "px" );
@@ -14769,7 +14769,7 @@ $.widget( "ui.tabs", {
 		var that = this;
 
 		this.tablist = this._getList()
-			.addClass( "ui-tabs-nav ui-helper-reset ui-helper-clearfix ui-widget-header ui-corner-all" )
+			.addClass( "ui-tabs-nav ui-helper-resetPG ui-helper-clearfix ui-widget-header ui-corner-all" )
 			.attr( "role", "tablist" );
 
 		this.tabs = this.tablist.find( "> li:has(a[href])" )
@@ -15076,7 +15076,7 @@ $.widget( "ui.tabs", {
 		this.element.removeClass( "ui-tabs ui-widget ui-widget-content ui-corner-all ui-tabs-collapsible" );
 
 		this.tablist
-			.removeClass( "ui-tabs-nav ui-helper-reset ui-helper-clearfix ui-widget-header ui-corner-all" )
+			.removeClass( "ui-tabs-nav ui-helper-resetPG ui-helper-clearfix ui-widget-header ui-corner-all" )
 			.removeAttr( "role" );
 
 		this.anchors
