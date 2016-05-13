@@ -11,6 +11,7 @@ function Point(x,y){
     this.y = y;
 }
 
+var playing = true;
 var steveModeEnabled = false;
 var noErrorsYet = true;
 var notComplete = true;
@@ -109,17 +110,23 @@ function updateLives() {
         lifeString += '<img src="images/hud_heartFull.png"/>';
     }
     $('#lives-bar').html(lifeString);
+
+    if (lifePoints == 0) {
+        gameOver();
+    }
 }
 
 //Start a new round with all dots not selected + a new sequence
 function newRound(generateGrid){
-    console.log("Entered newRound()");
+	if (playing) {
+		console.log("Entered newRound()");
 
-    noErrorsYet = true;
-    notComplete = true;
-    index = 0;
+		noErrorsYet = true;
+		notComplete = true;
+		index = 0;
 
-    generateGrid(createGrid,make_2D_Array, pathDemonstration);
+		generateGrid(createGrid,make_2D_Array, pathDemonstration);
+	}
 }
 
 function difficulty(nodeCount) {
@@ -158,7 +165,7 @@ function generateGrid(createGrid, make_2D_Array, pathDemonstration){
     }
 
     var someGrid = new Grid(3,3);
-    var arrayToRepeat = runPathFinder(someGrid, difficulty(someGrid.grid.length * someGrid.grid[0].length), !!Math.floor(Math.random() * 2));
+    var arrayToRepeat = runPathFinder(someGrid, difficulty(someGrid.grid.length * someGrid.grid[0].length), true);
    // printPath(arrayToRepeat);
 	
 //
