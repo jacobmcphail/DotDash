@@ -40,7 +40,8 @@ function openMainMenu() {
     document.getElementById('credits-screen').style.display = 'none';
     document.getElementById('return-button').style.display = 'none';
     document.getElementById('main-screen').style.display = 'block';
-    document.getElementById('title').innerHTML = "DotDash._"
+    document.getElementById('title').innerHTML = "DotDash._";
+    document.getElementById('gameover-screen').style.display = "none";
 //LeafBunny: hide pause and tutorial buttons when returning to Main Manu
     document.getElementById('game-screen').style.display = 'none';
     document.getElementById('title').style.display = 'block';
@@ -49,6 +50,8 @@ function play() {
     document.getElementById('main-screen').style.display = 'none';
     document.getElementById('title').style.display = 'none';
     document.getElementById('game-screen').style.display = 'block';
+    document.getElementById('game-screen').style.opacity = '1';
+    playing = true;
 }
 function badge1() {
     window.alert("get this badge by playing for 100000 hours");
@@ -89,6 +92,25 @@ function resetGrid(){
 
 }
 
+function gameOver() {
+    playing = false;
+    $( "#game-screen" ).fadeOut( 1500, function() {
+        $('#gameover-screen').fadeIn(1500, function() {});
+    });
+
+    // add final score
+    document.getElementById('final-score').innerHTML = playerScore;
+
+
+    // very bad
+    /*
+    var text = document.createElement("h2");
+    var node = document.createTextNode(playerScore);
+    text.appendChild(node);
+    var element = document.getElementById("final-score");
+    element.appendChild(text);
+    */
+}
 
 /*
 function resetGrid(){
