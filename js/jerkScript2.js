@@ -153,8 +153,8 @@ function generateGrid(createGrid, make_2D_Array, validate){
 
     var someGrid = new Grid(3,3);
     var arrayToRepeat = runPathFinder(someGrid, 4, 0);
-    
     printPath(arrayToRepeat);
+	pathDemonstration(arrayToRepeat);
 //
     $(function(){
         $( ".dot" ).bind( "click", tapHandler );
@@ -371,3 +371,23 @@ $(document).ready(function(){
         console.log("steveModeEnabled: " + steveModeEnabled);
     });
 });
+
+function pathDemonstration(demoArray) {
+    var pt;
+    var newArray = demoArray;
+    for (var i = 0; i < newArray.length; i++) {
+        (function (i) {
+            window.setTimeout(function () {
+                pt = newArray[i].pos;
+                dotArray[pt.x][pt.y].classList.add("selected");
+            }, i * 600);
+        }(i));
+
+        (function (i) {
+            window.setTimeout(function () {
+                pt = newArray[i].pos;
+                dotArray[pt.x][pt.y].classList.remove("selected");
+            }, newArray.length * 600);
+        }(i));
+    }
+}
