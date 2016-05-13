@@ -25,7 +25,7 @@ var container;
 var dotArray = [];
 var highscores = ["-----", "scrumcake", "-------", "-------", "-------", "-------", "-------", "-------", "-------"];
 
-$.getScript("js/nuggetScript2.js", function(){
+$.getScript("js/nuggetScript.js", function(){
 //        alert("ALL YOUR MEAT BYPRODUCTS COMBINED");
 //          console.log("ALL YOUR MEAT BYPRODUCTS COMBINED");
 });
