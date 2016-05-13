@@ -10,5 +10,5 @@ Natasha Elaschuk,
 Zia Minhas, 
 and Special Guest Start Steve Albini
 
-# Prototype Version
+# Sprint One Version
 

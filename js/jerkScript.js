@@ -29,7 +29,7 @@ $.getScript("js/nuggetScript.js", function(){
 //          console.log("ALL YOUR MEAT BYPRODUCTS COMBINED");
 });
 
-$.getScript("js/PathGenerator.js", function(){
+$.getScript("js/pathGenerator.js", function(){
           //console.log("Bald kiwi bird");
 });
 
