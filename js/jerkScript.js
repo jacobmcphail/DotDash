@@ -1,5 +1,5 @@
 /**
- *  
+ * Gameplay-related
  * */
 
 //Point constructor
@@ -8,6 +8,7 @@ function Point(x,y){
     this.y = y;
 }
 
+//Global variables; may relocate in the future
 var playing = true;
 var steveModeEnabled = false;
 var noErrorsYet = true;
@@ -17,6 +18,7 @@ var socks;
 var playerScore = 0;
 var currentRound = 1;
 var lifePoints = 3;
+//In future versions of the game, maximum numRows = 5 and maximum numRows = 4
 var numRows = 3;
 var numCols = 3;
 var container;
@@ -24,26 +26,17 @@ var dotArray = [];
 var highscores = ["-----", "scrumcake", "-------", "-------", "-------", "-------", "-------", "-------", "-------"];
 
 $.getScript("js/nuggetScript.js", function(){
-//        alert("ALL YOUR MEAT BYPRODUCTS COMBINED");
 //          console.log("ALL YOUR MEAT BYPRODUCTS COMBINED");
 });
 
 $.getScript("js/PathGenerator.js", function(){
-          console.log("Bald kiwi bird");
+          //console.log("Bald kiwi bird");
 });
 
-/*arrayToRepeat.push(new Point(0,0));
-arrayToRepeat.push(new Point(0,1));
-arrayToRepeat.push(new Point(2,2));
-arrayToRepeat.push(new Point(2,0));
-*/
-
-
 $(document).ready(function(){
-    
     updateHighScores();
 
-    //update high scores
+    //Update high scores
     function updateHighScores() {
         var scoreSpaces = document.getElementsByClassName("score-text");
         for (var i = 0; i < highscores.length; i++) {
@@ -51,7 +44,7 @@ $(document).ready(function(){
         }
     }
 
-    //return scores to normal after steve mode is disabled
+    //return scores to normal after Steve Mode is disabled
     document.getElementById('option-4').onchange = function() {
         if ( document.getElementById('option-4').checked === false ) {
             updateHighScores();
@@ -64,43 +57,43 @@ $(document).ready(function(){
 
         initialize(mode, newRound, removeDots);
     });
-
 });
 
-//Initialize global variables depending on mode
 function initialize(gameMode, newRound, removeDots){
-    console.log("Entered initialize()");
+    //Initialize global variables depending on mode (currently only one mode)
     container = document.getElementById("dot-container");
     playerScore = 0;
     currentRound = 1;
     lifePoints = 3;
     updateLives();
     updateScore();
-    //Score
-    //pathLength
-    //difficulty
-    //Should initialize Socks
+
+    // Socks is a grid element with a fixed number of columns that contains dots.
+    // When the game first starts up, create a new element to assign to socks.
     if($('#socksID').length === 0){
         socks = document.createElement("div");
         socks.id = "socksID";
         socks.className = "ui-grid-b gamegrid center";
         container.appendChild(socks);
     }
-
+    /*If there are dots, clear them so they can be filled with new ones next round.
+    Although the game currently only creates 3x3 grids, in the future a new grid will
+     be generated each round with maximum dimensions determined by difficulty level.
+      Will reshuffle ordering of functions to make more efficient
+    */
     if(socks.hasChildNodes()){
-            console.log("Socks has children. Must exterminate");
             removeDots();
         }
-
-
     newRound(generateGrid);
 }
 
+//Updates score on the bottom of gameplay screen
 function updateScore() {
     var score = playerScore.toString();
     $('#playerScore').text(score);
 }
 
+//Manages player lives during gameplay
 function updateLives() {
     var lifeString = '';
     for (var life = lifePoints; life > 0; life--) {
@@ -113,11 +106,9 @@ function updateLives() {
     }
 }
 
-//Start a new round with all dots not selected + a new sequence
+/* Invoked at the start of every round. Generate a new grid and reset variables*/
 function newRound(generateGrid){
 	if (playing) {
-		console.log("Entered newRound()");
-
 		noErrorsYet = true;
 		notComplete = true;
 		index = 0;
@@ -136,23 +127,21 @@ function difficulty(nodeCount) {
 
 //Create a grid to populate with dots
 function generateGrid(createGrid, make_2D_Array, pathDemonstration){
-    console.log("Entered generateGrid()");
-
     createGrid(socks,numRows,numCols);
 
-    //main.className = "ui-grid-b gamegrid center";
+    //In progress: creating a function to expand grid size
+    //socks.className = "ui-grid-b gamegrid center";
     /*
         if (numCols==3){
-            main.className = "ui-grid-b gamegrid center";
+            socks.className = "ui-grid-b gamegrid center";
         }
         else if(numCols==4){
-            main.className = "ui-grid-c gamegrid center";
+            socks.className = "ui-grid-c gamegrid center";
         }*/
 
     dotArray = make_2D_Array(dotArray,numRows,numCols);
 
-    //Place dots generated in make_2D_Array on grid ONLY IF
-    //Socks is empty
+    //Place dots generated in make_2D_Array
     var dotID = 1;
     for(var i=0;i<numRows;i++){
         for(var j=0;j<numCols;j++){
@@ -163,19 +152,14 @@ function generateGrid(createGrid, make_2D_Array, pathDemonstration){
 
     var someGrid = new Grid(3,3);
     var arrayToRepeat = runPathFinder(someGrid, difficulty(someGrid.grid.length * someGrid.grid[0].length), true);
-   // printPath(arrayToRepeat);
-	
-//
+
     $(function(){
         $( ".dot" ).bind( "click", tapHandler );
-        //console.log("Entered dot-binding function. Perhaps give it a name.");
         function tapHandler( event ){
             if($(event.target).hasClass("selected")){
                 $( event.target ).removeClass( "selected" );
-//                console.log("dot unselected");
             } else {
                 $( event.target ).addClass( "selected" );
-  //              console.log("dot selected");
             }
         }
     });
@@ -184,17 +168,15 @@ function generateGrid(createGrid, make_2D_Array, pathDemonstration){
 	}
 
 	pathDemonstration(arrayToRepeat, validate);
-	
-    //validate(arrayToRepeat, userFeedback, dotArray);
 }
 
-//  $(document).ready(function(){
-
 /* Any dot that is selected by the user has its x and y coordinates compared to
- * x and y coordinates of successive points in arrayToRepeat
- * Comparison takes place every time a dot is selected
- * If the coordinates do not match, output something that is taken as an argument in
- * feedback(boolean) */
+ * x and y coordinates of points in array (the array to repeat)
+ * Comparison takes place every time a dot is selected.
+ * If at any time the coordinates do not match, indicate to to the user
+ * they done goofed, deduct a life and start a new round.
+ * If the user makes no mistakes, indiciate such to the user, increment score,
+  * and start a new round*/
 
 function validate(array, userFeedback, dArray){
     console.log("Entered validate()");
@@ -231,12 +213,8 @@ function validate(array, userFeedback, dArray){
     }
 }
 
-//Displays feedback to user if they got round correct or incorrect.
-//bool = path correct
-//lastNode = a dot-containing div?
-//If there is a JQuery selector, it fucking does stuff
-//regardless of whether there's an explicit function call?
-//
+/* Displays feedback to user if they got round correct or incorrect.
+* */
 function userFeedback(bool, lastNode) {
     console.log("Entered userFeedback()");
 
@@ -246,8 +224,6 @@ function userFeedback(bool, lastNode) {
     } else {
         dot = "incorrect";
     }
-    //Problem: Last dot tapped in correct path remains tapped
-    //and also retains an X
     if (steveModeEnabled) {
         $(".dot").removeClass("tapped_steve");
     } else {
@@ -279,14 +255,17 @@ function userFeedback(bool, lastNode) {
     }, 1250);
 }
 
-/*This is where you would do things like update score, remove a life,
+/*
+* Artifact of a structure for the game progression's that was not implemented in
+* the prototype. Retained for now so as to not break the game.
 * */
 function adjustStats(reset){
-    console.log("Entered adjustStats()");
+    //console.log("Entered adjustStats()");
     reset(removeDots);
 }
 
-/**/
+/* Remove dots from grid container. To combine with other functions involved in
+starting a new round into a cleaner function later.*/
 function reset(removeDots) {
     console.log("Entered reset()");
     removeDots();
@@ -294,8 +273,8 @@ function reset(removeDots) {
     newRound(generateGrid);
 }
 
-
-/* Remove all the child elements of socks
+/* Remove all the child elements of socks, the grid container with a set number
+   of columns.
  * */
 function removeDots(){
     console.log("Entered removeDots()");
@@ -305,11 +284,9 @@ function removeDots(){
     }
 }
 
-
-
 /*
  Create the grid that dots will populate
- As of now, this function assumes numCols is always going to be 3
+ As of now, numCols is always going to be 3.
  */
 
 function createGrid(cont, nRows, nCols){
@@ -323,15 +300,14 @@ function createGrid(cont, nRows, nCols){
             ch = String.fromCharCode(ch.charCodeAt(0)+1);
             gridElement.id = "block" + (dotID);
             dotID++;
-            //Takes a container to hold the grid in as an argument and returns the updated grid.
             cont.appendChild(gridElement);
         }
     }
 }
 
-
-/*Creates 9 button-containing objects
- Fill up each array with an array*/
+/*Creates dot-containing div elements and stores them in a 2D array.
+* Each has an x and y attribute that can be used to reference a dot in
+* the array.*/
 function make_2D_Array(array, nRows, nCols) {
     var i, j;
     for(i=0;i<nRows;i++){
@@ -341,11 +317,9 @@ function make_2D_Array(array, nRows, nCols) {
             var newDot = document.createElement("div");
             newDot.className = "dot";
             newArray[j] = newDot;
-            //Add custom properties to objects
             newDot.setAttribute('isVisited','false');
             newDot.setAttribute('x',i);
             newDot.setAttribute('y',j);
-            // console.log("x: " + newDot.getAttribute('x') + "; y: " + newDot.getAttribute('y'));
         }
     }
     return array;
@@ -355,50 +329,13 @@ function make_2D_Array(array, nRows, nCols) {
 function getIsVisited(element) {
     return element.getAttribute('isVisited');
 }
-function ifVisited(element) {
-    return element=='false';
-}
 
-//It works if it's here
-function steveify() {
-    $(".dot").addClass("steve black");
-    if(!$(".dot").hasClass("bound")){
-        $(".dot").bind("click", steveTap);
-        $(".dot").addClass("bound");
-    }
-}
-
-
-$(document).ready(function(){
-
-    $(".cawButton").click(function(){
-        if (steveModeEnabled) {
-            var sound = document.getElementById("audio");
-            sound.play();
-
-            // change scores to "Steve"
-            var curScores = document.getElementsByClassName("score-text");
-            for (var i = 0; i < curScores.length; i++) {
-                curScores[i].innerHTML = "Steve";
-            }
-            
-        }
-        console.log("steveModeEnabled: " + steveModeEnabled);
-    });
-	
-	$(".mode-select").click(function(){
-        //Create a non-anonymous jquery function that can be called
-        // wherever SteveHeads are needed (for example, when a new grid is created
-        //every round
-        if(steveModeEnabled){
-            steveify();
-        }
-    });
-});
-
+/*Takes the sequence of dots the user must repeat as an argument.
+* Briefly changes the colour of each to indicate which dots should be
+ * selected in which sequence.*/
 function pathDemonstration(arrayToRepeat, validate) {
     var pt;
-    //Testing: print to console the path
+    //For testing
     printPath(arrayToRepeat);
     console.log(arrayToRepeat.length);
 
@@ -430,4 +367,84 @@ function pathDemonstration(arrayToRepeat, validate) {
         }(i));
      }
 	 validate(arrayToRepeat, userFeedback, dotArray);
+}
+
+// Gameplay-related
+function resetGrid(){
+    console.log("Entered resetGrid()");
+    removeDots();
+    resetVals();
+    openMainMenu();
+}
+
+function gameOver() {
+    playing = false;
+    $( "#game-screen" ).fadeOut( 1500, function() {
+        $('#gameover-screen').fadeIn(1500, function() {});
+    });
+
+    // add final score
+    document.getElementById('final-score').innerHTML = playerScore;
+}
+
+function resetVals(){
+    noErrorsYet = true;
+    notComplete = true;
+    index = 0;
+}
+
+//Easter Egg: Handles toggling of Steve Mode
+$(document).ready(function(){
+    $(".cawButton").click(function(){
+        if (steveModeEnabled) {
+            var sound = document.getElementById("audio");
+            sound.play();
+
+            // change scores to "Steve"
+            var curScores = document.getElementsByClassName("score-text");
+            for (var i = 0; i < curScores.length; i++) {
+                curScores[i].innerHTML = "Steve";
+            }
+        }
+        //console.log("steveModeEnabled: " + steveModeEnabled);
+    });
+
+    $(".mode-select").click(function(){
+        if(steveModeEnabled){
+            steveify();
+        }
+    });
+});
+
+// Easter Egg: All is Steve Albini; Steve Albini is all
+function enableSteveMode() {
+    if (steveModeEnabled == false) {
+        steveModeEnabled = true;
+    } else {
+        steveModeEnabled = false;
+        $(".dot").removeClass("steve tapped_steve black bound");
+        $(".dot").unbind("click", steveTap);
+    }
+    console.log("steve-option toggle: " + steveModeEnabled);
+}
+
+//Easter Egg: Turns on Steve Mode
+function steveify() {
+    $(".dot").addClass("steve black");
+    if(!$(".dot").hasClass("bound")){
+        $(".dot").bind("click", steveTap);
+        $(".dot").addClass("bound");
+    }
+}
+
+function steveTap(event) {
+    if ($(event.target).hasClass("tapped_steve")) {
+        $(event.target).removeClass("tapped_steve");
+        $(event.target).addClass("steve");
+        console.log("Untapped");
+    } else {
+        $(event.target).removeClass("steve");
+        $(event.target).addClass("tapped_steve");
+        console.log("Tapped");
+    }
 }
