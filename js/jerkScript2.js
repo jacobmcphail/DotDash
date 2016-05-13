@@ -22,6 +22,7 @@ var lifePoints = 3;
 var numRows = 3;
 var numCols = 3;
 var container;
+var dotArray = [];
 var highscores = ["-----", "scrumcake", "-------", "-------", "-------", "-------", "-------", "-------", "-------"];
 
 $.getScript("js/nuggetScript2.js", function(){
@@ -118,15 +119,14 @@ function newRound(generateGrid){
     notComplete = true;
     index = 0;
 
-    generateGrid(createGrid,make_2D_Array,validate);
+    generateGrid(createGrid,make_2D_Array, pathDemonstration);
 }
 
 //Create a grid to populate with dots
-function generateGrid(createGrid, make_2D_Array, validate){
+function generateGrid(createGrid, make_2D_Array, pathDemonstration){
     console.log("Entered generateGrid()");
 
 
-    var dotArray = [];
     //main =
         createGrid(socks,numRows,numCols);
 
@@ -153,8 +153,8 @@ function generateGrid(createGrid, make_2D_Array, validate){
 
     var someGrid = new Grid(3,3);
     var arrayToRepeat = runPathFinder(someGrid, 4, 0);
-    
-    printPath(arrayToRepeat);
+   // printPath(arrayToRepeat);
+	
 //
     $(function(){
         $( ".dot" ).bind( "click", tapHandler );
@@ -169,8 +169,13 @@ function generateGrid(createGrid, make_2D_Array, validate){
             }
         }
     });
+	if(steveModeEnabled){
+		steveify();
+	}
 
-    validate(arrayToRepeat, userFeedback, dotArray);
+	pathDemonstration(arrayToRepeat, validate);
+	
+    //validate(arrayToRepeat, userFeedback, dotArray);
 }
 
 //  $(document).ready(function(){
@@ -333,15 +338,24 @@ function make_2D_Array(array, nRows, nCols) {
             // console.log("x: " + newDot.getAttribute('x') + "; y: " + newDot.getAttribute('y'));
         }
     }
-
     return array;
 }
+
 //Returns whether a dot has been visited
 function getIsVisited(element) {
     return element.getAttribute('isVisited');
 }
 function ifVisited(element) {
     return element=='false';
+}
+
+//It works if it's here
+function steveify() {
+    $(".dot").addClass("steve black");
+    if(!$(".dot").hasClass("bound")){
+        $(".dot").bind("click", steveTap);
+        $(".dot").addClass("bound");
+    }
 }
 
 
@@ -358,16 +372,52 @@ $(document).ready(function(){
                 curScores[i].innerHTML = "Steve";
             }
             
-            if(steveModeEnabled){
-                $(function(){
-                    $(".dot").addClass("steve black");
-                    if(!$(".dot").hasClass("bound")){
-                        $(".dot").bind("click", steveTap);
-                        $(".dot").addClass("bound");
-                    }
-                });
-            }
         }
         console.log("steveModeEnabled: " + steveModeEnabled);
     });
+	
+	$(".mode-select").click(function(){
+        //Create a non-anonymous jquery function that can be called
+        // wherever SteveHeads are needed (for example, when a new grid is created
+        //every round
+        if(steveModeEnabled){
+            steveify();
+        }
+    });
 });
+
+function pathDemonstration(arrayToRepeat, validate) {
+    var pt;
+    //Testing: print to console the path
+    printPath(arrayToRepeat);
+    console.log(arrayToRepeat.length);
+
+    for (var i = 0; i < arrayToRepeat.length; i++) {
+        (function (i) {
+            window.setTimeout(function () {
+                pt = arrayToRepeat[i].pos;
+                console.log("Selected: " + pt.x + ", " + pt.y);
+                if(steveModeEnabled){
+                   dotArray[pt.x][pt.y].classList.add("magenta");
+                   dotArray[pt.x][pt.y].classList.remove("black");
+               }else{
+                   dotArray[pt.x][pt.y].classList.add("selected");
+               }
+            }, i * 600);
+        }(i));
+
+        (function (i) {
+            window.setTimeout(function () {
+                pt = arrayToRepeat[i].pos;
+                console.log("Unselected: " + pt.x + ", " + pt.y);
+				if(steveModeEnabled){
+                   dotArray[pt.x][pt.y].classList.add("black");
+                   dotArray[pt.x][pt.y].classList.remove("magenta");
+               }else{
+                   dotArray[pt.x][pt.y].classList.remove("selected");
+               }
+            }, arrayToRepeat.length * 600);
+        }(i));
+     }
+	 validate(arrayToRepeat, userFeedback, dotArray);
+}
