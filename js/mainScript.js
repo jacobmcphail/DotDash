@@ -25,7 +25,7 @@ var container;
 var dotArray = [];
 var highscores = ["-----", "scrumcake", "-------", "-------", "-------", "-------", "-------", "-------", "-------"];
 
-$.getScript("js/nuggetScript2.js", function(){
+$.getScript("js/nuggetScript.js", function(){
 //        alert("ALL YOUR MEAT BYPRODUCTS COMBINED");
 //          console.log("ALL YOUR MEAT BYPRODUCTS COMBINED");
 });
@@ -122,13 +122,19 @@ function newRound(generateGrid){
     generateGrid(createGrid,make_2D_Array, pathDemonstration);
 }
 
+function difficulty(nodeCount) {
+    var length = (nodeCount * 0.35) + ((0.1 * currentRound) - 0.1);
+    if (length > nodeCount) {
+        return nodeCount;
+    }
+    return Math.round(length);
+}
+
 //Create a grid to populate with dots
 function generateGrid(createGrid, make_2D_Array, pathDemonstration){
     console.log("Entered generateGrid()");
 
-
-    //main =
-        createGrid(socks,numRows,numCols);
+    createGrid(socks,numRows,numCols);
 
     //main.className = "ui-grid-b gamegrid center";
     /*
@@ -152,7 +158,7 @@ function generateGrid(createGrid, make_2D_Array, pathDemonstration){
     }
 
     var someGrid = new Grid(3,3);
-    var arrayToRepeat = runPathFinder(someGrid, 4, 0);
+    var arrayToRepeat = runPathFinder(someGrid, difficulty(someGrid.grid.length * someGrid.grid[0].length), !!Math.floor(Math.random() * 2));
    // printPath(arrayToRepeat);
 	
 //
@@ -403,7 +409,7 @@ function pathDemonstration(arrayToRepeat, validate) {
                }else{
                    dotArray[pt.x][pt.y].classList.add("selected");
                }
-            }, i * 600);
+            }, i * (600 - (currentRound * 2)));
         }(i));
 
         (function (i) {
@@ -416,7 +422,7 @@ function pathDemonstration(arrayToRepeat, validate) {
                }else{
                    dotArray[pt.x][pt.y].classList.remove("selected");
                }
-            }, arrayToRepeat.length * 600);
+            }, arrayToRepeat.length * (600 - (currentRound * 2)));
         }(i));
      }
 	 validate(arrayToRepeat, userFeedback, dotArray);

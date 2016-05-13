@@ -1,12 +1,12 @@
 /**
- * Created by Jnek on 2016-05-11.
+ * Created by Jnek on 2016-05-12.
  */
 
+//Function responsible for changing the dot's colour when tapped
 
-var steveModeEnabled = false;
-var noErrorsYet = true;
-var notComplete = true;
-var index = 0;
+
+//Global variables moved to jerkScript2
+
 function openOptions() {
     document.getElementById('main-screen').style.display = 'none';
     document.getElementById('options-screen').style.display = "block";
@@ -76,7 +76,21 @@ function steveTap(event) {
         console.log("Tapped");
     }
 }
+function resetGrid(){
+    console.log("Entered resetGrid()");
+    removeDots();
+	resetVals();
+    /*$(".dot").removeClass("selected");
+     if($(".dot").hasClass("tapped_steve")){
+     $(".dot").removeClass("tapped_steve");
+     $(".dot").addClass("steve");
+     }*/
+    openMainMenu();
 
+}
+
+
+/*
 function resetGrid(){
     console.clear();
     openMainMenu();
@@ -86,7 +100,7 @@ function resetGrid(){
         $(".dot").removeClass("tapped_steve");
         $(".dot").addClass("steve");
     }
-}
+}*/
 //Just for testing. May be able to repurpose for pause
 function resetVals(){
     noErrorsYet = true;

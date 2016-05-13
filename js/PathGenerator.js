@@ -161,7 +161,7 @@ function resetPG(gamegrid){
 function runPathFinder(gamegrid, length, mode) {
     var array;
     while(true) {
-        if (mode == 0) {
+        if (mode) {
             array = generateSequence(gamegrid, length);
         } else {
             array = generatePath(gamegrid, length);
