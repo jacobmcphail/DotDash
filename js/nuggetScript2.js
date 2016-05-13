@@ -78,7 +78,8 @@ function steveTap(event) {
 }
 function resetGrid(){
     console.log("Entered resetGrid()");
-    reset(removeDots);
+    removeDots();
+	resetVals();
     /*$(".dot").removeClass("selected");
      if($(".dot").hasClass("tapped_steve")){
      $(".dot").removeClass("tapped_steve");
