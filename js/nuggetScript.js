@@ -1,11 +1,4 @@
-/**
- * Created by Jnek on 2016-05-12.
- */
-
-//Function responsible for changing the dot's colour when tapped
-
-
-//Global variables moved to jerkScript2
+// Related to movement between screens
 
 function openOptions() {
     document.getElementById('main-screen').style.display = 'none';
@@ -57,6 +50,8 @@ function badge1() {
     window.alert("get this badge by playing for 100000 hours");
 }
 
+
+// Easter Egg: All is Steve Albini; Steve Albini is all
 function enableSteveMode() {
     if (steveModeEnabled == false) {
         steveModeEnabled = true;
@@ -79,6 +74,8 @@ function steveTap(event) {
         console.log("Tapped");
     }
 }
+
+// Gameplay-related
 function resetGrid(){
     console.log("Entered resetGrid()");
     removeDots();
@@ -100,30 +97,8 @@ function gameOver() {
 
     // add final score
     document.getElementById('final-score').innerHTML = playerScore;
-
-
-    // very bad
-    /*
-    var text = document.createElement("h2");
-    var node = document.createTextNode(playerScore);
-    text.appendChild(node);
-    var element = document.getElementById("final-score");
-    element.appendChild(text);
-    */
 }
 
-/*
-function resetGrid(){
-    console.clear();
-    openMainMenu();
-    resetVals();
-    $(".dot").removeClass("selected");
-    if($(".dot").hasClass("tapped_steve")){
-        $(".dot").removeClass("tapped_steve");
-        $(".dot").addClass("steve");
-    }
-}*/
-//Just for testing. May be able to repurpose for pause
 function resetVals(){
     noErrorsYet = true;
     notComplete = true;

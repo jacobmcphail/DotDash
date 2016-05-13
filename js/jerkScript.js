@@ -1,9 +1,6 @@
 /**
- * Created by Jnek on 2016-05-12.
- */
-<!--New branch Chartreuse-->
-//Thursday 12:01
-//Steve heads don't appear in the right place
+ *  
+ * */
 
 //Point constructor
 function Point(x,y){
