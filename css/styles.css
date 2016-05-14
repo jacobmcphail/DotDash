@@ -314,7 +314,7 @@ div.dot {
     margin-left:15%;
 }
 div.dot.selected {
-    background: yellow;
+    background: lightgoldenrodyellow;
 }
 .gamegrid{
     background-color:#000;
@@ -328,14 +328,23 @@ div.dot.selected {
 div.dot.blue {
     background: dodgerblue;
 }
+div.dot.cyan {
+    background: cyan;
+}
 div.dot.green {
-    background: green;
+    background: limegreen;
 }
 div.dot.orange {
-    background: orangered;
+    background: orange;
+}
+div.dot.purple {
+    background: purple;
 }
 div.dot.magenta {
     background: magenta;
+}
+div.dot.pink {
+    background: hotpink;
 }
 div.dot.black{
     background: black;

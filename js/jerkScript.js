@@ -25,6 +25,9 @@ var container;
 var dotArray = [];
 var highscores = ["-----", "scrumcake", "-------", "-------", "-------", "-------", "-------", "-------", "-------"];
 
+var colourArray = ["cyan","orange","green","pink","blue","purple"];
+var colour;
+
 $.getScript("js/nuggetScript.js", function(){
 //          console.log("ALL YOUR MEAT BYPRODUCTS COMBINED");
 });
@@ -112,6 +115,8 @@ function newRound(generateGrid){
 		noErrorsYet = true;
 		notComplete = true;
 		index = 0;
+        colour = colourArray[Math.floor(Math.random()*6)];
+        console.log(colour);
 
 		generateGrid(createGrid,make_2D_Array, pathDemonstration);
 	}
@@ -158,7 +163,9 @@ function generateGrid(createGrid, make_2D_Array, pathDemonstration){
         function tapHandler( event ){
             if($(event.target).hasClass("selected")){
                 $( event.target ).removeClass( "selected" );
+                //$( event.target ).addClass( colour );
             } else {
+                $( event.target ).removeClass( colour );
                 $( event.target ).addClass( "selected" );
             }
         }
@@ -279,7 +286,6 @@ function reset(removeDots) {
 function removeDots(){
     console.log("Entered removeDots()");
     while(socks.hasChildNodes()){
-        console.log("Number of elements in socks: " + socks.childNodes.length);
         socks.removeChild(socks.lastChild);
     }
 }
@@ -315,7 +321,10 @@ function make_2D_Array(array, nRows, nCols) {
         array[i] = newArray;
         for(j=0;j<nCols;j++){
             var newDot = document.createElement("div");
+
             newDot.className = "dot";
+            newDot.classList.add(colour);
+
             newArray[j] = newDot;
             newDot.setAttribute('isVisited','false');
             newDot.setAttribute('x',i);
@@ -343,11 +352,11 @@ function pathDemonstration(arrayToRepeat, validate) {
         (function (i) {
             window.setTimeout(function () {
                 pt = arrayToRepeat[i].pos;
-                console.log("Selected: " + pt.x + ", " + pt.y);
                 if(steveModeEnabled){
                    dotArray[pt.x][pt.y].classList.add("magenta");
                    dotArray[pt.x][pt.y].classList.remove("black");
                }else{
+                    dotArray[pt.x][pt.y].classList.remove(colour);
                    dotArray[pt.x][pt.y].classList.add("selected");
                }
             }, i * (600 - (currentRound * 2)));
@@ -356,12 +365,12 @@ function pathDemonstration(arrayToRepeat, validate) {
         (function (i) {
             window.setTimeout(function () {
                 pt = arrayToRepeat[i].pos;
-                console.log("Unselected: " + pt.x + ", " + pt.y);
 				if(steveModeEnabled){
                    dotArray[pt.x][pt.y].classList.add("black");
                    dotArray[pt.x][pt.y].classList.remove("magenta");
                }else{
                    dotArray[pt.x][pt.y].classList.remove("selected");
+                    dotArray[pt.x][pt.y].classList.add(colour);
                }
             }, arrayToRepeat.length * (600 - (currentRound * 2)));
         }(i));
@@ -441,10 +450,8 @@ function steveTap(event) {
     if ($(event.target).hasClass("tapped_steve")) {
         $(event.target).removeClass("tapped_steve");
         $(event.target).addClass("steve");
-        console.log("Untapped");
     } else {
         $(event.target).removeClass("steve");
         $(event.target).addClass("tapped_steve");
-        console.log("Tapped");
     }
 }
