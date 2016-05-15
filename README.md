@@ -8,7 +8,7 @@ Jennifer Kwan,
 Jacob Mcphail, 
 Natasha Elaschuk, 
 Zia Minhas, 
-and Special Guest Start Steve Albini
+and Special Guest Star Steve Albini
 
-# Sprint One Version
+# Sprint Two Version
 
