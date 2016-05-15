@@ -369,11 +369,33 @@ div.dot.good_dot {
 }
 .dotcont {
     max-width: 75px;
-}​
-/*
-.center{
-    position: absolute;
-    left:calc(50% - 240px/2);
-    top:calc(50% - 320px/2);
+    padding-right: 5px;
+
+    /*background: violet;border-width: thick;
+    border-style: solid;
+    border-color: white;*/
 }
-*/
+
+.row-centered {
+    text-align:center;
+}
+.col-centered {
+    display:inline-block;
+    float:none;
+    /* reset the text-align */
+    text-align:left;
+    /* inline-block space fix */
+    margin-right:-4px;
+}
+
+.custom-offset {
+    margin-left: 2.33333%;
+}
+    /*
+    .center{
+        position: absolute;
+        left:calc(50% - 240px/2);
+        top:calc(50% - 320px/2);
+    }
+    */
+

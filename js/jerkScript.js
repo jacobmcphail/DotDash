@@ -4,13 +4,15 @@
 
 /*
 Saturday May 14th: VinegarFruit (official Death/Dev Branch)
--Reordered the code that instantiates grid containers and dots
--Added Bootstrap:
-    -Mechanics of grid expansion using Bootstrap in place.
-    -Stupid game grid is not centered. I've tried many things and nothing has worked.
-      An unnecessarily complicated/stupid simple solution will reveal itself.
-    -<h2> elements in Options, High Scores, and Badges messed because of default Bootstrap
-    formatting. Can be overridden manually in css file. */
+CHANGES:
+    * Commented out addition of Bootstrap for now. Grid is perfectly centered and able to expand just fine without it so far.
+    * Provisions for centering the dots when Bootstrap is included remain in the code but are commented out.
+    * Now turning off the Steve Mode button clears the high score tables of Steve
+KNOWN ISSUES:
+    *Issues with Bootstrap
+    *   <h2> elements in Options, High Scores, and Badges messed. Need to be overridden manually in css file.
+    *   Centering with css does nothing. Dots on game grid misaligned.
+    *   */
 
 //Point constructor
 function Point(x,y){
@@ -30,7 +32,7 @@ var currentRound = 1;
 var lifePoints = 3;
 //In future versions of the game, maximum numRows = 5 and maximum numRows = 4
 var numRows = 3;
-var numCols = 3;
+var numCols = 4;
 
 var container;
 var dotArray = [];
@@ -59,11 +61,11 @@ $(document).ready(function(){
     }
 
     //return scores to normal after Steve Mode is disabled
-    document.getElementById('option-4').onchange = function() {
-        if ( document.getElementById('option-4').checked === false ) {
+    $("#option-4").click(function(){
+        if(!steveModeEnabled){
             updateHighScores();
         }
-    };
+    });
     
     $(".mode-select").click(function(){
         var mode = this.id;
@@ -76,6 +78,7 @@ $(document).ready(function(){
 function initialize(gameMode, newRound, removeDots){
     //Initialize global variables depending on mode (currently only one mode)
     container = document.getElementById("dot-container");
+    container.classList.add("vertical-center");
     playerScore = 0;
     currentRound = 1;
     lifePoints = 3;
@@ -115,7 +118,7 @@ function newRound(generateGrid){
         colour = colourArray[Math.floor(Math.random()*6)];
 
         //Grid expands at regular intervals
-        if(currentRound==20){
+        if(currentRound==5){
             numCols=4;
         }
         if(currentRound==40){
@@ -137,16 +140,6 @@ function newRound(generateGrid){
             socks.id = "socksID";
 
             socks.className = "container center";
-            //socks.style = "align: center;"
-
-            //socks.className = "ui-grid-b gamegrid center";
-             /*if (numCols==3){
-             socks.className = "ui-grid-4 gamegrid center";
-             }
-             else if(numCols==4){
-             socks.className = "ui-grid-3 gamegrid center";
-             }
-            */
             container.appendChild(socks);
         }
         /*If there are dots, clear them so they can be filled with new ones next round.
@@ -179,36 +172,18 @@ function generateGrid(createGrid, make_2D_Array, pathDemonstration){
     var someGrid = new Grid(numRows,numCols);
     var arrayToRepeat = runPathFinder(someGrid, difficulty(someGrid.grid.length * someGrid.grid[0].length), true);
 
-    $(function(){
-        $( ".dot" ).bind( "click", tapHandler );
-        function tapHandler( event ){
-            if($(event.target).hasClass("selected")){
-                $( event.target ).removeClass( "selected" );
-                //$( event.target ).addClass( colour );
-                console.log(this.x + ", " + this.y);
-            } else {
-                $( event.target ).removeClass( colour );
-                $( event.target ).addClass( "selected" );
-            }
-        }
-    });
     if(steveModeEnabled){
         steveify();
     }
 
     pathDemonstration(arrayToRepeat, validate);
-}
 
+}
 
 /*
  Create the grid that dots will populate
  */
-//socks doesn't need to be a parameter if it's a global variable.
 
-//In createGrid, at the beginning of each for loop
-//create a div class = "row row-centered"
-//Each grid element in that div class "col-xs-3 col-centered"
-//Each dot must have class "text-center"
 function createGrid(cont, nRows, nCols){
     var totalDots = nRows * nCols;
     var dotID = 1;
@@ -218,9 +193,8 @@ function createGrid(cont, nRows, nCols){
     //numCols = 4: col-xs-3
     //numCols = 5; col-xs-2 with offset
     //numCols = 6; cols-xs-2
-    //numCols = 7; cols-xs-1 with offset, etc
+    //numCols = 7; cols-xs-1 with offset, etc.
     //numCols = 12; cols-xs-1
-    // var col_xs = 4;
     for(var i = 0; i < nRows; i++) {
         newRow = document.createElement("div");
         newRow.className = "row row-centered";
@@ -232,8 +206,23 @@ function createGrid(cont, nRows, nCols){
                 case 4:
                     gridElement.classList.add("col-xs-3");
                     break;
+                case 5:
+                    gridElement.classList.add("col-xs-2");
+                    //Uncomment if you are using Bootstrap
+                 /*   if(isFirstElement){
+                        gridElement.classList.add("col-xs-offset-1");
+                        isFirstElement = false;
+                    }*/
+                    break;
+                case 6:
+                    gridElement.classList.add("col-xs-2");
+                    break;
                 default:
                     gridElement.classList.add("col-xs-4");
+                    if(isFirstElement){
+                        gridElement.classList.add("custom-offset");
+                        isFirstElement = false;
+                    }
                     break;
             }
             gridElement.id = "block" + (dotID);
@@ -284,6 +273,19 @@ function difficulty(nodeCount) {
 
 function validate(array, userFeedback, dArray){
     var ex, wai;
+
+    $(function(){
+        $( ".dot" ).bind( "click", tapHandler );
+        function tapHandler( event ){
+            if($(event.target).hasClass("selected")){
+                $( event.target ).removeClass( "selected" );
+                console.log("x: " + this.x + ", y:" + this.y);
+            } else {
+                $( event.target ).removeClass( colour );
+                $( event.target ).addClass( "selected" );
+            }
+        }
+    });
 
     if(notComplete&&noErrorsYet) {
         $(".dot").on("click", function () {
@@ -452,7 +454,7 @@ $(document).ready(function(){
             var sound = document.getElementById("audio");
             sound.play();
 
-            // change scores to "Steve"
+            // Easter Egg: change scores to "Steve"
             var curScores = document.getElementsByClassName("score-text");
             for (var i = 0; i < curScores.length; i++) {
                 curScores[i].innerHTML = "Steve";
