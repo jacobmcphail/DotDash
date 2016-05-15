@@ -95,7 +95,7 @@ h1 {
 #options-screen {
     display: none;
 }
-.container {
+.T_container {
     margin-top: 100px;
     margin-left: auto;
     margin-right: auto;
@@ -367,9 +367,13 @@ div.dot.wrong_dot {
 div.dot.good_dot {
     background-image: url("../images/checkmark.png");
 }
+.dotcont {
+    max-width: 75px;
+}​
+/*
 .center{
     position: absolute;
-    /*background:green;*/
-    left:calc(50% - 240px/2); /* width divided by 2*/
-    top:calc(50% - 320px/2); /* height divided by 2*/
+    left:calc(50% - 240px/2);
+    top:calc(50% - 320px/2);
 }
+*/

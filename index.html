@@ -9,6 +9,13 @@
         <link rel="stylesheet" type="text/css" href="css/styles.css"/>
         <script src="js/jerkScript.js"></script>
 
+        <!--VinegarFruit addition: Bootstrap. Will be useful for making prettier grids and allowing
+        the desktop version to have more than 4 columns of dots
+        Dammit, it fucks with formatting of options, high score, and badges-->
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+
         <title>DotDash._</title>
     </head>
 
@@ -35,7 +42,7 @@
         <!-- common button used to return to the main menu -->
         <button onclick="openMainMenu()" class="nongameplay-buttons" id="return-button"><img src="images/backward.png"/></button>
         <div id="options-screen">
-            <div class="container">
+            <div class="T_container">
                 <h2 class="option-header">Music</h2>
                 <div class="option-slider">
                     <input type="checkbox" value="None" id="option-1" name="check" checked="checked"/>
@@ -59,7 +66,7 @@
             </div>
         </div>
         <div id="scores-screen">
-            <div class="container">
+            <div class="T_container">
                 <h2>Marathon Mode</h2>
                 <table>
                     <tr>
@@ -109,7 +116,7 @@
             <button onclick="openBadges()" class="nongameplay-buttons" id="badges-button"><img src="images/medal2.png"/></button>
         </div>
         <div id="badges-screen">
-            <div class="container">
+            <div class="T_container">
                 <h2>Unlock badges by playing the game right, wethead.</h2>
                 <div class="badge-icons">
                     <button onclick="badge1()" class="badge-button" id="badge-1-button"><img src="images/locked.png"/></button>
@@ -123,14 +130,14 @@
                     <img src="images/locked.png"/>
                     <img src="images/locked.png"/>
                 </div>
-                <div class="container" id="hint-box">
+                <div class="T_container" id="hint-box">
                     <h2>Hint:"What the hell is water?" </h2>
                 </div>
             </div>
             <button onclick="openScores()" class="nongameplay-buttons" id="badge-return-button"><img src="images/backward.png"/></button>
         </div>
         <div id="credits-screen">
-            <div class="container" id="credits-container">
+            <div class="T_container" id="credits-container">
                 <h2>created by:</h2>
                 <h2><b>THE SURVEYORS</b></h2>
                 <img src="images/dot-magenta.png"/>
@@ -162,7 +169,7 @@
             <div id="score-bar">
                 <p id="playerScore">0</p>
             </div>
-            <div class="container" id="dot-container">
+            <div class="T_container" id="dot-container">
             </div>
         </div>
 	    <div id="gameover-screen">

@@ -2,6 +2,16 @@
  * Gameplay-related
  * */
 
+/*
+Saturday May 14th: VinegarFruit (official Death/Dev Branch)
+-Reordered the code that instantiates grid containers and dots
+-Added Bootstrap:
+    -Mechanics of grid expansion using Bootstrap in place.
+    -Stupid game grid is not centered. I've tried many things and nothing has worked.
+      An unnecessarily complicated/stupid simple solution will reveal itself.
+    -<h2> elements in Options, High Scores, and Badges messed because of default Bootstrap
+    formatting. Can be overridden manually in css file. */
+
 //Point constructor
 function Point(x,y){
     this.x = x;
@@ -21,6 +31,7 @@ var lifePoints = 3;
 //In future versions of the game, maximum numRows = 5 and maximum numRows = 4
 var numRows = 3;
 var numCols = 3;
+
 var container;
 var dotArray = [];
 var highscores = ["-----", "scrumcake", "-------", "-------", "-------", "-------", "-------", "-------", "-------"];
@@ -71,22 +82,6 @@ function initialize(gameMode, newRound, removeDots){
     updateLives();
     updateScore();
 
-    // Socks is a grid element with a fixed number of columns that contains dots.
-    // When the game first starts up, create a new element to assign to socks.
-    if($('#socksID').length === 0){
-        socks = document.createElement("div");
-        socks.id = "socksID";
-        socks.className = "ui-grid-b gamegrid center";
-        container.appendChild(socks);
-    }
-    /*If there are dots, clear them so they can be filled with new ones next round.
-    Although the game currently only creates 3x3 grids, in the future a new grid will
-     be generated each round with maximum dimensions determined by difficulty level.
-      Will reshuffle ordering of functions to make more efficient
-    */
-    if(socks.hasChildNodes()){
-            removeDots();
-        }
     newRound(generateGrid);
 }
 
@@ -111,38 +106,64 @@ function updateLives() {
 
 /* Invoked at the start of every round. Generate a new grid and reset variables*/
 function newRound(generateGrid){
+    console.log("Current round: " + currentRound);
+
 	if (playing) {
 		noErrorsYet = true;
 		notComplete = true;
 		index = 0;
         colour = colourArray[Math.floor(Math.random()*6)];
-        console.log(colour);
+
+        //Grid expands at regular intervals
+        if(currentRound==20){
+            numCols=4;
+        }
+        if(currentRound==40){
+            numRows = 4;
+        }
+        if(currentRound==60){
+            numRows = 5;
+        }
+
+        //Create a new socks every time a new round starts
+        // Socks is a grid element with a fixed number of columns that contains dots.
+        // When the game first starts up, create a new element to assign to socks.
+        if($('#socksID').length > 0){
+            $("#socksID").remove();
+        }
+
+        if($('#socksID').length === 0){
+            socks = document.createElement("div");
+            socks.id = "socksID";
+
+            socks.className = "container center";
+            //socks.style = "align: center;"
+
+            //socks.className = "ui-grid-b gamegrid center";
+             /*if (numCols==3){
+             socks.className = "ui-grid-4 gamegrid center";
+             }
+             else if(numCols==4){
+             socks.className = "ui-grid-3 gamegrid center";
+             }
+            */
+            container.appendChild(socks);
+        }
+        /*If there are dots, clear them so they can be filled with new ones next round.
+         */
+        if(socks.hasChildNodes()){
+            removeDots();
+        }
+        //Also, get rid of the old socks
+
 
 		generateGrid(createGrid,make_2D_Array, pathDemonstration);
 	}
 }
 
-function difficulty(nodeCount) {
-    var length = (nodeCount * 0.35) + ((0.1 * currentRound) - 0.1);
-    if (length > nodeCount) {
-        return nodeCount;
-    }
-    return Math.round(length);
-}
-
 //Create a grid to populate with dots
 function generateGrid(createGrid, make_2D_Array, pathDemonstration){
     createGrid(socks,numRows,numCols);
-
-    //In progress: creating a function to expand grid size
-    //socks.className = "ui-grid-b gamegrid center";
-    /*
-        if (numCols==3){
-            socks.className = "ui-grid-b gamegrid center";
-        }
-        else if(numCols==4){
-            socks.className = "ui-grid-c gamegrid center";
-        }*/
 
     dotArray = make_2D_Array(dotArray,numRows,numCols);
 
@@ -155,7 +176,7 @@ function generateGrid(createGrid, make_2D_Array, pathDemonstration){
         }
     }
 
-    var someGrid = new Grid(3,3);
+    var someGrid = new Grid(numRows,numCols);
     var arrayToRepeat = runPathFinder(someGrid, difficulty(someGrid.grid.length * someGrid.grid[0].length), true);
 
     $(function(){
@@ -164,17 +185,93 @@ function generateGrid(createGrid, make_2D_Array, pathDemonstration){
             if($(event.target).hasClass("selected")){
                 $( event.target ).removeClass( "selected" );
                 //$( event.target ).addClass( colour );
+                console.log(this.x + ", " + this.y);
             } else {
                 $( event.target ).removeClass( colour );
                 $( event.target ).addClass( "selected" );
             }
         }
     });
-	if(steveModeEnabled){
-		steveify();
-	}
+    if(steveModeEnabled){
+        steveify();
+    }
 
-	pathDemonstration(arrayToRepeat, validate);
+    pathDemonstration(arrayToRepeat, validate);
+}
+
+
+/*
+ Create the grid that dots will populate
+ */
+//socks doesn't need to be a parameter if it's a global variable.
+
+//In createGrid, at the beginning of each for loop
+//create a div class = "row row-centered"
+//Each grid element in that div class "col-xs-3 col-centered"
+//Each dot must have class "text-center"
+function createGrid(cont, nRows, nCols){
+    var totalDots = nRows * nCols;
+    var dotID = 1;
+    var newRow;
+
+    //At the start: col-xs-4
+    //numCols = 4: col-xs-3
+    //numCols = 5; col-xs-2 with offset
+    //numCols = 6; cols-xs-2
+    //numCols = 7; cols-xs-1 with offset, etc
+    //numCols = 12; cols-xs-1
+    // var col_xs = 4;
+    for(var i = 0; i < nRows; i++) {
+        newRow = document.createElement("div");
+        newRow.className = "row row-centered";
+        var isFirstElement = true;
+        for(var j=0;j<nCols;j++) {
+            var gridElement = document.createElement("div");
+            gridElement.className = "col-centered dotcont";
+            switch(numCols){
+                case 4:
+                    gridElement.classList.add("col-xs-3");
+                    break;
+                default:
+                    gridElement.classList.add("col-xs-4");
+                    break;
+            }
+            gridElement.id = "block" + (dotID);
+            dotID++;
+            newRow.appendChild(gridElement);
+        }
+        cont.appendChild(newRow);
+    }
+}
+
+/*Creates dot-containing div elements and stores them in a 2D array.
+ * Each has an x and y attribute that can be used to reference a dot in
+ * the array.*/
+function make_2D_Array(array, nRows, nCols) {
+    var i, j;
+    for(i=0;i<nRows;i++){
+        var newArray = [];
+        array[i] = newArray;
+        for(j=0;j<nCols;j++){
+            var newDot = document.createElement("div");
+
+            newDot.className = "dot text-center";
+            newDot.classList.add(colour);
+
+            newArray[j] = newDot;
+            newDot.setAttribute('isVisited','false');
+            newDot.setAttribute('x',i);
+            newDot.setAttribute('y',j);
+        }
+    }
+    return array;
+}
+function difficulty(nodeCount) {
+    var length = (nodeCount * 0.35) + ((0.1 * currentRound) - 0.1);
+    if (length > nodeCount) {
+        return nodeCount;
+    }
+    return Math.round(length);
 }
 
 /* Any dot that is selected by the user has its x and y coordinates compared to
@@ -186,7 +283,6 @@ function generateGrid(createGrid, make_2D_Array, pathDemonstration){
   * and start a new round*/
 
 function validate(array, userFeedback, dArray){
-    console.log("Entered validate()");
     var ex, wai;
 
     if(notComplete&&noErrorsYet) {
@@ -197,10 +293,8 @@ function validate(array, userFeedback, dArray){
             if (notComplete && noErrorsYet) {
                 if (ex == array[index].pos.x && wai == array[index].pos.y) {
                     if (index < array.length) {
-                        console.log("Correct so far; index = " + index);
                         index++;
                         if (index >= array.length) {
-                            console.log("All correct!");
                             notComplete = false;
                             playerScore += currentRound;
                             updateScore();
@@ -209,7 +303,6 @@ function validate(array, userFeedback, dArray){
                         }
                     }
                 } else {
-                    console.log("Incorrect");
                     noErrorsYet = false;
                     lifePoints--;
                     updateLives();
@@ -223,8 +316,6 @@ function validate(array, userFeedback, dArray){
 /* Displays feedback to user if they got round correct or incorrect.
 * */
 function userFeedback(bool, lastNode) {
-    console.log("Entered userFeedback()");
-
     var dot;
     if (bool) {
         dot = "correct";
@@ -274,7 +365,6 @@ function adjustStats(reset){
 /* Remove dots from grid container. To combine with other functions involved in
 starting a new round into a cleaner function later.*/
 function reset(removeDots) {
-    console.log("Entered reset()");
     removeDots();
     resetVals();
     newRound(generateGrid);
@@ -284,54 +374,9 @@ function reset(removeDots) {
    of columns.
  * */
 function removeDots(){
-    console.log("Entered removeDots()");
     while(socks.hasChildNodes()){
         socks.removeChild(socks.lastChild);
     }
-}
-
-/*
- Create the grid that dots will populate
- As of now, numCols is always going to be 3.
- */
-
-function createGrid(cont, nRows, nCols){
-    var totalDots = nRows * nCols;
-    var dotID = 1;
-    for(var i = 0; i < nRows; i++) {
-        var ch = 'a';
-        for(var j=0;j<nCols;j++) {
-            var gridElement = document.createElement("div");
-            gridElement.className = "ui-block-" +ch+ " box";
-            ch = String.fromCharCode(ch.charCodeAt(0)+1);
-            gridElement.id = "block" + (dotID);
-            dotID++;
-            cont.appendChild(gridElement);
-        }
-    }
-}
-
-/*Creates dot-containing div elements and stores them in a 2D array.
-* Each has an x and y attribute that can be used to reference a dot in
-* the array.*/
-function make_2D_Array(array, nRows, nCols) {
-    var i, j;
-    for(i=0;i<nRows;i++){
-        var newArray = [];
-        array[i] = newArray;
-        for(j=0;j<nCols;j++){
-            var newDot = document.createElement("div");
-
-            newDot.className = "dot";
-            newDot.classList.add(colour);
-
-            newArray[j] = newDot;
-            newDot.setAttribute('isVisited','false');
-            newDot.setAttribute('x',i);
-            newDot.setAttribute('y',j);
-        }
-    }
-    return array;
 }
 
 //Returns whether a dot has been visited
@@ -346,7 +391,6 @@ function pathDemonstration(arrayToRepeat, validate) {
     var pt;
     //For testing
     printPath(arrayToRepeat);
-    console.log(arrayToRepeat.length);
 
     for (var i = 0; i < arrayToRepeat.length; i++) {
         (function (i) {
@@ -380,7 +424,6 @@ function pathDemonstration(arrayToRepeat, validate) {
 
 // Gameplay-related
 function resetGrid(){
-    console.log("Entered resetGrid()");
     removeDots();
     resetVals();
     openMainMenu();
