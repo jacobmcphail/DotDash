@@ -13,16 +13,20 @@ h1 {
     text-align: center;
     padding-bottom: 5px;
 }
-#wrapper {
+
+html, body {
+    		height: 100%;
+    		margin: 0;
 }
+
 #screen {
-    border: 4px solid white;
+  /*  border: 4px solid white; */
     background-color: black;
-    width: 400px;
-    height: 600px;
+    width: 100%;
+    height: 100%; 
     margin: auto;
     position: relative;
-    overflow: hidden;
+    overflow: hidden; */ 
 }
 #title {
     color: #32CD32;
@@ -34,33 +38,35 @@ h1 {
     display: block;
 }
 #mode-selection-container {
-    margin-top: 40%;
-    height: 200px;
     background-color: black;
 }
 .mode-select {
     width: 210px;
-    height: 210px;
-    margin: auto;
+    height: 210px; 
     border: 15px solid black;
     border-radius: 50%;
+	top: 40%;
+	display: inline-block;
 }
 #mode-1 {
     background: dodgerblue;
-    float: left;
-    margin-left: -120px;
+	position: absolute;
+	left: 25%;
 }
 #mode-2 {
     background: magenta;
+	position: absolute;
+	left: 42.5%;
 }
 #mode-3 {
     background: yellow;
-    float: right;
-    margin-right: -120px;
+	position: absolute;
+	left: 60%;
 }
+
 #mode-2:hover {
     transform:scale(1.05,1.05);
-}
+} 
 .nongameplay-buttons {
     background-color: black;
     border: none;
@@ -68,6 +74,7 @@ h1 {
     position: absolute;
     bottom: 5px;
 }
+
 .nongameplay-buttons:hover {
     transform:scale(1.2,1.2);
 }
@@ -284,7 +291,7 @@ input[type=checkbox] {
 #final-score-container {
     border-radius: 4px;
     border: 3px solid white;
-    margin: 20% auto;
+    margin: 5% auto;
     width: 70%;
 }
 
