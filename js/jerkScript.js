@@ -15,10 +15,11 @@ KNOWN ISSUES:
     *   */
 
 //Global variables; may relocate in the future
-var playing = true;
+var playing = false;
 var steveModeEnabled = false;
 var noErrorsYet = true;
 var notComplete = true;
+var userInput = true;
 var index = 0;
 var socks;
 var playerScore = 0;
@@ -91,6 +92,10 @@ function initialize(gameMode, newRound, removeDots){
     playerScore = 0;
     currentRound = 1;
     lifePoints = 3;
+	numRows = 3;
+	numCols = 3;
+	playing = true;
+	userInput = false;
     updateLives();
     updateScore();
     newRound(generateGrid);
@@ -280,6 +285,9 @@ function validate(array, userFeedback, dArray){
     $(function(){
         $( ".dot" ).bind( "tapone", tapHandler );
         function tapHandler( event ){
+			if (!userInput) {
+				return;
+			}
             if($(event.target).hasClass("selected")){
                 $( event.target ).removeClass( "selected" );
                 console.log("x: " + this.x + ", y:" + this.y);
@@ -292,9 +300,11 @@ function validate(array, userFeedback, dArray){
 
     if(notComplete&&noErrorsYet) {
         $(".dot").on("tapone", function () {
+			if (!userInput) {
+					return;
+			}
             ex = $(this).attr("x");
             wai = $(this).attr("y");
-
             if (notComplete && noErrorsYet) {
                 if (ex == array[index].pos.x && wai == array[index].pos.y) {
                     if (index < array.length) {
@@ -393,6 +403,7 @@ function getIsVisited(element) {
 * Briefly changes the colour of each to indicate which dots should be
  * selected in which sequence.*/
 function pathDemonstration(arrayToRepeat, validate) {
+	userInput = false;
     var pt;
     //For testing
     printPath(arrayToRepeat);
@@ -421,6 +432,7 @@ function pathDemonstration(arrayToRepeat, validate) {
                    dotArray[pt.x][pt.y].classList.remove("selected");
                     dotArray[pt.x][pt.y].classList.add(colour);
                }
+			   userInput = true;
             }, arrayToRepeat.length * (600 - (currentRound * 2)));
         }(i));
      }
