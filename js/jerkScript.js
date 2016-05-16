@@ -14,12 +14,6 @@ KNOWN ISSUES:
     *   Centering with css does nothing. Dots on game grid misaligned.
     *   */
 
-//Point constructor
-function Point(x,y){
-    this.x = x;
-    this.y = y;
-}
-
 //Global variables; may relocate in the future
 var playing = true;
 var steveModeEnabled = false;
@@ -32,7 +26,7 @@ var currentRound = 1;
 var lifePoints = 3;
 //In future versions of the game, maximum numRows = 5 and maximum numRows = 4
 var numRows = 3;
-var numCols = 4;
+var numCols = 3;
 
 var container;
 var dotArray = [];
@@ -61,17 +55,32 @@ $(document).ready(function(){
     }
 
     //return scores to normal after Steve Mode is disabled
-    $("#option-4").click(function(){
+    $("#option-4").on('tapone', function(){
         if(!steveModeEnabled){
             updateHighScores();
         }
     });
     
-    $(".mode-select").click(function(){
+    $(".mode-select").on('tapone', function(){
         var mode = this.id;
+		if(steveModeEnabled){
+            steveify();
+        }
         console.log("mode selected: " + mode);
-
         initialize(mode, newRound, removeDots);
+    });
+	
+	$(".cawButton").on('tapone', function(){
+        if (steveModeEnabled) {
+            var sound = document.getElementById("audio");
+            sound.play();
+
+            // Easter Egg: change scores to "Steve"
+            var curScores = document.getElementsByClassName("score-text");
+            for (var i = 0; i < curScores.length; i++) {
+                curScores[i].innerHTML = "Steve";
+            }
+        }
     });
 });
 
@@ -84,7 +93,6 @@ function initialize(gameMode, newRound, removeDots){
     lifePoints = 3;
     updateLives();
     updateScore();
-
     newRound(generateGrid);
 }
 
@@ -157,9 +165,7 @@ function newRound(generateGrid){
 //Create a grid to populate with dots
 function generateGrid(createGrid, make_2D_Array, pathDemonstration){
     createGrid(socks,numRows,numCols);
-
     dotArray = make_2D_Array(dotArray,numRows,numCols);
-
     //Place dots generated in make_2D_Array
     var dotID = 1;
     for(var i=0;i<numRows;i++){
@@ -168,14 +174,11 @@ function generateGrid(createGrid, make_2D_Array, pathDemonstration){
             dotID++;
         }
     }
-
-    var someGrid = new Grid(numRows,numCols);
-    var arrayToRepeat = runPathFinder(someGrid, difficulty(someGrid.grid.length * someGrid.grid[0].length), true);
-
+   // var someGrid = new Grid(numRows,numCols);
+    var arrayToRepeat = runPathFinder(numRows, numCols, difficulty(numRows * numCols), true);
     if(steveModeEnabled){
         steveify();
     }
-
     pathDemonstration(arrayToRepeat, validate);
 
 }
@@ -275,7 +278,7 @@ function validate(array, userFeedback, dArray){
     var ex, wai;
 
     $(function(){
-        $( ".dot" ).bind( "click", tapHandler );
+        $( ".dot" ).bind( "tapone", tapHandler );
         function tapHandler( event ){
             if($(event.target).hasClass("selected")){
                 $( event.target ).removeClass( "selected" );
@@ -288,7 +291,7 @@ function validate(array, userFeedback, dArray){
     });
 
     if(notComplete&&noErrorsYet) {
-        $(".dot").on("click", function () {
+        $(".dot").on("tapone", function () {
             ex = $(this).attr("x");
             wai = $(this).attr("y");
 
@@ -396,7 +399,7 @@ function pathDemonstration(arrayToRepeat, validate) {
 
     for (var i = 0; i < arrayToRepeat.length; i++) {
         (function (i) {
-            window.setTimeout(function () {
+            setTimeout(function () {
                 pt = arrayToRepeat[i].pos;
                 if(steveModeEnabled){
                    dotArray[pt.x][pt.y].classList.add("magenta");
@@ -409,7 +412,7 @@ function pathDemonstration(arrayToRepeat, validate) {
         }(i));
 
         (function (i) {
-            window.setTimeout(function () {
+            setTimeout(function () {
                 pt = arrayToRepeat[i].pos;
 				if(steveModeEnabled){
                    dotArray[pt.x][pt.y].classList.add("black");
@@ -447,29 +450,6 @@ function resetVals(){
     index = 0;
 }
 
-//Easter Egg: Handles toggling of Steve Mode
-$(document).ready(function(){
-    $(".cawButton").click(function(){
-        if (steveModeEnabled) {
-            var sound = document.getElementById("audio");
-            sound.play();
-
-            // Easter Egg: change scores to "Steve"
-            var curScores = document.getElementsByClassName("score-text");
-            for (var i = 0; i < curScores.length; i++) {
-                curScores[i].innerHTML = "Steve";
-            }
-        }
-        //console.log("steveModeEnabled: " + steveModeEnabled);
-    });
-
-    $(".mode-select").click(function(){
-        if(steveModeEnabled){
-            steveify();
-        }
-    });
-});
-
 // Easter Egg: All is Steve Albini; Steve Albini is all
 function enableSteveMode() {
     if (steveModeEnabled == false) {
@@ -477,7 +457,7 @@ function enableSteveMode() {
     } else {
         steveModeEnabled = false;
         $(".dot").removeClass("steve tapped_steve black bound");
-        $(".dot").unbind("click", steveTap);
+        $(".dot").unbind("tapone", steveTap);
     }
     console.log("steve-option toggle: " + steveModeEnabled);
 }
@@ -486,7 +466,7 @@ function enableSteveMode() {
 function steveify() {
     $(".dot").addClass("steve black");
     if(!$(".dot").hasClass("bound")){
-        $(".dot").bind("click", steveTap);
+        $(".dot").bind("tapone", steveTap);
         $(".dot").addClass("bound");
     }
 }
