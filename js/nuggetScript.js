@@ -25,7 +25,7 @@ function openCredits() {
     document.getElementById('main-screen').style.display = 'none';
     document.getElementById('credits-screen').style.display = "block";
     document.getElementById('return-button').style.display = "block";
-    document.getElementById('title').innerHTML = "DotDash._"
+    document.getElementById('title').innerHTML = ""
 }
 function openMainMenu() {
     document.getElementById('options-screen').style.display = 'none';
