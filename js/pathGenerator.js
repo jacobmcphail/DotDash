@@ -158,8 +158,9 @@ function resetPG(gamegrid){
 }
 
 //Runs path generator
-function runPathFinder(gamegrid, length, mode) {
+function runPathFinder(rows, cols, length, mode) {
     var array;
+	var gamegrid = new Grid(rows, cols)
     while(true) {
         if (mode) {
             array = generateSequence(gamegrid, length);

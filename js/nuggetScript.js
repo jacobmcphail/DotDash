@@ -45,6 +45,7 @@ function play() {
     document.getElementById('game-screen').style.opacity = '1';
     playing = true;
 }
+
 function badge1() {
     window.alert("get this badge by playing for 100000 hours");
 }
