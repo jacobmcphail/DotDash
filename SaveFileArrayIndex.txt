@@ -11,9 +11,3 @@
 8: Get to level 40 in no-time mode
 9: Get to level 40 in marathon mode
 10: [time attack badge 3]
-- High Scores - (all ints)
-11: Marathon High Score 
-12: No-timed High Score 
-13: Time-Attack High Score 
-
-

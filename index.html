@@ -79,6 +79,29 @@
                         <td id="score-mar-1">1.</td>
                         <td class="score-text"></td>
                     </tr>
+                    <tr>
+                        <td id="score-mar-2">2.</td>
+                        <td class="score-text"></td>
+                    </tr>
+                    <tr>
+                        <td id="score-mar-3">3.</td>
+                        <td class="score-text"></td>
+                    </tr>
+                </table><br/>
+                <h2>TimeAttack Mode</h2>
+                <table>
+                    <tr>
+                        <td id="score-attack-1">1.</td>
+                        <td class="score-text"></td>
+                    </tr>
+                    <tr>
+                        <td id="score-attack-2">2.</td>
+                        <td class="score-text"></td>
+                    </tr>
+                    <tr>
+                        <td id="score-attack-3">3.</td>
+                        <td class="score-text"></td>
+                    </tr>
                 </table><br/>
                 <h2>Untimed Mode</h2>
                 <table>
@@ -86,11 +109,12 @@
                         <td id="score-untimed-1">1.</td>
                         <td class="score-text"></td>
                     </tr>
-                </table><br/>
-				<h2>TimeAttack Mode</h2>
-                <table>
                     <tr>
-                        <td id="score-attack-1">1.</td>
+                        <td id="score-untimed-2">2.</td>
+                        <td class="score-text"></td>
+                    </tr>
+                    <tr>
+                        <td id="score-untimed-3">3.</td>
                         <td class="score-text"></td>
                     </tr>
                 </table>
@@ -122,11 +146,16 @@
             <div class="T_container" id="credits-container">
                 <h2>created by:</h2>
                 <h2><b>THE SURVEYORS</b></h2>
-                <img src="images/dot-magenta.png"/><p>Jake Superior</p>
-                <img src="images/dot-yellow.png"/><p>Frisky Dingo</p>
-                <img src="images/dot-green.png"/><p>Jenkinz</p>
-                <img src="images/dot-blue.png"/><p>ZIA</p>
-                <img src="images/dot-purple.png"/><p>A Sponge</p><br/>
+                <img src="images/dot-magenta.png"/>
+                <p>Jake Superior</p>
+                <img src="images/dot-yellow.png"/>
+                <p>Frisky Dingo</p>
+                <img src="images/dot-green.png"/>
+                <p>Jenkinz</p>
+                <img src="images/dot-blue.png"/>
+                <p>ZIA</p>
+                <img src="images/dot-purple.png"/>
+                <p>A Sponge</p><br/>
                 <audio id="audio" src="http://www.soundjay.com/button/beep-07.wav" autostart="false" ></audio>
                 <button id="steve-button" class="cawButton"><img src="images/crow.png" width="60" height="60"/></button>
             </div>
@@ -153,10 +182,8 @@
             <br/>
             <h1>GAME OVER</h1>
             <div id="final-score-container"><h2>Your score: </h2><h2 id="final-score">NULL</h2></div>
-            <div class="ingame-button-container"><button class="ingame-buttons">Play Again</button></div><br/>
+            <div class="ingame-button-container"><button class="ingame-buttons" onclick="playAgain()">Play Again</button></div><br/>
             <div class="ingame-button-container"><button class="ingame-buttons" onclick="openMainMenu()">Main Menu</button></div>
-        </div>
-        <div>
         </div>
     </div>
 <!--added preloader-->
