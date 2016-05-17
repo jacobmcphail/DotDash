@@ -44,8 +44,8 @@ function play() {
     document.getElementById('title').style.display = 'none';
     document.getElementById('game-screen').style.display = 'block';
     document.getElementById('game-screen').style.opacity = '1';
+	playing = true;
     initialize(gamemode, newRound, removeDots);
-    playing = true;
 }
 
 function badge1() {

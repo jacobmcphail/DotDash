@@ -92,7 +92,7 @@ $(document).ready(function(){
         var mode = this.id;
 		gamemode = 1; //sets gamemode
         console.log("mode selected: " + mode);
-        initialize(gamemode, newRound, removeDots);
+    //    initialize(gamemode, newRound, removeDots);
     });
 	
 	$(".cawButton").on('tapone', function(){
