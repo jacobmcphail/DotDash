@@ -57,6 +57,12 @@ function gameSetup() {
 	}
 }
 
+function clearSave() {
+	localSavedFiles = null;
+	localStorage.setItem("saveFile", JSON.stringify(localSavedFiles));
+	gameSetup();
+}
+
 $(document).ready(function(){
     updateHighScores();
 
