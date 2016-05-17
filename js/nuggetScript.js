@@ -39,10 +39,12 @@ function openMainMenu() {
     document.getElementById('title').style.display = 'block';
 }
 function play() {
+    document.getElementById('gameover-screen').style.display = "none";
     document.getElementById('main-screen').style.display = 'none';
     document.getElementById('title').style.display = 'none';
     document.getElementById('game-screen').style.display = 'block';
     document.getElementById('game-screen').style.opacity = '1';
+    initialize(gamemode, newRound, removeDots);
     playing = true;
 }
 

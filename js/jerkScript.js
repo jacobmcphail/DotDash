@@ -92,7 +92,7 @@ $(document).ready(function(){
         var mode = this.id;
 		gamemode = 1; //sets gamemode
         console.log("mode selected: " + mode);
-        initialize(mode, newRound, removeDots);
+        initialize(gamemode, newRound, removeDots);
     });
 	
 	$(".cawButton").on('tapone', function(){
@@ -480,6 +480,12 @@ function resetGrid(){
     removeDots();
     resetVals();
     openMainMenu();
+}
+
+function playAgain() {
+    removeDots();
+    resetVals();
+    play();
 }
 
 function gameOver() {
