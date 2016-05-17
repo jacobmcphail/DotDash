@@ -25,7 +25,7 @@ function openCredits() {
     document.getElementById('main-screen').style.display = 'none';
     document.getElementById('credits-screen').style.display = "block";
     document.getElementById('return-button').style.display = "block";
-    document.getElementById('title').innerHTML = "DotDash._"
+    document.getElementById('title').innerHTML = ""
 }
 function openMainMenu() {
     document.getElementById('options-screen').style.display = 'none';
@@ -38,14 +38,11 @@ function openMainMenu() {
     document.getElementById('game-screen').style.display = 'none';
     document.getElementById('title').style.display = 'block';
 }
-
 function play() {
-    document.getElementById('gameover-screen').style.display = "none";
     document.getElementById('main-screen').style.display = 'none';
     document.getElementById('title').style.display = 'none';
     document.getElementById('game-screen').style.display = 'block';
     document.getElementById('game-screen').style.opacity = '1';
-    initialize(gamemode, newRound, removeDots);
     playing = true;
 }
 
