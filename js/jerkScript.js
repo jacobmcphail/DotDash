@@ -25,7 +25,6 @@ var numCols = 3;
 var localSavedFiles;
 var container;
 var dotArray = [];
-var highscores = ["-----", "scrumcake", "-------", "-------", "-------", "-------", "-------", "-------", "-------"];
 
 var colourArray = ["cyan","orange","green","pink","blue","purple"];
 var colour;
@@ -40,14 +39,30 @@ $.getScript("js/pathGenerator.js", function(){
 
 //File storing function
 function gameSetup() {
+	checkCookie();
 	localSavedFiles = JSON.parse(localStorage.getItem("saveFile"));
 	if (localSavedFiles == null) {
-		localSavedFiles = [false, false, false, false, false, false, false, false, false, false, false];
+		localSavedFiles = [false, false, false, false, false, false, false, false, false, false, false, 0, 0, 0];
 		localStorage.setItem("saveFile", JSON.stringify(localSavedFiles));
 	} else {
 		console.log(localSavedFiles);
 		updateBadges();
 	}
+	updateHighScores();
+}
+
+function checkCookie(){
+    var cookieEnabled=(navigator.cookieEnabled)? true : false;
+    if (typeof navigator.cookieEnabled=="undefined" && !cookieEnabled){ 
+        document.cookie="testcookie";
+        cookieEnabled=(document.cookie.indexOf("testcookie")!=-1)? true : false;
+    }
+    return (cookieEnabled)?true:showCookieFail();
+}
+
+function showCookieFail(){
+  console.log("NO COOKIES");
+  window.alert("WARNING: Cookies must be enabled to play this game. Enable cookies then refresh the game.");
 }
 
 function clearSave() {
@@ -56,16 +71,15 @@ function clearSave() {
 	gameSetup();
 }
 
-$(document).ready(function(){
-    updateHighScores();
-
     //Update high scores
-    function updateHighScores() {
-        var scoreSpaces = document.getElementsByClassName("score-text");
-        for (var i = 0; i < highscores.length; i++) {
-            scoreSpaces[i].innerHTML = highscores[i];
-        }
+function updateHighScores() {
+    var scoreSpaces = document.getElementsByClassName("score-text");
+    for (var i = 11, q = 0; i < 14; i++, q++) {
+        scoreSpaces[q].innerHTML = localSavedFiles[i];
     }
+}
+
+$(document).ready(function(){
 
     //return scores to normal after Steve Mode is disabled
     $("#option-4").on('tapone', function(){
@@ -471,7 +485,9 @@ function resetGrid(){
 function gameOver() {
     playing = false;
 	badgeChecker(currentRound, lifePoints);
+	scoreChecker(playerScore);
 	localStorage.setItem("saveFile", JSON.stringify(localSavedFiles));
+	updateHighScores();
     $( "#game-screen" ).fadeOut( 1500, function() {
         $('#gameover-screen').fadeIn(1500, function() {});
     });
@@ -517,6 +533,34 @@ function steveTap(event) {
             $(event.target).addClass("tapped_steve");
         }
     }
+}
+
+function scoreChecker(playerScore) {
+	switch(gamemode) {
+		case 0:
+			if (playerScore > localSavedFiles[11]) {
+				localSavedFiles[12] = playerScore;
+				return true;
+			}
+			break;
+			break;
+		case 1: 
+			if (playerScore > localSavedFiles[12]) {
+				localSavedFiles[12] = playerScore;
+				return true;
+			}
+			break;
+		case 2:
+			if (playerScore > localSavedFiles[13]) {
+				localSavedFiles[12] = playerScore;
+				return true;
+			}
+			break;
+			break;
+		default:
+			window.alert("YOU SHOULD NOT SEE THIS!");
+	}
+	return false;
 }
 
 // Checks to see if player has unlocked any new badges
