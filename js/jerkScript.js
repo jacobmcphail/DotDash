@@ -3,18 +3,12 @@
  * */
 
 /*
-Saturday May 14th: VinegarFruit (official Death/Dev Branch)
-CHANGES:
-    * Commented out addition of Bootstrap for now. Grid is perfectly centered and able to expand just fine without it so far.
-    * Provisions for centering the dots when Bootstrap is included remain in the code but are commented out.
-    * Now turning off the Steve Mode button clears the high score tables of Steve
-KNOWN ISSUES:
-    *Issues with Bootstrap
-    *   <h2> elements in Options, High Scores, and Badges messed. Need to be overridden manually in css file.
-    *   Centering with css does nothing. Dots on game grid misaligned.
-    *   */
+Tuesday May 16th: VinegarFruit (official Death/Dev Branch)
+-Steve mode cheating thwarted
+-Steve badge!
+-Removed some comments
+*/
 
-//Global variables; may relocate in the future
 var gamemode;
 var playing = false;
 var steveModeEnabled = false;
@@ -26,7 +20,6 @@ var socks;
 var playerScore = 0;
 var currentRound = 1;
 var lifePoints = 3;
-//In future versions of the game, maximum numRows = 5 and maximum numRows = 4
 var numRows = 3;
 var numCols = 3;
 var localSavedFiles;
@@ -309,6 +302,8 @@ function validate(array, userFeedback, dArray){
 			if (!userInput) {
 				return;
 			}
+            //Inserting steveify function
+
             if($(event.target).hasClass("selected")){
                 $( event.target ).removeClass( "selected" );
                 console.log("x: " + this.x + ", y:" + this.y);
@@ -513,18 +508,19 @@ function steveify() {
 }
 
 function steveTap(event) {
-    if ($(event.target).hasClass("tapped_steve")) {
-        $(event.target).removeClass("tapped_steve");
-        $(event.target).addClass("steve");
-    } else {
-        $(event.target).removeClass("steve");
-        $(event.target).addClass("tapped_steve");
+    if(userInput){
+        if ($(event.target).hasClass("tapped_steve")) {
+            $(event.target).removeClass("tapped_steve");
+            $(event.target).addClass("steve");
+        } else {
+            $(event.target).removeClass("steve");
+            $(event.target).addClass("tapped_steve");
+        }
     }
 }
 
 // Checks to see if player has unlocked any new badges
 function badgeChecker(currentRound, lifePoints) {
-	if (!steveModeEnabled) {
 		switch(gamemode){
 			case 0:
 				if (currentRound >= 40 && !localSavedFiles[9] ) {
@@ -556,11 +552,10 @@ function badgeChecker(currentRound, lifePoints) {
 				break;
 			case 2:
 				//code here for time attack badge triggers
-				break
+				break;
 			default:
 				window.alert("YOU SHOULD NOT SEE THIS!");
 		}
-	}
 	updateBadges();
 }
 
