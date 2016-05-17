@@ -26,7 +26,7 @@ html, body {
     height: 100%; 
     margin: auto;
     position: relative;
-    overflow: hidden; */ 
+    overflow: hidden;  
 }
 #title {
     color: #32CD32;

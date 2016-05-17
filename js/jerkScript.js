@@ -15,6 +15,7 @@ KNOWN ISSUES:
     *   */
 
 //Global variables; may relocate in the future
+var gamemode;
 var playing = false;
 var steveModeEnabled = false;
 var noErrorsYet = true;
@@ -28,7 +29,7 @@ var lifePoints = 3;
 //In future versions of the game, maximum numRows = 5 and maximum numRows = 4
 var numRows = 3;
 var numCols = 3;
-
+var localSavedFiles;
 var container;
 var dotArray = [];
 var highscores = ["-----", "scrumcake", "-------", "-------", "-------", "-------", "-------", "-------", "-------"];
@@ -43,6 +44,18 @@ $.getScript("js/nuggetScript.js", function(){
 $.getScript("js/pathGenerator.js", function(){
           //console.log("Bald kiwi bird");
 });
+
+//File storing function
+function gameSetup() {
+	localSavedFiles = JSON.parse(localStorage.getItem("saveFile"));
+	if (localSavedFiles == null) {
+		localSavedFiles = [false, false, false, false, false, false, false, false, false, false, false];
+		localStorage.setItem("saveFile", JSON.stringify(localSavedFiles));
+	} else {
+		console.log(localSavedFiles);
+		updateBadges();
+	}
+}
 
 $(document).ready(function(){
     updateHighScores();
@@ -64,9 +77,7 @@ $(document).ready(function(){
     
     $(".mode-select").on('tapone', function(){
         var mode = this.id;
-		if(steveModeEnabled){
-            steveify();
-        }
+		gamemode = 1; //sets gamemode
         console.log("mode selected: " + mode);
         initialize(mode, newRound, removeDots);
     });
@@ -75,7 +86,11 @@ $(document).ready(function(){
         if (steveModeEnabled) {
             var sound = document.getElementById("audio");
             sound.play();
-
+			if (!localSavedFiles[1]) {
+				localSavedFiles[1] = true;
+				localStorage.setItem("saveFile", JSON.stringify(localSavedFiles));
+				updateBadges();
+			}
             // Easter Egg: change scores to "Steve"
             var curScores = document.getElementsByClassName("score-text");
             for (var i = 0; i < curScores.length; i++) {
@@ -129,17 +144,6 @@ function newRound(generateGrid){
 		notComplete = true;
 		index = 0;
         colour = colourArray[Math.floor(Math.random()*6)];
-
-        //Grid expands at regular intervals
-        if(currentRound==5){
-            numCols=4;
-        }
-        if(currentRound==40){
-            numRows = 4;
-        }
-        if(currentRound==60){
-            numRows = 5;
-        }
 
         //Create a new socks every time a new round starts
         // Socks is a grid element with a fixed number of columns that contains dots.
@@ -263,8 +267,19 @@ function make_2D_Array(array, nRows, nCols) {
     }
     return array;
 }
+
+// Sets difficulty for round
 function difficulty(nodeCount) {
-    var length = (nodeCount * 0.35) + ((0.1 * currentRound) - 0.1);
+	var length;
+	if (currentRound < 45) {
+		numRows = Math.round((3 + (currentRound / 19)));
+		numCols = Math.round((3 + (currentRound / 22)));
+		length = 3 + ((0.1 * currentRound) - 0.1);
+	} else {
+		numRows = 5;
+		numCols = 5;
+		length = 3 + ((0.05 * currentRound) - 0.05);
+	}
     if (length > nodeCount) {
         return nodeCount;
     }
@@ -405,6 +420,12 @@ function getIsVisited(element) {
 function pathDemonstration(arrayToRepeat, validate) {
 	userInput = false;
     var pt;
+	var blinkTime;
+	if (currentRound >= 250) {
+		blinkTime = 200;
+	} else {
+		blinkTime = (700 - (currentRound * 2))
+	}
     //For testing
     printPath(arrayToRepeat);
 
@@ -419,7 +440,7 @@ function pathDemonstration(arrayToRepeat, validate) {
                     dotArray[pt.x][pt.y].classList.remove(colour);
                    dotArray[pt.x][pt.y].classList.add("selected");
                }
-            }, i * (600 - (currentRound * 2)));
+            }, i * blinkTime);
         }(i));
 
         (function (i) {
@@ -433,7 +454,7 @@ function pathDemonstration(arrayToRepeat, validate) {
                     dotArray[pt.x][pt.y].classList.add(colour);
                }
 			   userInput = true;
-            }, arrayToRepeat.length * (600 - (currentRound * 2)));
+            }, arrayToRepeat.length * blinkTime);
         }(i));
      }
 	 validate(arrayToRepeat, userFeedback, dotArray);
@@ -448,6 +469,8 @@ function resetGrid(){
 
 function gameOver() {
     playing = false;
+	badgeChecker(currentRound, lifePoints);
+	localStorage.setItem("saveFile", JSON.stringify(localSavedFiles));
     $( "#game-screen" ).fadeOut( 1500, function() {
         $('#gameover-screen').fadeIn(1500, function() {});
     });
@@ -491,4 +514,57 @@ function steveTap(event) {
         $(event.target).removeClass("steve");
         $(event.target).addClass("tapped_steve");
     }
+}
+
+// Checks to see if player has unlocked any new badges
+function badgeChecker(currentRound, lifePoints) {
+	if (!steveModeEnabled) {
+		switch(gamemode){
+			case 0:
+				if (currentRound >= 40 && !localSavedFiles[9] ) {
+					localSavedFiles[9] = true;
+					console.log("UNLOCK: Get to level 30 in marathon mode");
+				}
+				if (currentRound >= 60 && lifePoints >= 3 && !localSavedFiles[6] ) {
+					localSavedFiles[6] = true;
+					console.log("UNLOCK: Get to level 50 in marathon mode with all lives");
+				}
+				if (currentRound >= 60 && !localSavedFiles[3] ) {
+					localSavedFiles[3] = true;
+					console.log("UNLOCK: Get to level 60 in marathon mode");
+				}
+				break;
+			case 1:
+				if (currentRound >= 40 && !localSavedFiles[8] ) {
+					localSavedFiles[8] = true;
+					console.log("UNLOCK: Get to level 30 in marathon mode");
+				}
+				if (currentRound >= 60 && lifePoints >= 3 && !localSavedFiles[5] ) {
+					localSavedFiles[5] = true;
+					console.log("UNLOCK: Get to level 50 in marathon mode with all lives");
+				}
+				if (currentRound >= 60 && !localSavedFiles[2] ) {
+					localSavedFiles[2] = true;
+					console.log("UNLOCK: Get to level 60 in marathon mode");
+				}
+				break;
+			case 2:
+				//code here for time attack badge triggers
+				break
+			default:
+				window.alert("YOU SHOULD NOT SEE THIS!");
+		}
+	}
+	updateBadges();
+}
+
+// Updates the badges in the badge menu
+function updateBadges() {
+	for (var bIndex = 1; bIndex <= 10; bIndex++) {
+		if (localSavedFiles[bIndex]) {
+			document.getElementById("badge" + bIndex).src="images/medal2.png";
+		} else {
+			document.getElementById("badge" + bIndex).src="images/locked.png";
+		} 
+	} 
 }

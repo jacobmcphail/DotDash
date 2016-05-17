@@ -1,0 +1,13 @@
+- Save Array Index -
+0: First time playing (boolean)
+- Badges - (all booleans)
+1: Unlock Steve Mode - Steve
+2: Get to level 60 in no-time mode
+3: Get to level 60 in marathon mode
+4: [time attack badge]
+5: Get to level 60 in no-time mode with all lives
+6: Get to level 60 in marathon mode with all lives
+7: [time attack badge 2]
+8: Get to level 40 in no-time mode
+9: Get to level 40 in marathon mode
+10: [time attack badge 3]
