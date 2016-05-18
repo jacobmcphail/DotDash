@@ -63,3 +63,9 @@ function closePauseScreen() {
 function badge1() {
     window.alert("get this badge by playing for 100000 hours");
 }
+
+
+function quitGame() {
+    playing = false;
+    openMainMenu();
+}
