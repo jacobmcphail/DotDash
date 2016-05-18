@@ -48,6 +48,11 @@ $.getScript("js/pathGenerator.js", function(){
 function gameSetup() {
 	checkCookie();
 	localSavedFiles = JSON.parse(localStorage.getItem("saveFile"));
+	if (localSavedFiles.length != 14) {
+		localSavedFiles = null;
+		console.log("Save Error");
+		window.alert("There was a problem with your save! Creating new save file.");
+	}
 	if (localSavedFiles == null) {
 		localSavedFiles = [false, false, false, false, false, false, false, false, false, false, false, 0, 0, 0];
 		localStorage.setItem("saveFile", JSON.stringify(localSavedFiles));
@@ -684,7 +689,18 @@ function badgeChecker(currentRound, lifePoints) {
 				}
 				break;
 			case 2:
-				//code here for time attack badge triggers
+				if (currentRound >= 20 && !localSavedFiles[4] ) {
+					localSavedFiles[4] = true;
+					console.log("UNLOCK: Get to level 20 in time attack mode");
+				}
+				if (currentRound >= 20 && lifePoints == -1 && !localSavedFiles[7] ) {
+					localSavedFiles[7] = true;
+					console.log("UNLOCK: Get to level 20 in time attack mode without a mistake");
+				}
+				if (currentRound >= 30 && !localSavedFiles[10] ) {
+					localSavedFiles[10] = true;
+					console.log("UNLOCK: Get to level 30 in time attack mode");
+				}
 				break;
 			default:
 				window.alert("YOU SHOULD NOT SEE THIS!");

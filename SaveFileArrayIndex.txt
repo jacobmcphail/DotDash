@@ -4,13 +4,13 @@
 1: Unlock Steve Mode - Steve
 2: Get to level 60 in no-time mode
 3: Get to level 60 in marathon mode
-4: [time attack badge]
+4: Get to level 20 in time attack mode
 5: Get to level 60 in no-time mode with all lives
 6: Get to level 60 in marathon mode with all lives
-7: [time attack badge 2]
+7: Get to level 20 in time attack mode without a mistake
 8: Get to level 40 in no-time mode
 9: Get to level 40 in marathon mode
-10: [time attack badge 3]
+10: Get to level 30 in time attack mode
 - High Scores - (all ints)
 11: Marathon High Score 
 12: No-timed High Score 
