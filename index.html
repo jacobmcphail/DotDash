@@ -3,6 +3,8 @@
     <html>
     <head>
 		<meta charset="UTF-8">
+		<link type = "image/png" rel="icon" href="images/crow.png" />
+		
 		<meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1,width=device-width, height=device-height, target-densitydpi=device-dpi" />
 		<script type="text/javascript" src="cordova.js" ></script>
         <script src = "js/jquery-1.12.3.min.js"></script>
@@ -19,6 +21,17 @@
         <!--Adding this in makes it not centered dammit.
         <link rel="stylesheet" type="text/css" href="bootstrap-3.3.6-dist/css/bootstrap.min.css">
         -->
+		<!-- plugins for BootStrap -->
+		<link rel="stylesheet" href="bootstrap-3.3.6-dist/css/bootstrap.css">
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.2/jquery.min.js"></script>
+		<script src="bootstrap-3.3.6-dist/js/bootstrap.min.js"></script>
+	  <style>
+	  .carousel-inner > .item > img,
+	  .carousel-inner > .item > a > img {
+		  width: 70%;
+		  margin: auto;
+	  }
+	  </style>
 
         <title>DotDash._</title>
     </head>
@@ -30,12 +43,52 @@
         <!-- buttons and elements used in the main menu screen ----------------------------------------->
         <div id="main-screen">
             <div id="mode-selection-container">
-                <button onclick="play()" class="mode-select" id="mode-1">Marathon</button>
-                <button onclick="play()" class="mode-select" id="mode-2">No Timer</button>
-                <button onclick="play()" class="mode-select" id="mode-3">Time Attack</button>
-                <button class="nongameplay-buttons" id="left-arrow-button"><img src="images/arrowLeft.png"/></button>
-                <button class="nongameplay-buttons" id="right-arrow-button"><img src="images/arrowRight.png"/></button>
-            </div>
+				<div id = "middle">
+					<div id="myCarousel" class="carousel slide">
+			
+						<!-- Wrapper for slides -->
+							<div class="carousel-inner" role="listbox">
+								<div class="item active">
+									<button onclick="play()" class="mode-select" id="mode-1">Marathon</button>
+								</div>
+								<div class="item">
+									<button onclick="play()" class="mode-select" id="mode-2">No Timer</button>
+								</div>
+								<div class="item">
+									<button onclick="play()" class="mode-select" id="mode-3">Time Attack</button>
+								</div>
+							</div>
+							
+							<a class="left carousel-control" href="#myCarousel" role="button">
+						<span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+						<span class="sr-only">Previous</span>
+						</a>
+						<a class="right carousel-control" href="#myCarousel" role="button">
+						  <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+						  <span class="sr-only">Next</span>
+						</a>
+					</div>
+
+					<script>
+					$(document).ready(function(){
+						// Activate Carousel
+						$("#myCarousel").carousel("pause");
+						   
+						
+						// Enable Carousel Controls
+						$(".left").click(function(){
+							$("#myCarousel").carousel("prev");
+						});
+						$(".right").click(function(){
+							$("#myCarousel").carousel("next");
+						});
+						
+						 
+					});
+					</script>
+				</div>
+			</div>
+                
             <button onclick="openOptions()" class="nongameplay-buttons" id="options-button"><img src="images/gear.png"></button>
             <button onclick="openScores()" class="nongameplay-buttons" id="scores-button"><img src="images/trophy.png"></button>
             <button onclick="openCredits()" class="nongameplay-buttons" id="credits-button"><img src="images/exclamation.png"></button>
