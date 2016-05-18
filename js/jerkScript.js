@@ -139,6 +139,7 @@ $(document).ready(function(){
             var sound = document.getElementById("audio");
             sound.play();
 			if (!localSavedFiles[1]) {
+				window.alert("Badge Unlocked! Activated Steve mode.");
 				localSavedFiles[1] = true;
 				localStorage.setItem("saveFile", JSON.stringify(localSavedFiles));
 				updateBadges();
@@ -661,23 +662,24 @@ function scoreChecker(playerScore) {
 	switch(gamemode) {
 		case 0:
 			if (playerScore > localSavedFiles[11]) {
+				window.alert("New HighScore in marathon mode!");
 				localSavedFiles[11] = playerScore;
 				return true;
 			}
 			break;
-			break;
 		case 1: 
 			if (playerScore > localSavedFiles[12]) {
+				window.alert("New HighScore in no-time mode!");
 				localSavedFiles[12] = playerScore;
 				return true;
 			}
 			break;
 		case 2:
 			if (playerScore > localSavedFiles[13]) {
-				localSavedFiles[12] = playerScore;
+				window.alert("New HighScore in time attack mode!");
+				localSavedFiles[13] = playerScore;
 				return true;
 			}
-			break;
 			break;
 		default:
 			window.alert("YOU SHOULD NOT SEE THIS!");
@@ -690,42 +692,51 @@ function badgeChecker(currentRound, lifePoints) {
 		switch(gamemode){
 			case 0:
 				if (currentRound >= 40 && !localSavedFiles[9] ) {
+					window.alert("Badge Unlocked! Get to level 40 in no-time mode.");
 					localSavedFiles[9] = true;
 					console.log("UNLOCK: Get to level 30 in marathon mode");
 				}
 				if (currentRound >= 60 && lifePoints >= 3 && !localSavedFiles[6] ) {
+					window.alert("Badge Unlocked! Get to level 60 in marathon mode with all lives.");
 					localSavedFiles[6] = true;
-					console.log("UNLOCK: Get to level 50 in marathon mode with all lives");
+					console.log("UNLOCK: Get to level 60 in marathon mode with all lives");
 				}
 				if (currentRound >= 60 && !localSavedFiles[3] ) {
+					window.alert("Badge Unlocked! Get to level 60 in marathon mode.");
 					localSavedFiles[3] = true;
 					console.log("UNLOCK: Get to level 60 in marathon mode");
 				}
 				break;
 			case 1:
 				if (currentRound >= 40 && !localSavedFiles[8] ) {
+					window.alert("Badge Unlocked! Get to level 40 in no-time mode.");
 					localSavedFiles[8] = true;
 					console.log("UNLOCK: Get to level 30 in marathon mode");
 				}
 				if (currentRound >= 60 && lifePoints >= 3 && !localSavedFiles[5] ) {
+					window.alert("Badge Unlocked! Get to level 60 in no-time mode with all lives.");
 					localSavedFiles[5] = true;
 					console.log("UNLOCK: Get to level 50 in marathon mode with all lives");
 				}
 				if (currentRound >= 60 && !localSavedFiles[2] ) {
+					window.alert("Badge Unlocked! Get to level 60 in no-time mode.");
 					localSavedFiles[2] = true;
 					console.log("UNLOCK: Get to level 60 in marathon mode");
 				}
 				break;
 			case 2:
 				if (currentRound >= 20 && !localSavedFiles[4] ) {
+					window.alert("Badge Unlocked! Get to level 20 in time attack mode.");
 					localSavedFiles[4] = true;
 					console.log("UNLOCK: Get to level 20 in time attack mode");
 				}
 				if (currentRound >= 20 && lifePoints == -1 && !localSavedFiles[7] ) {
+					window.alert("Badge Unlocked! Get to level 20 in time attack mode without a mistake.");
 					localSavedFiles[7] = true;
 					console.log("UNLOCK: Get to level 20 in time attack mode without a mistake");
 				}
 				if (currentRound >= 30 && !localSavedFiles[10] ) {
+					window.alert("Badge Unlocked! Get to level 30 in time attack mode.");
 					localSavedFiles[10] = true;
 					console.log("UNLOCK: Get to level 30 in time attack mode");
 				}
