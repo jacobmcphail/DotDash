@@ -150,10 +150,15 @@
             </div>
         </div>
 		<div id="pause-screen">
-            <h1>Paused</h1>
+            <h1>Paused</h1>                                                                                                                                                              <!-- is this my mistake or did someone add this? -->
             <button class="nongameplay-buttons" onclick="closePauseScreen(); resumeGame();" id="unpause-button"><img src="images/backward.png"/></button>
-            <button class="nongameplay-buttons" onclick="playAgain()" id="restart-button"><img src="images/return.png"/></button>
-            <button class="nongameplay-buttons" onclick="openMainMenu()" id="quit-button"><img src="images/cross.png"/></button>
+            <button class="nongameplay-buttons" onclick="openConfirmation('restart')" id="restart-button"><img src="images/return.png"/></button>
+            <button class="nongameplay-buttons" onclick="openConfirmation('quit')" id="quit-button"><img src="images/cross.png"/></button>
+            <div id="confirmation-container">
+                <h2 id="confirm-text"></h2>
+                <button class="confirm-buttons" onclick="closeConfirmation()" id="no-button"><img src="images/cross.png"/></button>
+                <button class="confirm-buttons" id="yes-button"><img src="images/checkmark.png"/></button>
+            </div>
         </div>
         <div id="gameover-screen">
             <br/>
@@ -161,9 +166,9 @@
             <div id="final-score-container"><h2>Your score: </h2><h2 id="final-score">NULL</h2></div>
             <button class="nongameplay-buttons" id="game-over-quit-button" onclick="quitGame()"><img src="images/backward.png"></button>
             <button class="nongameplay-buttons" id="game-over-restart-button" onclick="playAgain()"><img src="images/return.png"></button>
-
         </div>
         <div>
+
         </div>
     </div>
 <!--added preloader-->

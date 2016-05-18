@@ -38,8 +38,8 @@ function openMainMenu() {
     document.getElementById('game-screen').style.display = 'none';
     document.getElementById('title').style.display = 'block';
     document.getElementById('pause-screen').style.display = 'none';
-    
 }
+
 function play() {
     document.getElementById('gameover-screen').style.display = "none";
     document.getElementById('pause-screen').style.display = "none";
@@ -54,6 +54,7 @@ function play() {
 function openPauseScreen() {
     document.getElementById('pause-screen').style.display = "block";
     document.getElementById('game-screen').style.display = 'none';
+    document.getElementById('confirmation-container').style.display = 'none';
 }
 
 function closePauseScreen() {
@@ -65,6 +66,43 @@ function badge1() {
     window.alert("get this badge by playing for 100000 hours");
 }
 
+function openConfirmation(type) {
+
+    document.getElementById('confirmation-container').style.display = 'block';
+
+    $('#confirmation-container').animate({
+        'margin-left': '-=5px',
+        'margin-right': '+=5px'
+    }, 100, function() {
+        $('#confirmation-container').animate({
+            'margin-left': '+=5px',
+            'margin-right': '-=5px'
+        }, 100, function() {
+            $('#confirmation-container').animate({
+                'margin-left': '-=5px',
+                'margin-right': '+=5px'
+            }, 100);
+        });
+    });
+
+    if (type == 'quit') {
+        document.getElementById('confirm-text').innerHTML = "Are you sure you want to quit this round?";
+        document.getElementById('yes-button').onclick = function() {
+            quitGame();
+        };
+
+    } else if (type == 'restart') {
+        document.getElementById('confirm-text').innerHTML = "Are you sure you want to restart this round?";
+        document.getElementById('yes-button').onclick = function() {
+            playAgain();
+        };
+    }
+
+}
+
+function closeConfirmation() {
+    document.getElementById('confirmation-container').style.display = 'none';
+}
 
 function quitGame() {
     playing = false;
