@@ -25,9 +25,14 @@ var numCols = 3;
 var localSavedFiles;
 var container;
 var dotArray = [];
-
 var colourArray = ["cyan","orange","green","pink","blue","purple"];
 var colour;
+
+
+
+$.getScript("js/gameTimer.js", function(){
+//          console.log("ALL YOUR MEAT BYPRODUCTS COMBINED");
+});
 
 $.getScript("js/nuggetScript.js", function(){
 //          console.log("ALL YOUR MEAT BYPRODUCTS COMBINED");
@@ -36,6 +41,8 @@ $.getScript("js/nuggetScript.js", function(){
 $.getScript("js/pathGenerator.js", function(){
           //console.log("Bald kiwi bird");
 });
+
+
 
 //File storing function
 function gameSetup() {
@@ -71,13 +78,14 @@ function clearSave() {
 	gameSetup();
 }
 
-    //Update high scores
+//Update high scores
 function updateHighScores() {
     var scoreSpaces = document.getElementsByClassName("score-text");
     for (var i = 11, q = 0; i < 14; i++, q++) {
         scoreSpaces[q].innerHTML = localSavedFiles[i];
     }
 }
+
 
 $(document).ready(function(){
 
@@ -296,6 +304,7 @@ function difficulty(nodeCount) {
     if (length > nodeCount) {
         return nodeCount;
     }
+	timerSet(0, 20);
     return Math.round(length);
 }
 
@@ -309,15 +318,22 @@ function difficulty(nodeCount) {
 
 function validate(array, userFeedback, dArray){
     var ex, wai;
-
+	
+	var counter = setTimeout(function() {
+		console.log("TIMESUP");
+		noErrorsYet = false;
+        lifePoints--;
+        updateLives();
+		userFeedback(false, null);
+		return;
+	}, ((minutes * 60) * 1100) + (seconds * 1000) + 20);
+	
     $(function(){
         $( ".dot" ).bind( "tapone", tapHandler );
         function tapHandler( event ){
 			if (!userInput) {
 				return;
 			}
-            //Inserting steveify function
-
             if($(event.target).hasClass("selected")){
                 $( event.target ).removeClass( "selected" );
                 console.log("x: " + this.x + ", y:" + this.y);
@@ -340,14 +356,18 @@ function validate(array, userFeedback, dArray){
                     if (index < array.length) {
                         index++;
                         if (index >= array.length) {
+							clearTimeout(counter);
+							timerPause();
                             notComplete = false;
-                            playerScore += currentRound;
+                            playerScore += currentRound + (Math.round(currentRound * 0.1) * seconds);
                             updateScore();
                             currentRound++;
                             userFeedback(true, dArray[ex][wai]);
-                        }
-                    }
+                        } 
+                    } 
                 } else {
+					clearTimeout(counter);
+					timerPause();
                     noErrorsYet = false;
                     lifePoints--;
                     updateLives();
@@ -441,7 +461,6 @@ function pathDemonstration(arrayToRepeat, validate) {
 	} else {
 		blinkTime = (700 - (currentRound * 2))
 	}
-    
     //For testing
     printPath(arrayToRepeat);
 
@@ -469,13 +488,14 @@ function pathDemonstration(arrayToRepeat, validate) {
                    dotArray[pt.x][pt.y].classList.remove("selected");
                     dotArray[pt.x][pt.y].classList.add(colour);
                }
-			   userInput = true;
             }, arrayToRepeat.length * blinkTime);
-
-
         }(i));
      }
-	 validate(arrayToRepeat, userFeedback, dotArray);
+	 setTimeout(function () {
+		userInput = true;
+	    timerStart();
+	    validate(arrayToRepeat, userFeedback, dotArray);
+     }, arrayToRepeat.length * blinkTime);
 }
 
 function playAgain() {
