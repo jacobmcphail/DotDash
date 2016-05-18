@@ -48,15 +48,16 @@ $.getScript("js/pathGenerator.js", function(){
 function gameSetup() {
 	checkCookie();
 	localSavedFiles = JSON.parse(localStorage.getItem("saveFile"));
-	if (localSavedFiles.length != 14) {
-		localSavedFiles = null;
-		console.log("Save Error");
-		window.alert("There was a problem with your save! Creating new save file.");
-	}
 	if (localSavedFiles == null) {
 		localSavedFiles = [false, false, false, false, false, false, false, false, false, false, false, 0, 0, 0];
 		localStorage.setItem("saveFile", JSON.stringify(localSavedFiles));
 	} else {
+		if (localSavedFiles.length != 14) {
+		localSavedFiles = null;
+		console.log("Save Error");
+		window.alert("There was a problem with your save! Creating new save file.");
+		gameSetup();
+		}
 		console.log(localSavedFiles);
 		updateBadges();
 	}
