@@ -53,15 +53,34 @@ function gameSetup() {
 		localStorage.setItem("saveFile", JSON.stringify(localSavedFiles));
 	} else {
 		if (localSavedFiles.length != 14) {
-		localSavedFiles = null;
-		console.log("Save Error");
-		window.alert("There was a problem with your save! Creating new save file.");
-		gameSetup();
+            localSavedFiles = null;
+            console.log("Save Error");
+            window.alert("There was a problem with your save! Creating new save file.");
+            gameSetup();
 		}
 		console.log(localSavedFiles);
 		updateBadges();
 	}
 	updateHighScores();
+
+    /* arrow key stuff -- may not use
+    document.onkeydown = function(e) {
+        switch (e.keyCode) {
+            case 37:
+                alert('left');
+                break;
+            case 38:
+                alert('up');
+                break;
+            case 39:
+                alert('right');
+                break;
+            case 40:
+                alert('down');
+                break;
+        }
+    }; */
+
 }
 
 function checkCookie(){

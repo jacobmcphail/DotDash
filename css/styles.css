@@ -48,6 +48,9 @@ html, body {
     border-radius: 50%;
 	top: 40%;
 	display: inline-block;
+    font-family: Consolas;
+    font-weight: bolder;
+    font-size: 120%;
 }
 #mode-1 {
     background: dodgerblue;
@@ -96,13 +99,13 @@ html, body {
     bottom: 30%;
     right: 15%;
 }
-#options-button {
+#options-button, #unpause-button  {
     left: 5px;
 }
-#scores-button {
+#scores-button, #restart-button {
     left: 70px;
 }
-#credits-button {
+#credits-button, #pause-button, #quit-button  {
     right: 5px;
 }
 #return-button {
@@ -110,22 +113,6 @@ html, body {
 }
 #badges-button {
     display:none;
-    right: 5px;
-}
-
-#pause-button {
-    right: 5px;
-}
-
-#unpause-button {
-    left: 5px;
-}
-
-#restart-button {
-    left: 70px;
-}
-
-#quit-button {
     right: 5px;
 }
 
@@ -142,6 +129,7 @@ html, body {
     margin-right: auto;
     width: 300px;
 }
+
 .option-header {
     float: left;
     padding-right: 50px;
@@ -289,7 +277,7 @@ input[type=checkbox] {
     color: black;
 }
 
-#gameover-text {
+#gameover-screen h1 {
     font-size: 500%;
     color: #32CD32;
 }
@@ -297,6 +285,12 @@ input[type=checkbox] {
 #pause-screen {
     display: none;
     color: black;
+}
+
+
+#pause-screen h1 {
+    font-size: 500%;
+    color: #32CD32;
 }
 
 #final-score-container {
@@ -347,12 +341,15 @@ div#preload { display: none; }
 div.dot {
     width: 50px;
     height: 50px;
+    /*
     -moz-border-radius: 25px;
     -webkit-border-radius: 25px;
+    background: blue; */
     border-radius: 25px;
-    background: blue;
+    /*
     margin-top: 10%;
     margin-left:15%;
+    */
 }
 div.dot.selected {
     background: lightgoldenrodyellow;
@@ -411,6 +408,7 @@ div.dot.good_dot {
 .dotcont {
     max-width: 75px;
     padding-right: 5px;
+    margin: 10px 15px;
 
     /*background: violet;border-width: thick;
     border-style: solid;
