@@ -605,11 +605,15 @@ function resumeGame() {
 	}
 }
 
-function pauseGame() {
+function pauseGame(type) {
     if (userInput) {
-		clearTimeout(counter);
-		timerPause();
-        openPauseScreen();
+        clearTimeout(counter);
+        timerPause();
+        if (type == 'pause') {
+            openPauseScreen();
+        } else if (type == 'tutorial') {
+            openTutorialScreen();
+        }
     }
 }
 

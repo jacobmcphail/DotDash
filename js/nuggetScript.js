@@ -34,10 +34,11 @@ function openMainMenu() {
     document.getElementById('return-button').style.display = 'none';
     document.getElementById('main-screen').style.display = 'block';
     document.getElementById('title').innerHTML = "DotDash._";
-    document.getElementById('gameover-screen').style.display = "none";
+    document.getElementById('gameover-screen').style.display = 'none';
     document.getElementById('game-screen').style.display = 'none';
     document.getElementById('title').style.display = 'block';
     document.getElementById('pause-screen').style.display = 'none';
+    document.getElementById('tutorial-screen').style.display = 'none';
 }
 
 function play() {
@@ -49,6 +50,17 @@ function play() {
     document.getElementById('game-screen').style.opacity = '1';
 	playing = true;
     initialize(gamemode, newRound, removeDots);
+}
+
+function openTutorialScreen() {
+    document.getElementById('tutorial-screen').style.display = "block";
+    document.getElementById('game-screen').style.display = 'none';
+}
+
+function closeTutorialScreen() {
+    document.getElementById('tutorial-screen').style.display = "none";
+    document.getElementById('game-screen').style.display = 'block';
+
 }
 
 function openPauseScreen() {

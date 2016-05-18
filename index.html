@@ -67,28 +67,28 @@
         <div id="options-screen">
             <div class="T_container">
                 <h2 class="option-header">Music</h2>
-                <div class="option-slider">
+                <div class="checkbox">
                     <input type="checkbox" value="None" id="option-1" name="check" checked="checked"/>
                     <label for="option-1"></label>
                 </div>
                 <h2 class="option-header">Sound Effects</h2>
-                <div class="option-slider">
+                <div class="checkbox">
                     <input type="checkbox" value="None" id="option-2" name="check" checked="checked"/>
                     <label for="option-2"></label>
                 </div>
                 <h2 class="option-header">Colour</h2>
-                <div class="option-slider">
+                <div class="checkbox">
                     <input type="checkbox" value="None" id="option-3" name="check" checked="checked"/>
                     <label for="option-3"></label>
                 </div>
                 <h2 class="option-header">Steve Mode</h2>
-                <div class="option-slider">
-                    <input type="checkbox" onclick="enableSteveMode()" value="None" id="option-4" name="check" />
+                <div class="checkbox">
+                    <input type="checkbox" value="None" onclick="enableSteveMode()" id="option-4" name="check" />
                     <label for="option-4"></label>
                 </div>
-				<h2 class="option-header">Reset Save</h2>
-                <div class="option-slider">
-                    <input type="checkbox" onclick="clearSave()" value="None" id="option-5" name="check" />
+                <h2 class="option-header">Reset Save</h2>
+                <div class="checkbox">
+                    <input type="checkbox" value="None" id="option-5" name="check" />
                     <label for="option-5"></label>
                 </div>
             </div>
@@ -162,8 +162,8 @@
             <div id="timer-bar">
                 <p id="timer">0:00</p>
             </div>
-            <button class="nongameplay-buttons" onclick="pauseGame()" id="pause-button"><img src="images/pause.png"></button>
-            <button class="nongameplay-buttons" id="tutorial-button"><img src="images/question.png"></button>
+            <button class="nongameplay-buttons" onclick="pauseGame('pause')" id="pause-button"><img src="images/pause.png"></button>
+            <button class="nongameplay-buttons" onclick="pauseGame('tutorial')" id="tutorial-button"><img src="images/question.png"></button>
             <div id="score-bar">
                 <p id="playerScore">0</p>
             </div>
@@ -188,8 +188,9 @@
             <button class="nongameplay-buttons" id="game-over-quit-button" onclick="quitGame()"><img src="images/backward.png"></button>
             <button class="nongameplay-buttons" id="game-over-restart-button" onclick="playAgain()"><img src="images/return.png"></button>
         </div>
-        <div>
-
+        <div id="tutorial-screen">
+            <h1>How To Play</h1>
+            <button class="nongameplay-buttons" id="tutorial-return-button" onclick="closeTutorialScreen();  resumeGame();"><img src="images/backward.png"></button>
         </div>
     </div>
 <!--added preloader-->
