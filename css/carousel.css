@@ -237,5 +237,6 @@
 	margin: auto;
 }
 .sr-only img {
-	margin: 70px;
+	margin: auto;
+	margin-top: 80px;
 }

@@ -168,6 +168,11 @@ function initialize(gamemode, newRound, removeDots){
 	userInput = false;
     updateLives();
     updateScore();
+	if (gamemode == 1) {
+		document.getElementById('timer-bar').style.visibility='hidden';
+	} else {
+		document.getElementById('timer-bar').style.visibility='visible'; 
+	}
 	switch(gamemode) {
 		case 0:
 			timerSet(0, 20);
