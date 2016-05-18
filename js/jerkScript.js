@@ -98,8 +98,14 @@ $(document).ready(function(){
     
     $(".mode-select").on('tapone', function(){
         var mode = this.id;
-		gamemode = 1; //sets gamemode
-        console.log("mode selected: " + mode);
+		if (mode == "mode-1") {
+			gamemode = 0;
+		} else if (mode == "mode-2") {
+			gamemode = 1;
+		} else {
+			gamemode = 2;
+		}
+        console.log("mode selected: " + mode + ":" + gamemode);
     //    initialize(gamemode, newRound, removeDots);
     });
 	
@@ -121,19 +127,35 @@ $(document).ready(function(){
     });
 });
 
-function initialize(gameMode, newRound, removeDots){
+function initialize(gamemode, newRound, removeDots){
     //Initialize global variables depending on mode (currently only one mode)
     container = document.getElementById("dot-container");
     container.classList.add("vertical-center");
     playerScore = 0;
     currentRound = 1;
-    lifePoints = 3;
+	lifePoints = 3;
+	if (gamemode == 2) {
+		lifePoints = -1;
+	}
 	numRows = 3;
 	numCols = 3;
 	playing = true;
 	userInput = false;
     updateLives();
     updateScore();
+	switch(gamemode) {
+		case 0:
+			timerSet(0, 20);
+			break;
+		case 1: 
+			timerSet(0, 0);
+			break;
+		case 2:
+			timerSet(3, 0);
+			break;
+		default:
+			window.alert("YOU SHOULD NOT SEE THIS!");
+		}
     newRound(generateGrid);
 }
 
@@ -161,6 +183,9 @@ function newRound(generateGrid){
     console.log("Current round: " + currentRound);
 
 	if (playing) {
+		if (gamemode == 0) {
+			timerSet(0, 20);
+		}
 		noErrorsYet = true;
 		notComplete = true;
 		index = 0;
@@ -304,7 +329,6 @@ function difficulty(nodeCount) {
     if (length > nodeCount) {
         return nodeCount;
     }
-	timerSet(0, 20);
     return Math.round(length);
 }
 
@@ -320,12 +344,19 @@ function validate(array, userFeedback, dArray){
     var ex, wai;
 	
 	counter = setTimeout(function() {
-		console.log("TIMESUP");
-		noErrorsYet = false;
-        lifePoints--;
-        updateLives();
-		userFeedback(false, null);
-		return;
+		if (gamemode != 1) {
+			console.log("TIMESUP");
+			if (gamemode == 2) {
+				lifePoints = 0;
+				updateLives();
+				return;
+			}
+			noErrorsYet = false;
+			lifePoints--;
+			updateLives();
+			userFeedback(false, null);
+			return;
+		}
 	}, ((minutes * 60) * 1100) + (seconds * 1000) + 20);
 	
     $(function(){
@@ -368,6 +399,11 @@ function validate(array, userFeedback, dArray){
                 } else {
 					clearTimeout(counter);
 					timerPause();
+					if (gamemode == 2) {
+						for (var c = 0; c < 20; c++) {
+							updateTimer();
+						}
+					}
                     noErrorsYet = false;
                     lifePoints--;
                     updateLives();
@@ -493,7 +529,9 @@ function pathDemonstration(arrayToRepeat, validate) {
      }
 	 setTimeout(function () {
 		userInput = true;
-	    timerStart();
+	    if (gamemode != 1) {
+		timerStart();
+		}
 	    validate(arrayToRepeat, userFeedback, dotArray);
      }, arrayToRepeat.length * blinkTime);
 }
@@ -506,14 +544,23 @@ function playAgain() {
 
 function resumeGame() {
 	counter = setTimeout(function() {
-		console.log("TIMESUP");
-		noErrorsYet = false;
-        lifePoints--;
-        updateLives();
-		userFeedback(false, null);
-		return;
+		if (gamemode != 1) {
+			console.log("TIMESUP");
+			if (gamemode == 2) {
+				lifePoints = 0;
+				updateLives();
+				return;
+			}
+			noErrorsYet = false;
+			lifePoints--;
+			updateLives();
+			userFeedback(false, null);
+			return;
+		}
 	}, ((minutes * 60) * 1100) + (seconds * 1000) + 20);
-	timerStart();
+	if (gamemode != 1) {
+		timerStart();
+	}
 }
 
 function pauseGame() {
@@ -581,7 +628,7 @@ function scoreChecker(playerScore) {
 	switch(gamemode) {
 		case 0:
 			if (playerScore > localSavedFiles[11]) {
-				localSavedFiles[12] = playerScore;
+				localSavedFiles[11] = playerScore;
 				return true;
 			}
 			break;

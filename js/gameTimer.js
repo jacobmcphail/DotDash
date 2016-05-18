@@ -18,11 +18,7 @@ function timerPause(){
 function timerSet(timeMinutes, timerSeconds){
 	minutes = timeMinutes;
 	seconds = timerSeconds;
-	if (minutes > 0) {
-		$('#timer').text(minutes + ":" + seconds);
-	} else {
-		$('#timer').text(seconds);
-	}
+	updateClock()
 }
 
 function updateTimer(){
@@ -34,9 +30,18 @@ function updateTimer(){
 		minutes--;
 		seconds = 59;
 	}
-	if (minutes > 0) {
-		$('#timer').text(minutes + ":" + seconds);
+	updateClock();
+} 
+
+
+function updateClock() {
+		if (minutes > 0) {
+		if (seconds < 10) {
+			$('#timer').text(minutes + ":0" + seconds);
+		} else {
+			$('#timer').text(minutes + ":" + seconds);
+		}
 	} else {
 		$('#timer').text(seconds);
 	}
-} 
+}
