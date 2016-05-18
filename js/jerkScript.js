@@ -27,7 +27,7 @@ var container;
 var dotArray = [];
 var colourArray = ["cyan","orange","green","pink","blue","purple"];
 var colour;
-
+var counter;
 
 
 $.getScript("js/gameTimer.js", function(){
@@ -319,7 +319,7 @@ function difficulty(nodeCount) {
 function validate(array, userFeedback, dArray){
     var ex, wai;
 	
-	var counter = setTimeout(function() {
+	counter = setTimeout(function() {
 		console.log("TIMESUP");
 		noErrorsYet = false;
         lifePoints--;
@@ -504,8 +504,22 @@ function playAgain() {
     play();
 }
 
+function resumeGame() {
+	counter = setTimeout(function() {
+		console.log("TIMESUP");
+		noErrorsYet = false;
+        lifePoints--;
+        updateLives();
+		userFeedback(false, null);
+		return;
+	}, ((minutes * 60) * 1100) + (seconds * 1000) + 20);
+	timerStart();
+}
+
 function pauseGame() {
     if (userInput) {
+		clearTimeout(counter);
+		timerPause();
         openPauseScreen();
     }
 }
