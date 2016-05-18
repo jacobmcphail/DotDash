@@ -607,12 +607,12 @@ function pauseGame() {
 
 function gameOver() {
     playing = false;
-	badgeChecker(currentRound, lifePoints);
-	scoreChecker(playerScore);
-	localStorage.setItem("saveFile", JSON.stringify(localSavedFiles));
-	updateHighScores();
     $( "#game-screen" ).fadeOut( 1500, function() {
         $('#gameover-screen').fadeIn(1500, function() {});
+		badgeChecker(currentRound, lifePoints);
+		scoreChecker(playerScore);
+		localStorage.setItem("saveFile", JSON.stringify(localSavedFiles));
+		updateHighScores();
     });
 
     // add final score
