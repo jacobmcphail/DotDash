@@ -37,15 +37,27 @@ function openMainMenu() {
     document.getElementById('gameover-screen').style.display = "none";
     document.getElementById('game-screen').style.display = 'none';
     document.getElementById('title').style.display = 'block';
+    document.getElementById('pause-screen').style.display = 'none';
 }
 function play() {
     document.getElementById('gameover-screen').style.display = "none";
+    document.getElementById('pause-screen').style.display = "none";
     document.getElementById('main-screen').style.display = 'none';
     document.getElementById('title').style.display = 'none';
     document.getElementById('game-screen').style.display = 'block';
     document.getElementById('game-screen').style.opacity = '1';
 	playing = true;
     initialize(gamemode, newRound, removeDots);
+}
+
+function openPauseScreen() {
+    document.getElementById('pause-screen').style.display = "block";
+    document.getElementById('game-screen').style.display = 'none';
+}
+
+function closePauseScreen() {
+    document.getElementById('pause-screen').style.display = "none";
+    document.getElementById('game-screen').style.display = 'block';
 }
 
 function badge1() {

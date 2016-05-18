@@ -140,14 +140,20 @@
             <div id="timer-bar">
                 <p>0:00</p>
             </div>
-            <!--Temporary for testing: pause button returns you to Main Menu-->
-            <button class="nongameplay-buttons" onclick="resetGrid()" id="pause-button"><img src="images/pause.png"></button>
+
+            <button class="nongameplay-buttons" onclick="pauseGame()" id="pause-button"><img src="images/pause.png"></button>
             <button class="nongameplay-buttons" id="tutorial-button"><img src="images/question.png"></button>
             <div id="score-bar">
                 <p id="playerScore">0</p>
             </div>
             <div class="T_container" id="dot-container">
             </div>
+        </div>
+        <div id="pause-screen">
+            <h1>Paused</h1>
+            <button class="nongameplay-buttons" onclick="closePauseScreen()" id="unpause-button"><img src="images/backward.png"/></button>
+            <button class="nongameplay-buttons" onclick="playAgain()" id="restart-button"><img src="images/return.png"/></button>
+            <button class="nongameplay-buttons" onclick="openMainMenu()" id="quit-button"><img src="images/cross.png"/></button>
         </div>
 	    <div id="gameover-screen">
             <br/>

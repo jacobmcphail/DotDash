@@ -441,6 +441,7 @@ function pathDemonstration(arrayToRepeat, validate) {
 	} else {
 		blinkTime = (700 - (currentRound * 2))
 	}
+    
     //For testing
     printPath(arrayToRepeat);
 
@@ -470,22 +471,23 @@ function pathDemonstration(arrayToRepeat, validate) {
                }
 			   userInput = true;
             }, arrayToRepeat.length * blinkTime);
+
+
         }(i));
      }
 	 validate(arrayToRepeat, userFeedback, dotArray);
-}
-
-// Gameplay-related
-function resetGrid(){
-    removeDots();
-    resetVals();
-    openMainMenu();
 }
 
 function playAgain() {
     removeDots();
     resetVals();
     play();
+}
+
+function pauseGame() {
+    if (userInput) {
+        openPauseScreen();
+    }
 }
 
 function gameOver() {

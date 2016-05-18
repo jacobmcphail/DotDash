@@ -12,6 +12,7 @@ h1 {
     font-family: "Consolas";
     text-align: center;
     padding-bottom: 5px;
+    color: white;
 }
 
 html, body {
@@ -66,7 +67,16 @@ html, body {
 
 #mode-2:hover {
     transform:scale(1.05,1.05);
-} 
+}
+
+.nongameplay-buttons-no-hover {
+    background-color: black;
+    border: none;
+    display: inline-block;
+    position: absolute;
+    bottom: 5px;
+}
+
 .nongameplay-buttons {
     background-color: black;
     border: none;
@@ -102,9 +112,23 @@ html, body {
     display:none;
     right: 5px;
 }
+
 #pause-button {
     right: 5px;
 }
+
+#unpause-button {
+    left: 5px;
+}
+
+#restart-button {
+    left: 70px;
+}
+
+#quit-button {
+    right: 5px;
+}
+
 #tutorial-button {
     right: 75px;
     bottom: 9px;
@@ -261,11 +285,17 @@ input[type=checkbox] {
 }
 
 #gameover-screen {
+    position: relative;
     margin: 50px auto 100px auto;
     width:80%;
     height:80%;
     background-color: cornflowerblue;
     display: none;
+}
+
+#pause-screen {
+    display: none;
+    color: black;
 }
 
 .ingame-buttons {
