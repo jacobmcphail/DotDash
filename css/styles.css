@@ -8,8 +8,7 @@ body {
                                   not supported by any browser */
 }
 
-@media screen and (orientation: portrait) {
-}
+body > div { -webkit-transition: all 1s ease-in-out; }
 
 h1 {
     font-family: "Consolas";
