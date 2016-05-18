@@ -8,7 +8,7 @@ body {
                                   not supported by any browser */
 }
 
-body > div { -webkit-transition: all 1s ease-in-out; }
+body > div { -webkit-transition: all 0s ease-in-out; }
 
 h1 {
     font-family: "Consolas";
