@@ -30,9 +30,9 @@
         <!-- buttons and elements used in the main menu screen ----------------------------------------->
         <div id="main-screen">
             <div id="mode-selection-container">
-                <button onclick="play()" class="mode-select" id="mode-1">MODE1</button>
-                <button onclick="play()" class="mode-select" id="mode-2">MODE2</button>
-                <button onclick="play()" class="mode-select" id="mode-3">MODE3</button>
+                <button onclick="play()" class="mode-select" id="mode-1">Marathon</button>
+                <button onclick="play()" class="mode-select" id="mode-2">No Timer</button>
+                <button onclick="play()" class="mode-select" id="mode-3">Time Attack</button>
                 <button class="nongameplay-buttons" id="left-arrow-button"><img src="images/arrowLeft.png"/></button>
                 <button class="nongameplay-buttons" id="right-arrow-button"><img src="images/arrowRight.png"/></button>
             </div>
@@ -114,7 +114,7 @@
                     <img id="badge10" src="images/locked.png"/>
                 </div>
                 <div class="T_container" id="hint-box">
-                    <h2>Hint:"What the hell is water?" </h2>
+                    <h2 id="badgehint" ></h2>
                 </div>
             </div>
             <button onclick="openScores()" class="nongameplay-buttons" id="badge-return-button"><img src="images/backward.png"/></button>
