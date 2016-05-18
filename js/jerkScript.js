@@ -347,14 +347,14 @@ function make_2D_Array(array, nRows, nCols) {
 // Sets difficulty for round
 function difficulty(nodeCount) {
 	var length;
-	if (currentRound < 45) {
+	if (currentRound < 40) {
 		numRows = Math.round((3 + (currentRound / 19)));
-		numCols = Math.round((3 + (currentRound / 22)));
+		numCols = Math.round((3 + (currentRound / 32)));
 		length = 3 + ((0.1 * currentRound) - 0.1);
 	} else {
 		numRows = 5;
-		numCols = 5;
-		length = 3 + ((0.05 * currentRound) - 0.05);
+		numCols = 4;
+		length = 3 + ((0.03 * currentRound) - 0.03);
 	}
     if (length > nodeCount) {
         return nodeCount;
@@ -429,13 +429,17 @@ function validate(array, userFeedback, dArray){
                 } else {
 					clearTimeout(counter);
 					timerPause();
+					noErrorsYet = false;
 					if (gamemode == 2) {
 						for (var c = 0; c < 20; c++) {
 							updateTimer();
 						}
+						if ((seconds + minutes) <= 0) {
+						lifePoints = 0;
+						}
+					} else {
+	                    lifePoints--;					
 					}
-                    noErrorsYet = false;
-                    lifePoints--;
                     updateLives();
                     userFeedback(false, dArray[ex][wai]);
                 }
@@ -529,7 +533,6 @@ function pathDemonstration(arrayToRepeat, validate) {
 	}
     //For testing
     printPath(arrayToRepeat);
-
     for (var i = 0; i < arrayToRepeat.length; i++) {
         (function (i) {
             setTimeout(function () {
