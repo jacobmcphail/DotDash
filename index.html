@@ -8,30 +8,16 @@
 		<meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1,width=device-width, height=device-height, target-densitydpi=device-dpi" />
 		<script type="text/javascript" src="cordova.js" ></script>
         <script src = "js/jquery-1.12.3.min.js"></script>
-        <link rel="stylesheet" type="text/css" href="jquery.mobile-1.4.5/jquery.mobile-1.4.5.css"/>
         <script src="bootstrap-3.3.6-dist/js/bootstrap.min.js"></script>
 		<script src="js/jgestures.min.js"></script>
 		<script src="js/gameTimer.js"></script>
 		<script src="js/nuggetScript.js"></script>
 		<script src="js/pathGenerator.js"></script>
         <script src="js/jerkScript.js"></script>
-
+		<script src="js/carousel.js"></script>
         <link rel="stylesheet" type="text/css" href="css/styles.css"/>
-		
-        <!--Adding this in makes it not centered dammit.
-        <link rel="stylesheet" type="text/css" href="bootstrap-3.3.6-dist/css/bootstrap.min.css">
-        -->
-		<!-- plugins for BootStrap -->
-		<link rel="stylesheet" href="bootstrap-3.3.6-dist/css/bootstrap.css">
-		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.2/jquery.min.js"></script>
-		<script src="bootstrap-3.3.6-dist/js/bootstrap.min.js"></script>
-	  <style>
-	  .carousel-inner > .item > img,
-	  .carousel-inner > .item > a > img {
-		  width: 70%;
-		  margin: auto;
-	  }
-	  </style>
+		<link rel="stylesheet" href="css/carousel.css">
+		<link rel="stylesheet" type="text/css" href="jquery.mobile-1.4.5/jquery.mobile-1.4.5.css"/>
 
         <title>DotDash._</title>
     </head>
@@ -61,31 +47,13 @@
 							
 							<a class="left carousel-control" href="#myCarousel" role="button">
 						<span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
-						<span class="sr-only">Previous</span>
+						<span class="sr-only"><img src="images/arrowLeft.png"></span>
 						</a>
 						<a class="right carousel-control" href="#myCarousel" role="button">
 						  <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
-						  <span class="sr-only">Next</span>
+						  <span class="sr-only"><img src="images/arrowRight.png"></span>
 						</a>
 					</div>
-
-					<script>
-					$(document).ready(function(){
-						// Activate Carousel
-						$("#myCarousel").carousel("pause");
-						   
-						
-						// Enable Carousel Controls
-						$(".left").click(function(){
-							$("#myCarousel").carousel("prev");
-						});
-						$(".right").click(function(){
-							$("#myCarousel").carousel("next");
-						});
-						
-						 
-					});
-					</script>
 				</div>
 			</div>
                 
