@@ -1,29 +1,38 @@
-<!--May 13th/16 Master -->
+<!--May 14th/16 VinegarFruit: branch off of master that we should all be messing with-->
 
-<meta charset="UTF-8">
     <html>
     <head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1,width=device-width, height=device-height, target-densitydpi=device-dpi" />
+		<script type="text/javascript" src="cordova.js" ></script>
         <script src = "js/jquery-1.12.3.min.js"></script>
         <link rel="stylesheet" type="text/css" href="jquery.mobile-1.4.5/jquery.mobile-1.4.5.css"/>
+        <script src="bootstrap-3.3.6-dist/js/bootstrap.min.js"></script>
+		<script src="js/jgestures.min.js"></script>
+		<script src="js/gameTimer.js"></script>
+		<script src="js/nuggetScript.js"></script>
+		<script src="js/pathGenerator.js"></script>
+        <script src="js/jerkScript.js"></script>
 
         <link rel="stylesheet" type="text/css" href="css/styles.css"/>
-        <script src="js/jerkScript.js"></script>
+		
+        <!--Adding this in makes it not centered dammit.
+        <link rel="stylesheet" type="text/css" href="bootstrap-3.3.6-dist/css/bootstrap.min.css">
+        -->
 
         <title>DotDash._</title>
     </head>
 
-<body>
-<div id="wrapper">
-    <br/>
+<body onload="gameSetup()">
     <div id="screen">
         <div id="title">DotDash._&nbsp </div>
 
         <!-- buttons and elements used in the main menu screen ----------------------------------------->
         <div id="main-screen">
             <div id="mode-selection-container">
-                <button class="mode-select" id="mode-1">MODE1</button>
+                <button onclick="play()" class="mode-select" id="mode-1">MODE1</button>
                 <button onclick="play()" class="mode-select" id="mode-2">MODE2</button>
-                <button class="mode-select" id="mode-3">MODE3</button>
+                <button onclick="play()" class="mode-select" id="mode-3">MODE3</button>
                 <button class="nongameplay-buttons" id="left-arrow-button"><img src="images/arrowLeft.png"/></button>
                 <button class="nongameplay-buttons" id="right-arrow-button"><img src="images/arrowRight.png"/></button>
             </div>
@@ -35,7 +44,7 @@
         <!-- common button used to return to the main menu -->
         <button onclick="openMainMenu()" class="nongameplay-buttons" id="return-button"><img src="images/backward.png"/></button>
         <div id="options-screen">
-            <div class="container">
+            <div class="T_container">
                 <h2 class="option-header">Music</h2>
                 <div class="option-slider">
                     <input type="checkbox" value="None" id="option-1" name="check" checked="checked"/>
@@ -56,37 +65,19 @@
                     <input type="checkbox" onclick="enableSteveMode()" value="None" id="option-4" name="check" />
                     <label for="option-4"></label>
                 </div>
+				<h2 class="option-header">Reset Save</h2>
+                <div class="option-slider">
+                    <input type="checkbox" onclick="clearSave()" value="None" id="option-5" name="check" />
+                    <label for="option-5"></label>
+                </div>
             </div>
         </div>
         <div id="scores-screen">
-            <div class="container">
+            <div class="T_container">
                 <h2>Marathon Mode</h2>
                 <table>
                     <tr>
                         <td id="score-mar-1">1.</td>
-                        <td class="score-text"></td>
-                    </tr>
-                    <tr>
-                        <td id="score-mar-2">2.</td>
-                        <td class="score-text"></td>
-                    </tr>
-                    <tr>
-                        <td id="score-mar-3">3.</td>
-                        <td class="score-text"></td>
-                    </tr>
-                </table><br/>
-                <h2>TimeAttack Mode</h2>
-                <table>
-                    <tr>
-                        <td id="score-attack-1">1.</td>
-                        <td class="score-text"></td>
-                    </tr>
-                    <tr>
-                        <td id="score-attack-2">2.</td>
-                        <td class="score-text"></td>
-                    </tr>
-                    <tr>
-                        <td id="score-attack-3">3.</td>
                         <td class="score-text"></td>
                     </tr>
                 </table><br/>
@@ -96,12 +87,11 @@
                         <td id="score-untimed-1">1.</td>
                         <td class="score-text"></td>
                     </tr>
+                </table><br/>
+				<h2>TimeAttack Mode</h2>
+                <table>
                     <tr>
-                        <td id="score-untimed-2">2.</td>
-                        <td class="score-text"></td>
-                    </tr>
-                    <tr>
-                        <td id="score-untimed-3">3.</td>
+                        <td id="score-attack-1">1.</td>
                         <td class="score-text"></td>
                     </tr>
                 </table>
@@ -109,40 +99,35 @@
             <button onclick="openBadges()" class="nongameplay-buttons" id="badges-button"><img src="images/medal2.png"/></button>
         </div>
         <div id="badges-screen">
-            <div class="container">
+            <div class="T_container">
                 <h2>Unlock badges by playing the game right, wethead.</h2>
                 <div class="badge-icons">
-                    <button onclick="badge1()" class="badge-button" id="badge-1-button"><img src="images/locked.png"/></button>
-                    <img src="images/locked.png"/>
-                    <img src="images/locked.png"/>
-                    <img src="images/locked.png"/>
-                    <img src="images/locked.png"/>
-                    <img src="images/locked.png"/>
-                    <img src="images/locked.png"/>
-                    <img src="images/locked.png"/>
-                    <img src="images/locked.png"/>
-                    <img src="images/locked.png"/>
+                    <button onclick="badge1()" class="badge-button" id="badge-1-button"><img id="badge1" src="images/locked.png"/></button>
+                    <img id="badge2" src="images/locked.png"/>
+                    <img id="badge3" src="images/locked.png"/>
+                    <img id="badge4" src="images/locked.png"/>
+                    <img id="badge5" src="images/locked.png"/>
+                    <img id="badge6" src="images/locked.png"/>
+                    <img id="badge7" src="images/locked.png"/>
+                    <img id="badge8" src="images/locked.png"/>
+                    <img id="badge9" src="images/locked.png"/>
+                    <img id="badge10" src="images/locked.png"/>
                 </div>
-                <div class="container" id="hint-box">
+                <div class="T_container" id="hint-box">
                     <h2>Hint:"What the hell is water?" </h2>
                 </div>
             </div>
             <button onclick="openScores()" class="nongameplay-buttons" id="badge-return-button"><img src="images/backward.png"/></button>
         </div>
         <div id="credits-screen">
-            <div class="container" id="credits-container">
+            <div class="T_container" id="credits-container">
                 <h2>created by:</h2>
                 <h2><b>THE SURVEYORS</b></h2>
-                <img src="images/dot-magenta.png"/>
-                <p>Jake Superior</p>
-                <img src="images/dot-yellow.png"/>
-                <p>Frisky Dingo</p>
-                <img src="images/dot-green.png"/>
-                <p>Jenkinz</p>
-                <img src="images/dot-blue.png"/>
-                <p>ZIA</p>
-                <img src="images/dot-purple.png"/>
-                <p>A Sponge</p><br/>
+                <img src="images/dot-magenta.png"/><p>Jake Superior</p>
+                <img src="images/dot-yellow.png"/><p>Frisky Dingo</p>
+                <img src="images/dot-green.png"/><p>Jenkinz</p>
+                <img src="images/dot-blue.png"/><p>ZIA</p>
+                <img src="images/dot-purple.png"/><p>A Sponge</p><br/>
                 <audio id="audio" src="http://www.soundjay.com/button/beep-07.wav" autostart="false" ></audio>
                 <button id="steve-button" class="cawButton"><img src="images/crow.png" width="60" height="60"/></button>
             </div>
@@ -154,29 +139,33 @@
                 <img src="images/hud_heartFull.png"/>
             </div>
             <div id="timer-bar">
-                <p>0:00</p>
+                <p id="timer">0:00</p>
             </div>
-            <!--Temporary for testing: pause button returns you to Main Menu-->
-            <button class="nongameplay-buttons" onclick="resetGrid()" id="pause-button"><img src="images/pause.png"></button>
+            <button class="nongameplay-buttons" onclick="pauseGame()" id="pause-button"><img src="images/pause.png"></button>
             <button class="nongameplay-buttons" id="tutorial-button"><img src="images/question.png"></button>
             <div id="score-bar">
                 <p id="playerScore">0</p>
             </div>
-            <div class="container" id="dot-container">
+            <div class="T_container" id="dot-container">
             </div>
         </div>
-	    <div id="gameover-screen">
+		<div id="pause-screen">
+            <h1>Paused</h1>
+            <button class="nongameplay-buttons" onclick="closePauseScreen(); resumeGame();" id="unpause-button"><img src="images/backward.png"/></button>
+            <button class="nongameplay-buttons" onclick="playAgain()" id="restart-button"><img src="images/return.png"/></button>
+            <button class="nongameplay-buttons" onclick="openMainMenu()" id="quit-button"><img src="images/cross.png"/></button>
+        </div>
+        <div id="gameover-screen">
             <br/>
-            <h1>GAME OVER</h1>
+            <h1 id="gameover-text">GAME OVER</h1>
             <div id="final-score-container"><h2>Your score: </h2><h2 id="final-score">NULL</h2></div>
-            <div class="ingame-button-container"><button class="ingame-buttons">Play Again</button></div><br/>
-            <div class="ingame-button-container"><button class="ingame-buttons" onclick="openMainMenu()">Main Menu</button></div>
+            <button class="nongameplay-buttons" id="game-over-quit-button" onclick="quitGame()"><img src="images/backward.png"></button>
+            <button class="nongameplay-buttons" id="game-over-restart-button" onclick="playAgain()"><img src="images/return.png"></button>
+
         </div>
         <div>
         </div>
     </div>
-    <br/>
-</div>
 <!--added preloader-->
 <div id="preload">
     <img src="images/cross.png" width="1" height="1" alt="Cross" />

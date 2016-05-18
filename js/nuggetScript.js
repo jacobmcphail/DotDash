@@ -25,7 +25,7 @@ function openCredits() {
     document.getElementById('main-screen').style.display = 'none';
     document.getElementById('credits-screen').style.display = "block";
     document.getElementById('return-button').style.display = "block";
-    document.getElementById('title').innerHTML = "DotDash._"
+    document.getElementById('title').innerHTML = ""
 }
 function openMainMenu() {
     document.getElementById('options-screen').style.display = 'none';
@@ -37,14 +37,35 @@ function openMainMenu() {
     document.getElementById('gameover-screen').style.display = "none";
     document.getElementById('game-screen').style.display = 'none';
     document.getElementById('title').style.display = 'block';
+    document.getElementById('pause-screen').style.display = 'none';
 }
 function play() {
+    document.getElementById('gameover-screen').style.display = "none";
+    document.getElementById('pause-screen').style.display = "none";
     document.getElementById('main-screen').style.display = 'none';
     document.getElementById('title').style.display = 'none';
     document.getElementById('game-screen').style.display = 'block';
     document.getElementById('game-screen').style.opacity = '1';
-    playing = true;
+	playing = true;
+    initialize(gamemode, newRound, removeDots);
 }
+
+function openPauseScreen() {
+    document.getElementById('pause-screen').style.display = "block";
+    document.getElementById('game-screen').style.display = 'none';
+}
+
+function closePauseScreen() {
+    document.getElementById('pause-screen').style.display = "none";
+    document.getElementById('game-screen').style.display = 'block';
+}
+
 function badge1() {
     window.alert("get this badge by playing for 100000 hours");
+}
+
+
+function quitGame() {
+    playing = false;
+    openMainMenu();
 }

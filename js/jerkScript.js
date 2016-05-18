@@ -2,31 +2,37 @@
  * Gameplay-related
  * */
 
-//Point constructor
-function Point(x,y){
-    this.x = x;
-    this.y = y;
-}
+/*
+Tuesday May 16th: VinegarFruit (official Death/Dev Branch)
+-Steve mode cheating thwarted
+-Steve badge!
+-Removed some comments
+*/
 
-//Global variables; may relocate in the future
-var playing = true;
+var gamemode;
+var playing = false;
 var steveModeEnabled = false;
 var noErrorsYet = true;
 var notComplete = true;
+var userInput = true;
 var index = 0;
 var socks;
 var playerScore = 0;
 var currentRound = 1;
 var lifePoints = 3;
-//In future versions of the game, maximum numRows = 5 and maximum numRows = 4
 var numRows = 3;
 var numCols = 3;
+var localSavedFiles;
 var container;
 var dotArray = [];
-var highscores = ["-----", "scrumcake", "-------", "-------", "-------", "-------", "-------", "-------", "-------"];
-
 var colourArray = ["cyan","orange","green","pink","blue","purple"];
 var colour;
+var counter;
+
+
+$.getScript("js/gameTimer.js", function(){
+//          console.log("ALL YOUR MEAT BYPRODUCTS COMBINED");
+});
 
 $.getScript("js/nuggetScript.js", function(){
 //          console.log("ALL YOUR MEAT BYPRODUCTS COMBINED");
@@ -36,57 +42,125 @@ $.getScript("js/pathGenerator.js", function(){
           //console.log("Bald kiwi bird");
 });
 
-$(document).ready(function(){
-    updateHighScores();
 
-    //Update high scores
-    function updateHighScores() {
-        var scoreSpaces = document.getElementsByClassName("score-text");
-        for (var i = 0; i < highscores.length; i++) {
-            scoreSpaces[i].innerHTML = highscores[i];
-        }
+
+//File storing function
+function gameSetup() {
+	checkCookie();
+	localSavedFiles = JSON.parse(localStorage.getItem("saveFile"));
+	if (localSavedFiles.length != 14) {
+		localSavedFiles = null;
+		console.log("Save Error");
+		window.alert("There was a problem with your save! Creating new save file.");
+	}
+	if (localSavedFiles == null) {
+		localSavedFiles = [false, false, false, false, false, false, false, false, false, false, false, 0, 0, 0];
+		localStorage.setItem("saveFile", JSON.stringify(localSavedFiles));
+	} else {
+		console.log(localSavedFiles);
+		updateBadges();
+	}
+	updateHighScores();
+}
+
+function checkCookie(){
+    var cookieEnabled=(navigator.cookieEnabled)? true : false;
+    if (typeof navigator.cookieEnabled=="undefined" && !cookieEnabled){ 
+        document.cookie="testcookie";
+        cookieEnabled=(document.cookie.indexOf("testcookie")!=-1)? true : false;
     }
+    return (cookieEnabled)?true:showCookieFail();
+}
+
+function showCookieFail(){
+  console.log("NO COOKIES");
+  window.alert("WARNING: Cookies must be enabled to play this game. Enable cookies then refresh the game.");
+}
+
+function clearSave() {
+	localSavedFiles = null;
+	localStorage.setItem("saveFile", JSON.stringify(localSavedFiles));
+	gameSetup();
+}
+
+//Update high scores
+function updateHighScores() {
+    var scoreSpaces = document.getElementsByClassName("score-text");
+    for (var i = 11, q = 0; i < 14; i++, q++) {
+        scoreSpaces[q].innerHTML = localSavedFiles[i];
+    }
+}
+
+
+$(document).ready(function(){
 
     //return scores to normal after Steve Mode is disabled
-    document.getElementById('option-4').onchange = function() {
-        if ( document.getElementById('option-4').checked === false ) {
+    $("#option-4").on('tapone', function(){
+        if(!steveModeEnabled){
             updateHighScores();
         }
-    };
+    });
     
-    $(".mode-select").click(function(){
+    $(".mode-select").on('tapone', function(){
         var mode = this.id;
-        console.log("mode selected: " + mode);
-
-        initialize(mode, newRound, removeDots);
+		if (mode == "mode-1") {
+			gamemode = 0;
+		} else if (mode == "mode-2") {
+			gamemode = 1;
+		} else {
+			gamemode = 2;
+		}
+        console.log("mode selected: " + mode + ":" + gamemode);
+    //    initialize(gamemode, newRound, removeDots);
+    });
+	
+	$(".cawButton").on('tapone', function(){
+        if (steveModeEnabled) {
+            var sound = document.getElementById("audio");
+            sound.play();
+			if (!localSavedFiles[1]) {
+				localSavedFiles[1] = true;
+				localStorage.setItem("saveFile", JSON.stringify(localSavedFiles));
+				updateBadges();
+			}
+            // Easter Egg: change scores to "Steve"
+            var curScores = document.getElementsByClassName("score-text");
+            for (var i = 0; i < curScores.length; i++) {
+                curScores[i].innerHTML = "Steve";
+            }
+        }
     });
 });
 
-function initialize(gameMode, newRound, removeDots){
+function initialize(gamemode, newRound, removeDots){
     //Initialize global variables depending on mode (currently only one mode)
     container = document.getElementById("dot-container");
+    container.classList.add("vertical-center");
     playerScore = 0;
     currentRound = 1;
-    lifePoints = 3;
+	lifePoints = 3;
+	if (gamemode == 2) {
+		lifePoints = -1;
+	}
+	numRows = 3;
+	numCols = 3;
+	playing = true;
+	userInput = false;
     updateLives();
     updateScore();
-
-    // Socks is a grid element with a fixed number of columns that contains dots.
-    // When the game first starts up, create a new element to assign to socks.
-    if($('#socksID').length === 0){
-        socks = document.createElement("div");
-        socks.id = "socksID";
-        socks.className = "ui-grid-b gamegrid center";
-        container.appendChild(socks);
-    }
-    /*If there are dots, clear them so they can be filled with new ones next round.
-    Although the game currently only creates 3x3 grids, in the future a new grid will
-     be generated each round with maximum dimensions determined by difficulty level.
-      Will reshuffle ordering of functions to make more efficient
-    */
-    if(socks.hasChildNodes()){
-            removeDots();
-        }
+	switch(gamemode) {
+		case 0:
+			timerSet(0, 20);
+			break;
+		case 1: 
+			timerSet(0, 0);
+			break;
+		case 2:
+			timerSet(3, 0);
+			break;
+		default:
+			window.alert("YOU SHOULD NOT SEE THIS!");
+		}
     newRound(generateGrid);
 }
 
@@ -111,41 +185,47 @@ function updateLives() {
 
 /* Invoked at the start of every round. Generate a new grid and reset variables*/
 function newRound(generateGrid){
+    console.log("Current round: " + currentRound);
+
 	if (playing) {
+		if (gamemode == 0) {
+			timerSet(0, 20);
+		}
 		noErrorsYet = true;
 		notComplete = true;
 		index = 0;
         colour = colourArray[Math.floor(Math.random()*6)];
-        console.log(colour);
+
+        //Create a new socks every time a new round starts
+        // Socks is a grid element with a fixed number of columns that contains dots.
+        // When the game first starts up, create a new element to assign to socks.
+        if($('#socksID').length > 0){
+            $("#socksID").remove();
+        }
+
+        if($('#socksID').length === 0){
+            socks = document.createElement("div");
+            socks.id = "socksID";
+
+            socks.className = "container center";
+            container.appendChild(socks);
+        }
+        /*If there are dots, clear them so they can be filled with new ones next round.
+         */
+        if(socks.hasChildNodes()){
+            removeDots();
+        }
+        //Also, get rid of the old socks
+
 
 		generateGrid(createGrid,make_2D_Array, pathDemonstration);
 	}
 }
 
-function difficulty(nodeCount) {
-    var length = (nodeCount * 0.35) + ((0.1 * currentRound) - 0.1);
-    if (length > nodeCount) {
-        return nodeCount;
-    }
-    return Math.round(length);
-}
-
 //Create a grid to populate with dots
 function generateGrid(createGrid, make_2D_Array, pathDemonstration){
     createGrid(socks,numRows,numCols);
-
-    //In progress: creating a function to expand grid size
-    //socks.className = "ui-grid-b gamegrid center";
-    /*
-        if (numCols==3){
-            socks.className = "ui-grid-b gamegrid center";
-        }
-        else if(numCols==4){
-            socks.className = "ui-grid-c gamegrid center";
-        }*/
-
     dotArray = make_2D_Array(dotArray,numRows,numCols);
-
     //Place dots generated in make_2D_Array
     var dotID = 1;
     for(var i=0;i<numRows;i++){
@@ -154,27 +234,107 @@ function generateGrid(createGrid, make_2D_Array, pathDemonstration){
             dotID++;
         }
     }
+   // var someGrid = new Grid(numRows,numCols);
+    var arrayToRepeat = runPathFinder(numRows, numCols, difficulty(numRows * numCols), true);
+    if(steveModeEnabled){
+        steveify();
+    }
+    pathDemonstration(arrayToRepeat, validate);
 
-    var someGrid = new Grid(3,3);
-    var arrayToRepeat = runPathFinder(someGrid, difficulty(someGrid.grid.length * someGrid.grid[0].length), true);
+}
 
-    $(function(){
-        $( ".dot" ).bind( "click", tapHandler );
-        function tapHandler( event ){
-            if($(event.target).hasClass("selected")){
-                $( event.target ).removeClass( "selected" );
-                //$( event.target ).addClass( colour );
-            } else {
-                $( event.target ).removeClass( colour );
-                $( event.target ).addClass( "selected" );
+/*
+ Create the grid that dots will populate
+ */
+
+function createGrid(cont, nRows, nCols){
+    var totalDots = nRows * nCols;
+    var dotID = 1;
+    var newRow;
+
+    //At the start: col-xs-4
+    //numCols = 4: col-xs-3
+    //numCols = 5; col-xs-2 with offset
+    //numCols = 6; cols-xs-2
+    //numCols = 7; cols-xs-1 with offset, etc.
+    //numCols = 12; cols-xs-1
+    for(var i = 0; i < nRows; i++) {
+        newRow = document.createElement("div");
+        newRow.className = "row row-centered";
+        var isFirstElement = true;
+        for(var j=0;j<nCols;j++) {
+            var gridElement = document.createElement("div");
+            gridElement.className = "col-centered dotcont";
+            switch(numCols){
+                case 4:
+                    gridElement.classList.add("col-xs-3");
+                    break;
+                case 5:
+                    gridElement.classList.add("col-xs-2");
+                    //Uncomment if you are using Bootstrap
+                 /*   if(isFirstElement){
+                        gridElement.classList.add("col-xs-offset-1");
+                        isFirstElement = false;
+                    }*/
+                    break;
+                case 6:
+                    gridElement.classList.add("col-xs-2");
+                    break;
+                default:
+                    gridElement.classList.add("col-xs-4");
+                    if(isFirstElement){
+                        gridElement.classList.add("custom-offset");
+                        isFirstElement = false;
+                    }
+                    break;
             }
+            gridElement.id = "block" + (dotID);
+            dotID++;
+            newRow.appendChild(gridElement);
         }
-    });
-	if(steveModeEnabled){
-		steveify();
-	}
+        cont.appendChild(newRow);
+    }
+}
 
-	pathDemonstration(arrayToRepeat, validate);
+/*Creates dot-containing div elements and stores them in a 2D array.
+ * Each has an x and y attribute that can be used to reference a dot in
+ * the array.*/
+function make_2D_Array(array, nRows, nCols) {
+    var i, j;
+    for(i=0;i<nRows;i++){
+        var newArray = [];
+        array[i] = newArray;
+        for(j=0;j<nCols;j++){
+            var newDot = document.createElement("div");
+
+            newDot.className = "dot text-center";
+            newDot.classList.add(colour);
+
+            newArray[j] = newDot;
+            newDot.setAttribute('isVisited','false');
+            newDot.setAttribute('x',i);
+            newDot.setAttribute('y',j);
+        }
+    }
+    return array;
+}
+
+// Sets difficulty for round
+function difficulty(nodeCount) {
+	var length;
+	if (currentRound < 45) {
+		numRows = Math.round((3 + (currentRound / 19)));
+		numCols = Math.round((3 + (currentRound / 22)));
+		length = 3 + ((0.1 * currentRound) - 0.1);
+	} else {
+		numRows = 5;
+		numCols = 5;
+		length = 3 + ((0.05 * currentRound) - 0.05);
+	}
+    if (length > nodeCount) {
+        return nodeCount;
+    }
+    return Math.round(length);
 }
 
 /* Any dot that is selected by the user has its x and y coordinates compared to
@@ -186,30 +346,69 @@ function generateGrid(createGrid, make_2D_Array, pathDemonstration){
   * and start a new round*/
 
 function validate(array, userFeedback, dArray){
-    console.log("Entered validate()");
     var ex, wai;
+	
+	counter = setTimeout(function() {
+		if (gamemode != 1) {
+			console.log("TIMESUP");
+			if (gamemode == 2) {
+				lifePoints = 0;
+				updateLives();
+				return;
+			}
+			noErrorsYet = false;
+			lifePoints--;
+			updateLives();
+			userFeedback(false, null);
+			return;
+		}
+	}, ((minutes * 60) * 1100) + (seconds * 1000) + 20);
+	
+    $(function(){
+        $( ".dot" ).bind( "tapone", tapHandler );
+        function tapHandler( event ){
+			if (!userInput) {
+				return;
+			}
+            if($(event.target).hasClass("selected")){
+                $( event.target ).removeClass( "selected" );
+                console.log("x: " + this.x + ", y:" + this.y);
+            } else {
+                $( event.target ).removeClass( colour );
+                $( event.target ).addClass( "selected" );
+            }
+        }
+    });
 
     if(notComplete&&noErrorsYet) {
-        $(".dot").on("click", function () {
+        $(".dot").on("tapone", function () {
+			if (!userInput) {
+					return;
+			}
             ex = $(this).attr("x");
             wai = $(this).attr("y");
-
             if (notComplete && noErrorsYet) {
                 if (ex == array[index].pos.x && wai == array[index].pos.y) {
                     if (index < array.length) {
-                        console.log("Correct so far; index = " + index);
                         index++;
                         if (index >= array.length) {
-                            console.log("All correct!");
+							clearTimeout(counter);
+							timerPause();
                             notComplete = false;
-                            playerScore += currentRound;
+                            playerScore += currentRound + (Math.round(currentRound * 0.1) * seconds);
                             updateScore();
                             currentRound++;
                             userFeedback(true, dArray[ex][wai]);
-                        }
-                    }
+                        } 
+                    } 
                 } else {
-                    console.log("Incorrect");
+					clearTimeout(counter);
+					timerPause();
+					if (gamemode == 2) {
+						for (var c = 0; c < 20; c++) {
+							updateTimer();
+						}
+					}
                     noErrorsYet = false;
                     lifePoints--;
                     updateLives();
@@ -223,8 +422,6 @@ function validate(array, userFeedback, dArray){
 /* Displays feedback to user if they got round correct or incorrect.
 * */
 function userFeedback(bool, lastNode) {
-    console.log("Entered userFeedback()");
-
     var dot;
     if (bool) {
         dot = "correct";
@@ -274,7 +471,6 @@ function adjustStats(reset){
 /* Remove dots from grid container. To combine with other functions involved in
 starting a new round into a cleaner function later.*/
 function reset(removeDots) {
-    console.log("Entered reset()");
     removeDots();
     resetVals();
     newRound(generateGrid);
@@ -284,54 +480,9 @@ function reset(removeDots) {
    of columns.
  * */
 function removeDots(){
-    console.log("Entered removeDots()");
     while(socks.hasChildNodes()){
         socks.removeChild(socks.lastChild);
     }
-}
-
-/*
- Create the grid that dots will populate
- As of now, numCols is always going to be 3.
- */
-
-function createGrid(cont, nRows, nCols){
-    var totalDots = nRows * nCols;
-    var dotID = 1;
-    for(var i = 0; i < nRows; i++) {
-        var ch = 'a';
-        for(var j=0;j<nCols;j++) {
-            var gridElement = document.createElement("div");
-            gridElement.className = "ui-block-" +ch+ " box";
-            ch = String.fromCharCode(ch.charCodeAt(0)+1);
-            gridElement.id = "block" + (dotID);
-            dotID++;
-            cont.appendChild(gridElement);
-        }
-    }
-}
-
-/*Creates dot-containing div elements and stores them in a 2D array.
-* Each has an x and y attribute that can be used to reference a dot in
-* the array.*/
-function make_2D_Array(array, nRows, nCols) {
-    var i, j;
-    for(i=0;i<nRows;i++){
-        var newArray = [];
-        array[i] = newArray;
-        for(j=0;j<nCols;j++){
-            var newDot = document.createElement("div");
-
-            newDot.className = "dot";
-            newDot.classList.add(colour);
-
-            newArray[j] = newDot;
-            newDot.setAttribute('isVisited','false');
-            newDot.setAttribute('x',i);
-            newDot.setAttribute('y',j);
-        }
-    }
-    return array;
 }
 
 //Returns whether a dot has been visited
@@ -343,14 +494,20 @@ function getIsVisited(element) {
 * Briefly changes the colour of each to indicate which dots should be
  * selected in which sequence.*/
 function pathDemonstration(arrayToRepeat, validate) {
+	userInput = false;
     var pt;
+	var blinkTime;
+	if (currentRound >= 250) {
+		blinkTime = 200;
+	} else {
+		blinkTime = (700 - (currentRound * 2))
+	}
     //For testing
     printPath(arrayToRepeat);
-    console.log(arrayToRepeat.length);
 
     for (var i = 0; i < arrayToRepeat.length; i++) {
         (function (i) {
-            window.setTimeout(function () {
+            setTimeout(function () {
                 pt = arrayToRepeat[i].pos;
                 if(steveModeEnabled){
                    dotArray[pt.x][pt.y].classList.add("magenta");
@@ -359,11 +516,11 @@ function pathDemonstration(arrayToRepeat, validate) {
                     dotArray[pt.x][pt.y].classList.remove(colour);
                    dotArray[pt.x][pt.y].classList.add("selected");
                }
-            }, i * (600 - (currentRound * 2)));
+            }, i * blinkTime);
         }(i));
 
         (function (i) {
-            window.setTimeout(function () {
+            setTimeout(function () {
                 pt = arrayToRepeat[i].pos;
 				if(steveModeEnabled){
                    dotArray[pt.x][pt.y].classList.add("black");
@@ -372,22 +529,59 @@ function pathDemonstration(arrayToRepeat, validate) {
                    dotArray[pt.x][pt.y].classList.remove("selected");
                     dotArray[pt.x][pt.y].classList.add(colour);
                }
-            }, arrayToRepeat.length * (600 - (currentRound * 2)));
+            }, arrayToRepeat.length * blinkTime);
         }(i));
      }
-	 validate(arrayToRepeat, userFeedback, dotArray);
+	 setTimeout(function () {
+		userInput = true;
+	    if (gamemode != 1) {
+		timerStart();
+		}
+	    validate(arrayToRepeat, userFeedback, dotArray);
+     }, arrayToRepeat.length * blinkTime);
 }
 
-// Gameplay-related
-function resetGrid(){
-    console.log("Entered resetGrid()");
+function playAgain() {
     removeDots();
     resetVals();
-    openMainMenu();
+    play();
+}
+
+function resumeGame() {
+	counter = setTimeout(function() {
+		if (gamemode != 1) {
+			console.log("TIMESUP");
+			if (gamemode == 2) {
+				lifePoints = 0;
+				updateLives();
+				return;
+			}
+			noErrorsYet = false;
+			lifePoints--;
+			updateLives();
+			userFeedback(false, null);
+			return;
+		}
+	}, ((minutes * 60) * 1100) + (seconds * 1000) + 20);
+	if (gamemode != 1) {
+		timerStart();
+	}
+}
+
+function pauseGame() {
+    if (userInput) {
+		clearTimeout(counter);
+		timerPause();
+        openPauseScreen();
+    }
 }
 
 function gameOver() {
     playing = false;
+	badgeChecker(currentRound, lifePoints);
+	scoreChecker(playerScore);
+	localStorage.setItem("saveFile", JSON.stringify(localSavedFiles));
+	updateHighScores();
     $( "#game-screen" ).fadeOut( 1500, function() {
         $('#gameover-screen').fadeIn(1500, function() {});
     });
@@ -402,29 +596,6 @@ function resetVals(){
     index = 0;
 }
 
-//Easter Egg: Handles toggling of Steve Mode
-$(document).ready(function(){
-    $(".cawButton").click(function(){
-        if (steveModeEnabled) {
-            var sound = document.getElementById("audio");
-            sound.play();
-
-            // change scores to "Steve"
-            var curScores = document.getElementsByClassName("score-text");
-            for (var i = 0; i < curScores.length; i++) {
-                curScores[i].innerHTML = "Steve";
-            }
-        }
-        //console.log("steveModeEnabled: " + steveModeEnabled);
-    });
-
-    $(".mode-select").click(function(){
-        if(steveModeEnabled){
-            steveify();
-        }
-    });
-});
-
 // Easter Egg: All is Steve Albini; Steve Albini is all
 function enableSteveMode() {
     if (steveModeEnabled == false) {
@@ -432,7 +603,7 @@ function enableSteveMode() {
     } else {
         steveModeEnabled = false;
         $(".dot").removeClass("steve tapped_steve black bound");
-        $(".dot").unbind("click", steveTap);
+        $(".dot").unbind("tapone", steveTap);
     }
     console.log("steve-option toggle: " + steveModeEnabled);
 }
@@ -441,17 +612,109 @@ function enableSteveMode() {
 function steveify() {
     $(".dot").addClass("steve black");
     if(!$(".dot").hasClass("bound")){
-        $(".dot").bind("click", steveTap);
+        $(".dot").bind("tapone", steveTap);
         $(".dot").addClass("bound");
     }
 }
 
 function steveTap(event) {
-    if ($(event.target).hasClass("tapped_steve")) {
-        $(event.target).removeClass("tapped_steve");
-        $(event.target).addClass("steve");
-    } else {
-        $(event.target).removeClass("steve");
-        $(event.target).addClass("tapped_steve");
+    if(userInput){
+        if ($(event.target).hasClass("tapped_steve")) {
+            $(event.target).removeClass("tapped_steve");
+            $(event.target).addClass("steve");
+        } else {
+            $(event.target).removeClass("steve");
+            $(event.target).addClass("tapped_steve");
+        }
     }
+}
+
+function scoreChecker(playerScore) {
+	switch(gamemode) {
+		case 0:
+			if (playerScore > localSavedFiles[11]) {
+				localSavedFiles[11] = playerScore;
+				return true;
+			}
+			break;
+			break;
+		case 1: 
+			if (playerScore > localSavedFiles[12]) {
+				localSavedFiles[12] = playerScore;
+				return true;
+			}
+			break;
+		case 2:
+			if (playerScore > localSavedFiles[13]) {
+				localSavedFiles[12] = playerScore;
+				return true;
+			}
+			break;
+			break;
+		default:
+			window.alert("YOU SHOULD NOT SEE THIS!");
+	}
+	return false;
+}
+
+// Checks to see if player has unlocked any new badges
+function badgeChecker(currentRound, lifePoints) {
+		switch(gamemode){
+			case 0:
+				if (currentRound >= 40 && !localSavedFiles[9] ) {
+					localSavedFiles[9] = true;
+					console.log("UNLOCK: Get to level 30 in marathon mode");
+				}
+				if (currentRound >= 60 && lifePoints >= 3 && !localSavedFiles[6] ) {
+					localSavedFiles[6] = true;
+					console.log("UNLOCK: Get to level 50 in marathon mode with all lives");
+				}
+				if (currentRound >= 60 && !localSavedFiles[3] ) {
+					localSavedFiles[3] = true;
+					console.log("UNLOCK: Get to level 60 in marathon mode");
+				}
+				break;
+			case 1:
+				if (currentRound >= 40 && !localSavedFiles[8] ) {
+					localSavedFiles[8] = true;
+					console.log("UNLOCK: Get to level 30 in marathon mode");
+				}
+				if (currentRound >= 60 && lifePoints >= 3 && !localSavedFiles[5] ) {
+					localSavedFiles[5] = true;
+					console.log("UNLOCK: Get to level 50 in marathon mode with all lives");
+				}
+				if (currentRound >= 60 && !localSavedFiles[2] ) {
+					localSavedFiles[2] = true;
+					console.log("UNLOCK: Get to level 60 in marathon mode");
+				}
+				break;
+			case 2:
+				if (currentRound >= 20 && !localSavedFiles[4] ) {
+					localSavedFiles[4] = true;
+					console.log("UNLOCK: Get to level 20 in time attack mode");
+				}
+				if (currentRound >= 20 && lifePoints == -1 && !localSavedFiles[7] ) {
+					localSavedFiles[7] = true;
+					console.log("UNLOCK: Get to level 20 in time attack mode without a mistake");
+				}
+				if (currentRound >= 30 && !localSavedFiles[10] ) {
+					localSavedFiles[10] = true;
+					console.log("UNLOCK: Get to level 30 in time attack mode");
+				}
+				break;
+			default:
+				window.alert("YOU SHOULD NOT SEE THIS!");
+		}
+	updateBadges();
+}
+
+// Updates the badges in the badge menu
+function updateBadges() {
+	for (var bIndex = 1; bIndex <= 10; bIndex++) {
+		if (localSavedFiles[bIndex]) {
+			document.getElementById("badge" + bIndex).src="images/medal2.png";
+		} else {
+			document.getElementById("badge" + bIndex).src="images/locked.png";
+		} 
+	} 
 }

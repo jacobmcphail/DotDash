@@ -1,0 +1,5 @@
+$ ls .idea/
+ant.xml         encodings.xml       modules.xml     workspace.xml
+compiler.xml        inspectionProfiles  scopes
+copyright       libraries       testrunner.xml
+dictionaries        misc.xml        vcs.xml
