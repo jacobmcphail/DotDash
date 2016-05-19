@@ -48,19 +48,40 @@ $.getScript("js/pathGenerator.js", function(){
 function gameSetup() {
 	checkCookie();
 	localSavedFiles = JSON.parse(localStorage.getItem("saveFile"));
-	if (localSavedFiles.length != 14) {
-		localSavedFiles = null;
-		console.log("Save Error");
-		window.alert("There was a problem with your save! Creating new save file.");
-	}
 	if (localSavedFiles == null) {
 		localSavedFiles = [false, false, false, false, false, false, false, false, false, false, false, 0, 0, 0];
 		localStorage.setItem("saveFile", JSON.stringify(localSavedFiles));
 	} else {
+		if (localSavedFiles.length != 14) {
+            localSavedFiles = null;
+            console.log("Save Error");
+            window.alert("There was a problem with your save! Creating new save file.");
+            gameSetup();
+		}
 		console.log(localSavedFiles);
 		updateBadges();
 	}
 	updateHighScores();
+	document.getElementById('local-scores').style.display = 'block';
+	document.getElementById('online-scores').style.display = 'none';
+    /* arrow key stuff -- may not use
+    document.onkeydown = function(e) {
+        switch (e.keyCode) {
+            case 37:
+                alert('left');
+                break;
+            case 38:
+                alert('up');
+                break;
+            case 39:
+                alert('right');
+                break;
+            case 40:
+                alert('down');
+                break;
+        }
+    }; */
+
 }
 
 function checkCookie(){
@@ -85,9 +106,8 @@ function clearSave() {
 
 //Update high scores
 function updateHighScores() {
-    var scoreSpaces = document.getElementsByClassName("score-text");
     for (var i = 11, q = 0; i < 14; i++, q++) {
-        scoreSpaces[q].innerHTML = localSavedFiles[i];
+		$("#localHS-" + q).text(localSavedFiles[i]);
     }
 }
 
@@ -119,18 +139,69 @@ $(document).ready(function(){
             var sound = document.getElementById("audio");
             sound.play();
 			if (!localSavedFiles[1]) {
+				window.alert("Badge Unlocked! Activated Steve mode.");
 				localSavedFiles[1] = true;
 				localStorage.setItem("saveFile", JSON.stringify(localSavedFiles));
 				updateBadges();
 			}
             // Easter Egg: change scores to "Steve"
-            var curScores = document.getElementsByClassName("score-text");
+           /* var curScores = document.getElementsByClassName("score-text");
             for (var i = 0; i < curScores.length; i++) {
                 curScores[i].innerHTML = "Steve";
-            }
+            }*/
         }
     });
+	
+/*	if( /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) ) {
+		function reorient(e) {
+		var portrait = (window.orientation % 180 == 0);
+		$("body > div").css("-webkit-transform", !portrait ? "rotate(-90deg)" : "");
+		}
+		window.onorientationchange = reorient;
+		window.setTimeout(reorient, 0);
+	}	*/
+	
+	$(".cb-enable").click(function(){
+        var parent = $(this).parents('.switch');
+        $('.cb-disable',parent).removeClass('selected');
+        $(this).addClass('selected');
+        $('.checkbox',parent).attr('checked', true);
+		document.getElementById('local-scores').style.display = 'block';
+		document.getElementById('online-scores').style.display = 'none';
+    });
+    $(".cb-disable").click(function(){
+        var parent = $(this).parents('.switch');
+        $('.cb-enable',parent).removeClass('selected');
+        $(this).addClass('selected');
+        $('.checkbox',parent).attr('checked', false);
+		document.getElementById('local-scores').style.display = 'none';
+		document.getElementById('online-scores').style.display = 'block';
+		printOnlineScores();
+    });
+	
 });
+
+function printOnlineScores() {
+	var leaderboard = document.getElementById("online-scores");
+	leaderboard.innerHTML = '';
+	/*
+	/ Check if you can connect to database.
+	*/
+	leaderboard.innerHTML += '<h1>Leaderboard</h1>';
+	leaderboard.innerHTML += '<h2>Marathon</h2>';
+	for(var i = 1; i <= 10; i++){
+		leaderboard.innerHTML += '<p>' + i + ': ' + 'PLACEHOLDER' + ' - ' + 'SCRSCR' + '</p>';
+	}
+	leaderboard.innerHTML += '<br><h2>No Timer</h2>';
+	for(var i = 1; i <= 10; i++){
+		leaderboard.innerHTML += '<p>' + i + ': ' + 'PLACEHOLDER' + ' - ' + 'SCRSCR' + '</p>';
+	}
+	leaderboard.innerHTML += '<br><h2>Time Attack</h2>';
+	for(var i = 1; i <= 10; i++){
+		leaderboard.innerHTML += '<p>' + i + ': ' + 'PLACEHOLDER' + ' - ' + 'SCRSCR' + '</p>';
+	}
+	leaderboard.innerHTML += '<br>';
+}
 
 function initialize(gamemode, newRound, removeDots){
     //Initialize global variables depending on mode (currently only one mode)
@@ -148,6 +219,11 @@ function initialize(gamemode, newRound, removeDots){
 	userInput = false;
     updateLives();
     updateScore();
+	if (gamemode == 1) {
+		document.getElementById('timer-bar').style.visibility='hidden';
+	} else {
+		document.getElementById('timer-bar').style.visibility='visible'; 
+	}
 	switch(gamemode) {
 		case 0:
 			timerSet(0, 20);
@@ -322,14 +398,14 @@ function make_2D_Array(array, nRows, nCols) {
 // Sets difficulty for round
 function difficulty(nodeCount) {
 	var length;
-	if (currentRound < 45) {
+	if (currentRound < 40) {
 		numRows = Math.round((3 + (currentRound / 19)));
-		numCols = Math.round((3 + (currentRound / 22)));
+		numCols = Math.round((3 + (currentRound / 32)));
 		length = 3 + ((0.1 * currentRound) - 0.1);
 	} else {
 		numRows = 5;
-		numCols = 5;
-		length = 3 + ((0.05 * currentRound) - 0.05);
+		numCols = 4;
+		length = 3 + ((0.03 * currentRound) - 0.03);
 	}
     if (length > nodeCount) {
         return nodeCount;
@@ -404,13 +480,17 @@ function validate(array, userFeedback, dArray){
                 } else {
 					clearTimeout(counter);
 					timerPause();
+					noErrorsYet = false;
 					if (gamemode == 2) {
 						for (var c = 0; c < 20; c++) {
 							updateTimer();
 						}
+						if ((seconds + minutes) <= 0) {
+						lifePoints = 0;
+						}
+					} else {
+	                    lifePoints--;					
 					}
-                    noErrorsYet = false;
-                    lifePoints--;
                     updateLives();
                     userFeedback(false, dArray[ex][wai]);
                 }
@@ -504,7 +584,6 @@ function pathDemonstration(arrayToRepeat, validate) {
 	}
     //For testing
     printPath(arrayToRepeat);
-
     for (var i = 0; i < arrayToRepeat.length; i++) {
         (function (i) {
             setTimeout(function () {
@@ -568,22 +647,26 @@ function resumeGame() {
 	}
 }
 
-function pauseGame() {
+function pauseGame(type) {
     if (userInput) {
-		clearTimeout(counter);
-		timerPause();
-        openPauseScreen();
+        clearTimeout(counter);
+        timerPause();
+        if (type == 'pause') {
+            openPauseScreen();
+        } else if (type == 'tutorial') {
+            openTutorialScreen();
+        }
     }
 }
 
 function gameOver() {
     playing = false;
-	badgeChecker(currentRound, lifePoints);
-	scoreChecker(playerScore);
-	localStorage.setItem("saveFile", JSON.stringify(localSavedFiles));
-	updateHighScores();
     $( "#game-screen" ).fadeOut( 1500, function() {
         $('#gameover-screen').fadeIn(1500, function() {});
+		badgeChecker(currentRound, lifePoints);
+		scoreChecker(playerScore);
+		localStorage.setItem("saveFile", JSON.stringify(localSavedFiles));
+		updateHighScores();
     });
 
     // add final score
@@ -633,23 +716,24 @@ function scoreChecker(playerScore) {
 	switch(gamemode) {
 		case 0:
 			if (playerScore > localSavedFiles[11]) {
+				window.alert("New HighScore in marathon mode!");
 				localSavedFiles[11] = playerScore;
 				return true;
 			}
 			break;
-			break;
 		case 1: 
 			if (playerScore > localSavedFiles[12]) {
+				window.alert("New HighScore in no-time mode!");
 				localSavedFiles[12] = playerScore;
 				return true;
 			}
 			break;
 		case 2:
 			if (playerScore > localSavedFiles[13]) {
-				localSavedFiles[12] = playerScore;
+				window.alert("New HighScore in time attack mode!");
+				localSavedFiles[13] = playerScore;
 				return true;
 			}
-			break;
 			break;
 		default:
 			window.alert("YOU SHOULD NOT SEE THIS!");
@@ -662,42 +746,51 @@ function badgeChecker(currentRound, lifePoints) {
 		switch(gamemode){
 			case 0:
 				if (currentRound >= 40 && !localSavedFiles[9] ) {
+					window.alert("Badge Unlocked! Get to level 40 in no-time mode.");
 					localSavedFiles[9] = true;
 					console.log("UNLOCK: Get to level 30 in marathon mode");
 				}
 				if (currentRound >= 60 && lifePoints >= 3 && !localSavedFiles[6] ) {
+					window.alert("Badge Unlocked! Get to level 60 in marathon mode with all lives.");
 					localSavedFiles[6] = true;
-					console.log("UNLOCK: Get to level 50 in marathon mode with all lives");
+					console.log("UNLOCK: Get to level 60 in marathon mode with all lives");
 				}
 				if (currentRound >= 60 && !localSavedFiles[3] ) {
+					window.alert("Badge Unlocked! Get to level 60 in marathon mode.");
 					localSavedFiles[3] = true;
 					console.log("UNLOCK: Get to level 60 in marathon mode");
 				}
 				break;
 			case 1:
 				if (currentRound >= 40 && !localSavedFiles[8] ) {
+					window.alert("Badge Unlocked! Get to level 40 in no-time mode.");
 					localSavedFiles[8] = true;
 					console.log("UNLOCK: Get to level 30 in marathon mode");
 				}
 				if (currentRound >= 60 && lifePoints >= 3 && !localSavedFiles[5] ) {
+					window.alert("Badge Unlocked! Get to level 60 in no-time mode with all lives.");
 					localSavedFiles[5] = true;
 					console.log("UNLOCK: Get to level 50 in marathon mode with all lives");
 				}
 				if (currentRound >= 60 && !localSavedFiles[2] ) {
+					window.alert("Badge Unlocked! Get to level 60 in no-time mode.");
 					localSavedFiles[2] = true;
 					console.log("UNLOCK: Get to level 60 in marathon mode");
 				}
 				break;
 			case 2:
 				if (currentRound >= 20 && !localSavedFiles[4] ) {
+					window.alert("Badge Unlocked! Get to level 20 in time attack mode.");
 					localSavedFiles[4] = true;
 					console.log("UNLOCK: Get to level 20 in time attack mode");
 				}
 				if (currentRound >= 20 && lifePoints == -1 && !localSavedFiles[7] ) {
+					window.alert("Badge Unlocked! Get to level 20 in time attack mode without a mistake.");
 					localSavedFiles[7] = true;
 					console.log("UNLOCK: Get to level 20 in time attack mode without a mistake");
 				}
 				if (currentRound >= 30 && !localSavedFiles[10] ) {
+					window.alert("Badge Unlocked! Get to level 30 in time attack mode.");
 					localSavedFiles[10] = true;
 					console.log("UNLOCK: Get to level 30 in time attack mode");
 				}

@@ -3,23 +3,24 @@
     <html>
     <head>
 		<meta charset="UTF-8">
+		<link type = "image/png" rel="icon" href="images/crow.png" />
+		
 		<meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1,width=device-width, height=device-height, target-densitydpi=device-dpi" />
 		<script type="text/javascript" src="cordova.js" ></script>
-        <script src = "js/jquery-1.12.3.min.js"></script>
-        <link rel="stylesheet" type="text/css" href="jquery.mobile-1.4.5/jquery.mobile-1.4.5.css"/>
-        <script src="bootstrap-3.3.6-dist/js/bootstrap.min.js"></script>
+		<script src = "js/jquery-1.12.3.min.js"></script>
+		<script src="bootstrap-3.3.6-dist/js/bootstrap.min.js"></script>
 		<script src="js/jgestures.min.js"></script>
 		<script src="js/gameTimer.js"></script>
 		<script src="js/nuggetScript.js"></script>
 		<script src="js/pathGenerator.js"></script>
         <script src="js/jerkScript.js"></script>
+		<script src="js/carousel.js"></script>
 
-        <link rel="stylesheet" type="text/css" href="css/styles.css"/>
+		<link rel="stylesheet" type="text/css" href="css/styles.css"/>
+		<link rel="stylesheet" href="css/carousel.css">
+		<link rel="stylesheet" type="text/css" href="jquery.mobile-1.4.5/jquery.mobile-1.4.5.css"/>
+		<link rel="stylesheet" type="text/css" href="css/hoverText.css"/>
 		
-        <!--Adding this in makes it not centered dammit.
-        <link rel="stylesheet" type="text/css" href="bootstrap-3.3.6-dist/css/bootstrap.min.css">
-        -->
-
         <title>DotDash._</title>
     </head>
 
@@ -30,12 +31,34 @@
         <!-- buttons and elements used in the main menu screen ----------------------------------------->
         <div id="main-screen">
             <div id="mode-selection-container">
-                <button onclick="play()" class="mode-select" id="mode-1">MODE1</button>
-                <button onclick="play()" class="mode-select" id="mode-2">MODE2</button>
-                <button onclick="play()" class="mode-select" id="mode-3">MODE3</button>
-                <button class="nongameplay-buttons" id="left-arrow-button"><img src="images/arrowLeft.png"/></button>
-                <button class="nongameplay-buttons" id="right-arrow-button"><img src="images/arrowRight.png"/></button>
-            </div>
+				<div id = "middle">
+					<div id="myCarousel" class="carousel slide">
+			
+						<!-- Wrapper for slides -->
+							<div class="carousel-inner" role="listbox">
+								<div class="item active">
+									<button onclick="play()" class="mode-select" id="mode-1">Marathon</button>
+								</div>
+								<div class="item">
+									<button onclick="play()" class="mode-select" id="mode-2">No Timer</button>
+								</div>
+								<div class="item">
+									<button onclick="play()" class="mode-select" id="mode-3">Time Attack</button>
+								</div>
+							</div>
+							
+							<a class="left carousel-control" href="#myCarousel" role="button">
+						<span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+						<span class="sr-only"><img src="images/arrowLeft.png"></span>
+						</a>
+						<a class="right carousel-control" href="#myCarousel" role="button">
+						  <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+						  <span class="sr-only"><img src="images/arrowRight.png"></span>
+						</a>
+					</div>
+				</div>
+			</div>
+                
             <button onclick="openOptions()" class="nongameplay-buttons" id="options-button"><img src="images/gear.png"></button>
             <button onclick="openScores()" class="nongameplay-buttons" id="scores-button"><img src="images/trophy.png"></button>
             <button onclick="openCredits()" class="nongameplay-buttons" id="credits-button"><img src="images/exclamation.png"></button>
@@ -43,58 +66,57 @@
 
         <!-- common button used to return to the main menu -->
         <button onclick="openMainMenu()" class="nongameplay-buttons" id="return-button"><img src="images/backward.png"/></button>
-        <div id="options-screen">
+              <div id="options-screen">
             <div class="T_container">
                 <h2 class="option-header">Music</h2>
-                <div class="option-slider">
+                <div class="checkbox">
                     <input type="checkbox" value="None" id="option-1" name="check" checked="checked"/>
                     <label for="option-1"></label>
                 </div>
                 <h2 class="option-header">Sound Effects</h2>
-                <div class="option-slider">
+                <div class="checkbox">
                     <input type="checkbox" value="None" id="option-2" name="check" checked="checked"/>
                     <label for="option-2"></label>
                 </div>
                 <h2 class="option-header">Colour</h2>
-                <div class="option-slider">
+                <div class="checkbox">
                     <input type="checkbox" value="None" id="option-3" name="check" checked="checked"/>
                     <label for="option-3"></label>
                 </div>
                 <h2 class="option-header">Steve Mode</h2>
-                <div class="option-slider">
-                    <input type="checkbox" onclick="enableSteveMode()" value="None" id="option-4" name="check" />
+                <div class="checkbox">
+                    <input type="checkbox" value="None" onclick="enableSteveMode()" id="option-4" name="check" />
                     <label for="option-4"></label>
                 </div>
-				<h2 class="option-header">Reset Save</h2>
-                <div class="option-slider">
-                    <input type="checkbox" onclick="clearSave()" value="None" id="option-5" name="check" />
+                <h2 class="option-header">Reset Save</h2>
+                <div class="checkbox">
+                    <input type="checkbox" value="None" id="option-5" name="check" />
                     <label for="option-5"></label>
                 </div>
+				<h2 class="option-header">Disable Labels</h2>
++                <div class="checkbox">
++                    <input type="checkbox" value="None" onclick="disableLabels()" id="option-6" name="check" />
++                    <label for="option-6"></label>
++                </div>
             </div>
         </div>
         <div id="scores-screen">
-            <div class="T_container">
-                <h2>Marathon Mode</h2>
-                <table>
-                    <tr>
-                        <td id="score-mar-1">1.</td>
-                        <td class="score-text"></td>
-                    </tr>
-                </table><br/>
-                <h2>Untimed Mode</h2>
-                <table>
-                    <tr>
-                        <td id="score-untimed-1">1.</td>
-                        <td class="score-text"></td>
-                    </tr>
-                </table><br/>
-				<h2>TimeAttack Mode</h2>
-                <table>
-                    <tr>
-                        <td id="score-attack-1">1.</td>
-                        <td class="score-text"></td>
-                    </tr>
-                </table>
+				<div id="score-tab">
+				<p class="field switch">
+				<input type="radio" id="radio1" name="field"  checked />
+				<input type="radio" id="radio2" name="field" />
+				<label for="radio1" class="cb-enable selected"><span>Local</span></label>
+				<label for="radio2" class="cb-disable"><span>Online</span></label>
+				</p>
+				</div>
+            <div class="L_container">
+				<div id="local-scores">
+				<h2>Marathon</h2><p id="localHS-0">0</p>
+				<h2>No Timer</h2><p id="localHS-1">0</p>
+				<h2>Time Attack</h2><p id="localHS-2">0</p>
+				</div>
+				<div class="scroll-board" id="online-scores">
+				</div>
             </div>
             <button onclick="openBadges()" class="nongameplay-buttons" id="badges-button"><img src="images/medal2.png"/></button>
         </div>
@@ -114,7 +136,7 @@
                     <img id="badge10" src="images/locked.png"/>
                 </div>
                 <div class="T_container" id="hint-box">
-                    <h2>Hint:"What the hell is water?" </h2>
+                    <h2 id="badgehint" ></h2>
                 </div>
             </div>
             <button onclick="openScores()" class="nongameplay-buttons" id="badge-return-button"><img src="images/backward.png"/></button>
@@ -141,8 +163,8 @@
             <div id="timer-bar">
                 <p id="timer">0:00</p>
             </div>
-            <button class="nongameplay-buttons" onclick="pauseGame()" id="pause-button"><img src="images/pause.png"></button>
-            <button class="nongameplay-buttons" id="tutorial-button"><img src="images/question.png"></button>
+             <button class="nongameplay-buttons" onclick="pauseGame('pause')" id="pause-button"><img src="images/pause.png"></button>
+            <button class="nongameplay-buttons" onclick="pauseGame('tutorial')" id="tutorial-button"><img src="images/question.png"></button>
             <div id="score-bar">
                 <p id="playerScore">0</p>
             </div>
@@ -150,20 +172,26 @@
             </div>
         </div>
 		<div id="pause-screen">
-            <h1>Paused</h1>
+            <h1>Paused</h1>                                                                                                                                                              <!-- is this my mistake or did someone add this? -->
             <button class="nongameplay-buttons" onclick="closePauseScreen(); resumeGame();" id="unpause-button"><img src="images/backward.png"/></button>
-            <button class="nongameplay-buttons" onclick="playAgain()" id="restart-button"><img src="images/return.png"/></button>
-            <button class="nongameplay-buttons" onclick="openMainMenu()" id="quit-button"><img src="images/cross.png"/></button>
+            <button class="nongameplay-buttons" onclick="openConfirmation('restart')" id="restart-button"><img src="images/return.png"/></button>
+            <button class="nongameplay-buttons" onclick="openConfirmation('quit')" id="quit-button"><img src="images/cross.png"/></button>
+            <div id="confirmation-container">
+                <h2 id="confirm-text"></h2>
+                <button class="confirm-buttons" onclick="closeConfirmation()" id="no-button"><img src="images/cross.png"/></button>
+                <button class="confirm-buttons" id="yes-button"><img src="images/checkmark.png"/></button>
+            </div>
         </div>
         <div id="gameover-screen">
             <br/>
-            <h1 id="gameover-text">GAME OVER</h1>
+            <h1>GAME OVER</h1>
             <div id="final-score-container"><h2>Your score: </h2><h2 id="final-score">NULL</h2></div>
             <button class="nongameplay-buttons" id="game-over-quit-button" onclick="quitGame()"><img src="images/backward.png"></button>
             <button class="nongameplay-buttons" id="game-over-restart-button" onclick="playAgain()"><img src="images/return.png"></button>
-
         </div>
-        <div>
+		<div id="tutorial-screen">
+            <h1>How To Play</h1>
+            <button class="nongameplay-buttons" id="tutorial-return-button" onclick="closeTutorialScreen();  resumeGame();"><img src="images/backward.png"></button>
         </div>
     </div>
 <!--added preloader-->

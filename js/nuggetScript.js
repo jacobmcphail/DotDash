@@ -1,5 +1,7 @@
 // Related to movement between screens
 
+var labelsOn = true;
+
 function openOptions() {
     document.getElementById('main-screen').style.display = 'none';
     document.getElementById('options-screen').style.display = "block";
@@ -34,11 +36,13 @@ function openMainMenu() {
     document.getElementById('return-button').style.display = 'none';
     document.getElementById('main-screen').style.display = 'block';
     document.getElementById('title').innerHTML = "DotDash._";
-    document.getElementById('gameover-screen').style.display = "none";
+    document.getElementById('gameover-screen').style.display = 'none';
     document.getElementById('game-screen').style.display = 'none';
     document.getElementById('title').style.display = 'block';
     document.getElementById('pause-screen').style.display = 'none';
+	document.getElementById('tutorial-screen').style.display = 'none';
 }
+
 function play() {
     document.getElementById('gameover-screen').style.display = "none";
     document.getElementById('pause-screen').style.display = "none";
@@ -50,9 +54,21 @@ function play() {
     initialize(gamemode, newRound, removeDots);
 }
 
+function openTutorialScreen() {
+    document.getElementById('tutorial-screen').style.display = "block";
+    document.getElementById('game-screen').style.display = 'none';
+}
+
+function closeTutorialScreen() {
+    document.getElementById('tutorial-screen').style.display = "none";
+    document.getElementById('game-screen').style.display = 'block';
+
+}
+
 function openPauseScreen() {
     document.getElementById('pause-screen').style.display = "block";
     document.getElementById('game-screen').style.display = 'none';
+    document.getElementById('confirmation-container').style.display = 'none';
 }
 
 function closePauseScreen() {
@@ -64,8 +80,55 @@ function badge1() {
     window.alert("get this badge by playing for 100000 hours");
 }
 
+function openConfirmation(type) {
+
+    document.getElementById('confirmation-container').style.display = 'block';
+
+    $('#confirmation-container').animate({
+        'margin-left': '-=5px',
+        'margin-right': '+=5px'
+    }, 100, function() {
+        $('#confirmation-container').animate({
+            'margin-left': '+=5px',
+            'margin-right': '-=5px'
+        }, 100, function() {
+            $('#confirmation-container').animate({
+                'margin-left': '-=5px',
+                'margin-right': '+=5px'
+            }, 100);
+        });
+    });
+
+    if (type == 'quit') {
+        document.getElementById('confirm-text').innerHTML = "Are you sure you want to quit this round?";
+        document.getElementById('yes-button').onclick = function() {
+            quitGame();
+        };
+
+    } else if (type == 'restart') {
+        document.getElementById('confirm-text').innerHTML = "Are you sure you want to restart this round?";
+        document.getElementById('yes-button').onclick = function() {
+            playAgain();
+        };
+    }
+
+}
+
+function closeConfirmation() {
+    document.getElementById('confirmation-container').style.display = 'none';
+}
 
 function quitGame() {
     playing = false;
     openMainMenu();
+}
+
+function disableLabels() {
+    if(labelsOn == true) {
+        $('link[rel=stylesheet][href="css/hoverText.css"]').remove();
+        labelsOn = false;
+    } else {
+        $('head').append('<link rel="stylesheet" type="text/css"  href="css/hoverText.css"/>');
+        labelsOn = true;
+	}
 }
