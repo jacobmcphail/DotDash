@@ -7,15 +7,16 @@
 		
 		<meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1,width=device-width, height=device-height, target-densitydpi=device-dpi" />
 		<script type="text/javascript" src="cordova.js" ></script>
-        <script src = "js/jquery-1.12.3.min.js"></script>
-        <script src="bootstrap-3.3.6-dist/js/bootstrap.min.js"></script>
+		<script src = "js/jquery-1.12.3.min.js"></script>
+		<script src="bootstrap-3.3.6-dist/js/bootstrap.min.js"></script>
 		<script src="js/jgestures.min.js"></script>
 		<script src="js/gameTimer.js"></script>
 		<script src="js/nuggetScript.js"></script>
 		<script src="js/pathGenerator.js"></script>
         <script src="js/jerkScript.js"></script>
 		<script src="js/carousel.js"></script>
-        <link rel="stylesheet" type="text/css" href="css/styles.css"/>
+
+		<link rel="stylesheet" type="text/css" href="css/styles.css"/>
 		<link rel="stylesheet" href="css/carousel.css">
 		<link rel="stylesheet" type="text/css" href="jquery.mobile-1.4.5/jquery.mobile-1.4.5.css"/>
 
@@ -28,6 +29,7 @@
 
         <!-- buttons and elements used in the main menu screen ----------------------------------------->
         <div id="main-screen">
+		<div id="swiperL"></div><div id="swiperR"></div>
             <div id="mode-selection-container">
 				<div id = "middle">
 					<div id="myCarousel" class="carousel slide">
@@ -64,7 +66,7 @@
 
         <!-- common button used to return to the main menu -->
         <button onclick="openMainMenu()" class="nongameplay-buttons" id="return-button"><img src="images/backward.png"/></button>
-        <div id="options-screen">
+              <div id="options-screen">
             <div class="T_container">
                 <h2 class="option-header">Music</h2>
                 <div class="checkbox">
@@ -94,28 +96,22 @@
             </div>
         </div>
         <div id="scores-screen">
-            <div class="T_container">
-                <h2>Marathon Mode</h2>
-                <table>
-                    <tr>
-                        <td id="score-mar-1">1.</td>
-                        <td class="score-text"></td>
-                    </tr>
-                </table><br/>
-                <h2>Untimed Mode</h2>
-                <table>
-                    <tr>
-                        <td id="score-untimed-1">1.</td>
-                        <td class="score-text"></td>
-                    </tr>
-                </table><br/>
-				<h2>TimeAttack Mode</h2>
-                <table>
-                    <tr>
-                        <td id="score-attack-1">1.</td>
-                        <td class="score-text"></td>
-                    </tr>
-                </table>
+				<div id="score-tab">
+				<p class="field switch">
+				<input type="radio" id="radio1" name="field"  checked />
+				<input type="radio" id="radio2" name="field" />
+				<label for="radio1" class="cb-enable selected"><span>Local</span></label>
+				<label for="radio2" class="cb-disable"><span>Online</span></label>
+				</p>
+				</div>
+            <div class="L_container">
+				<div id="local-scores">
+				<h2>Marathon</h2><p id="localHS-0">0</p>
+				<h2>No Timer</h2><p id="localHS-1">0</p>
+				<h2>Time Attack</h2><p id="localHS-2">0</p>
+				</div>
+				<div class="scroll-board" id="online-scores">
+				</div>
             </div>
             <button onclick="openBadges()" class="nongameplay-buttons" id="badges-button"><img src="images/medal2.png"/></button>
         </div>
@@ -162,7 +158,7 @@
             <div id="timer-bar">
                 <p id="timer">0:00</p>
             </div>
-            <button class="nongameplay-buttons" onclick="pauseGame('pause')" id="pause-button"><img src="images/pause.png"></button>
+             <button class="nongameplay-buttons" onclick="pauseGame('pause')" id="pause-button"><img src="images/pause.png"></button>
             <button class="nongameplay-buttons" onclick="pauseGame('tutorial')" id="tutorial-button"><img src="images/question.png"></button>
             <div id="score-bar">
                 <p id="playerScore">0</p>
@@ -188,7 +184,7 @@
             <button class="nongameplay-buttons" id="game-over-quit-button" onclick="quitGame()"><img src="images/backward.png"></button>
             <button class="nongameplay-buttons" id="game-over-restart-button" onclick="playAgain()"><img src="images/return.png"></button>
         </div>
-        <div id="tutorial-screen">
+		<div id="tutorial-screen">
             <h1>How To Play</h1>
             <button class="nongameplay-buttons" id="tutorial-return-button" onclick="closeTutorialScreen();  resumeGame();"><img src="images/backward.png"></button>
         </div>

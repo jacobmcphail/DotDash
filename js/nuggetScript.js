@@ -12,6 +12,7 @@ function openScores() {
     document.getElementById('scores-screen').style.display = "block";
     document.getElementById('return-button').style.display = "block";
     document.getElementById('badges-button').style.display = "block";
+	document.getElementById('online-scores').style.display = 'none';
     document.getElementById('title').innerHTML = "Scores._"
 }
 function openBadges() {
@@ -38,7 +39,7 @@ function openMainMenu() {
     document.getElementById('game-screen').style.display = 'none';
     document.getElementById('title').style.display = 'block';
     document.getElementById('pause-screen').style.display = 'none';
-    document.getElementById('tutorial-screen').style.display = 'none';
+	document.getElementById('tutorial-screen').style.display = 'none';
 }
 
 function play() {

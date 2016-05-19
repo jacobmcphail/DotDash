@@ -105,9 +105,8 @@ function clearSave() {
 
 //Update high scores
 function updateHighScores() {
-    var scoreSpaces = document.getElementsByClassName("score-text");
     for (var i = 11, q = 0; i < 14; i++, q++) {
-        scoreSpaces[q].innerHTML = localSavedFiles[i];
+		$("#localHS-" + q).text(localSavedFiles[i]);
     }
 }
 
@@ -145,10 +144,10 @@ $(document).ready(function(){
 				updateBadges();
 			}
             // Easter Egg: change scores to "Steve"
-            var curScores = document.getElementsByClassName("score-text");
+           /* var curScores = document.getElementsByClassName("score-text");
             for (var i = 0; i < curScores.length; i++) {
                 curScores[i].innerHTML = "Steve";
-            }
+            }*/
         }
     });
 	
@@ -159,7 +158,47 @@ $(document).ready(function(){
 	window.onorientationchange = reorient;
 	window.setTimeout(reorient, 0);
 	
+	$(".cb-enable").click(function(){
+        var parent = $(this).parents('.switch');
+        $('.cb-disable',parent).removeClass('selected');
+        $(this).addClass('selected');
+        $('.checkbox',parent).attr('checked', true);
+		document.getElementById('local-scores').style.display = 'block';
+		document.getElementById('online-scores').style.display = 'none';
+    });
+    $(".cb-disable").click(function(){
+        var parent = $(this).parents('.switch');
+        $('.cb-enable',parent).removeClass('selected');
+        $(this).addClass('selected');
+        $('.checkbox',parent).attr('checked', false);
+		document.getElementById('local-scores').style.display = 'none';
+		document.getElementById('online-scores').style.display = 'block';
+		printOnlineScores();
+    });
+	
 });
+
+function printOnlineScores() {
+	var leaderboard = document.getElementById("online-scores");
+	leaderboard.innerHTML = '';
+	/*
+	/ Check if you can connect to database.
+	*/
+	leaderboard.innerHTML += '<h1>Leaderboard</h1>';
+	leaderboard.innerHTML += '<h2>Marathon</h2>';
+	for(var i = 1; i <= 10; i++){
+		leaderboard.innerHTML += '<p>' + i + ': ' + 'PLACEHOLDER' + ' - ' + 'SCRSCR' + '</p>';
+	}
+	leaderboard.innerHTML += '<br><h2>No Timer</h2>';
+	for(var i = 1; i <= 10; i++){
+		leaderboard.innerHTML += '<p>' + i + ': ' + 'PLACEHOLDER' + ' - ' + 'SCRSCR' + '</p>';
+	}
+	leaderboard.innerHTML += '<br><h2>Time Attack</h2>';
+	for(var i = 1; i <= 10; i++){
+		leaderboard.innerHTML += '<p>' + i + ': ' + 'PLACEHOLDER' + ' - ' + 'SCRSCR' + '</p>';
+	}
+	leaderboard.innerHTML += '<br>';
+}
 
 function initialize(gamemode, newRound, removeDots){
     //Initialize global variables depending on mode (currently only one mode)
