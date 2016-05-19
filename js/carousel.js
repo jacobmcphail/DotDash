@@ -11,7 +11,7 @@ $(document).ready(function(){
 /*	$("body").on('swipeone', 'swipeleft', function(){
 	$("#myCarousel").carousel("prev");
 	}); */
-	/*$("body").on('swipeone', function(){
+	$("#main-screen").on('swipeone', function(){
 	$("#myCarousel").carousel("next");
-	}); */
+	}); 
 });
