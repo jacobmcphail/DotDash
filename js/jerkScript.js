@@ -152,14 +152,14 @@ $(document).ready(function(){
         }
     });
 	
-	if( /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) ) {
+/*	if( /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) ) {
 		function reorient(e) {
 		var portrait = (window.orientation % 180 == 0);
 		$("body > div").css("-webkit-transform", !portrait ? "rotate(-90deg)" : "");
 		}
 		window.onorientationchange = reorient;
 		window.setTimeout(reorient, 0);
-	}	
+	}	*/
 	
 	$(".cb-enable").click(function(){
         var parent = $(this).parents('.switch');

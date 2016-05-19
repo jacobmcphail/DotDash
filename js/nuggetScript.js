@@ -130,4 +130,5 @@ function disableLabels() {
     } else {
         $('head').append('<link rel="stylesheet" type="text/css"  href="css/hoverText.css"/>');
         labelsOn = true;
+	}
 }
