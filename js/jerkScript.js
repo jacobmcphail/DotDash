@@ -201,6 +201,21 @@ function printOnlineScores() {
 		leaderboard.innerHTML += '<p>' + i + ': ' + 'PLACEHOLDER' + ' - ' + 'SCRSCR' + '</p>';
 	}
 	leaderboard.innerHTML += '<br>';
+	
+	var j_notation =
+	{
+    "player_name": "BRAINUSER", 
+    "player_score": 4512,
+	}; 
+
+
+	$.ajax({
+    url: '../dirtysandals.php',
+    type: 'POST',
+    contentType: 'application/json',
+    data: JSON.stringify(j_notation),
+    dataType: 'json'
+	});
 }
 
 function initialize(gamemode, newRound, removeDots){
