@@ -1,0 +1,111 @@
+
+/* button hover text */
+/* adapted from http://jsfiddle.net/joshnh/fxfhc/ */
+
+/* arrow for left-aligned buttons */
+#options-button:hover:before, #scores-button:hover:before, #unpause-button:hover:before, #restart-button:hover:before,
+#game-over-quit-button:hover:before, #tutorial-return-button:hover:before, #return-button:hover:before, #badge-return-button:hover:before{
+    border-top: 8px solid white;
+    border-left: 8px solid transparent;
+    border-right: 8px solid transparent;
+    content: '';
+    position: absolute;
+    top: -10px;
+    left: 25px;
+}
+
+/* textbox for left-aligned buttons */
+#options-button:hover:after, #scores-button:hover:after, #unpause-button:hover:after, #restart-button:hover:after,
+#game-over-quit-button:hover:after, #tutorial-return-button:hover:after, #return-button:hover:after, #badge-return-button:hover:after{
+    background: black;
+    border-radius: 5px;
+    border: 2px solid white;
+    color: white;
+    font-family: Consolas;
+    font-weight: bold;
+    left: 50%;
+    margin-left: -15px;
+    position: absolute;
+    text-align: center;
+    padding: 5px 25px;
+    bottom: 60px;
+}
+
+/* arrow for right-aligned buttons */
+#credits-button:hover:before, #tutorial-button:hover:before, #pause-button:hover:before, #game-over-restart-button:hover:before,
+#quit-button:hover:before, #game-over-restart-button:hover:before, #badges-button:hover:before {
+    border-top: 8px solid white;
+    border-left: 8px solid transparent;
+    border-right: 8px solid transparent;
+    content: '';
+    position: absolute;
+    top: -10px;
+    right: 25px;
+}
+
+/* textbox for right-aligned buttons */
+#credits-button:hover:after, #tutorial-button:hover:after, #pause-button:hover:after, #game-over-restart-button:hover:after,
+#quit-button:hover:after, #game-over-restart-button:hover:after, #badges-button:hover:after {
+    background: black;
+    border-radius: 5px;
+    border: 2px solid white;
+    color: white;
+    font-family: Consolas;
+    font-weight: bold;
+    right: 50%;
+    margin-right: -15px;
+    position: absolute;
+    text-align: center;
+    padding: 5px 25px;
+    bottom: 60px;
+}
+
+
+#options-button:hover:after {
+    content: 'Options';
+}
+
+#scores-button:hover:after {
+    content: 'High Scores';
+}
+
+#credits-button:hover:after {
+    content: 'Credits';
+}
+
+#tutorial-button:hover:after {
+    content: 'Tutorial';
+}
+
+#pause-button:hover:after {
+    content: 'Pause';
+}
+
+#unpause-button:hover:after, #tutorial-return-button:hover:after {
+    content: 'Back to Game';
+}
+#restart-button:hover:after {
+    content: 'Restart';
+}
+
+#game-over-restart-button:hover:after {
+    content: 'Play Again';
+}
+
+#game-over-quit-button:hover:after, #return-button:hover:after, #quit-button:hover:after {
+    content: 'Main Menu';
+}
+
+#badges-button:hover:after {
+    content: 'Badges';
+}
+
+#badge-return-button:hover:after {
+    content: 'Scores';
+}
+
+
+
+
+
+/* end button hover text */

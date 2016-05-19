@@ -1,5 +1,7 @@
 // Related to movement between screens
 
+var labelsOn = true;
+
 function openOptions() {
     document.getElementById('main-screen').style.display = 'none';
     document.getElementById('options-screen').style.display = "block";
@@ -120,4 +122,14 @@ function closeConfirmation() {
 function quitGame() {
     playing = false;
     openMainMenu();
+}
+
+function disableLabels() {
+    if(labelsOn == true) {
+        $('link[rel=stylesheet][href="css/hoverText.css"]').remove();
+        labelsOn = false;
+    } else {
+        $('head').append('<link rel="stylesheet" type="text/css"  href="css/hoverText.css"/>');
+        labelsOn = true;
+    }
 }
