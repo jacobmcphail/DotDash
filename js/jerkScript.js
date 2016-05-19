@@ -234,13 +234,13 @@ function initialize(gamemode, newRound, removeDots){
 	}
 	switch(gamemode) {
 		case 0:
-			timerSet(0, 20);
+			timerSet(0, 5);
 			break;
 		case 1: 
 			timerSet(0, 0);
 			break;
 		case 2:
-			timerSet(3, 0);
+			timerSet(2, 0);
 			break;
 		default:
 			window.alert("YOU SHOULD NOT SEE THIS!");
@@ -273,7 +273,7 @@ function newRound(generateGrid){
 
 	if (playing) {
 		if (gamemode == 0) {
-			timerSet(0, 20);
+			timerSet(0, 5);
 		}
 		noErrorsYet = true;
 		notComplete = true;
@@ -544,7 +544,7 @@ function userFeedback(bool, lastNode) {
         $(lastNode).removeClass("selected");
         adjustStats(reset);
 
-    }, 1250);
+    }, 800);
 }
 
 /*
@@ -588,7 +588,7 @@ function pathDemonstration(arrayToRepeat, validate) {
 	if (currentRound >= 250) {
 		blinkTime = 200;
 	} else {
-		blinkTime = (700 - (currentRound * 2))
+		blinkTime = (500 - (currentRound * 2))
 	}
     //For testing
     printPath(arrayToRepeat);
