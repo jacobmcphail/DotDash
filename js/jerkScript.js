@@ -184,38 +184,25 @@ $(document).ready(function(){
 function printOnlineScores() {
 	var leaderboard = document.getElementById("online-scores");
 	leaderboard.innerHTML = '';
-	/*
-	/ Check if you can connect to database.
-	*/
-	leaderboard.innerHTML += '<h1>Leaderboard</h1>';
-	leaderboard.innerHTML += '<h2>Marathon</h2>';
-	for(var i = 1; i <= 10; i++){
-		leaderboard.innerHTML += '<p>' + i + ': ' + 'PLACEHOLDER' + ' - ' + 'SCRSCR' + '</p>';
+	var databus = getOutput;
+	if(getOutput == null){
+		leaderboard.innerHTML += '<h2>Could not get online leaderboard!</h2>';
+	} else {
+		leaderboard.innerHTML += '<h1>Leaderboard</h1>';
+		leaderboard.innerHTML += '<h2>Marathon</h2>';
+		for(var i = 1; i <= 10; i++){
+			leaderboard.innerHTML += '<p>' + i + ': ' + 'PLACEHOLDER' + ' - ' + 'SCRSCR' + '</p>';
+		}
+		leaderboard.innerHTML += '<br><h2>No Timer</h2>';
+		for(var i = 1; i <= 10; i++){
+			leaderboard.innerHTML += '<p>' + i + ': ' + 'PLACEHOLDER' + ' - ' + 'SCRSCR' + '</p>';
+		}
+		leaderboard.innerHTML += '<br><h2>Time Attack</h2>';
+		for(var i = 1; i <= 10; i++){
+			leaderboard.innerHTML += '<p>' + i + ': ' + 'PLACEHOLDER' + ' - ' + 'SCRSCR' + '</p>';
+		}
+		leaderboard.innerHTML += '<br>';
 	}
-	leaderboard.innerHTML += '<br><h2>No Timer</h2>';
-	for(var i = 1; i <= 10; i++){
-		leaderboard.innerHTML += '<p>' + i + ': ' + 'PLACEHOLDER' + ' - ' + 'SCRSCR' + '</p>';
-	}
-	leaderboard.innerHTML += '<br><h2>Time Attack</h2>';
-	for(var i = 1; i <= 10; i++){
-		leaderboard.innerHTML += '<p>' + i + ': ' + 'PLACEHOLDER' + ' - ' + 'SCRSCR' + '</p>';
-	}
-	leaderboard.innerHTML += '<br>';
-	
-	var j_notation =
-	{
-    "player_name": "BRAINUSER", 
-    "player_score": 4512,
-	}; 
-
-
-	$.ajax({
-    url: '../dirtysandals.php',
-    type: 'POST',
-    contentType: 'application/json',
-    data: JSON.stringify(j_notation),
-    dataType: 'json'
-	});
 }
 
 function initialize(gamemode, newRound, removeDots){
