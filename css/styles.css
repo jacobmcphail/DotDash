@@ -142,6 +142,11 @@ html, body {
     right: 75px;
     bottom: 9px;
 }
+
+#tutorial-next-button {
+    right: 5px;
+}
+
 #options-screen {
     display: none;
 }
@@ -298,6 +303,13 @@ input[type=checkbox] {
 #tutorial-screen {
     display:none;
     color:black;
+}
+
+
+#tutorial1 {
+    display: block;
+    margin: 0 auto;
+    height: 90%;
 }
 
 #pause-screen h1 {

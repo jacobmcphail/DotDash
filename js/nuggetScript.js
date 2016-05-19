@@ -53,15 +53,17 @@ function play() {
 	playing = true;
     initialize(gamemode, newRound, removeDots);
 }
-
+;
 function openTutorialScreen() {
     document.getElementById('tutorial-screen').style.display = "block";
     document.getElementById('game-screen').style.display = 'none';
+    document.getElementById('title').style.display = 'block';
+    document.getElementById('title').innerHTML = "Game Tutorial._";
 }
-
 function closeTutorialScreen() {
     document.getElementById('tutorial-screen').style.display = "none";
     document.getElementById('game-screen').style.display = 'block';
+    document.getElementById('title').innerHTML = "";
 
 }
 
