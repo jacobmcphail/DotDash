@@ -195,15 +195,15 @@ function printOnlineScores() {
 		leaderboard.innerHTML += '<h1>Leaderboard</h1>';
 		leaderboard.innerHTML += '<h2>Marathon</h2>';
 		var indexDB = 0;
-		for(var i = 1; i <= 10; i++; indexDB++){
+		for(var i = 1; i <= 10; i++, indexDB++){
 			leaderboard.innerHTML += '<p>' + i + ': ' + databus[indexDB]["player_score"] + ' - ' + databus[indexDB]["player_score"] + '</p>';
 		}
 		leaderboard.innerHTML += '<br><h2>No Timer</h2>';
-		for(var i = 1; i <= 10; i++; indexDB++){
+		for(var i = 1; i <= 10; i++, indexDB++){
 			leaderboard.innerHTML += '<p>' + i + ': ' + databus[indexDB]["player_score"] + ' - ' + databus[indexDB]["player_score"] + '</p>';
 		}
 		leaderboard.innerHTML += '<br><h2>Time Attack</h2>';
-		for(var i = 1; i <= 10; i++; indexDB++){
+		for(var i = 1; i <= 10; i++, indexDB++){
 			leaderboard.innerHTML += '<p>' + i + ': ' + databus[indexDB]["player_score"] + ' - ' + databus[indexDB]["player_score"] + '</p>';
 		}
 		leaderboard.innerHTML += '<br>';
