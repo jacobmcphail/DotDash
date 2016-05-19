@@ -1,10 +1,10 @@
-function getOutput() {
-   $.ajax({
-      url:'../php/dirtyshoes.php',
-      complete: function (response) {
-		  return response.responseText;
-      },
-      error: function () {}
-  });
-  return null;
+function getOutput(database) {
+   return $.ajax({
+      type: "GET",
+      url: "../php/readDB.php",
+      dataType: "json",
+      data: {
+		  database : database
+	  }
+	});
 }

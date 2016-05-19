@@ -186,28 +186,29 @@ $(document).ready(function(){
 function printOnlineScores() {
 	var leaderboard = document.getElementById("online-scores");
 	leaderboard.innerHTML = '';
-	var databus = getOutput();
-	console.log(databus);
-	if(databus == null){
-		leaderboard.innerHTML += '<br><br><br><h2>Could not get online leaderboard!</h2>';
-	} else {
-		databus = JSON.parse(databus);
+	var databus;
+	getOutput(databus).success(function (data) {
+		console.log(data);
+	//	data = JSON.parse(data);
 		leaderboard.innerHTML += '<h1>Leaderboard</h1>';
 		leaderboard.innerHTML += '<h2>Marathon</h2>';
 		var indexDB = 0;
 		for(var i = 1; i <= 10; i++, indexDB++){
-			leaderboard.innerHTML += '<p>' + i + ': ' + databus[indexDB]["player_score"] + ' - ' + databus[indexDB]["player_score"] + '</p>';
+			leaderboard.innerHTML += '<p>' + i + ': ' + data[indexDB]["mName"] + ' - ' + data[indexDB]["mScore"] + '</p>';
 		}
 		leaderboard.innerHTML += '<br><h2>No Timer</h2>';
 		for(var i = 1; i <= 10; i++, indexDB++){
-			leaderboard.innerHTML += '<p>' + i + ': ' + databus[indexDB]["player_score"] + ' - ' + databus[indexDB]["player_score"] + '</p>';
+			leaderboard.innerHTML += '<p>' + i + ': ' + data[indexDB]["uName"] + ' - ' + data[indexDB]["uScore"] + '</p>';
 		}
 		leaderboard.innerHTML += '<br><h2>Time Attack</h2>';
 		for(var i = 1; i <= 10; i++, indexDB++){
-			leaderboard.innerHTML += '<p>' + i + ': ' + databus[indexDB]["player_score"] + ' - ' + databus[indexDB]["player_score"] + '</p>';
+			leaderboard.innerHTML += '<p>' + i + ': ' + data[indexDB]["tName"] + ' - ' + data[indexDB]["tScore"] + '</p>';
 		}
 		leaderboard.innerHTML += '<br>';
-	}
+	});
+	
+	//leaderboard.innerHTML += '<br><br><br><h2>Could not get online leaderboard!</h2>';
+
 }
 
 function initialize(gamemode, newRound, removeDots){
