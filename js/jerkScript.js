@@ -42,7 +42,9 @@ $.getScript("js/pathGenerator.js", function(){
           //console.log("Bald kiwi bird");
 });
 
-
+$.getScript("js/online.js", function(){
+          //console.log("Bald kiwi bird");
+});
 
 //File storing function
 function gameSetup() {
@@ -184,22 +186,25 @@ $(document).ready(function(){
 function printOnlineScores() {
 	var leaderboard = document.getElementById("online-scores");
 	leaderboard.innerHTML = '';
-	var databus = getOutput;
-	if(getOutput == null){
-		leaderboard.innerHTML += '<h2>Could not get online leaderboard!</h2>';
+	var databus = getOutput();
+	console.log(databus);
+	if(databus == null){
+		leaderboard.innerHTML += '<br><br><br><h2>Could not get online leaderboard!</h2>';
 	} else {
+		databus = JSON.parse(databus);
 		leaderboard.innerHTML += '<h1>Leaderboard</h1>';
 		leaderboard.innerHTML += '<h2>Marathon</h2>';
-		for(var i = 1; i <= 10; i++){
-			leaderboard.innerHTML += '<p>' + i + ': ' + 'PLACEHOLDER' + ' - ' + 'SCRSCR' + '</p>';
+		var indexDB = 0;
+		for(var i = 1; i <= 10; i++; indexDB++){
+			leaderboard.innerHTML += '<p>' + i + ': ' + databus[indexDB]["player_score"] + ' - ' + databus[indexDB]["player_score"] + '</p>';
 		}
 		leaderboard.innerHTML += '<br><h2>No Timer</h2>';
-		for(var i = 1; i <= 10; i++){
-			leaderboard.innerHTML += '<p>' + i + ': ' + 'PLACEHOLDER' + ' - ' + 'SCRSCR' + '</p>';
+		for(var i = 1; i <= 10; i++; indexDB++){
+			leaderboard.innerHTML += '<p>' + i + ': ' + databus[indexDB]["player_score"] + ' - ' + databus[indexDB]["player_score"] + '</p>';
 		}
 		leaderboard.innerHTML += '<br><h2>Time Attack</h2>';
-		for(var i = 1; i <= 10; i++){
-			leaderboard.innerHTML += '<p>' + i + ': ' + 'PLACEHOLDER' + ' - ' + 'SCRSCR' + '</p>';
+		for(var i = 1; i <= 10; i++; indexDB++){
+			leaderboard.innerHTML += '<p>' + i + ': ' + databus[indexDB]["player_score"] + ' - ' + databus[indexDB]["player_score"] + '</p>';
 		}
 		leaderboard.innerHTML += '<br>';
 	}

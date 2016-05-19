@@ -1,14 +1,10 @@
 function getOutput() {
    $.ajax({
-      url:'myAjax.php',
+      url:'../php/dirtyshoes.php',
       complete: function (response) {
-          console.log("Connect: SUCCESS");
-		  return response;
+		  return response.responseText;
       },
-      error: function () {
-          console.log("Connect: FAILED");
-		  return null;
-      }
+      error: function () {}
   });
   return null;
 }
