@@ -8,10 +8,10 @@ $(document).ready(function(){
 	$(".right").on('tapone', function(){
 	$("#myCarousel").carousel("next");
 	});
-	$("#swiperL").on('swipeone', function(){
+	$("body").on('swipeone', 'swipeleft', function(){
 	$("#myCarousel").carousel("prev");
 	});
-	$("#swiperR").on('swipeone', function(){
+	$("body").on('swipeone', 'swiperight', function(){
 	$("#myCarousel").carousel("next");
 	});
 });

@@ -197,6 +197,7 @@ input[type=checkbox] {
     position: absolute;
     width: 16px;
     height: 16px;
+    background: #32CD32;
 
     -webkit-border-radius: 50px;
     -moz-border-radius: 50px;
@@ -459,7 +460,7 @@ div.dot.good_dot {
     margin-top: -40px;
     left: 50%;
     background-color: black;
-    outline-color: bisque;
+
     border-style: solid;
     border-color: #fff;
 	font-size: 2em;
@@ -468,7 +469,7 @@ div.dot.good_dot {
 #online-scores {
     border-style: solid;
     border-color: #fff;
-    height: 60%;
+    height: 50%;
     margin: auto;
     width: 95%;
 	max-width: 1000px;
@@ -500,19 +501,4 @@ div.dot.good_dot {
 .custom-offset {
     margin-left: 2.33333%;
 }
-
-#swiperL {
-	width: 50%;
-    height: 100%;
-    position: absolute;
-}
-
-#swiperR {
-	padding-left: 50%;
-	width: 50%;
-    height: 100%;
-    position: absolute;
-}
-
-
 
