@@ -7,7 +7,7 @@
 		
 		<meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1,width=device-width, height=device-height, target-densitydpi=device-dpi" />
 		<script type="text/javascript" src="cordova.js" ></script>
-		<script src = "js/jquery-1.12.3.min.js"></script>
+		<script src = "js/jquery-2.2.3.min.js"></script>
 		<script src="bootstrap-3.3.6-dist/js/bootstrap.min.js"></script>
 		<script src="js/jgestures.min.js"></script>
 		<script src="js/gameTimer.js"></script>
@@ -70,34 +70,34 @@
             <div class="T_container">
                 <h2 class="option-header">Music</h2>
                 <div class="checkbox">
-                    <input type="checkbox" value="None" id="option-1" name="check" checked="checked"/>
+                    <input type="checkbox" value="None" onclick="buttonSounds()" id="option-1" name="check" checked="checked"/>
                     <label for="option-1"></label>
                 </div>
                 <h2 class="option-header">Sound Effects</h2>
                 <div class="checkbox">
-                    <input type="checkbox" value="None" id="option-2" name="check" checked="checked"/>
+                    <input type="checkbox" value="None" onclick="buttonSounds()" id="option-2" name="check" checked="checked"/>
                     <label for="option-2"></label>
                 </div>
                 <h2 class="option-header">Colour</h2>
                 <div class="checkbox">
-                    <input type="checkbox" value="None" id="option-3" name="check" checked="checked"/>
+                    <input type="checkbox" value="None" onclick="buttonSounds()" id="option-3" name="check" checked="checked"/>
                     <label for="option-3"></label>
                 </div>
                 <h2 class="option-header">Steve Mode</h2>
                 <div class="checkbox">
-                    <input type="checkbox" value="None" onclick="enableSteveMode()" id="option-4" name="check" />
+                    <input type="checkbox" value="None" onclick="buttonSounds();enableSteveMode();" id="option-4" name="check" />
                     <label for="option-4"></label>
                 </div>
                 <h2 class="option-header">Reset Save</h2>
                 <div class="checkbox">
-                    <input type="checkbox" value="None" id="option-5" name="check" />
+                    <input type="checkbox" value="None" onclick="buttonSounds();clearSave();" id="option-5" name="check" />
                     <label for="option-5"></label>
                 </div>
 				<h2 class="option-header">Disable Labels</h2>
-+                <div class="checkbox">
-+                    <input type="checkbox" value="None" onclick="disableLabels()" id="option-6" name="check" />
-+                    <label for="option-6"></label>
-+                </div>
+                <div class="checkbox">
+                    <input type="checkbox" value="None" onclick="disableLabels()" id="option-6" name="check" />
+                    <label for="option-6"></label>
+                </div>
             </div>
         </div>
         <div id="scores-screen">
@@ -105,8 +105,8 @@
 				<p class="field switch">
 				<input type="radio" id="radio1" name="field"  checked />
 				<input type="radio" id="radio2" name="field" />
-				<label for="radio1" class="cb-enable selected"><span>Local</span></label>
-				<label for="radio2" class="cb-disable"><span>Online</span></label>
+				<label for="radio1" class="cb-enable selected" onclick="buttonSounds()"><span>Local</span></label>
+				<label for="radio2" class="cb-disable" onclick="buttonSounds()"><span>Online</span></label>
 				</p>
 				</div>
             <div class="L_container">
@@ -122,21 +122,18 @@
         </div>
         <div id="badges-screen">
             <div class="T_container">
-                <h2>Unlock badges by playing the game right, wethead.</h2>
+                <h2 id="badge-desc"></h2>
                 <div class="badge-icons">
-                    <button onclick="badge1()" class="badge-button" id="badge-1-button"><img id="badge1" src="images/locked.png"/></button>
-                    <img id="badge2" src="images/locked.png"/>
-                    <img id="badge3" src="images/locked.png"/>
-                    <img id="badge4" src="images/locked.png"/>
-                    <img id="badge5" src="images/locked.png"/>
-                    <img id="badge6" src="images/locked.png"/>
-                    <img id="badge7" src="images/locked.png"/>
-                    <img id="badge8" src="images/locked.png"/>
-                    <img id="badge9" src="images/locked.png"/>
-                    <img id="badge10" src="images/locked.png"/>
-                </div>
-                <div class="T_container" id="hint-box">
-                    <h2 id="badgehint" ></h2>
+                    <img class="badge-button" id="1badge" src="images/locked.png"/>
+                    <img class="badge-button" id="2badge" src="images/locked.png"/>
+                    <img class="badge-button" id="3badge" src="images/locked.png"/>
+                    <img class="badge-button" id="4badge" src="images/locked.png"/>
+                    <img class="badge-button" id="5badge" src="images/locked.png"/>
+                    <img class="badge-button" id="6badge" src="images/locked.png"/>
+                    <img class="badge-button" id="7badge" src="images/locked.png"/>
+                    <img class="badge-button" id="8badge" src="images/locked.png"/>
+                    <img class="badge-button" id="9badge" src="images/locked.png"/>
+                    <img class="badge-button" id="10badge" src="images/locked.png"/>
                 </div>
             </div>
             <button onclick="openScores()" class="nongameplay-buttons" id="badge-return-button"><img src="images/backward.png"/></button>
@@ -189,9 +186,25 @@
             <button class="nongameplay-buttons" id="game-over-quit-button" onclick="quitGame()"><img src="images/backward.png"></button>
             <button class="nongameplay-buttons" id="game-over-restart-button" onclick="playAgain()"><img src="images/return.png"></button>
         </div>
-		<div id="tutorial-screen">
-            <h1>How To Play</h1>
+        <div id="tutorial1-screen">
+            <img class="tutorial-gif" src="images/tutorial1.gif"/>
             <button class="nongameplay-buttons" id="tutorial-return-button" onclick="closeTutorialScreen();  resumeGame();"><img src="images/backward.png"></button>
+            <button class="nongameplay-buttons" id="to-tutorial2-button" onclick="openTutorial2Screen();"><img src="images/forward.png"></button>
+        </div>
+        <div id="tutorial2-screen">
+            <img class="tutorial-gif"  src="images/untimed.gif"/>
+            <button class="nongameplay-buttons" id="tutorial1-return-button" onclick="openTutorialScreen();"><img src="images/backward.png"></button>
+            <button class="nongameplay-buttons" id="to-tutorial3-button" onclick="openTutorial3Screen();"><img src="images/forward.png"></button>
+        </div>
+        <div id="tutorial3-screen">
+            <img class="tutorial-gif" src="images/marathon.gif"/>
+            <button class="nongameplay-buttons" id="tutorial2-return-button" onclick="openTutorial2Screen();"><img src="images/backward.png"></button>
+            <button class="nongameplay-buttons" id="to-tutorial4-button" onclick="openTutorial4Screen();"><img src="images/forward.png"></button>
+        </div>
+        <div id="tutorial4-screen">
+            <img class="tutorial-gif"  src="images/timeattack.gif"/>
+            <button class="nongameplay-buttons" id="tutorial3-return-button" onclick="openTutorial3Screen();"><img src="images/backward.png"></button>
+            <button class="nongameplay-buttons" id="tutorial-end-button" onclick="closeTutorialScreen(); resumeGame();"><img src="images/forward.png"></button>
         </div>
     </div>
 <!--added preloader-->

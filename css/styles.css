@@ -8,8 +8,6 @@ body {
                                   not supported by any browser */
 }
 
-body > div { -webkit-transition: all 0s ease-in-out; }
-
 h1 {
     font-family: "Consolas";
     text-align: center;
@@ -121,13 +119,13 @@ html, body {
     bottom: 30%;
     right: 15%;
 }
-#options-button, #unpause-button  {
+#options-button, #unpause-button, #tutorial-return-button, #tutorial1-return-button, #tutorial2-return-button, #tutorial3-return-button  {
     left: 5px;
 }
 #scores-button, #restart-button {
     left: 70px;
 }
-#credits-button, #pause-button, #quit-button  {
+#credits-button, #pause-button, #quit-button, #to-tutorial2-button, #to-tutorial3-button, #to-tutorial4-button, #tutorial-end-button  {
     right: 5px;
 }
 #return-button {
@@ -142,6 +140,7 @@ html, body {
     right: 75px;
     bottom: 9px;
 }
+
 #options-screen {
     display: none;
 }
@@ -220,7 +219,9 @@ input[type=checkbox] {
 .badge-icons {
     margin: 40px auto 0 auto;
     padding: 10px;
-    width: 90%;
+	position: absolute;
+	width: 270px;
+	margin-top: 120px;
     border: 1px solid white;
     border-radius: 5px;
 }
@@ -228,6 +229,10 @@ input[type=checkbox] {
     background-color: transparent;
     border: none;
     padding: 0;
+}
+#badge-desc {
+	position: absolute;
+	width: 270px;
 }
 #credits-screen {
     display:none;
@@ -295,9 +300,26 @@ input[type=checkbox] {
     display: none;
 }
 
-#tutorial-screen {
+#tutorial1-screen {
     display:none;
-    color:black;
+}
+
+#tutorial2-screen {
+    display:none;
+}
+
+#tutorial3-screen {
+    display:none;
+}
+
+#tutorial4-screen {
+    display:none;
+}
+
+.tutorial-gif {
+    display: block;
+    margin: 0 auto;
+    height: 80%;
 }
 
 #pause-screen h1 {
@@ -362,15 +384,15 @@ div#preload { display: none; }
 div.dot {
     width: 50px;
     height: 50px;
-    /*
+
     -moz-border-radius: 25px;
     -webkit-border-radius: 25px;
-    background: blue; */
+    background: blue;
     border-radius: 25px;
-    /*
+
     margin-top: 10%;
     margin-left:15%;
-    */
+
 }
 div.dot.selected {
     background: lightgoldenrodyellow;
