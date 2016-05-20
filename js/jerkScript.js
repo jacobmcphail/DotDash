@@ -1,32 +1,48 @@
-/**
- * Gameplay-related
- * */
-
 /*
-Tuesday May 16th: VinegarFruit (official Death/Dev Branch)
--Steve mode cheating thwarted
--Steve badge!
--Removed some comments
+jerkScript.js
+ Gameplay-related
 */
 
+//Global variables
+
+/*Game mode: 
+0 = Marathon
+1 = Untimed
+2 = Time Attack
+*/
 var gamemode;
+
+/*True when player is playing; false when Game Over. */
 var playing = false;
-var steveModeEnabled = false;
+
+/*Tracks whether user has made any errors. */
 var noErrorsYet = true;
 var notComplete = true;
-var userInput = true;
+/*Index of array holding sequence of dots in each round; used to compare the dot
+each user selects with successive dots in the array. */
 var index = 0;
+
+/*When false, user cannot select anything. */
+var userInput = true;
+
+/*Grid container with dimensions determined by difficulty; each grid element holds a div container that holds a dot. */
 var socks;
+/*Container that holds the game grid. */
+var container;
+/*Dots are div elements with attributes (x- and y- coordinates) 
+Every round, dots are created, appended to socks, and stored in dotArray. */
+var dotArray = [];
+
 var playerScore = 0;
 var currentRound = 1;
 var lifePoints = 3;
 var numRows = 3;
 var numCols = 3;
 var localSavedFiles;
-var container;
-var dotArray = [];
 var colourArray = ["cyan","orange","green","pink","blue","purple"];
 var colour;
+
+/*Keeps track of time in Marathon and Time Attack modes*/
 var counter;
 
 $.getScript("js/gameTimer.js", function(){});
@@ -39,11 +55,12 @@ $.getScript("js/audio.js", function(){});
 $.getScript("js/leaderboard.js", function(){});
 $.getScript("js/steve.js", function(){});
 
-//File storing function
+/*File storing function*/
 function gameSetup() {
 	checkCookie();
 	localSavedFiles = JSON.parse(localStorage.getItem("saveFile"));
 	if (localSavedFiles == null) {
+		//Refer to SaveFileArrayIndex.txt
 		localSavedFiles = [false, false, false, false, false, false, false, false, false, false, false, 0, 0, 0];
 		localStorage.setItem("saveFile", JSON.stringify(localSavedFiles));
 	} else {
@@ -60,7 +77,7 @@ function gameSetup() {
 	document.getElementById('local-scores').style.display = 'block';
 	document.getElementById('online-scores').style.display = 'none';
 
-    /* t - goes to touching.js */
+    /*see touching.js */
     whatDevice();
     addTouchListeners();
 }
@@ -83,25 +100,8 @@ function clearSave() {
 	gameSetup();
 }
 
-$(document).ready(function(){
-    
-    $(".mode-select").on('tapone', function(){
-        var mode = this.id;
-		if (mode == "mode-1") {
-			gamemode = 0;
-		} else if (mode == "mode-2") {
-			gamemode = 1;
-		} else {
-			gamemode = 2;
-		}
-        console.log("mode selected: " + mode + ":" + gamemode);
-    //    initialize(gamemode, newRound, removeDots);
-    });
-	
-});
-
 function initialize(gamemode, newRound, removeDots){
-    //Initialize global variables depending on mode (currently only one mode)
+    //Initialize global variables depending on mode
     container = document.getElementById("dot-container");
     container.classList.add("vertical-center");
     playerScore = 0;
@@ -161,7 +161,7 @@ function updateLives() {
 /* Invoked at the start of every round. Generate a new grid and reset variables*/
 function newRound(generateGrid){
 	disco.pause();
-	levelPass.play();
+	
     console.log("Current round: " + currentRound);
 
 	if (playing) {
@@ -231,12 +231,6 @@ function createGrid(cont, nRows, nCols){
     var dotID = 1;
     var newRow;
 
-    //At the start: col-xs-4
-    //numCols = 4: col-xs-3
-    //numCols = 5; col-xs-2 with offset
-    //numCols = 6; cols-xs-2
-    //numCols = 7; cols-xs-1 with offset, etc.
-    //numCols = 12; cols-xs-1
     for(var i = 0; i < nRows; i++) {
         newRow = document.createElement("div");
         newRow.className = "row row-centered";
@@ -250,11 +244,6 @@ function createGrid(cont, nRows, nCols){
                     break;
                 case 5:
                     gridElement.classList.add("col-xs-2");
-                    //Uncomment if you are using Bootstrap
-                 /*   if(isFirstElement){
-                        gridElement.classList.add("col-xs-offset-1");
-                        isFirstElement = false;
-                    }*/
                     break;
                 case 6:
                     gridElement.classList.add("col-xs-2");
@@ -298,7 +287,7 @@ function make_2D_Array(array, nRows, nCols) {
     return array;
 }
 
-// Sets difficulty for round
+/* Sets difficulty for round. */
 function difficulty(nodeCount) {
 	var length;
 	if (currentRound < 40) {
@@ -350,9 +339,10 @@ function validate(array, userFeedback, dArray){
 			if (!userInput) {
 				return;
 			}
-			disco.pause();
+			//*** change made to test something
+			//disco.pause();
 			tapSound.play();
-			disco.play();
+			//disco.play();
 			
             if($(event.target).hasClass("selected")){
                 $( event.target ).removeClass( "selected" );
@@ -376,6 +366,8 @@ function validate(array, userFeedback, dArray){
                     if (index < array.length) {
                         index++;
                         if (index >= array.length) {
+							//****
+							levelPass.play();
 							clearTimeout(counter);
 							timerPause();
                             notComplete = false;
@@ -443,30 +435,21 @@ function userFeedback(bool, lastNode) {
             $(".dot").addClass("steve");
         }
         $(lastNode).removeClass("selected");
-        adjustStats(reset);
+		
+        //adjustStats(reset);
+		reset(removeDots);
 
     }, 800);
 }
 
-/*
-* Artifact of a structure for the game progression's that was not implemented in
-* the prototype. Retained for now so as to not break the game.
-* */
-function adjustStats(reset){
-    //console.log("Entered adjustStats()");
-    reset(removeDots);
-}
-
-/* Remove dots from grid container. To combine with other functions involved in
-starting a new round into a cleaner function later.*/
+/* Remove dots from grid container and calls functions that resets global variables and starts a new round.*/
 function reset(removeDots) {
     removeDots();
     resetVals();
     newRound(generateGrid);
 }
 
-/* Remove all the child elements of socks, the grid container with a set number
-   of columns.
+/* Remove all the child elements of socks, the grid container
  * */
 function removeDots(){
     while(socks.hasChildNodes()){
