@@ -35,6 +35,7 @@ function openCredits() {
 	yesSound.play();
 }
 function openMainMenu() {
+	yesSound.play();
     document.getElementById('options-screen').style.display = 'none';
     document.getElementById('scores-screen').style.display = 'none';
     document.getElementById('credits-screen').style.display = 'none';
