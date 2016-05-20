@@ -19,6 +19,7 @@ function openScores() {
 	yesSound.play();
 }
 function openBadges() {
+	$("#badge-desc").text("Unlock badges by playing the game right, wethead.");
     document.getElementById('scores-screen').style.display = 'none';
     document.getElementById('badges-screen').style.display = "block";
     document.getElementById('badge-return-button').style.display = "block";
@@ -111,10 +112,6 @@ function closePauseScreen() {
     document.getElementById('game-screen').style.display = 'block';
 	noSound.play();
 	disco.play();
-}
-
-function badge1() {
-    window.alert("get this badge by playing for 100000 hours");
 }
 
 function openConfirmation(type) {

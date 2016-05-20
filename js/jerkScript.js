@@ -41,23 +41,21 @@ var wrongSound = new Audio('sounds/wrong.ogg');
 
 
 $.getScript("js/gameTimer.js", function(){
-//          console.log("ALL YOUR MEAT BYPRODUCTS COMBINED");
 });
 
 $.getScript("js/nuggetScript.js", function(){
-//          console.log("ALL YOUR MEAT BYPRODUCTS COMBINED");
 });
 
 $.getScript("js/pathGenerator.js", function(){
-          //console.log("Bald kiwi bird");
 });
 
 $.getScript("js/online.js", function(){
-          //console.log("Bald kiwi bird");
 });
 
 $.getScript("js/touching.js", function(){
-    //console.log("Bald kiwi bird");
+});
+
+$.getScript("js/badges.js", function(){
 });
 
 //File storing function
@@ -92,12 +90,10 @@ function checkCookie(){
         document.cookie="testcookie";
         cookieEnabled=(document.cookie.indexOf("testcookie")!=-1)? true : false;
     }
-    return (cookieEnabled)?true:showCookieFail();
-}
-
-function showCookieFail(){
-  console.log("NO COOKIES");
-  window.alert("WARNING: Cookies must be enabled to play this game. Enable cookies then refresh the game.");
+    if (!cookieEnabled) {
+	console.log("NO COOKIES");
+	window.alert("WARNING: Cookies must be enabled to play this game. Enable cookies then refresh the game.");
+	}
 }
 
 function clearSave() {
@@ -154,15 +150,6 @@ $(document).ready(function(){
         }
     });
 	
-/*	if( /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) ) {
-		function reorient(e) {
-		var portrait = (window.orientation % 180 == 0);
-		$("body > div").css("-webkit-transform", !portrait ? "rotate(-90deg)" : "");
-		}
-		window.onorientationchange = reorient;
-		window.setTimeout(reorient, 0);
-	}	*/
-	
 	$(".cb-enable").click(function(){
         var parent = $(this).parents('.switch');
         $('.cb-disable',parent).removeClass('selected');
@@ -189,7 +176,6 @@ function printOnlineScores() {
 	leaderboard.innerHTML = '<br><br><br><br><br><h2>Loading...</h2>';
 	getOutput(databus).success(function (data) {
 		console.log(data);
-	//	data = JSON.parse(data);
 		leaderboard.innerHTML = '<h1>Leaderboard</h1>';
 		leaderboard.innerHTML += '<h2>Marathon</h2>';
 		var indexDB = 0;
@@ -693,7 +679,6 @@ function gameOver() {
 		updateHighScores();
 		disco.CurrentTime=0;
 		loseSound.play();
-		
 		if (playerScore > 0) {
 		var playerName;
 		while(true) {
@@ -801,73 +786,3 @@ function scoreChecker(playerScore) {
 	return false;
 }
 
-// Checks to see if player has unlocked any new badges
-function badgeChecker(currentRound, lifePoints) {
-		switch(gamemode){
-			case 0:
-				if (currentRound >= 40 && !localSavedFiles[9] ) {
-					window.alert("Badge Unlocked! Get to level 40 in no-time mode.");
-					localSavedFiles[9] = true;
-					console.log("UNLOCK: Get to level 30 in marathon mode");
-				}
-				if (currentRound >= 60 && lifePoints >= 3 && !localSavedFiles[6] ) {
-					window.alert("Badge Unlocked! Get to level 60 in marathon mode with all lives.");
-					localSavedFiles[6] = true;
-					console.log("UNLOCK: Get to level 60 in marathon mode with all lives");
-				}
-				if (currentRound >= 60 && !localSavedFiles[3] ) {
-					window.alert("Badge Unlocked! Get to level 60 in marathon mode.");
-					localSavedFiles[3] = true;
-					console.log("UNLOCK: Get to level 60 in marathon mode");
-				}
-				break;
-			case 1:
-				if (currentRound >= 40 && !localSavedFiles[8] ) {
-					window.alert("Badge Unlocked! Get to level 40 in no-time mode.");
-					localSavedFiles[8] = true;
-					console.log("UNLOCK: Get to level 30 in marathon mode");
-				}
-				if (currentRound >= 60 && lifePoints >= 3 && !localSavedFiles[5] ) {
-					window.alert("Badge Unlocked! Get to level 60 in no-time mode with all lives.");
-					localSavedFiles[5] = true;
-					console.log("UNLOCK: Get to level 50 in marathon mode with all lives");
-				}
-				if (currentRound >= 60 && !localSavedFiles[2] ) {
-					window.alert("Badge Unlocked! Get to level 60 in no-time mode.");
-					localSavedFiles[2] = true;
-					console.log("UNLOCK: Get to level 60 in marathon mode");
-				}
-				break;
-			case 2:
-				if (currentRound >= 20 && !localSavedFiles[4] ) {
-					window.alert("Badge Unlocked! Get to level 20 in time attack mode.");
-					localSavedFiles[4] = true;
-					console.log("UNLOCK: Get to level 20 in time attack mode");
-				}
-				if (currentRound >= 20 && lifePoints == -1 && !localSavedFiles[7] ) {
-					window.alert("Badge Unlocked! Get to level 20 in time attack mode without a mistake.");
-					localSavedFiles[7] = true;
-					console.log("UNLOCK: Get to level 20 in time attack mode without a mistake");
-				}
-				if (currentRound >= 30 && !localSavedFiles[10] ) {
-					window.alert("Badge Unlocked! Get to level 30 in time attack mode.");
-					localSavedFiles[10] = true;
-					console.log("UNLOCK: Get to level 30 in time attack mode");
-				}
-				break;
-			default:
-				window.alert("YOU SHOULD NOT SEE THIS!");
-		}
-	updateBadges();
-}
-
-// Updates the badges in the badge menu
-function updateBadges() {
-	for (var bIndex = 1; bIndex <= 10; bIndex++) {
-		if (localSavedFiles[bIndex]) {
-			document.getElementById("badge" + bIndex).src="images/medal2.png";
-		} else {
-			document.getElementById("badge" + bIndex).src="images/locked.png";
-		} 
-	} 
-}
