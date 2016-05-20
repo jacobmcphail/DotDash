@@ -68,7 +68,6 @@ function openTutorialScreen() {
     document.getElementById('tutorial1-screen').style.display = "block";
     document.getElementById('tutorial2-screen').style.display = "none";
     document.getElementById('game-screen').style.display = 'none';
-    disco.pause();
 	yesSound.play();
 }
 
@@ -76,18 +75,20 @@ function openTutorial2Screen() {
     document.getElementById('tutorial1-screen').style.display = "none";
     document.getElementById('tutorial3-screen').style.display = "none";
     document.getElementById('tutorial2-screen').style.display = "block";
-    
+    yesSound.play();
 }
 
 function openTutorial3Screen() {
     document.getElementById('tutorial2-screen').style.display = "none";
     document.getElementById('tutorial3-screen').style.display = "block";
     document.getElementById('tutorial4-screen').style.display = "none";
+	yesSound.play();
 }
 
 function openTutorial4Screen() {
     document.getElementById('tutorial3-screen').style.display = "none";
     document.getElementById('tutorial4-screen').style.display = "block";
+	yesSound.play();
 }
 
 function closeTutorialScreen() {
@@ -95,7 +96,6 @@ function closeTutorialScreen() {
     document.getElementById('tutorial1-screen').style.display = "none";
     document.getElementById('game-screen').style.display = 'block';
     document.getElementById('title').innerHTML = "";
-	disco.pause();
 	noSound.play();
 }
 
