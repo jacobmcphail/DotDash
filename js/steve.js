@@ -1,6 +1,11 @@
+/*Easter Egg: Steve Albini functions*/
+
+//Easter egg: whether or not Steve abides
+var steveModeEnabled = false;
+
 $(document).ready(function(){
 	
-	    //return scores to normal after Steve Mode is disabled
+	//return scores to normal after Steve Mode is disabled
     $("#option-4").on('tapone', function(){
         if(!steveModeEnabled){
             updateHighScores();
@@ -17,11 +22,6 @@ $(document).ready(function(){
 				localStorage.setItem("saveFile", JSON.stringify(localSavedFiles));
 				updateBadges();
 			}
-            // Easter Egg: change scores to "Steve"
-           /* var curScores = document.getElementsByClassName("score-text");
-            for (var i = 0; i < curScores.length; i++) {
-                curScores[i].innerHTML = "Steve";
-            }*/
         }
     });
 	

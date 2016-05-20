@@ -114,6 +114,7 @@ function closePauseScreen() {
 	disco.play();
 }
 
+//Displays dialog box asking user if they would like to quit
 function openConfirmation(type) {
 	yesSound.play();
     document.getElementById('confirmation-container').style.display = 'block';
@@ -162,6 +163,7 @@ function quitGame() {
 	noSound.play();
 }
 
+//Remove labels that appear over buttons on hover; toggled in options screen
 function disableLabels() {
 	tapSound.play();
     if(labelsOn == true) {

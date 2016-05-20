@@ -210,6 +210,7 @@ input[type=checkbox] {
     opacity: 1;
 }
 /* end for option buttons */
+
 #scores-screen {
     display:none;
 }
@@ -509,18 +510,49 @@ div.dot.good_dot {
     margin-right: auto;
 }
 
-.cb-enable, .cb-disable, .cb-enable span, .cb-disable span { display: block; float: left; }
-.cb-enable span, .cb-disable span { line-height: 30px; display: block; background-repeat: no-repeat; font-weight: bold; }
-.cb-enable span { background-position: left -90px; padding: 0 10px; }
-.cb-disable span { background-position: right -180px;padding: 0 10px; }
-.cb-disable.selected { background-position: 0 -30px; }
-.cb-disable.selected span { background-position: right -210px; color: #000; background-color: #fff; }
-.cb-enable.selected { background-position: 0 -60px; }
-.cb-enable.selected span { background-position: left -150px; color: #000; background-color: #fff; }
-.switch label { cursor: pointer; }
-.switch input { display: none; }
+/*Leaderboard tab buttons; borrowed from StackOverflow */
+.cb-enable, .cb-disable, .cb-enable span, .cb-disable span { 
+	display: block; float: left; 
+}
 
+.cb-enable span, .cb-disable span { 
+	line-height: 30px; 
+	display: block; 
+	background-repeat: no-repeat; 
+	font-weight: bold; 
+}
+
+.cb-enable span { 
+	background-position: left -90px; 
+	padding: 0 10px; 
+}
+
+.cb-disable span { 
+	background-position: right -180px;
+	padding: 0 10px; 
+}
+.cb-disable.selected { 
+	background-position: 0 -30px; 
+}
+.cb-disable.selected span { 
+	background-position: right -210px; 
+	color: #000; 
+	background-color: #fff; 
+}
+.cb-enable.selected { 
+	background-position: 0 -60px; 
+}
+.cb-enable.selected span { 
+	background-position: left -150px; 
+	color: #000; 
+	background-color: #fff; 
+}
+.switch label { 
+	cursor: pointer; 
+}
+.switch input { 
+	display: none; 
+}
 .custom-offset {
     margin-left: 2.33333%;
 }
-
