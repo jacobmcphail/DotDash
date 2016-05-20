@@ -94,10 +94,10 @@
                     <label for="option-5"></label>
                 </div>
 				<h2 class="option-header">Disable Labels</h2>
-+                <div class="checkbox">
-+                    <input type="checkbox" value="None" onclick="disableLabels()" id="option-6" name="check" />
-+                    <label for="option-6"></label>
-+                </div>
+                <div class="checkbox">
+                    <input type="checkbox" value="None" onclick="disableLabels()" id="option-6" name="check" />
+                    <label for="option-6"></label>
+                </div>
             </div>
         </div>
         <div id="scores-screen">
@@ -189,9 +189,25 @@
             <button class="nongameplay-buttons" id="game-over-quit-button" onclick="quitGame()"><img src="images/backward.png"></button>
             <button class="nongameplay-buttons" id="game-over-restart-button" onclick="playAgain()"><img src="images/return.png"></button>
         </div>
-		<div id="tutorial-screen">
-            <h1>How To Play</h1>
+        <div id="tutorial1-screen">
+            <img class="tutorial-gif" src="images/tutorial1.gif"/>
             <button class="nongameplay-buttons" id="tutorial-return-button" onclick="closeTutorialScreen();  resumeGame();"><img src="images/backward.png"></button>
+            <button class="nongameplay-buttons" id="to-tutorial2-button" onclick="openTutorial2Screen();"><img src="images/forward.png"></button>
+        </div>
+        <div id="tutorial2-screen">
+            <img class="tutorial-gif"  src="images/untimed.gif"/>
+            <button class="nongameplay-buttons" id="tutorial1-return-button" onclick="openTutorialScreen();"><img src="images/backward.png"></button>
+            <button class="nongameplay-buttons" id="to-tutorial3-button" onclick="openTutorial3Screen();"><img src="images/forward.png"></button>
+        </div>
+        <div id="tutorial3-screen">
+            <img class="tutorial-gif" src="images/marathon.gif"/>
+            <button class="nongameplay-buttons" id="tutorial2-return-button" onclick="openTutorial2Screen();"><img src="images/backward.png"></button>
+            <button class="nongameplay-buttons" id="to-tutorial4-button" onclick="openTutorial4Screen();"><img src="images/forward.png"></button>
+        </div>
+        <div id="tutorial4-screen">
+            <img class="tutorial-gif"  src="images/timeattack.gif"/>
+            <button class="nongameplay-buttons" id="tutorial3-return-button" onclick="openTutorial3Screen();"><img src="images/backward.png"></button>
+            <button class="nongameplay-buttons" id="tutorial-end-button" onclick="closeTutorialScreen(); resumeGame();"><img src="images/forward.png"></button>
         </div>
     </div>
 <!--added preloader-->

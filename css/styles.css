@@ -121,13 +121,13 @@ html, body {
     bottom: 30%;
     right: 15%;
 }
-#options-button, #unpause-button  {
+#options-button, #unpause-button, #tutorial-return-button, #tutorial1-return-button, #tutorial2-return-button, #tutorial3-return-button  {
     left: 5px;
 }
 #scores-button, #restart-button {
     left: 70px;
 }
-#credits-button, #pause-button, #quit-button  {
+#credits-button, #pause-button, #quit-button, #to-tutorial2-button, #to-tutorial3-button, #to-tutorial4-button, #tutorial-end-button  {
     right: 5px;
 }
 #return-button {
@@ -141,10 +141,6 @@ html, body {
 #tutorial-button {
     right: 75px;
     bottom: 9px;
-}
-
-#tutorial-next-button {
-    right: 5px;
 }
 
 #options-screen {
@@ -300,16 +296,26 @@ input[type=checkbox] {
     display: none;
 }
 
-#tutorial-screen {
+#tutorial1-screen {
     display:none;
-    color:black;
 }
 
+#tutorial2-screen {
+    display:none;
+}
 
-#tutorial1 {
+#tutorial3-screen {
+    display:none;
+}
+
+#tutorial4-screen {
+    display:none;
+}
+
+.tutorial-gif {
     display: block;
     margin: 0 auto;
-    height: 90%;
+    height: 80%;
 }
 
 #pause-screen h1 {
@@ -374,15 +380,15 @@ div#preload { display: none; }
 div.dot {
     width: 50px;
     height: 50px;
-    /*
+
     -moz-border-radius: 25px;
     -webkit-border-radius: 25px;
-    background: blue; */
+    background: blue;
     border-radius: 25px;
-    /*
+
     margin-top: 10%;
     margin-left:15%;
-    */
+
 }
 div.dot.selected {
     background: lightgoldenrodyellow;

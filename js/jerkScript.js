@@ -39,6 +39,7 @@ var tapSound = new Audio('sounds/zap1.ogg');
 var wrongSound = new Audio('sounds/wrong.ogg');
 
 
+
 $.getScript("js/gameTimer.js", function(){
 //          console.log("ALL YOUR MEAT BYPRODUCTS COMBINED");
 });
@@ -53,6 +54,10 @@ $.getScript("js/pathGenerator.js", function(){
 
 $.getScript("js/online.js", function(){
           //console.log("Bald kiwi bird");
+});
+
+$.getScript("js/touching.js", function(){
+    //console.log("Bald kiwi bird");
 });
 
 //File storing function
@@ -75,24 +80,10 @@ function gameSetup() {
 	updateHighScores();
 	document.getElementById('local-scores').style.display = 'block';
 	document.getElementById('online-scores').style.display = 'none';
-    /* arrow key stuff -- may not use
-    document.onkeydown = function(e) {
-        switch (e.keyCode) {
-            case 37:
-                alert('left');
-                break;
-            case 38:
-                alert('up');
-                break;
-            case 39:
-                alert('right');
-                break;
-            case 40:
-                alert('down');
-                break;
-        }
-    }; */
 
+    /* t - goes to touching.js */
+    whatDevice();
+    addTouchListeners();
 }
 
 function checkCookie(){
@@ -690,6 +681,10 @@ function pauseGame(type) {
 function gameOver() {
     playing = false;
 	disco.pause();
+
+    document.getElementById('tutorial1-screen').style.display = "none";
+    document.getElementById('tutorial4-screen').style.display = "none";
+
     $( "#game-screen" ).fadeOut( 1500, function() {
         $('#gameover-screen').fadeIn(1500, function() {});
 		badgeChecker(currentRound, lifePoints);
