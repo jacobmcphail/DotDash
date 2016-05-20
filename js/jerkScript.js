@@ -134,6 +134,7 @@ function initialize(gamemode, newRound, removeDots){
 		default:
 			window.alert("YOU SHOULD NOT SEE THIS!");
 		}
+	disco.play();
     newRound(generateGrid);
 }
 
@@ -152,7 +153,6 @@ function updateLives() {
     $('#lives-bar').html(lifeString);
 
     if (lifePoints == 0) {
-		disco.pause();
         gameOver();
 		disco.currentTime = 0;
     }
@@ -160,7 +160,6 @@ function updateLives() {
 
 /* Invoked at the start of every round. Generate a new grid and reset variables*/
 function newRound(generateGrid){
-	disco.pause();
 	
     console.log("Current round: " + currentRound);
 
@@ -196,7 +195,6 @@ function newRound(generateGrid){
 
 
 		generateGrid(createGrid,make_2D_Array, pathDemonstration);
-		disco.play();
 	}
 	
 }
@@ -339,10 +337,7 @@ function validate(array, userFeedback, dArray){
 			if (!userInput) {
 				return;
 			}
-			//*** change made to test something
-			//disco.pause();
 			tapSound.play();
-			//disco.play();
 			
             if($(event.target).hasClass("selected")){
                 $( event.target ).removeClass( "selected" );
