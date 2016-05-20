@@ -29,34 +29,15 @@ var colourArray = ["cyan","orange","green","pink","blue","purple"];
 var colour;
 var counter;
 
-var disco = new Audio('sounds/Disco.mp3'); 
-var popupSound = new Audio('sounds/phaserDown2.ogg');
-var yesSound = new Audio('sounds/phaserDown1.ogg');
-var noSound = new Audio('sounds/phaserDown3.ogg');
-var loseSound = new Audio('sounds/you_lose.ogg');
-var levelPass = new Audio('sounds/jingles_PIZZA10');
-var tapSound = new Audio('sounds/zap1.ogg');
-var wrongSound = new Audio('sounds/wrong.ogg');
-
-
-
-$.getScript("js/gameTimer.js", function(){
-});
-
-$.getScript("js/nuggetScript.js", function(){
-});
-
-$.getScript("js/pathGenerator.js", function(){
-});
-
-$.getScript("js/online.js", function(){
-});
-
-$.getScript("js/touching.js", function(){
-});
-
-$.getScript("js/badges.js", function(){
-});
+$.getScript("js/gameTimer.js", function(){});
+$.getScript("js/nuggetScript.js", function(){});
+$.getScript("js/pathGenerator.js", function(){});
+$.getScript("js/online.js", function(){});
+$.getScript("js/touching.js", function(){});
+$.getScript("js/badges.js", function(){});
+$.getScript("js/audio.js", function(){});
+$.getScript("js/leaderboard.js", function(){});
+$.getScript("js/steve.js", function(){});
 
 //File storing function
 function gameSetup() {
@@ -102,22 +83,7 @@ function clearSave() {
 	gameSetup();
 }
 
-//Update high scores
-function updateHighScores() {
-    for (var i = 11, q = 0; i < 14; i++, q++) {
-		$("#localHS-" + q).text(localSavedFiles[i]);
-    }
-}
-
-
 $(document).ready(function(){
-
-    //return scores to normal after Steve Mode is disabled
-    $("#option-4").on('tapone', function(){
-        if(!steveModeEnabled){
-            updateHighScores();
-        }
-    });
     
     $(".mode-select").on('tapone', function(){
         var mode = this.id;
@@ -132,69 +98,7 @@ $(document).ready(function(){
     //    initialize(gamemode, newRound, removeDots);
     });
 	
-	$(".cawButton").on('tapone', function(){
-        if (steveModeEnabled) {
-            var sound = document.getElementById("audio");
-            sound.play();
-			if (!localSavedFiles[1]) {
-				window.alert("Badge Unlocked! Activated Steve mode.");
-				localSavedFiles[1] = true;
-				localStorage.setItem("saveFile", JSON.stringify(localSavedFiles));
-				updateBadges();
-			}
-            // Easter Egg: change scores to "Steve"
-           /* var curScores = document.getElementsByClassName("score-text");
-            for (var i = 0; i < curScores.length; i++) {
-                curScores[i].innerHTML = "Steve";
-            }*/
-        }
-    });
-	
-	$(".cb-enable").click(function(){
-        var parent = $(this).parents('.switch');
-        $('.cb-disable',parent).removeClass('selected');
-        $(this).addClass('selected');
-        $('.checkbox',parent).attr('checked', true);
-		document.getElementById('local-scores').style.display = 'block';
-		document.getElementById('online-scores').style.display = 'none';
-    });
-    $(".cb-disable").click(function(){
-        var parent = $(this).parents('.switch');
-        $('.cb-enable',parent).removeClass('selected');
-        $(this).addClass('selected');
-        $('.checkbox',parent).attr('checked', false);
-		document.getElementById('local-scores').style.display = 'none';
-		document.getElementById('online-scores').style.display = 'block';
-		printOnlineScores();
-    });
-	
 });
-
-function printOnlineScores() {
-	var leaderboard = document.getElementById("online-scores");
-	var databus;
-	leaderboard.innerHTML = '<br><br><br><br><br><h2>Loading...</h2>';
-	getOutput(databus).success(function (data) {
-		console.log(data);
-		leaderboard.innerHTML = '<h1>Leaderboard</h1>';
-		leaderboard.innerHTML += '<h2>Marathon</h2>';
-		var indexDB = 0;
-		for(var i = 1; i <= 10; i++, indexDB++){
-			leaderboard.innerHTML += '<p>' + i + ': ' + data[indexDB]["mName"] + ' - ' + data[indexDB]["mScore"] + '</p>';
-		}
-		leaderboard.innerHTML += '<br><h2>No Timer</h2>';
-		for(var i = 1; i <= 10; i++, indexDB++){
-			leaderboard.innerHTML += '<p>' + i + ': ' + data[indexDB]["uName"] + ' - ' + data[indexDB]["uScore"] + '</p>';
-		}
-		leaderboard.innerHTML += '<br><h2>Time Attack</h2>';
-		for(var i = 1; i <= 10; i++, indexDB++){
-			leaderboard.innerHTML += '<p>' + i + ': ' + data[indexDB]["tName"] + ' - ' + data[indexDB]["tScore"] + '</p>';
-		}
-		leaderboard.innerHTML += '<br>';
-	}).fail(function () {
-		leaderboard.innerHTML = '<br><br><br><h2>Could not get online leaderboard!</h2>';		
-	});
-}
 
 function initialize(gamemode, newRound, removeDots){
     //Initialize global variables depending on mode (currently only one mode)
@@ -570,11 +474,6 @@ function removeDots(){
     }
 }
 
-//Returns whether a dot has been visited
-function getIsVisited(element) {
-    return element.getAttribute('isVisited');
-}
-
 /*Takes the sequence of dots the user must repeat as an argument.
 * Briefly changes the colour of each to indicate which dots should be
  * selected in which sequence.*/
@@ -687,28 +586,11 @@ function gameOver() {
 				break;
 			}
 		}
-		
 		if (playerName != null) {
-		var j_notation =
-		{
-		"mode": gamemode,
-		"player_name": playerName, 
-		"player_score": playerScore,
-		}; 
-
-
-		$.ajax({
-			url: "http://www.crowbot.co/php/dirtyshoes.php",
-			type: 'POST',
-			contentType: 'application/json',
-			data: JSON.stringify(j_notation),
-			dataType: 'json'
-		});
+			sendScore(gamemode, playerName, playerScore);
 		}
-	}
-		
+	}	
     });
-
     // add final score
     document.getElementById('final-score').innerHTML = playerScore;
 }
@@ -719,70 +601,4 @@ function resetVals(){
     index = 0;
 }
 
-// Easter Egg: All is Steve Albini; Steve Albini is all
-function enableSteveMode() {
-	tapSound.play();
-    if (steveModeEnabled == false) {
-        steveModeEnabled = true;
-    } else {
-        steveModeEnabled = false;
-        $(".dot").removeClass("steve tapped_steve black bound");
-        $(".dot").unbind("tapone", steveTap);
-    }
-    console.log("steve-option toggle: " + steveModeEnabled);
-}
-
-//Easter Egg: Turns on Steve Mode
-function steveify() {
-    $(".dot").addClass("steve black");
-    if(!$(".dot").hasClass("bound")){
-        $(".dot").bind("tapone", steveTap);
-        $(".dot").addClass("bound");
-    }
-}
-
-function buttonSounds() {
-	tapSound.play();
-}
-
-function steveTap(event) {
-    if(userInput){
-        if ($(event.target).hasClass("tapped_steve")) {
-            $(event.target).removeClass("tapped_steve");
-            $(event.target).addClass("steve");
-        } else {
-            $(event.target).removeClass("steve");
-            $(event.target).addClass("tapped_steve");
-        }
-    }
-}
-
-function scoreChecker(playerScore) {
-	switch(gamemode) {
-		case 0:
-			if (playerScore > localSavedFiles[11]) {
-				window.alert("New HighScore in marathon mode!");
-				localSavedFiles[11] = playerScore;
-				return true;
-			}
-			break;
-		case 1: 
-			if (playerScore > localSavedFiles[12]) {
-				window.alert("New HighScore in no-time mode!");
-				localSavedFiles[12] = playerScore;
-				return true;
-			}
-			break;
-		case 2:
-			if (playerScore > localSavedFiles[13]) {
-				window.alert("New HighScore in time attack mode!");
-				localSavedFiles[13] = playerScore;
-				return true;
-			}
-			break;
-		default:
-			window.alert("YOU SHOULD NOT SEE THIS!");
-	}
-	return false;
-}
 
