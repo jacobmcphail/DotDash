@@ -29,6 +29,15 @@ var colourArray = ["cyan","orange","green","pink","blue","purple"];
 var colour;
 var counter;
 
+var disco = new Audio('sounds/Disco.mp3'); 
+var popupSound = new Audio('sounds/phaserDown2.ogg');
+var yesSound = new Audio('sounds/phaserDown1.ogg');
+var noSound = new Audio('sounds/phaserDown3.ogg');
+var loseSound = new Audio('sounds/you_lose.ogg');
+var levelPass = new Audio('sounds/jingles_PIZZA10');
+var tapSound = new Audio('sounds/zap1.ogg');
+var wrongSound = new Audio('sounds/wrong.ogg');
+
 
 $.getScript("js/gameTimer.js", function(){
 //          console.log("ALL YOUR MEAT BYPRODUCTS COMBINED");
@@ -262,12 +271,16 @@ function updateLives() {
     $('#lives-bar').html(lifeString);
 
     if (lifePoints == 0) {
+		disco.pause();
         gameOver();
+		disco.currentTime = 0;
     }
 }
 
 /* Invoked at the start of every round. Generate a new grid and reset variables*/
 function newRound(generateGrid){
+	disco.pause();
+	levelPass.play();
     console.log("Current round: " + currentRound);
 
 	if (playing) {
@@ -302,7 +315,9 @@ function newRound(generateGrid){
 
 
 		generateGrid(createGrid,make_2D_Array, pathDemonstration);
+		disco.play();
 	}
+	
 }
 
 //Create a grid to populate with dots
@@ -441,6 +456,7 @@ function validate(array, userFeedback, dArray){
 			}
 			noErrorsYet = false;
 			lifePoints--;
+			popupSound.play();
 			updateLives();
 			userFeedback(false, null);
 			return;
@@ -453,6 +469,10 @@ function validate(array, userFeedback, dArray){
 			if (!userInput) {
 				return;
 			}
+			disco.pause();
+			tapSound.play();
+			disco.play();
+			
             if($(event.target).hasClass("selected")){
                 $( event.target ).removeClass( "selected" );
                 console.log("x: " + this.x + ", y:" + this.y);
@@ -514,6 +534,7 @@ function userFeedback(bool, lastNode) {
         dot = "correct";
     } else {
         dot = "incorrect";
+		wrongSound.play();
     }
     if (steveModeEnabled) {
         $(".dot").removeClass("tapped_steve");
@@ -668,12 +689,15 @@ function pauseGame(type) {
 
 function gameOver() {
     playing = false;
+	disco.pause();
     $( "#game-screen" ).fadeOut( 1500, function() {
         $('#gameover-screen').fadeIn(1500, function() {});
 		badgeChecker(currentRound, lifePoints);
 		scoreChecker(playerScore);
 		localStorage.setItem("saveFile", JSON.stringify(localSavedFiles));
 		updateHighScores();
+		disco.CurrentTime=0;
+		loseSound.play();
 		
 		if (playerScore > 0) {
 		var playerName;
@@ -717,6 +741,7 @@ function resetVals(){
 
 // Easter Egg: All is Steve Albini; Steve Albini is all
 function enableSteveMode() {
+	tapSound.play();
     if (steveModeEnabled == false) {
         steveModeEnabled = true;
     } else {
@@ -734,6 +759,10 @@ function steveify() {
         $(".dot").bind("tapone", steveTap);
         $(".dot").addClass("bound");
     }
+}
+
+function buttonSounds() {
+	tapSound.play();
 }
 
 function steveTap(event) {
