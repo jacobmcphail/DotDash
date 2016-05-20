@@ -185,12 +185,12 @@ $(document).ready(function(){
 
 function printOnlineScores() {
 	var leaderboard = document.getElementById("online-scores");
-	leaderboard.innerHTML = '';
 	var databus;
+	leaderboard.innerHTML = '<br><br><br><br><br><h2>Loading...</h2>';
 	getOutput(databus).success(function (data) {
 		console.log(data);
 	//	data = JSON.parse(data);
-		leaderboard.innerHTML += '<h1>Leaderboard</h1>';
+		leaderboard.innerHTML = '<h1>Leaderboard</h1>';
 		leaderboard.innerHTML += '<h2>Marathon</h2>';
 		var indexDB = 0;
 		for(var i = 1; i <= 10; i++, indexDB++){
@@ -205,10 +205,9 @@ function printOnlineScores() {
 			leaderboard.innerHTML += '<p>' + i + ': ' + data[indexDB]["tName"] + ' - ' + data[indexDB]["tScore"] + '</p>';
 		}
 		leaderboard.innerHTML += '<br>';
+	}).fail(function () {
+		leaderboard.innerHTML = '<br><br><br><h2>Could not get online leaderboard!</h2>';		
 	});
-	
-	//leaderboard.innerHTML += '<br><br><br><h2>Could not get online leaderboard!</h2>';
-
 }
 
 function initialize(gamemode, newRound, removeDots){
@@ -675,6 +674,35 @@ function gameOver() {
 		scoreChecker(playerScore);
 		localStorage.setItem("saveFile", JSON.stringify(localSavedFiles));
 		updateHighScores();
+		
+		if (playerScore > 0) {
+		var playerName;
+		while(true) {
+			playerName = prompt("Submit your score by entering your name. (Max 14 Characters)");
+			if (playerName == null || playerName.length <= 14) {
+				break;
+			}
+		}
+		
+		if (playerName != null) {
+		var j_notation =
+		{
+		"mode": gamemode,
+		"player_name": playerName, 
+		"player_score": playerScore,
+		}; 
+
+
+		$.ajax({
+			url: "http://www.crowbot.co/php/dirtyshoes.php",
+			type: 'POST',
+			contentType: 'application/json',
+			data: JSON.stringify(j_notation),
+			dataType: 'json'
+		});
+		}
+	}
+		
     });
 
     // add final score

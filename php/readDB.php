@@ -1,11 +1,7 @@
-<html>
-    <head>
-        <title>DotDash._</title>
- <script src="tests/jquery-2.2.3.min.js"></script>
-  <script src="readDB.js"></script>
-    </head>
-<body>
 <?php
+
+	header("Access-Control-Allow-Origin: *");
+
     $connection = mysqli_connect("localhost","crowbotc_walnut","causticSauce292","crowbotc_DotDashLeaderboard") or die("Error " . mysqli_error($connection));
 
 //Records 1-10 marathon; 11-20 no timer; 21-30 time attack
@@ -42,5 +38,3 @@
 
 ?>
 
-</body>
-</html>

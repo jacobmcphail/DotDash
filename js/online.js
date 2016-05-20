@@ -1,7 +1,7 @@
 function getOutput(database) {
    return $.ajax({
       type: "GET",
-      url: "../php/readDB.php",
+      url: "http://www.crowbot.co/php/readDB.php",
       dataType: "json",
       data: {
 		  database : database
