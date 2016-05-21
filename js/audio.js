@@ -14,3 +14,9 @@ wrongSound.volume = 0.5;
 function buttonSounds() {
 	tapSound.play();
 }
+
+disco.addEventListener('ended', function() {
+    this.currentTime = 0;
+    this.play();
+}, false);
+myAudio.play()

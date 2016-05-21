@@ -1,3 +1,4 @@
+/*Handles sending data to and retrieving data from online leaderboard database. */
 
 $(document).ready(function(){
 

@@ -1,3 +1,6 @@
+/*Handle badges that are earned within game. Events that currently 
+unlock badges are not finalized. */
+
 $(document).ready(function(){
 	$(".badge-button").on('tapone', function(){
 		var badgeNum = parseInt(this.id);
