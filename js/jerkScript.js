@@ -122,13 +122,13 @@ function initialize(gamemode, newRound, removeDots){
 	}
 	switch(gamemode) {
 		case 0:
-			timerSet(0, 5);
+			timerSet(0, 5, 0);
 			break;
 		case 1: 
-			timerSet(0, 0);
+			timerSet(0, 0, 0);
 			break;
 		case 2:
-			timerSet(2, 0);
+			timerSet(2, 0, 0);
 			break;
 		default:
 			window.alert("YOU SHOULD NOT SEE THIS!");
@@ -164,7 +164,7 @@ function newRound(generateGrid){
 
 	if (playing) {
 		if (gamemode == 0) {
-			timerSet(0, 5);
+			timerSet(0, 5, 0);
 		}
 		noErrorsYet = true;
 		notComplete = true;
@@ -357,10 +357,11 @@ function validate(array, userFeedback, dArray){
             wai = $(this).attr("y");
             if (notComplete && noErrorsYet) {
                 if (ex == array[index].pos.x && wai == array[index].pos.y) {
-                    if (index < array.length) {
+                    //Player has not yet made a mistake
+					if (index < array.length) {
                         index++;
+						//Player successfully cleared round
                         if (index >= array.length) {
-							//****
 							levelPass.play();
 							clearTimeout(counter);
 							timerPause();
@@ -371,11 +372,13 @@ function validate(array, userFeedback, dArray){
                             userFeedback(true, dArray[ex][wai]);
                         } 
                     } 
+				//Player goofed
                 } else {
 					clearTimeout(counter);
 					timerPause();
 					noErrorsYet = false;
 					if (gamemode == 2) {
+						//Deducting time from the timer
 						for (var c = 0; c < 20; c++) {
 							updateTimer();
 						}

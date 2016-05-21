@@ -1,6 +1,7 @@
 /*Handles timers used in Marathon mode and Time Attack mode*/
 
 var inter = 0;
+var centiseconds = 0;
 var seconds = 0;
 var minutes = 0;
 var timerOn = false;
@@ -8,7 +9,8 @@ var timerOn = false;
 function timerStart(){
 	if(!timerOn) {
 		timerOn = true;
-		inter = setInterval(updateTimer,1000);
+		//Calls function updateTime every 1/100th of a second
+		inter = setInterval(updateTimer,10);
 	} 
 }
 
@@ -17,33 +19,42 @@ function timerPause(){
 	timerOn = false;
 }
 
-function timerSet(timeMinutes, timerSeconds){
+function timerSet(timeMinutes, timerSeconds, timeCentisec){
 	minutes = timeMinutes;
 	seconds = timerSeconds;
+	centiseconds = timeCentisec;
 	updateClock()
 }
 
 function updateTimer(){
-	console.log("time");
-	seconds--;
-	if(minutes <= 0 && seconds <= 0) {
+	
+	if(centiseconds <= 0) {
+		centiseconds = 99;
+		seconds--;
+	}
+	
+	if(minutes <= 0 && seconds <= 0 && centiseconds <=0) {
 		timerPause();
 	} else if(seconds < 0){
 		minutes--;
 		seconds = 59;
 	}
 	updateClock();
+	
+	centiseconds--;
 } 
 
-
 function updateClock() {
-		if (minutes > 0) {
+	//String that is either ":" or ":0" depending on value of centiseconds
+	var colon = (centiseconds<10) ? ":0" : ":";
+	
+	if (minutes > 0) {
 		if (seconds < 10) {
-			$('#timer').text(minutes + ":0" + seconds);
+			$('#timer').text(minutes + ":0" + seconds + colon + centiseconds);
 		} else {
-			$('#timer').text(minutes + ":" + seconds);
+			$('#timer').text(minutes + ":" + seconds + colon + centiseconds);
 		}
 	} else {
-		$('#timer').text(seconds);
+		$('#timer').text(seconds + colon + centiseconds);
 	}
 }
