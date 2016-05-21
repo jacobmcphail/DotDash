@@ -48,7 +48,6 @@ var counter;
 $.getScript("js/gameTimer.js", function(){});
 $.getScript("js/nuggetScript.js", function(){});
 $.getScript("js/pathGenerator.js", function(){});
-$.getScript("js/online.js", function(){});
 $.getScript("js/touching.js", function(){});
 $.getScript("js/badges.js", function(){});
 $.getScript("js/audio.js", function(){});
