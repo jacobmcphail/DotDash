@@ -287,18 +287,20 @@ function make_2D_Array(array, nRows, nCols) {
 /* Sets difficulty for round. */
 function difficulty(nodeCount) {
 	var length;
-	if (currentRound < 40) {
-		numRows = Math.round((3 + (currentRound / 19)));
-		numCols = Math.round((3 + (currentRound / 32)));
+	if (currentRound < 30) {
+		numRows = Math.round((3 + (currentRound / 30)));
+		numCols = Math.round((3 + (currentRound / 40)));
 		length = 3 + ((0.1 * currentRound) - 0.1);
 	} else {
-		numRows = 5;
+		numRows = 4;
 		numCols = 4;
-		length = 3 + ((0.03 * currentRound) - 0.03);
+		length = 3 + ((0.02 * currentRound) - 0.02);
 	}
     if (length > nodeCount) {
         return nodeCount;
     }
+	numRows = 4;
+	numCols = 4;
     return Math.round(length);
 }
 
