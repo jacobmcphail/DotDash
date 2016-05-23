@@ -160,7 +160,7 @@ function updateLives() {
 /* Invoked at the start of every round. Generate a new grid and reset variables*/
 function newRound(generateGrid){
     console.log("Current round: " + currentRound);
-
+	$("#timer-bar").css("background-color", "#32CD32");
 	if (playing) {
 		if (gamemode == 0) {
 			timerSet(0, 5, 0);
@@ -377,6 +377,7 @@ function validate(array, userFeedback, dArray){
 					timerPause();
 					noErrorsYet = false;
 					if (gamemode == 2) {
+						$("#timer-bar").css("background-color", "red");
 						//Deducting time from the timer
 						for (var c = 0; c < 200; c++) {
 							updateTimer();
