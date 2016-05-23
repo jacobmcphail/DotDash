@@ -75,7 +75,8 @@ function gameSetup() {
 	updateHighScores();
 	document.getElementById('local-scores').style.display = 'block';
 	document.getElementById('online-scores').style.display = 'none';
-
+	$("#title").text('DotDash._');
+	$("#main-screen").css("display", "block");
     /*see touching.js */
     whatDevice();
     addTouchListeners();
@@ -122,13 +123,13 @@ function initialize(gamemode, newRound, removeDots){
 	}
 	switch(gamemode) {
 		case 0:
-			timerSet(0, 5);
+			timerSet(0, 5, 0);
 			break;
 		case 1: 
-			timerSet(0, 0);
+			timerSet(0, 0, 0);
 			break;
 		case 2:
-			timerSet(2, 0);
+			timerSet(2, 0, 0);
 			break;
 		default:
 			window.alert("YOU SHOULD NOT SEE THIS!");
@@ -159,12 +160,11 @@ function updateLives() {
 
 /* Invoked at the start of every round. Generate a new grid and reset variables*/
 function newRound(generateGrid){
-	
     console.log("Current round: " + currentRound);
-
+	$("#timer-bar").css("background-color", "#32CD32");
 	if (playing) {
 		if (gamemode == 0) {
-			timerSet(0, 5);
+			timerSet(0, 5, 0);
 		}
 		noErrorsYet = true;
 		notComplete = true;
@@ -287,14 +287,14 @@ function make_2D_Array(array, nRows, nCols) {
 /* Sets difficulty for round. */
 function difficulty(nodeCount) {
 	var length;
-	if (currentRound < 40) {
-		numRows = Math.round((3 + (currentRound / 19)));
-		numCols = Math.round((3 + (currentRound / 32)));
+	if (currentRound < 30) {
+		numRows = Math.round((3 + (currentRound / 30)));
+		numCols = Math.round((3 + (currentRound / 40)));
 		length = 3 + ((0.1 * currentRound) - 0.1);
 	} else {
-		numRows = 5;
+		numRows = 4;
 		numCols = 4;
-		length = 3 + ((0.03 * currentRound) - 0.03);
+		length = 3 + ((0.02 * currentRound) - 0.02);
 	}
     if (length > nodeCount) {
         return nodeCount;
@@ -312,7 +312,7 @@ function difficulty(nodeCount) {
 
 function validate(array, userFeedback, dArray){
     var ex, wai;
-	
+	fadeOff();
 	counter = setTimeout(function() {
 		if (gamemode != 1) {
 			console.log("TIMESUP");
@@ -328,7 +328,7 @@ function validate(array, userFeedback, dArray){
 			userFeedback(false, null);
 			return;
 		}
-	}, ((minutes * 60) * 1100) + (seconds * 1000) + 20);
+	}, ((minutes * 60) * 1020) + (seconds * 1020));
 	
     $(function(){
         $( ".dot" ).bind( "tapone", tapHandler );
@@ -357,10 +357,11 @@ function validate(array, userFeedback, dArray){
             wai = $(this).attr("y");
             if (notComplete && noErrorsYet) {
                 if (ex == array[index].pos.x && wai == array[index].pos.y) {
-                    if (index < array.length) {
+                    //Player has not yet made a mistake
+					if (index < array.length) {
                         index++;
+						//Player successfully cleared round
                         if (index >= array.length) {
-							//****
 							levelPass.play();
 							clearTimeout(counter);
 							timerPause();
@@ -371,12 +372,15 @@ function validate(array, userFeedback, dArray){
                             userFeedback(true, dArray[ex][wai]);
                         } 
                     } 
+				//Player goofed
                 } else {
 					clearTimeout(counter);
 					timerPause();
 					noErrorsYet = false;
 					if (gamemode == 2) {
-						for (var c = 0; c < 20; c++) {
+						$("#timer-bar").css("background-color", "red");
+						//Deducting time from the timer
+						for (var c = 0; c < 200; c++) {
 							updateTimer();
 						}
 						if ((seconds + minutes) <= 0) {
@@ -465,10 +469,12 @@ function pathDemonstration(arrayToRepeat, validate) {
 	}
     //For testing
     printPath(arrayToRepeat);
+	fadeOn();
     for (var i = 0; i < arrayToRepeat.length; i++) {
         (function (i) {
             setTimeout(function () {
                 pt = arrayToRepeat[i].pos;
+				dotArray[pt.x][pt.y].classList.remove("fade");
                 if(steveModeEnabled){
                    dotArray[pt.x][pt.y].classList.add("magenta");
                    dotArray[pt.x][pt.y].classList.remove("black");
@@ -510,7 +516,6 @@ function playAgain() {
 function resumeGame() {
 	counter = setTimeout(function() {
 		if (gamemode != 1) {
-			console.log("TIMESUP");
 			if (gamemode == 2) {
 				lifePoints = 0;
 				updateLives();
@@ -522,7 +527,7 @@ function resumeGame() {
 			userFeedback(false, null);
 			return;
 		}
-	}, ((minutes * 60) * 1100) + (seconds * 1000) + 20);
+	}, ((minutes * 60) * 1000) + (seconds * 1000) + 20);
 	if (gamemode != 1) {
 		timerStart();
 	}
@@ -559,11 +564,16 @@ function gameOver() {
 		var playerName;
 		while(true) {
 			playerName = prompt("Submit your score by entering your name. (Max 14 Characters)");
-			if (playerName == null || playerName.length <= 14) {
+			if(playerName == null) {
+				break;
+			}
+			playerName = playerName.trim();
+			if (playerName.length <= 14 && playerName.length > 0){
 				break;
 			}
 		}
-		if (playerName != null) {
+		if (playerName != null && playerName.length > 0) {
+			console.log("Score Sent");
 			sendScore(gamemode, playerName, playerScore);
 		}
 	}	
@@ -576,6 +586,14 @@ function resetVals(){
     noErrorsYet = true;
     notComplete = true;
     index = 0;
+}
+
+function fadeOn(){
+	$(".dot").addClass("fade");
+}
+
+function fadeOff(){
+	$(".dot").removeClass("fade");
 }
 
 
