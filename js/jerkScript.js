@@ -299,8 +299,6 @@ function difficulty(nodeCount) {
     if (length > nodeCount) {
         return nodeCount;
     }
-	numRows = 4;
-	numCols = 4;
     return Math.round(length);
 }
 
