@@ -564,11 +564,16 @@ function gameOver() {
 		var playerName;
 		while(true) {
 			playerName = prompt("Submit your score by entering your name. (Max 14 Characters)");
-			if (playerName == null || playerName.length <= 14) {
+			if(playerName == null) {
+				break;
+			}
+			playerName = playerName.trim();
+			if (playerName.length <= 14 && playerName.length > 0){
 				break;
 			}
 		}
-		if (playerName != null) {
+		if (playerName != null && playerName.length > 0) {
+			console.log("Score Sent");
 			sendScore(gamemode, playerName, playerScore);
 		}
 	}	
