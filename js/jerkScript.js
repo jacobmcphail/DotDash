@@ -327,7 +327,7 @@ function validate(array, userFeedback, dArray){
 			userFeedback(false, null);
 			return;
 		}
-	}, ((minutes * 60) * 1000) + (seconds * 1000) );
+	}, ((minutes * 60) * 1020) + (seconds * 1020));
 	
     $(function(){
         $( ".dot" ).bind( "tapone", tapHandler );
@@ -378,7 +378,7 @@ function validate(array, userFeedback, dArray){
 					noErrorsYet = false;
 					if (gamemode == 2) {
 						//Deducting time from the timer
-						for (var c = 0; c < 20; c++) {
+						for (var c = 0; c < 200; c++) {
 							updateTimer();
 						}
 						if ((seconds + minutes) <= 0) {
@@ -525,7 +525,7 @@ function resumeGame() {
 			userFeedback(false, null);
 			return;
 		}
-	}, ((minutes * 60) * 1100) + (seconds * 1000) + 20);
+	}, ((minutes * 60) * 1000) + (seconds * 1000) + 20);
 	if (gamemode != 1) {
 		timerStart();
 	}
