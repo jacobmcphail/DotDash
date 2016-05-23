@@ -75,7 +75,8 @@ function gameSetup() {
 	updateHighScores();
 	document.getElementById('local-scores').style.display = 'block';
 	document.getElementById('online-scores').style.display = 'none';
-
+	$("#title").text('DotDash._');
+	$("#main-screen").css("display", "block");
     /*see touching.js */
     whatDevice();
     addTouchListeners();
