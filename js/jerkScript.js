@@ -159,7 +159,6 @@ function updateLives() {
 
 /* Invoked at the start of every round. Generate a new grid and reset variables*/
 function newRound(generateGrid){
-	
     console.log("Current round: " + currentRound);
 
 	if (playing) {
@@ -312,7 +311,7 @@ function difficulty(nodeCount) {
 
 function validate(array, userFeedback, dArray){
     var ex, wai;
-	
+	fadeOff();
 	counter = setTimeout(function() {
 		if (gamemode != 1) {
 			console.log("TIMESUP");
@@ -328,7 +327,7 @@ function validate(array, userFeedback, dArray){
 			userFeedback(false, null);
 			return;
 		}
-	}, ((minutes * 60) * 1100) + (seconds * 1000) + 20);
+	}, ((minutes * 60) * 1000) + (seconds * 1000) );
 	
     $(function(){
         $( ".dot" ).bind( "tapone", tapHandler );
@@ -468,10 +467,12 @@ function pathDemonstration(arrayToRepeat, validate) {
 	}
     //For testing
     printPath(arrayToRepeat);
+	fadeOn();
     for (var i = 0; i < arrayToRepeat.length; i++) {
         (function (i) {
             setTimeout(function () {
                 pt = arrayToRepeat[i].pos;
+				dotArray[pt.x][pt.y].classList.remove("fade");
                 if(steveModeEnabled){
                    dotArray[pt.x][pt.y].classList.add("magenta");
                    dotArray[pt.x][pt.y].classList.remove("black");
@@ -513,7 +514,6 @@ function playAgain() {
 function resumeGame() {
 	counter = setTimeout(function() {
 		if (gamemode != 1) {
-			console.log("TIMESUP");
 			if (gamemode == 2) {
 				lifePoints = 0;
 				updateLives();
@@ -579,6 +579,14 @@ function resetVals(){
     noErrorsYet = true;
     notComplete = true;
     index = 0;
+}
+
+function fadeOn(){
+	$(".dot").addClass("fade");
+}
+
+function fadeOff(){
+	$(".dot").removeClass("fade");
 }
 
 

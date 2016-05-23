@@ -431,6 +431,9 @@ div.dot.pink {
 div.dot.black{
     background: black;
 }
+div.dot.fade{
+    opacity: 0.2;
+}
 div.dot.steve{
     background-image: url("../images/steve.png");
 }

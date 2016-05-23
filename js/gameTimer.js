@@ -27,20 +27,16 @@ function timerSet(timeMinutes, timerSeconds, timeCentisec){
 }
 
 function updateTimer(){
-	
-	if(centiseconds <= 0) {
-		centiseconds = 99;
-		seconds--;
-	}
-	
 	if(minutes <= 0 && seconds <= 0 && centiseconds <=0) {
 		timerPause();
 	} else if(seconds < 0){
 		minutes--;
 		seconds = 59;
+	} else if(centiseconds < 0){
+		seconds--;
+		centiseconds = 99;
 	}
 	updateClock();
-	
 	centiseconds--;
 } 
 
