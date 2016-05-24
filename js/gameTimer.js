@@ -41,6 +41,12 @@ function updateTimer(){
 		centiseconds = 0;
 		seconds = 0;
 		minutes = 0;
+		noErrorsYet = false;
+		lifePoints--;
+		updateLives();
+		userFeedback(false, null);
+		updateClock();
+		return;
 	} 
 	updateClock();
 } 

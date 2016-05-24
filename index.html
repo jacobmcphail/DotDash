@@ -1,6 +1,5 @@
-<!--May 14th/16 VinegarFruit: branch off of master that we should all be messing with-->
-
-    <html>
+<!DOCTYPE html> 
+<html>
     <head>
 		<meta charset="UTF-8">
 		<link type = "image/png" rel="icon" href="images/crow.png" />
@@ -13,6 +12,7 @@
 		
         <script src="js/jerkScript.js"></script>
 		<script src="js/carousel.js"></script>
+		<script src="js/audio.js"></script>
 
 		<link rel="stylesheet" type="text/css" href="css/styles.css"/>
 		<link rel="stylesheet" href="css/carousel.css">
@@ -26,11 +26,11 @@
     <div id="screen">
         <div id="title">Loading...</div>
 
-        <!-- buttons and elements used in the main menu screen ----------------------------------------->
+        <!-- buttons and elements used in the main menu screen -->
         <div id="main-screen">
             <div id="mode-selection-container">
 				<div id = "middle">
-					<div id="myCarousel" class="carousel slide">
+					<div id="menuCarousel" class="carousel slide">
 			
 						<!-- Wrapper for slides -->
 							<div class="carousel-inner" role="listbox">
@@ -38,57 +38,52 @@
 									<button onclick="play()" class="mode-select" id="mode-1">Marathon</button>
 								</div>
 								<div class="item">
-									<button onclick="play()" class="mode-select" id="mode-2">No Timer</button>
+									<button onclick="play()" class="mode-select" id="mode-2">Sudden Death</button>
 								</div>
 								<div class="item">
 									<button onclick="play()" class="mode-select" id="mode-3">Time Attack</button>
 								</div>
 							</div>
 							
-							<a class="left carousel-control" href="#myCarousel" role="button">
+							<a class="left carousel-control" role="button">
 						<span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
-						<span class="sr-only"><img src="images/arrowLeft.png"></span>
+						<span class="sr-only"><img src="images/arrowLeft.png" alt="arrowleft"></span>
 						</a>
-						<a class="right carousel-control" href="#myCarousel" role="button">
+						<a class="right carousel-control" role="button">
 						  <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
-						  <span class="sr-only"><img src="images/arrowRight.png"></span>
+						  <span class="sr-only"><img src="images/arrowRight.png" alt="arrowright"></span>
 						</a>
 					</div>
 				</div>
 			</div>
                 
-            <button onclick="openOptions()" class="nongameplay-buttons" id="options-button"><img src="images/gear.png"></button>
-            <button onclick="openScores()" class="nongameplay-buttons" id="scores-button"><img src="images/trophy.png"></button>
-            <button onclick="openCredits()" class="nongameplay-buttons" id="credits-button"><img src="images/exclamation.png"></button>
+            <button onclick="openOptions()" class="nongameplay-buttons" id="options-button"><img src="images/gear.png" alt="gear"></button>
+            <button onclick="openScores()" class="nongameplay-buttons" id="scores-button"><img src="images/trophy.png" alt="trophy"></button>
+            <button onclick="openCredits()" class="nongameplay-buttons" id="credits-button"><img src="images/exclamation.png" alt="excalmation"></button>
         </div>
 
         <!-- common button used to return to the main menu -->
-        <button onclick="openMainMenu()" class="nongameplay-buttons" id="return-button"><img src="images/backward.png"/></button>
+        <button onclick="openMainMenu()" class="nongameplay-buttons" id="return-button"><img src="images/backward.png" alt="backward" /></button>
               <div id="options-screen">
             <div class="T_container">
                 <h2 class="option-header">Music</h2>
                 <div class="checkbox">
-                    <input type="checkbox" value="None" onclick="buttonSounds()" id="option-1" name="check" checked="checked"/>
+                    <input type="checkbox" value="None" onclick="buttonSounds();toggleMusic();" id="option-1" name="check" checked="checked"/>
                     <label for="option-1"></label>
                 </div>
                 <h2 class="option-header">Sound Effects</h2>
                 <div class="checkbox">
-                    <input type="checkbox" value="None" onclick="buttonSounds()" id="option-2" name="check" checked="checked"/>
+                    <input type="checkbox" value="None" onclick="buttonSounds();toggleSound();" id="option-2" name="check" checked="checked"/>
                     <label for="option-2"></label>
-                </div>
-                <h2 class="option-header">Colour</h2>
-                <div class="checkbox">
-                    <input type="checkbox" value="None" onclick="buttonSounds()" id="option-3" name="check" checked="checked"/>
-                    <label for="option-3"></label>
                 </div>
                 <h2 class="option-header">Steve Mode</h2>
                 <div class="checkbox">
-                    <input type="checkbox" value="None" onclick="buttonSounds();enableSteveMode();" id="option-4" name="check" />
+                    <input type="checkbox" value="None" onclick="buttonSounds();steveModeToggle();" id="option-4" name="check" />
                     <label for="option-4"></label>
                 </div>
                 <h2 class="option-header">Reset Save</h2>
-                <div class="checkbox">
-                    <input type="checkbox" value="None" onclick="buttonSounds();clearSave();" id="option-5" name="check" />
+                <div class="buttonbox">
+                    <input type="button" value="Reset" onclick="buttonSounds();clearSave();" id="option-5" name="check" />
                     <label for="option-5"></label>
                 </div>
 				<h2 class="option-header">Disable Labels</h2>
@@ -110,56 +105,57 @@
             <div class="L_container">
 				<div id="local-scores">
 				<h2>Marathon</h2><p id="localHS-0">0</p>
-				<h2>No Timer</h2><p id="localHS-1">0</p>
+				<h2>Sudden Death</h2><p id="localHS-1">0</p>
 				<h2>Time Attack</h2><p id="localHS-2">0</p>
 				</div>
 				<div class="scroll-board" id="online-scores">
+				<!--!-->
+				<div id="online-score-container"></div>
 				</div>
             </div>
-            <button onclick="openBadges()" class="nongameplay-buttons" id="badges-button"><img src="images/medal2.png"/></button>
+            <button onclick="openBadges()" class="nongameplay-buttons" id="badges-button"><img src="images/medal2.png" alt="medal2" /></button>
         </div>
         <div id="badges-screen">
             <div class="T_container">
-                <h2 id="badge-desc"></h2>
+                <h2 id="badge-desc">Desc</h2>
                 <div class="badge-icons">
-                    <img class="badge-button" id="1badge" src="images/locked.png"/>
-                    <img class="badge-button" id="2badge" src="images/locked.png"/>
-                    <img class="badge-button" id="3badge" src="images/locked.png"/>
-                    <img class="badge-button" id="4badge" src="images/locked.png"/>
-                    <img class="badge-button" id="5badge" src="images/locked.png"/>
-                    <img class="badge-button" id="6badge" src="images/locked.png"/>
-                    <img class="badge-button" id="7badge" src="images/locked.png"/>
-                    <img class="badge-button" id="8badge" src="images/locked.png"/>
-                    <img class="badge-button" id="9badge" src="images/locked.png"/>
-                    <img class="badge-button" id="10badge" src="images/locked.png"/>
+                    <img class="badge-button" id="1badge" src="images/locked.png" alt="locked" />
+                    <img class="badge-button" id="2badge" src="images/locked.png" alt="locked" />
+                    <img class="badge-button" id="3badge" src="images/locked.png" alt="locked" />
+                    <img class="badge-button" id="4badge" src="images/locked.png" alt="locked" />
+                    <img class="badge-button" id="5badge" src="images/locked.png" alt="locked" />
+                    <img class="badge-button" id="6badge" src="images/locked.png" alt="locked" />
+                    <img class="badge-button" id="7badge" src="images/locked.png" alt="locked" />
+                    <img class="badge-button" id="8badge" src="images/locked.png" alt="locked" />
+                    <img class="badge-button" id="9badge" src="images/locked.png" alt="locked" />
+                    <img class="badge-button" id="10badge" src="images/locked.png" alt="locked" />
                 </div>
             </div>
-            <button onclick="openScores()" class="nongameplay-buttons" id="badge-return-button"><img src="images/backward.png"/></button>
+            <button onclick="openScores()" class="nongameplay-buttons" id="badge-return-button"><img src="images/backward.png" alt="backward" /></button>
         </div>
         <div id="credits-screen">
             <div class="T_container" id="credits-container">
                 <h2>created by:</h2>
                 <h2><b>THE SURVEYORS</b></h2>
-                <img src="images/dot-magenta.png"/><p>Jake Superior</p>
-                <img src="images/dot-yellow.png"/><p>Frisky Dingo</p>
-                <img src="images/dot-green.png"/><p>Jenkinz</p>
-                <img src="images/dot-blue.png"/><p>ZIA</p>
-                <img src="images/dot-purple.png"/><p>A Sponge</p><br/>
-                <audio id="audio" src="http://www.soundjay.com/button/beep-07.wav" autostart="false" ></audio>
-                <button id="steve-button" class="cawButton"><img src="images/crow.png" width="60" height="60"/></button>
+                <img src="images/dot-magenta.png" alt="dot-magenta"/><p>Jake Superior</p>
+                <img src="images/dot-yellow.png" alt="dot-yellow"/><p>Frisky Dingo</p>
+                <img src="images/dot-green.png" alt="dot-green"/><p>Jenkinz</p>
+                <img src="images/dot-blue.png" alt="dot-blue"/><p>ZIA</p>
+                <img src="images/dot-purple.png" alt="dot-purple"/><p>A Sponge</p><br/>
+                <button id="steve-button" class="cawButton"><img src="images/crow.png" width="60" height="60" alt="crow"/></button>
             </div>
         </div>
         <div id="game-screen">
             <div id="lives-bar">
-                <img src="images/hud_heartFull.png"/>
-                <img src="images/hud_heartFull.png"/>
-                <img src="images/hud_heartFull.png"/>
+                <img src="images/hud_heartFull.png" alt="heart"/>
+                <img src="images/hud_heartFull.png" alt="heart"/>
+                <img src="images/hud_heartFull.png" alt="heart"/>
             </div>
             <div id="timer-bar">
                 <p id="timer">0:00</p>
             </div>
-             <button class="nongameplay-buttons" onclick="pauseGame('pause')" id="pause-button"><img src="images/pause.png"></button>
-            <button class="nongameplay-buttons" onclick="pauseGame('tutorial')" id="tutorial-button"><img src="images/question.png"></button>
+             <button class="nongameplay-buttons" onclick="pauseGame('pause')" id="pause-button"><img src="images/pause.png" alt="pause"></button>
+            <button class="nongameplay-buttons" onclick="pauseGame('tutorial')" id="tutorial-button"><img src="images/question.png" alt="question"></button>
             <div id="score-bar">
                 <p id="playerScore">0</p>
             </div>
@@ -168,41 +164,41 @@
         </div>
 		<div id="pause-screen">
             <h1>Paused</h1>                                                                                                                                                              <!-- is this my mistake or did someone add this? -->
-            <button class="nongameplay-buttons" onclick="closePauseScreen(); resumeGame();" id="unpause-button"><img src="images/backward.png"/></button>
-            <button class="nongameplay-buttons" onclick="openConfirmation('restart')" id="restart-button"><img src="images/return.png"/></button>
-            <button class="nongameplay-buttons" onclick="openConfirmation('quit')" id="quit-button"><img src="images/cross.png"/></button>
+            <button class="nongameplay-buttons" onclick="closePauseScreen(); resumeGame();" id="unpause-button"><img src="images/backward.png" alt="backward"/></button>
+            <button class="nongameplay-buttons" onclick="openConfirmation('restart')" id="restart-button"><img src="images/return.png" alt="return"/></button>
+            <button class="nongameplay-buttons" onclick="openConfirmation('quit')" id="quit-button"><img src="images/cross.png" alt="cross"/></button>
             <div id="confirmation-container">
-                <h2 id="confirm-text"></h2>
-                <button class="confirm-buttons" onclick="closeConfirmation()" id="no-button"><img src="images/cross.png"/></button>
-                <button class="confirm-buttons" id="yes-button"><img src="images/checkmark.png"/></button>
+                <h2 id="confirm-text">confirm</h2>
+                <button class="confirm-buttons" onclick="closeConfirmation()" id="no-button"><img src="images/cross.png" alt="cross"/></button>
+                <button class="confirm-buttons" id="yes-button"><img src="images/checkmark.png" alt="checkmark"/></button>
             </div>
         </div>
         <div id="gameover-screen">
             <br/>
             <h1>GAME OVER</h1>
             <div id="final-score-container"><h2>Your score: </h2><h2 id="final-score">NULL</h2></div>
-            <button class="nongameplay-buttons" id="game-over-quit-button" onclick="quitGame()"><img src="images/backward.png"></button>
-            <button class="nongameplay-buttons" id="game-over-restart-button" onclick="playAgain()"><img src="images/return.png"></button>
+            <button class="nongameplay-buttons" id="game-over-quit-button" onclick="quitGame()"><img src="images/backward.png" alt="backward"></button>
+            <button class="nongameplay-buttons" id="game-over-restart-button" onclick="playAgain()"><img src="images/return.png" alt="return"></button>
         </div>
         <div id="tutorial1-screen">
-            <img class="tutorial-gif" src="images/tutorial1.gif"/>
-            <button class="nongameplay-buttons" id="tutorial-return-button" onclick="closeTutorialScreen();  resumeGame();"><img src="images/backward.png"></button>
-            <button class="nongameplay-buttons" id="to-tutorial2-button" onclick="openTutorial2Screen();"><img src="images/forward.png"></button>
+            <img class="tutorial-gif" src="images/tutorial1.gif" alt="tutorial1"/>
+            <button class="nongameplay-buttons" id="tutorial-return-button" onclick="closeTutorialScreen();  resumeGame();"><img src="images/backward.png" alt="backward"></button>
+            <button class="nongameplay-buttons" id="to-tutorial2-button" onclick="openTutorial2Screen();"><img src="images/forward.png" alt="forward"></button>
         </div>
         <div id="tutorial2-screen">
-            <img class="tutorial-gif"  src="images/untimed.gif"/>
-            <button class="nongameplay-buttons" id="tutorial1-return-button" onclick="openTutorialScreen();"><img src="images/backward.png"></button>
-            <button class="nongameplay-buttons" id="to-tutorial3-button" onclick="openTutorial3Screen();"><img src="images/forward.png"></button>
+            <img class="tutorial-gif"  src="images/untimed.gif" alt="untimed"/>
+            <button class="nongameplay-buttons" id="tutorial1-return-button" onclick="openTutorialScreen();"><img src="images/backward.png" alt="backward"></button>
+            <button class="nongameplay-buttons" id="to-tutorial3-button" onclick="openTutorial3Screen();"><img src="images/forward.png" alt="forward"></button>
         </div>
         <div id="tutorial3-screen">
-            <img class="tutorial-gif" src="images/marathon.gif"/>
-            <button class="nongameplay-buttons" id="tutorial2-return-button" onclick="openTutorial2Screen();"><img src="images/backward.png"></button>
-            <button class="nongameplay-buttons" id="to-tutorial4-button" onclick="openTutorial4Screen();"><img src="images/forward.png"></button>
+            <img class="tutorial-gif" src="images/marathon.gif" alt="marathon"/>
+            <button class="nongameplay-buttons" id="tutorial2-return-button" onclick="openTutorial2Screen();"><img src="images/backward.png" alt="backward"></button>
+            <button class="nongameplay-buttons" id="to-tutorial4-button" onclick="openTutorial4Screen();"><img src="images/forward.png" alt="forward"></button>
         </div>
         <div id="tutorial4-screen">
-            <img class="tutorial-gif"  src="images/timeattack.gif"/>
-            <button class="nongameplay-buttons" id="tutorial3-return-button" onclick="openTutorial3Screen();"><img src="images/backward.png"></button>
-            <button class="nongameplay-buttons" id="tutorial-end-button" onclick="closeTutorialScreen(); resumeGame();"><img src="images/forward.png"></button>
+            <img class="tutorial-gif"  src="images/timeattack.gif" alt="timeattack"/>
+            <button class="nongameplay-buttons" id="tutorial3-return-button" onclick="openTutorial3Screen();"><img src="images/backward.png" alt="backward"></button>
+            <button class="nongameplay-buttons" id="tutorial-end-button" onclick="closeTutorialScreen(); resumeGame();"><img src="images/forward.png" alt="forward"></button>
         </div>
     </div>
 <!--added preloader-->

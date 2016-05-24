@@ -102,19 +102,7 @@ function resetPG(gamegrid){
 }
 
 //Runs path generator
-function runPathFinder(rows, cols, length, mode) {
-    var array;
-	var gamegrid = new Grid(rows, cols)
-    while(true) {
-        if (mode) {
-            array = generateSequence(gamegrid, length);
-        } else {
-            array = generatePath(gamegrid, length);
-        }
-        if (array.length == length) {
-            break;
-        }
-        resetPG(gamegrid);
-    }
-   return array;
+function runPathFinder(rows, cols, length) {
+	var gamegrid = new Grid(rows, cols)	 
+	return array = generateSequence(gamegrid, length);;
 }
