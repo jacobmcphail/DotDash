@@ -75,6 +75,10 @@ function gameSetup() {
 	updateHighScores();
 	document.getElementById('local-scores').style.display = 'block';
 	document.getElementById('online-scores').style.display = 'none';
+	$('input[type=checkbox]').each(function() { 
+        this.checked = true; 
+	}); 
+	$('#option-4').removeAttr('checked');
 	$("#title").text('DotDash._');
 	$("#main-screen").css("display", "block");
     /*see touching.js */
@@ -314,8 +318,8 @@ function validate(array, userFeedback, dArray){
     var ex, wai;
 	fadeOff();
 	counter = setTimeout(function() {
+		userInput = false;
 		if (gamemode != 1) {
-			console.log("TIMESUP");
 			if (gamemode == 2) {
 				lifePoints = 0;
 				updateLives();
@@ -362,6 +366,7 @@ function validate(array, userFeedback, dArray){
                         index++;
 						//Player successfully cleared round
                         if (index >= array.length) {
+							userInput = false;
 							levelPass.play();
 							clearTimeout(counter);
 							timerPause();
@@ -374,6 +379,7 @@ function validate(array, userFeedback, dArray){
                     } 
 				//Player goofed
                 } else {
+					userInput = false;
 					clearTimeout(counter);
 					timerPause();
 					noErrorsYet = false;
@@ -436,7 +442,6 @@ function userFeedback(bool, lastNode) {
 		
         //adjustStats(reset);
 		reset(removeDots);
-
     }, 800);
 }
 
@@ -459,7 +464,6 @@ function removeDots(){
 * Briefly changes the colour of each to indicate which dots should be
  * selected in which sequence.*/
 function pathDemonstration(arrayToRepeat, validate) {
-	userInput = false;
     var pt;
 	var blinkTime;
 	if (currentRound >= 250) {

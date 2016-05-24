@@ -193,6 +193,13 @@ input[type=checkbox] {
     background: black;
 }
 
+.buttonbox {
+	width: 28px;
+	height: 28px;
+	margin: 20px 0px 20px 230px;
+	position: relative;
+}
+
 .checkbox label:after {
     opacity: 0;
     content: '';
@@ -444,9 +451,13 @@ div.dot.fade{
 }
 div.dot.steve{
     background-image: url("../images/steve.png");
+	width: 50px; /* TMP, resize image to 52x52 then remove */
+	height: 50px; /* TMP, resize image to 52x52 then remove */
 }
 div.dot.tapped_steve{
     background-image: url("../images/madsteve.png");
+	width: 50px; /* TMP, resize image to 52x52 then remove */
+	height: 50px; /* TMP, resize image to 52x52 then remove */
 }
 div.dot.correct {
     background: green;

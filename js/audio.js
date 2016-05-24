@@ -17,6 +17,30 @@ function buttonSounds() {
 
 disco.addEventListener('ended', function() {
     this.currentTime = 0;
-    this.play();
-}, false);
-myAudio.play()
+	this.play();
+}, false); 
+
+function toggleSound(){
+	var soundVolume;
+	if (wrongSound.volume == 0.5) {
+		wrongSound.volume = 0.0;
+		soundVolume = 0.0;
+	} else {
+		wrongSound.volume = 0.5;
+		soundVolume = 1;
+	}
+	popupSound.volume = soundVolume;
+	yesSound.volume = soundVolume;
+	noSound.volume = soundVolume;
+	loseSound.volume = soundVolume;
+	levelPass.volume = soundVolume;
+	tapSound.volume = soundVolume;
+}
+
+function toggleMusic(){
+	if (disco.volume == 0.4) {
+		disco.volume = 0.0;
+	} else {
+		disco.volume = 0.4;
+	}
+}
