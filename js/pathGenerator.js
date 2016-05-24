@@ -92,62 +92,6 @@ function generateSequence(gamegrid, length) {
     return path;
 }
 
-//Creates a random swiping path
-function generatePath(gamegrid, length) {
-    var path = [];
-    var pathsize = 0;
-    path.push(gamegrid.grid[(Math.floor((Math.random() * gamegrid.grid.length)))][(Math.floor((Math.random() * gamegrid.grid[0].length)))]);
-    visit(path[pathsize]);
-    pathsize++;
-    while(pathsize < length) {
-        var neighbours = getNeighbours(path[pathsize-1], gamegrid);
-        var unvisited = getNumberOfUnvisited(neighbours);
-        if (unvisited <= 0) {
-            break;
-        }
-        var avaOne = [];
-        var avaTwo = [];
-        var avaThree = [];
-        var lowestNode = null;
-        for(var i = 0; i < neighbours.length; i++) {
-            if (neighbours[i].visited) {
-                continue;
-            }
-            var avaUnvisited = getNumberOfUnvisited(getNeighbours(neighbours[i], gamegrid));
-            if (avaUnvisited <= 1) {
-                avaOne.push(neighbours[i]);
-            } else if (avaUnvisited <= 2) {
-                avaTwo.push(neighbours[i]);
-            } else {
-                if (lowestNode == null) {
-                    lowestNode = neighbours[i];
-                    avaThree.push(lowestNode);
-                } else if (avaUnvisited == getNumberOfUnvisited(getNeighbours(lowestNode, gamegrid)) || getNeighbours(neighbours[i], gamegrid).length > 7) {
-                    avaThree.push(neighbours[i]);
-                } else if (avaUnvisited < getNumberOfUnvisited(getNeighbours(lowestNode, gamegrid))) {
-                    avaThree = [];
-                    lowestNode = neighbours[i];
-                    avaThree.push(lowestNode);
-                }
-            }
-        }
-        var ranNum;
-        if (avaOne.length > 0) {
-            ranNum = (Math.floor((Math.random() * avaOne.length)));
-            path.push(avaOne[ranNum]);
-        } else if (avaTwo.length > 0) {
-            ranNum = (Math.floor((Math.random() * avaTwo.length)));
-            path.push(avaTwo[ranNum]);
-        } else {
-            ranNum = (Math.floor((Math.random() * avaThree.length)));
-            path.push(avaThree[ranNum]);
-        }
-        visit(path[pathsize]);
-        pathsize++;
-    }
-    return path;
-}
-
 //Resets grid
 function resetPG(gamegrid){
     for(var x = 0; x < gamegrid.grid.length; x++) {
@@ -158,19 +102,7 @@ function resetPG(gamegrid){
 }
 
 //Runs path generator
-function runPathFinder(rows, cols, length, mode) {
-    var array;
-	var gamegrid = new Grid(rows, cols)
-    while(true) {
-        if (mode) {
-            array = generateSequence(gamegrid, length);
-        } else {
-            array = generatePath(gamegrid, length);
-        }
-        if (array.length == length) {
-            break;
-        }
-        resetPG(gamegrid);
-    }
-   return array;
+function runPathFinder(rows, cols, length) {
+	var gamegrid = new Grid(rows, cols)	 
+	return array = generateSequence(gamegrid, length);;
 }

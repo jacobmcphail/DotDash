@@ -1,70 +1,62 @@
-/**
- * Gameplay-related
- * */
-
 /*
-Tuesday May 16th: VinegarFruit (official Death/Dev Branch)
--Steve mode cheating thwarted
--Steve badge!
--Removed some comments
+jerkScript.js
+ Gameplay-related
 */
 
+//Global variables
+
+/*Game mode: 
+0 = Marathon
+1 = Untimed
+2 = Time Attack
+*/
 var gamemode;
+
+/*True when player is playing; false when Game Over. */
 var playing = false;
-var steveModeEnabled = false;
+
+/*Tracks whether user has made any errors. */
 var noErrorsYet = true;
 var notComplete = true;
-var userInput = true;
+/*Index of array holding sequence of dots in each round; used to compare the dot
+each user selects with successive dots in the array. */
 var index = 0;
+
+/*When false, user cannot select anything. */
+var userInput = true;
+
+/*Grid container with dimensions determined by difficulty; each grid element holds a div container that holds a dot. */
 var socks;
+/*Container that holds the game grid. */
+var container;
+/*Dots are div elements with attributes (x- and y- coordinates) 
+Every round, dots are created, appended to socks, and stored in dotArray. */
+var dotArray = [];
+
 var playerScore = 0;
 var currentRound = 1;
 var lifePoints = 3;
 var numRows = 3;
 var numCols = 3;
 var localSavedFiles;
-var container;
-var dotArray = [];
 var colourArray = ["cyan","orange","green","pink","blue","purple"];
 var colour;
-var counter;
 
-var disco = new Audio('sounds/Disco.mp3'); 
-var popupSound = new Audio('sounds/phaserDown2.ogg');
-var yesSound = new Audio('sounds/phaserDown1.ogg');
-var noSound = new Audio('sounds/phaserDown3.ogg');
-var loseSound = new Audio('sounds/you_lose.ogg');
-var levelPass = new Audio('sounds/jingles_PIZZA10');
-var tapSound = new Audio('sounds/zap1.ogg');
-var wrongSound = new Audio('sounds/wrong.ogg');
+$.getScript("js/gameTimer.js", function(){});
+$.getScript("js/nuggetScript.js", function(){});
+$.getScript("js/pathGenerator.js", function(){});
+$.getScript("js/touching.js", function(){});
+$.getScript("js/badges.js", function(){});
+$.getScript("js/audio.js", function(){});
+$.getScript("js/leaderboard.js", function(){});
+$.getScript("js/steve.js", function(){});
 
-
-
-$.getScript("js/gameTimer.js", function(){
-//          console.log("ALL YOUR MEAT BYPRODUCTS COMBINED");
-});
-
-$.getScript("js/nuggetScript.js", function(){
-//          console.log("ALL YOUR MEAT BYPRODUCTS COMBINED");
-});
-
-$.getScript("js/pathGenerator.js", function(){
-          //console.log("Bald kiwi bird");
-});
-
-$.getScript("js/online.js", function(){
-          //console.log("Bald kiwi bird");
-});
-
-$.getScript("js/touching.js", function(){
-    //console.log("Bald kiwi bird");
-});
-
-//File storing function
+/*File storing function*/
 function gameSetup() {
 	checkCookie();
 	localSavedFiles = JSON.parse(localStorage.getItem("saveFile"));
 	if (localSavedFiles == null) {
+		//Refer to SaveFileArrayIndex.txt
 		localSavedFiles = [false, false, false, false, false, false, false, false, false, false, false, 0, 0, 0];
 		localStorage.setItem("saveFile", JSON.stringify(localSavedFiles));
 	} else {
@@ -75,13 +67,18 @@ function gameSetup() {
             gameSetup();
 		}
 		console.log(localSavedFiles);
-		updateBadges();
 	}
+	updateBadges();
 	updateHighScores();
 	document.getElementById('local-scores').style.display = 'block';
 	document.getElementById('online-scores').style.display = 'none';
-
-    /* t - goes to touching.js */
+	$('input[type=checkbox]').each(function() { 
+        this.checked = true; 
+	}); 
+	$('#option-4').removeAttr('checked');
+	$("#title").text('DotDash._');
+	$("#main-screen").css("display", "block");
+    /*see touching.js */
     whatDevice();
     addTouchListeners();
 }
@@ -92,126 +89,25 @@ function checkCookie(){
         document.cookie="testcookie";
         cookieEnabled=(document.cookie.indexOf("testcookie")!=-1)? true : false;
     }
-    return (cookieEnabled)?true:showCookieFail();
-}
-
-function showCookieFail(){
-  console.log("NO COOKIES");
-  window.alert("WARNING: Cookies must be enabled to play this game. Enable cookies then refresh the game.");
+    if (!cookieEnabled) {
+	console.log("NO COOKIES");
+	window.alert("WARNING: Cookies must be enabled to play this game. Enable cookies then refresh the game.");
+	}
 }
 
 function clearSave() {
-	localSavedFiles = null;
-	localStorage.setItem("saveFile", JSON.stringify(localSavedFiles));
-	gameSetup();
-}
-
-//Update high scores
-function updateHighScores() {
-    for (var i = 11, q = 0; i < 14; i++, q++) {
-		$("#localHS-" + q).text(localSavedFiles[i]);
-    }
-}
-
-
-$(document).ready(function(){
-
-    //return scores to normal after Steve Mode is disabled
-    $("#option-4").on('tapone', function(){
-        if(!steveModeEnabled){
-            updateHighScores();
-        }
-    });
-    
-    $(".mode-select").on('tapone', function(){
-        var mode = this.id;
-		if (mode == "mode-1") {
-			gamemode = 0;
-		} else if (mode == "mode-2") {
-			gamemode = 1;
-		} else {
-			gamemode = 2;
-		}
-        console.log("mode selected: " + mode + ":" + gamemode);
-    //    initialize(gamemode, newRound, removeDots);
-    });
-	
-	$(".cawButton").on('tapone', function(){
-        if (steveModeEnabled) {
-            var sound = document.getElementById("audio");
-            sound.play();
-			if (!localSavedFiles[1]) {
-				window.alert("Badge Unlocked! Activated Steve mode.");
-				localSavedFiles[1] = true;
-				localStorage.setItem("saveFile", JSON.stringify(localSavedFiles));
-				updateBadges();
-			}
-            // Easter Egg: change scores to "Steve"
-           /* var curScores = document.getElementsByClassName("score-text");
-            for (var i = 0; i < curScores.length; i++) {
-                curScores[i].innerHTML = "Steve";
-            }*/
-        }
-    });
-	
-/*	if( /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) ) {
-		function reorient(e) {
-		var portrait = (window.orientation % 180 == 0);
-		$("body > div").css("-webkit-transform", !portrait ? "rotate(-90deg)" : "");
-		}
-		window.onorientationchange = reorient;
-		window.setTimeout(reorient, 0);
-	}	*/
-	
-	$(".cb-enable").click(function(){
-        var parent = $(this).parents('.switch');
-        $('.cb-disable',parent).removeClass('selected');
-        $(this).addClass('selected');
-        $('.checkbox',parent).attr('checked', true);
-		document.getElementById('local-scores').style.display = 'block';
-		document.getElementById('online-scores').style.display = 'none';
-    });
-    $(".cb-disable").click(function(){
-        var parent = $(this).parents('.switch');
-        $('.cb-enable',parent).removeClass('selected');
-        $(this).addClass('selected');
-        $('.checkbox',parent).attr('checked', false);
-		document.getElementById('local-scores').style.display = 'none';
-		document.getElementById('online-scores').style.display = 'block';
-		printOnlineScores();
-    });
-	
-});
-
-function printOnlineScores() {
-	var leaderboard = document.getElementById("online-scores");
-	var databus;
-	leaderboard.innerHTML = '<br><br><br><br><br><h2>Loading...</h2>';
-	getOutput(databus).success(function (data) {
-		console.log(data);
-	//	data = JSON.parse(data);
-		leaderboard.innerHTML = '<h1>Leaderboard</h1>';
-		leaderboard.innerHTML += '<h2>Marathon</h2>';
-		var indexDB = 0;
-		for(var i = 1; i <= 10; i++, indexDB++){
-			leaderboard.innerHTML += '<p>' + i + ': ' + data[indexDB]["mName"] + ' - ' + data[indexDB]["mScore"] + '</p>';
-		}
-		leaderboard.innerHTML += '<br><h2>No Timer</h2>';
-		for(var i = 1; i <= 10; i++, indexDB++){
-			leaderboard.innerHTML += '<p>' + i + ': ' + data[indexDB]["uName"] + ' - ' + data[indexDB]["uScore"] + '</p>';
-		}
-		leaderboard.innerHTML += '<br><h2>Time Attack</h2>';
-		for(var i = 1; i <= 10; i++, indexDB++){
-			leaderboard.innerHTML += '<p>' + i + ': ' + data[indexDB]["tName"] + ' - ' + data[indexDB]["tScore"] + '</p>';
-		}
-		leaderboard.innerHTML += '<br>';
-	}).fail(function () {
-		leaderboard.innerHTML = '<br><br><br><h2>Could not get online leaderboard!</h2>';		
-	});
+	var resetYes = window.confirm("Are you sure you want to reset your save? Your high scores and badges will be lost.");
+	if (resetYes) {
+		localSavedFiles = [false, false, false, false, false, false, false, false, false, false, false, 0, 0, 0];
+		localStorage.setItem("saveFile", JSON.stringify(localSavedFiles));
+		updateBadges();
+		updateHighScores();	
+		window.alert("Save Cleared");
+	}
 }
 
 function initialize(gamemode, newRound, removeDots){
-    //Initialize global variables depending on mode (currently only one mode)
+    //Initialize global variables depending on mode
     container = document.getElementById("dot-container");
     container.classList.add("vertical-center");
     playerScore = 0;
@@ -233,17 +129,18 @@ function initialize(gamemode, newRound, removeDots){
 	}
 	switch(gamemode) {
 		case 0:
-			timerSet(0, 5);
+			timerSet(0, 10, 0);
 			break;
 		case 1: 
-			timerSet(0, 0);
+			timerSet(0, 0, 0);
 			break;
 		case 2:
-			timerSet(2, 0);
+			timerSet(2, 0, 0);
 			break;
 		default:
 			window.alert("YOU SHOULD NOT SEE THIS!");
 		}
+	disco.play();
     newRound(generateGrid);
 }
 
@@ -262,7 +159,6 @@ function updateLives() {
     $('#lives-bar').html(lifeString);
 
     if (lifePoints == 0) {
-		disco.pause();
         gameOver();
 		disco.currentTime = 0;
     }
@@ -270,13 +166,11 @@ function updateLives() {
 
 /* Invoked at the start of every round. Generate a new grid and reset variables*/
 function newRound(generateGrid){
-	disco.pause();
-	levelPass.play();
     console.log("Current round: " + currentRound);
-
+	$("#timer-bar").css("background-color", "#32CD32");
 	if (playing) {
 		if (gamemode == 0) {
-			timerSet(0, 5);
+			timerSet(0, 10, 0);
 		}
 		noErrorsYet = true;
 		notComplete = true;
@@ -306,7 +200,6 @@ function newRound(generateGrid){
 
 
 		generateGrid(createGrid,make_2D_Array, pathDemonstration);
-		disco.play();
 	}
 	
 }
@@ -324,7 +217,7 @@ function generateGrid(createGrid, make_2D_Array, pathDemonstration){
         }
     }
    // var someGrid = new Grid(numRows,numCols);
-    var arrayToRepeat = runPathFinder(numRows, numCols, difficulty(numRows * numCols), true);
+    var arrayToRepeat = runPathFinder(numRows, numCols, difficulty(numRows * numCols));
     if(steveModeEnabled){
         steveify();
     }
@@ -341,12 +234,6 @@ function createGrid(cont, nRows, nCols){
     var dotID = 1;
     var newRow;
 
-    //At the start: col-xs-4
-    //numCols = 4: col-xs-3
-    //numCols = 5; col-xs-2 with offset
-    //numCols = 6; cols-xs-2
-    //numCols = 7; cols-xs-1 with offset, etc.
-    //numCols = 12; cols-xs-1
     for(var i = 0; i < nRows; i++) {
         newRow = document.createElement("div");
         newRow.className = "row row-centered";
@@ -360,11 +247,6 @@ function createGrid(cont, nRows, nCols){
                     break;
                 case 5:
                     gridElement.classList.add("col-xs-2");
-                    //Uncomment if you are using Bootstrap
-                 /*   if(isFirstElement){
-                        gridElement.classList.add("col-xs-offset-1");
-                        isFirstElement = false;
-                    }*/
                     break;
                 case 6:
                     gridElement.classList.add("col-xs-2");
@@ -408,17 +290,17 @@ function make_2D_Array(array, nRows, nCols) {
     return array;
 }
 
-// Sets difficulty for round
+/* Sets difficulty for round. */
 function difficulty(nodeCount) {
 	var length;
-	if (currentRound < 40) {
-		numRows = Math.round((3 + (currentRound / 19)));
-		numCols = Math.round((3 + (currentRound / 32)));
+	if (currentRound < 30) {
+		numRows = Math.round((3 + (currentRound / 30)));
+		numCols = Math.round((3 + (currentRound / 40)));
 		length = 3 + ((0.1 * currentRound) - 0.1);
 	} else {
-		numRows = 5;
+		numRows = 4;
 		numCols = 4;
-		length = 3 + ((0.03 * currentRound) - 0.03);
+		length = 3 + ((0.11 * currentRound) - 0.11);
 	}
     if (length > nodeCount) {
         return nodeCount;
@@ -436,23 +318,7 @@ function difficulty(nodeCount) {
 
 function validate(array, userFeedback, dArray){
     var ex, wai;
-	
-	counter = setTimeout(function() {
-		if (gamemode != 1) {
-			console.log("TIMESUP");
-			if (gamemode == 2) {
-				lifePoints = 0;
-				updateLives();
-				return;
-			}
-			noErrorsYet = false;
-			lifePoints--;
-			popupSound.play();
-			updateLives();
-			userFeedback(false, null);
-			return;
-		}
-	}, ((minutes * 60) * 1100) + (seconds * 1000) + 20);
+	fadeOff();
 	
     $(function(){
         $( ".dot" ).bind( "tapone", tapHandler );
@@ -460,9 +326,7 @@ function validate(array, userFeedback, dArray){
 			if (!userInput) {
 				return;
 			}
-			disco.pause();
 			tapSound.play();
-			disco.play();
 			
             if($(event.target).hasClass("selected")){
                 $( event.target ).removeClass( "selected" );
@@ -483,10 +347,13 @@ function validate(array, userFeedback, dArray){
             wai = $(this).attr("y");
             if (notComplete && noErrorsYet) {
                 if (ex == array[index].pos.x && wai == array[index].pos.y) {
-                    if (index < array.length) {
+                    //Player has not yet made a mistake
+					if (index < array.length) {
                         index++;
+						//Player successfully cleared round
                         if (index >= array.length) {
-							clearTimeout(counter);
+							userInput = false;
+							levelPass.play();
 							timerPause();
                             notComplete = false;
                             playerScore += currentRound + (Math.round(currentRound * 0.1) * seconds);
@@ -495,12 +362,15 @@ function validate(array, userFeedback, dArray){
                             userFeedback(true, dArray[ex][wai]);
                         } 
                     } 
+				//Player goofed
                 } else {
-					clearTimeout(counter);
+					userInput = false;
 					timerPause();
 					noErrorsYet = false;
 					if (gamemode == 2) {
-						for (var c = 0; c < 20; c++) {
+						$("#timer-bar").css("background-color", "red");
+						//Deducting time from the timer
+						for (var c = 0; c < 200; c++) {
 							updateTimer();
 						}
 						if ((seconds + minutes) <= 0) {
@@ -553,30 +423,20 @@ function userFeedback(bool, lastNode) {
             $(".dot").addClass("steve");
         }
         $(lastNode).removeClass("selected");
-        adjustStats(reset);
-
+		
+        //adjustStats(reset);
+		reset(removeDots);
     }, 800);
 }
 
-/*
-* Artifact of a structure for the game progression's that was not implemented in
-* the prototype. Retained for now so as to not break the game.
-* */
-function adjustStats(reset){
-    //console.log("Entered adjustStats()");
-    reset(removeDots);
-}
-
-/* Remove dots from grid container. To combine with other functions involved in
-starting a new round into a cleaner function later.*/
+/* Remove dots from grid container and calls functions that resets global variables and starts a new round.*/
 function reset(removeDots) {
     removeDots();
     resetVals();
     newRound(generateGrid);
 }
 
-/* Remove all the child elements of socks, the grid container with a set number
-   of columns.
+/* Remove all the child elements of socks, the grid container
  * */
 function removeDots(){
     while(socks.hasChildNodes()){
@@ -584,16 +444,10 @@ function removeDots(){
     }
 }
 
-//Returns whether a dot has been visited
-function getIsVisited(element) {
-    return element.getAttribute('isVisited');
-}
-
 /*Takes the sequence of dots the user must repeat as an argument.
 * Briefly changes the colour of each to indicate which dots should be
  * selected in which sequence.*/
 function pathDemonstration(arrayToRepeat, validate) {
-	userInput = false;
     var pt;
 	var blinkTime;
 	if (currentRound >= 250) {
@@ -603,10 +457,12 @@ function pathDemonstration(arrayToRepeat, validate) {
 	}
     //For testing
     printPath(arrayToRepeat);
+	fadeOn();
     for (var i = 0; i < arrayToRepeat.length; i++) {
         (function (i) {
             setTimeout(function () {
                 pt = arrayToRepeat[i].pos;
+				dotArray[pt.x][pt.y].classList.remove("fade");
                 if(steveModeEnabled){
                    dotArray[pt.x][pt.y].classList.add("magenta");
                    dotArray[pt.x][pt.y].classList.remove("black");
@@ -646,21 +502,6 @@ function playAgain() {
 }
 
 function resumeGame() {
-	counter = setTimeout(function() {
-		if (gamemode != 1) {
-			console.log("TIMESUP");
-			if (gamemode == 2) {
-				lifePoints = 0;
-				updateLives();
-				return;
-			}
-			noErrorsYet = false;
-			lifePoints--;
-			updateLives();
-			userFeedback(false, null);
-			return;
-		}
-	}, ((minutes * 60) * 1100) + (seconds * 1000) + 20);
 	if (gamemode != 1) {
 		timerStart();
 	}
@@ -668,7 +509,6 @@ function resumeGame() {
 
 function pauseGame(type) {
     if (userInput) {
-        clearTimeout(counter);
         timerPause();
         if (type == 'pause') {
             openPauseScreen();
@@ -684,7 +524,6 @@ function gameOver() {
 
     document.getElementById('tutorial1-screen').style.display = "none";
     document.getElementById('tutorial4-screen').style.display = "none";
-
     $( "#game-screen" ).fadeOut( 1500, function() {
         $('#gameover-screen').fadeIn(1500, function() {});
 		badgeChecker(currentRound, lifePoints);
@@ -693,37 +532,24 @@ function gameOver() {
 		updateHighScores();
 		disco.CurrentTime=0;
 		loseSound.play();
-		
 		if (playerScore > 0) {
 		var playerName;
 		while(true) {
 			playerName = prompt("Submit your score by entering your name. (Max 14 Characters)");
-			if (playerName == null || playerName.length <= 14) {
+			if(playerName == null) {
+				break;
+			}
+			playerName = playerName.trim();
+			if (playerName.length <= 14 && playerName.length > 0){
 				break;
 			}
 		}
-		
-		if (playerName != null) {
-		var j_notation =
-		{
-		"mode": gamemode,
-		"player_name": playerName, 
-		"player_score": playerScore,
-		}; 
-
-
-		$.ajax({
-			url: "http://www.crowbot.co/php/dirtyshoes.php",
-			type: 'POST',
-			contentType: 'application/json',
-			data: JSON.stringify(j_notation),
-			dataType: 'json'
-		});
+		if (playerName != null && playerName.length > 0) {
+			console.log("Score Sent");
+			sendScore(gamemode, playerName, playerScore);
 		}
-	}
-		
+	}	
     });
-
     // add final score
     document.getElementById('final-score').innerHTML = playerScore;
 }
@@ -734,140 +560,12 @@ function resetVals(){
     index = 0;
 }
 
-// Easter Egg: All is Steve Albini; Steve Albini is all
-function enableSteveMode() {
-	tapSound.play();
-    if (steveModeEnabled == false) {
-        steveModeEnabled = true;
-    } else {
-        steveModeEnabled = false;
-        $(".dot").removeClass("steve tapped_steve black bound");
-        $(".dot").unbind("tapone", steveTap);
-    }
-    console.log("steve-option toggle: " + steveModeEnabled);
+function fadeOn(){
+	$(".dot").addClass("fade");
 }
 
-//Easter Egg: Turns on Steve Mode
-function steveify() {
-    $(".dot").addClass("steve black");
-    if(!$(".dot").hasClass("bound")){
-        $(".dot").bind("tapone", steveTap);
-        $(".dot").addClass("bound");
-    }
+function fadeOff(){
+	$(".dot").removeClass("fade");
 }
 
-function buttonSounds() {
-	tapSound.play();
-}
 
-function steveTap(event) {
-    if(userInput){
-        if ($(event.target).hasClass("tapped_steve")) {
-            $(event.target).removeClass("tapped_steve");
-            $(event.target).addClass("steve");
-        } else {
-            $(event.target).removeClass("steve");
-            $(event.target).addClass("tapped_steve");
-        }
-    }
-}
-
-function scoreChecker(playerScore) {
-	switch(gamemode) {
-		case 0:
-			if (playerScore > localSavedFiles[11]) {
-				window.alert("New HighScore in marathon mode!");
-				localSavedFiles[11] = playerScore;
-				return true;
-			}
-			break;
-		case 1: 
-			if (playerScore > localSavedFiles[12]) {
-				window.alert("New HighScore in no-time mode!");
-				localSavedFiles[12] = playerScore;
-				return true;
-			}
-			break;
-		case 2:
-			if (playerScore > localSavedFiles[13]) {
-				window.alert("New HighScore in time attack mode!");
-				localSavedFiles[13] = playerScore;
-				return true;
-			}
-			break;
-		default:
-			window.alert("YOU SHOULD NOT SEE THIS!");
-	}
-	return false;
-}
-
-// Checks to see if player has unlocked any new badges
-function badgeChecker(currentRound, lifePoints) {
-		switch(gamemode){
-			case 0:
-				if (currentRound >= 40 && !localSavedFiles[9] ) {
-					window.alert("Badge Unlocked! Get to level 40 in no-time mode.");
-					localSavedFiles[9] = true;
-					console.log("UNLOCK: Get to level 30 in marathon mode");
-				}
-				if (currentRound >= 60 && lifePoints >= 3 && !localSavedFiles[6] ) {
-					window.alert("Badge Unlocked! Get to level 60 in marathon mode with all lives.");
-					localSavedFiles[6] = true;
-					console.log("UNLOCK: Get to level 60 in marathon mode with all lives");
-				}
-				if (currentRound >= 60 && !localSavedFiles[3] ) {
-					window.alert("Badge Unlocked! Get to level 60 in marathon mode.");
-					localSavedFiles[3] = true;
-					console.log("UNLOCK: Get to level 60 in marathon mode");
-				}
-				break;
-			case 1:
-				if (currentRound >= 40 && !localSavedFiles[8] ) {
-					window.alert("Badge Unlocked! Get to level 40 in no-time mode.");
-					localSavedFiles[8] = true;
-					console.log("UNLOCK: Get to level 30 in marathon mode");
-				}
-				if (currentRound >= 60 && lifePoints >= 3 && !localSavedFiles[5] ) {
-					window.alert("Badge Unlocked! Get to level 60 in no-time mode with all lives.");
-					localSavedFiles[5] = true;
-					console.log("UNLOCK: Get to level 50 in marathon mode with all lives");
-				}
-				if (currentRound >= 60 && !localSavedFiles[2] ) {
-					window.alert("Badge Unlocked! Get to level 60 in no-time mode.");
-					localSavedFiles[2] = true;
-					console.log("UNLOCK: Get to level 60 in marathon mode");
-				}
-				break;
-			case 2:
-				if (currentRound >= 20 && !localSavedFiles[4] ) {
-					window.alert("Badge Unlocked! Get to level 20 in time attack mode.");
-					localSavedFiles[4] = true;
-					console.log("UNLOCK: Get to level 20 in time attack mode");
-				}
-				if (currentRound >= 20 && lifePoints == -1 && !localSavedFiles[7] ) {
-					window.alert("Badge Unlocked! Get to level 20 in time attack mode without a mistake.");
-					localSavedFiles[7] = true;
-					console.log("UNLOCK: Get to level 20 in time attack mode without a mistake");
-				}
-				if (currentRound >= 30 && !localSavedFiles[10] ) {
-					window.alert("Badge Unlocked! Get to level 30 in time attack mode.");
-					localSavedFiles[10] = true;
-					console.log("UNLOCK: Get to level 30 in time attack mode");
-				}
-				break;
-			default:
-				window.alert("YOU SHOULD NOT SEE THIS!");
-		}
-	updateBadges();
-}
-
-// Updates the badges in the badge menu
-function updateBadges() {
-	for (var bIndex = 1; bIndex <= 10; bIndex++) {
-		if (localSavedFiles[bIndex]) {
-			document.getElementById("badge" + bIndex).src="images/medal2.png";
-		} else {
-			document.getElementById("badge" + bIndex).src="images/locked.png";
-		} 
-	} 
-}

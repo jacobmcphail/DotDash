@@ -15,10 +15,14 @@ function openScores() {
     document.getElementById('scores-screen').style.display = "block";
     document.getElementById('return-button').style.display = "block";
     document.getElementById('badges-button').style.display = "block";
+	if(document.getElementById('online-scores').style.display == 'block'){
+		printOnlineScores();
+	}
     document.getElementById('title').innerHTML = "Scores._";
 	yesSound.play();
 }
 function openBadges() {
+	$("#badge-desc").text("Unlock badges by playing the game right, wethead.");
     document.getElementById('scores-screen').style.display = 'none';
     document.getElementById('badges-screen').style.display = "block";
     document.getElementById('badge-return-button').style.display = "block";
@@ -44,7 +48,7 @@ function openMainMenu() {
     document.getElementById('game-screen').style.display = 'none';
     document.getElementById('title').style.display = 'block';
     document.getElementById('pause-screen').style.display = 'none';
-	document.getElementById('tutorial-screen').style.display = 'none';
+	
 	disco.pause();
 	disco.currentTime=0;
 	popupSound.play();	
@@ -67,7 +71,6 @@ function openTutorialScreen() {
     document.getElementById('tutorial1-screen').style.display = "block";
     document.getElementById('tutorial2-screen').style.display = "none";
     document.getElementById('game-screen').style.display = 'none';
-    disco.pause();
 	yesSound.play();
 }
 
@@ -75,18 +78,20 @@ function openTutorial2Screen() {
     document.getElementById('tutorial1-screen').style.display = "none";
     document.getElementById('tutorial3-screen').style.display = "none";
     document.getElementById('tutorial2-screen').style.display = "block";
-    
+    yesSound.play();
 }
 
 function openTutorial3Screen() {
     document.getElementById('tutorial2-screen').style.display = "none";
     document.getElementById('tutorial3-screen').style.display = "block";
     document.getElementById('tutorial4-screen').style.display = "none";
+	yesSound.play();
 }
 
 function openTutorial4Screen() {
     document.getElementById('tutorial3-screen').style.display = "none";
     document.getElementById('tutorial4-screen').style.display = "block";
+	yesSound.play();
 }
 
 function closeTutorialScreen() {
@@ -94,7 +99,6 @@ function closeTutorialScreen() {
     document.getElementById('tutorial1-screen').style.display = "none";
     document.getElementById('game-screen').style.display = 'block';
     document.getElementById('title').innerHTML = "";
-	disco.pause();
 	noSound.play();
 }
 
@@ -113,10 +117,7 @@ function closePauseScreen() {
 	disco.play();
 }
 
-function badge1() {
-    window.alert("get this badge by playing for 100000 hours");
-}
-
+//Displays dialog box asking user if they would like to quit
 function openConfirmation(type) {
 	yesSound.play();
     document.getElementById('confirmation-container').style.display = 'block';
@@ -165,6 +166,7 @@ function quitGame() {
 	noSound.play();
 }
 
+//Remove labels that appear over buttons on hover; toggled in options screen
 function disableLabels() {
 	tapSound.play();
     if(labelsOn == true) {
