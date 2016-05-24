@@ -46,7 +46,7 @@ function openMainMenu() {
     document.getElementById('game-screen').style.display = 'none';
     document.getElementById('title').style.display = 'block';
     document.getElementById('pause-screen').style.display = 'none';
-	document.getElementById('tutorial-screen').style.display = 'none';
+	
 	disco.pause();
 	disco.currentTime=0;
 	popupSound.play();	
