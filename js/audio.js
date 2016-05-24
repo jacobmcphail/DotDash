@@ -44,3 +44,6 @@ function toggleMusic(){
 		disco.volume = 0.4;
 	}
 }
+
+
+

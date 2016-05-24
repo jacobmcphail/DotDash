@@ -522,8 +522,9 @@ div.dot.good_dot {
 }
 
 #online-scores p {
-    text-align: center;
+	text-align: justify;
 	font-size: 1.2em;
+	margin-left: 38%;
 }
 
 .L_container {
