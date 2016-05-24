@@ -7,7 +7,7 @@ jerkScript.js
 
 /*Game mode: 
 0 = Marathon
-1 = Untimed
+1 = Sudden Death
 2 = Time Attack
 */
 var gamemode;
@@ -120,13 +120,14 @@ function initialize(gamemode, newRound, removeDots){
 	numCols = 3;
 	playing = true;
 	userInput = false;
-    updateLives();
-    updateScore();
 	if (gamemode == 1) {
 		document.getElementById('timer-bar').style.visibility='hidden';
+		lifePoints = 1;
 	} else {
 		document.getElementById('timer-bar').style.visibility='visible'; 
 	}
+	updateLives();
+    updateScore();
 	switch(gamemode) {
 		case 0:
 			timerSet(0, 10, 0);

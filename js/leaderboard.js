@@ -70,7 +70,7 @@ function printOnlineScores() {
 		for(var i = 1; i <= 10; i++, indexDB++){
 			leaderboard.innerHTML += '<p>' + i + ': ' + data[indexDB]["mName"] + ' - ' + data[indexDB]["mScore"] + '</p>';
 		}
-		leaderboard.innerHTML += '<br><h2>No Timer</h2>';
+		leaderboard.innerHTML += '<br><h2>Sudden Death</h2>';
 		for(var i = 1; i <= 10; i++, indexDB++){
 			leaderboard.innerHTML += '<p>' + i + ': ' + data[indexDB]["uName"] + ' - ' + data[indexDB]["uScore"] + '</p>';
 		}
