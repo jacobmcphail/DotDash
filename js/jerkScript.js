@@ -317,7 +317,7 @@ function difficulty(nodeCount) {
 function validate(array, userFeedback, dArray){
     var ex, wai;
 	fadeOff();
-	counter = setTimeout(function() {
+	/*counter = setTimeout(function() {
 		userInput = false;
 		if (gamemode != 1) {
 			if (gamemode == 2) {
@@ -332,7 +332,7 @@ function validate(array, userFeedback, dArray){
 			userFeedback(false, null);
 			return;
 		}
-	}, ((minutes * 60) * 1020) + (seconds * 1020) + (centiseconds * 102));
+	}, ((minutes * 60) * 1020) + (seconds * 1020) + (centiseconds * 102));*/
 	
     $(function(){
         $( ".dot" ).bind( "tapone", tapHandler );
@@ -518,7 +518,7 @@ function playAgain() {
 }
 
 function resumeGame() {
-	counter = setTimeout(function() {
+	/*counter = setTimeout(function() {
 		if (gamemode != 1) {
 			if (gamemode == 2) {
 				lifePoints = 0;
@@ -531,7 +531,7 @@ function resumeGame() {
 			userFeedback(false, null);
 			return;
 		}
-	}, ((minutes * 60) * 1020) + (seconds * 1020) + (centiseconds * 102));
+	}, ((minutes * 60) * 1020) + (seconds * 1020) + (centiseconds * 102));*/
 	if (gamemode != 1) {
 		timerStart();
 	}
