@@ -535,7 +535,7 @@ div.dot.good_dot {
 #online-scores p {
 	text-align: justify;
 	font-size: 1.2em;
-	margin-left: 38%;
+	
 }
 
 .L_container {
@@ -590,4 +590,11 @@ div.dot.good_dot {
 }
 .custom-offset {
     margin-left: 2.33333%;
+}
+
+/*Put in its proper place later*/
+#online-score-container {
+	margin: auto;
+	width: 400px;
+	max-width: 80%;
 }

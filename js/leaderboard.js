@@ -59,7 +59,7 @@ function updateHighScores() {
 }
 
 function printOnlineScores() {
-	var leaderboard = document.getElementById("online-scores");
+	var leaderboard = document.getElementById("online-score-container");
 	var databus;
 	leaderboard.innerHTML = '<br><br><br><br><br><h2>Loading...</h2>';
 	getData(databus).success(function (data) {
