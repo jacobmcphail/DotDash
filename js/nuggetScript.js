@@ -126,16 +126,21 @@ function openConfirmation(type) {
     $('#confirmation-container').animate({
         'margin-left': '-=5px',
         'margin-right': '+=5px'
-    }, 100, function() {
+    }, 80, function() {
         $('#confirmation-container').animate({
             'margin-left': '+=5px',
             'margin-right': '-=5px'
-        }, 100, function() {
+        }, 80, function () {
             $('#confirmation-container').animate({
-                'margin-left': '-=5px',
-                'margin-right': '+=5px'
-            }, 100);
-        });
+                'margin-left': '-=2px',
+                'margin-right': '+=2px'
+            }, 80, function () {
+                $('#confirmation-container').animate({
+                    'margin-left': '+=2px',
+                    'margin-right': '-=2px'
+                }, 80);
+            });
+        })
     });
 
     if (type == 'quit') {
