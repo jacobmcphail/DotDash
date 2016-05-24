@@ -127,7 +127,7 @@ function initialize(gamemode, newRound, removeDots){
 	}
 	switch(gamemode) {
 		case 0:
-			timerSet(0, 5, 0);
+			timerSet(0, 10, 0);
 			break;
 		case 1: 
 			timerSet(0, 0, 0);
@@ -168,7 +168,7 @@ function newRound(generateGrid){
 	$("#timer-bar").css("background-color", "#32CD32");
 	if (playing) {
 		if (gamemode == 0) {
-			timerSet(0, 5, 0);
+			timerSet(0, 10, 0);
 		}
 		noErrorsYet = true;
 		notComplete = true;
@@ -298,7 +298,6 @@ function difficulty(nodeCount) {
 	} else {
 		numRows = 4;
 		numCols = 4;
-		length = 3 + ((0.02 * currentRound) - 0.02);
 	}
     if (length > nodeCount) {
         return nodeCount;
@@ -332,7 +331,7 @@ function validate(array, userFeedback, dArray){
 			userFeedback(false, null);
 			return;
 		}
-	}, ((minutes * 60) * 1020) + (seconds * 1020));
+	}, ((minutes * 60) * 1020) + (seconds * 1020) + (centiseconds * 102));
 	
     $(function(){
         $( ".dot" ).bind( "tapone", tapHandler );
@@ -531,7 +530,7 @@ function resumeGame() {
 			userFeedback(false, null);
 			return;
 		}
-	}, ((minutes * 60) * 1000) + (seconds * 1000) + 20);
+	}, ((minutes * 60) * 1020) + (seconds * 1020) + (centiseconds * 102));
 	if (gamemode != 1) {
 		timerStart();
 	}
