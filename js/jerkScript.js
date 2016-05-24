@@ -67,8 +67,8 @@ function gameSetup() {
             gameSetup();
 		}
 		console.log(localSavedFiles);
-		updateBadges();
 	}
+	updateBadges();
 	updateHighScores();
 	document.getElementById('local-scores').style.display = 'block';
 	document.getElementById('online-scores').style.display = 'none';
@@ -96,9 +96,14 @@ function checkCookie(){
 }
 
 function clearSave() {
-	localSavedFiles = null;
-	localStorage.setItem("saveFile", JSON.stringify(localSavedFiles));
-	gameSetup();
+	var resetYes = window.confirm("Are you sure you want to reset your save? Your high scores and badges will be lost.");
+	if (resetYes) {
+		localSavedFiles = [false, false, false, false, false, false, false, false, false, false, false, 0, 0, 0];
+		localStorage.setItem("saveFile", JSON.stringify(localSavedFiles));
+		updateBadges();
+		updateHighScores();	
+		window.alert("Save Cleared");
+	}
 }
 
 function initialize(gamemode, newRound, removeDots){

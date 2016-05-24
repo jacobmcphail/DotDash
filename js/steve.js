@@ -15,8 +15,6 @@ $(document).ready(function(){
 	
 	$(".cawButton").on('tapone', function(){
         if (crowbotActive) {
-            var sound = document.getElementById("audio");
-            sound.play();
 			if (!localSavedFiles[1]) {
 				window.alert("Badge Unlocked! Activated Steve mode.");
 				localSavedFiles[1] = true;
