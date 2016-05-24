@@ -215,7 +215,7 @@ function generateGrid(createGrid, make_2D_Array, pathDemonstration){
         }
     }
    // var someGrid = new Grid(numRows,numCols);
-    var arrayToRepeat = runPathFinder(numRows, numCols, difficulty(numRows * numCols), true);
+    var arrayToRepeat = runPathFinder(numRows, numCols, difficulty(numRows * numCols));
     if(steveModeEnabled){
         steveify();
     }
