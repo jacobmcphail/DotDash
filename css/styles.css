@@ -8,6 +8,12 @@ body {
                                   not supported by any browser */
 }
 
+#main-screen {
+	display: none;
+	width: 100%;
+	height: 100%;
+}
+
 h1 {
     font-family: "Consolas";
     text-align: center;
@@ -16,9 +22,12 @@ h1 {
 }
 
 html, body {
-    		height: 100%;
-    		margin: 0;
+    height: 100%;
+    margin: 0;
+	width: 100%;
 }
+
+
 
 #middle{
 	position: relative;
@@ -28,7 +37,6 @@ html, body {
 }
 
 #screen {
-  /*  border: 4px solid white; */
     background-color: black;
     width: 100%;
     height: 100%;
@@ -46,8 +54,9 @@ html, body {
     display: block;
 }
 #mode-selection-container {
-    background-color: black;
 	height: 100%;
+	position: absolute;
+	width: 100%;
 }
 .mode-select {
     width: 210px;
@@ -190,6 +199,13 @@ input[type=checkbox] {
     background: black;
 }
 
+.buttonbox {
+	width: 28px;
+	height: 28px;
+	margin: 20px 0px 20px 230px;
+	position: relative;
+}
+
 .checkbox label:after {
     opacity: 0;
     content: '';
@@ -213,6 +229,8 @@ input[type=checkbox] {
 
 #scores-screen {
     display:none;
+	height: 100%;
+	width: 100%;
 }
 #badges-screen {
     display:none;
@@ -230,6 +248,8 @@ input[type=checkbox] {
     background-color: transparent;
     border: none;
     padding: 0;
+	width: 50px;
+	height: 50px;
 }
 #badge-desc {
 	position: absolute;
@@ -281,7 +301,12 @@ input[type=checkbox] {
 }
 #dot-container {
     height: 400px;
-    width: 300px;
+    width: 400px;
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	margin-top: -150px;
+	margin-left: -210px;
 }
 #steve-button {
     background-color: transparent;
@@ -383,8 +408,8 @@ table {
 div#preload { display: none; }
 
 div.dot {
-    width: 50px;
-    height: 50px;
+    width: 52px;
+    height: 52px;
 
     -moz-border-radius: 25px;
     -webkit-border-radius: 25px;
@@ -431,11 +456,18 @@ div.dot.pink {
 div.dot.black{
     background: black;
 }
+div.dot.fade{
+    opacity: 0.2;
+}
 div.dot.steve{
     background-image: url("../images/steve.png");
+	width: 50px; /* TMP, resize image to 52x52 then remove */
+	height: 50px; /* TMP, resize image to 52x52 then remove */
 }
 div.dot.tapped_steve{
     background-image: url("../images/madsteve.png");
+	width: 50px; /* TMP, resize image to 52x52 then remove */
+	height: 50px; /* TMP, resize image to 52x52 then remove */
 }
 div.dot.correct {
     background: green;
@@ -490,24 +522,27 @@ div.dot.good_dot {
 }
 
 #online-scores {
-    border-style: solid;
-    border-color: #fff;
-    height: 50%;
-    margin: auto;
-    width: 95%;
+	border-style: solid;
+	border-color: #fff;
+	margin: auto;
+	width: 95%;
 	max-width: 1000px;
 	overflow-y: scroll;
+	max-height: 60%;
+	height: 400px;
 }
 
 #online-scores p {
-    text-align: center;
+	text-align: justify;
 	font-size: 1.2em;
+	
 }
 
 .L_container {
-    margin-top: 140px;
-    margin-left: auto;
-    margin-right: auto;
+    margin-top: 120px;
+	margin-left: auto;
+	margin-right: auto;
+	height: 100%;
 }
 
 /*Leaderboard tab buttons; borrowed from StackOverflow */
@@ -555,4 +590,11 @@ div.dot.good_dot {
 }
 .custom-offset {
     margin-left: 2.33333%;
+}
+
+/*Put in its proper place later*/
+#online-score-container {
+	margin: auto;
+	width: 400px;
+	max-width: 80%;
 }

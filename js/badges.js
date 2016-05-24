@@ -7,7 +7,7 @@ $(document).ready(function(){
 		console.log(badgeNum);
 		switch(badgeNum) {
 			case 1:
-			$("#badge-desc").text("??????");
+			$("#badge-desc").text("Unlock Steve mode");
 			break;
 			case 2: 
 			$("#badge-desc").text("Get to level 60 in no timer mode");

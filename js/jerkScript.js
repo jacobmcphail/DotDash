@@ -7,7 +7,7 @@ jerkScript.js
 
 /*Game mode: 
 0 = Marathon
-1 = Untimed
+1 = Sudden Death
 2 = Time Attack
 */
 var gamemode;
@@ -42,9 +42,6 @@ var localSavedFiles;
 var colourArray = ["cyan","orange","green","pink","blue","purple"];
 var colour;
 
-/*Keeps track of time in Marathon and Time Attack modes*/
-var counter;
-
 $.getScript("js/gameTimer.js", function(){});
 $.getScript("js/nuggetScript.js", function(){});
 $.getScript("js/pathGenerator.js", function(){});
@@ -70,12 +67,17 @@ function gameSetup() {
             gameSetup();
 		}
 		console.log(localSavedFiles);
-		updateBadges();
 	}
+	updateBadges();
 	updateHighScores();
 	document.getElementById('local-scores').style.display = 'block';
 	document.getElementById('online-scores').style.display = 'none';
-
+	$('input[type=checkbox]').each(function() { 
+        this.checked = true; 
+	}); 
+	$('#option-4').removeAttr('checked');
+	$("#title").text('DotDash._');
+	$("#main-screen").css("display", "block");
     /*see touching.js */
     whatDevice();
     addTouchListeners();
@@ -94,9 +96,14 @@ function checkCookie(){
 }
 
 function clearSave() {
-	localSavedFiles = null;
-	localStorage.setItem("saveFile", JSON.stringify(localSavedFiles));
-	gameSetup();
+	var resetYes = window.confirm("Are you sure you want to reset your save? Your high scores and badges will be lost.");
+	if (resetYes) {
+		localSavedFiles = [false, false, false, false, false, false, false, false, false, false, false, 0, 0, 0];
+		localStorage.setItem("saveFile", JSON.stringify(localSavedFiles));
+		updateBadges();
+		updateHighScores();	
+		window.alert("Save Cleared");
+	}
 }
 
 function initialize(gamemode, newRound, removeDots){
@@ -113,22 +120,23 @@ function initialize(gamemode, newRound, removeDots){
 	numCols = 3;
 	playing = true;
 	userInput = false;
-    updateLives();
-    updateScore();
 	if (gamemode == 1) {
 		document.getElementById('timer-bar').style.visibility='hidden';
+		lifePoints = 1;
 	} else {
 		document.getElementById('timer-bar').style.visibility='visible'; 
 	}
+	updateLives();
+    updateScore();
 	switch(gamemode) {
 		case 0:
-			timerSet(0, 5);
+			timerSet(0, 10, 0);
 			break;
 		case 1: 
-			timerSet(0, 0);
+			timerSet(0, 0, 0);
 			break;
 		case 2:
-			timerSet(2, 0);
+			timerSet(2, 0, 0);
 			break;
 		default:
 			window.alert("YOU SHOULD NOT SEE THIS!");
@@ -159,12 +167,11 @@ function updateLives() {
 
 /* Invoked at the start of every round. Generate a new grid and reset variables*/
 function newRound(generateGrid){
-	
     console.log("Current round: " + currentRound);
-
+	$("#timer-bar").css("background-color", "#32CD32");
 	if (playing) {
 		if (gamemode == 0) {
-			timerSet(0, 5);
+			timerSet(0, 10, 0);
 		}
 		noErrorsYet = true;
 		notComplete = true;
@@ -211,7 +218,7 @@ function generateGrid(createGrid, make_2D_Array, pathDemonstration){
         }
     }
    // var someGrid = new Grid(numRows,numCols);
-    var arrayToRepeat = runPathFinder(numRows, numCols, difficulty(numRows * numCols), true);
+    var arrayToRepeat = runPathFinder(numRows, numCols, difficulty(numRows * numCols));
     if(steveModeEnabled){
         steveify();
     }
@@ -287,14 +294,14 @@ function make_2D_Array(array, nRows, nCols) {
 /* Sets difficulty for round. */
 function difficulty(nodeCount) {
 	var length;
-	if (currentRound < 40) {
-		numRows = Math.round((3 + (currentRound / 19)));
-		numCols = Math.round((3 + (currentRound / 32)));
+	if (currentRound < 30) {
+		numRows = Math.round((3 + (currentRound / 30)));
+		numCols = Math.round((3 + (currentRound / 40)));
 		length = 3 + ((0.1 * currentRound) - 0.1);
 	} else {
-		numRows = 5;
+		numRows = 4;
 		numCols = 4;
-		length = 3 + ((0.03 * currentRound) - 0.03);
+		length = 3 + ((0.11 * currentRound) - 0.11);
 	}
     if (length > nodeCount) {
         return nodeCount;
@@ -312,23 +319,7 @@ function difficulty(nodeCount) {
 
 function validate(array, userFeedback, dArray){
     var ex, wai;
-	
-	counter = setTimeout(function() {
-		if (gamemode != 1) {
-			console.log("TIMESUP");
-			if (gamemode == 2) {
-				lifePoints = 0;
-				updateLives();
-				return;
-			}
-			noErrorsYet = false;
-			lifePoints--;
-			popupSound.play();
-			updateLives();
-			userFeedback(false, null);
-			return;
-		}
-	}, ((minutes * 60) * 1100) + (seconds * 1000) + 20);
+	fadeOff();
 	
     $(function(){
         $( ".dot" ).bind( "tapone", tapHandler );
@@ -357,12 +348,13 @@ function validate(array, userFeedback, dArray){
             wai = $(this).attr("y");
             if (notComplete && noErrorsYet) {
                 if (ex == array[index].pos.x && wai == array[index].pos.y) {
-                    if (index < array.length) {
+                    //Player has not yet made a mistake
+					if (index < array.length) {
                         index++;
+						//Player successfully cleared round
                         if (index >= array.length) {
-							//****
+							userInput = false;
 							levelPass.play();
-							clearTimeout(counter);
 							timerPause();
                             notComplete = false;
                             playerScore += currentRound + (Math.round(currentRound * 0.1) * seconds);
@@ -371,12 +363,15 @@ function validate(array, userFeedback, dArray){
                             userFeedback(true, dArray[ex][wai]);
                         } 
                     } 
+				//Player goofed
                 } else {
-					clearTimeout(counter);
+					userInput = false;
 					timerPause();
 					noErrorsYet = false;
 					if (gamemode == 2) {
-						for (var c = 0; c < 20; c++) {
+						$("#timer-bar").css("background-color", "red");
+						//Deducting time from the timer
+						for (var c = 0; c < 200; c++) {
 							updateTimer();
 						}
 						if ((seconds + minutes) <= 0) {
@@ -432,7 +427,6 @@ function userFeedback(bool, lastNode) {
 		
         //adjustStats(reset);
 		reset(removeDots);
-
     }, 800);
 }
 
@@ -455,7 +449,6 @@ function removeDots(){
 * Briefly changes the colour of each to indicate which dots should be
  * selected in which sequence.*/
 function pathDemonstration(arrayToRepeat, validate) {
-	userInput = false;
     var pt;
 	var blinkTime;
 	if (currentRound >= 250) {
@@ -465,10 +458,12 @@ function pathDemonstration(arrayToRepeat, validate) {
 	}
     //For testing
     printPath(arrayToRepeat);
+	fadeOn();
     for (var i = 0; i < arrayToRepeat.length; i++) {
         (function (i) {
             setTimeout(function () {
                 pt = arrayToRepeat[i].pos;
+				dotArray[pt.x][pt.y].classList.remove("fade");
                 if(steveModeEnabled){
                    dotArray[pt.x][pt.y].classList.add("magenta");
                    dotArray[pt.x][pt.y].classList.remove("black");
@@ -508,21 +503,6 @@ function playAgain() {
 }
 
 function resumeGame() {
-	counter = setTimeout(function() {
-		if (gamemode != 1) {
-			console.log("TIMESUP");
-			if (gamemode == 2) {
-				lifePoints = 0;
-				updateLives();
-				return;
-			}
-			noErrorsYet = false;
-			lifePoints--;
-			updateLives();
-			userFeedback(false, null);
-			return;
-		}
-	}, ((minutes * 60) * 1100) + (seconds * 1000) + 20);
 	if (gamemode != 1) {
 		timerStart();
 	}
@@ -530,7 +510,6 @@ function resumeGame() {
 
 function pauseGame(type) {
     if (userInput) {
-        clearTimeout(counter);
         timerPause();
         if (type == 'pause') {
             openPauseScreen();
@@ -546,7 +525,6 @@ function gameOver() {
 
     document.getElementById('tutorial1-screen').style.display = "none";
     document.getElementById('tutorial4-screen').style.display = "none";
-
     $( "#game-screen" ).fadeOut( 1500, function() {
         $('#gameover-screen').fadeIn(1500, function() {});
 		badgeChecker(currentRound, lifePoints);
@@ -559,11 +537,16 @@ function gameOver() {
 		var playerName;
 		while(true) {
 			playerName = prompt("Submit your score by entering your name. (Max 14 Characters)");
-			if (playerName == null || playerName.length <= 14) {
+			if(playerName == null) {
+				break;
+			}
+			playerName = playerName.trim();
+			if (playerName.length <= 14 && playerName.length > 0){
 				break;
 			}
 		}
-		if (playerName != null) {
+		if (playerName != null && playerName.length > 0) {
+			console.log("Score Sent");
 			sendScore(gamemode, playerName, playerScore);
 		}
 	}	
@@ -576,6 +559,14 @@ function resetVals(){
     noErrorsYet = true;
     notComplete = true;
     index = 0;
+}
+
+function fadeOn(){
+	$(".dot").addClass("fade");
+}
+
+function fadeOff(){
+	$(".dot").removeClass("fade");
 }
 
 

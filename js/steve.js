@@ -2,6 +2,7 @@
 
 //Easter egg: whether or not Steve abides
 var steveModeEnabled = false;
+var crowbotActive = false;
 
 $(document).ready(function(){
 	
@@ -13,15 +14,14 @@ $(document).ready(function(){
     });
 	
 	$(".cawButton").on('tapone', function(){
-        if (steveModeEnabled) {
-            var sound = document.getElementById("audio");
-            sound.play();
+        if (crowbotActive) {
 			if (!localSavedFiles[1]) {
 				window.alert("Badge Unlocked! Activated Steve mode.");
 				localSavedFiles[1] = true;
 				localStorage.setItem("saveFile", JSON.stringify(localSavedFiles));
 				updateBadges();
 			}
+			enableSteveMode();
         }
     });
 	
@@ -39,17 +39,21 @@ function steveTap(event) {
     }
 }
 
+function steveModeToggle() {
+	if (steveModeEnabled == true){
+		steveModeEnabled = false;
+		crowbotActive = false;
+		$(".dot").removeClass("steve tapped_steve black bound");
+        $(".dot").unbind("tapone", steveTap);
+		updateHighScores();
+	} else {
+		crowbotActive = true;
+	}
+}
+
 // Easter Egg: All is Steve Albini; Steve Albini is all
 function enableSteveMode() {
-	tapSound.play();
-    if (steveModeEnabled == false) {
-        steveModeEnabled = true;
-    } else {
-        steveModeEnabled = false;
-        $(".dot").removeClass("steve tapped_steve black bound");
-        $(".dot").unbind("tapone", steveTap);
-    }
-    console.log("steve-option toggle: " + steveModeEnabled);
+    steveModeEnabled = true;
 }
 
 //Easter Egg: Turns on Steve Mode
