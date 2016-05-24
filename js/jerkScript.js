@@ -524,7 +524,6 @@ function gameOver() {
 
     document.getElementById('tutorial1-screen').style.display = "none";
     document.getElementById('tutorial4-screen').style.display = "none";
-
     $( "#game-screen" ).fadeOut( 1500, function() {
         $('#gameover-screen').fadeIn(1500, function() {});
 		badgeChecker(currentRound, lifePoints);
