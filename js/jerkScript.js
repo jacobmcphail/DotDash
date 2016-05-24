@@ -298,6 +298,7 @@ function difficulty(nodeCount) {
 	} else {
 		numRows = 4;
 		numCols = 4;
+		length = 3 + ((0.11 * currentRound) - 0.11);
 	}
     if (length > nodeCount) {
         return nodeCount;
