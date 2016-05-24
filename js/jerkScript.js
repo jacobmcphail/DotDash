@@ -42,9 +42,6 @@ var localSavedFiles;
 var colourArray = ["cyan","orange","green","pink","blue","purple"];
 var colour;
 
-/*Keeps track of time in Marathon and Time Attack modes*/
-var counter;
-
 $.getScript("js/gameTimer.js", function(){});
 $.getScript("js/nuggetScript.js", function(){});
 $.getScript("js/pathGenerator.js", function(){});
@@ -317,22 +314,6 @@ function difficulty(nodeCount) {
 function validate(array, userFeedback, dArray){
     var ex, wai;
 	fadeOff();
-	/*counter = setTimeout(function() {
-		userInput = false;
-		if (gamemode != 1) {
-			if (gamemode == 2) {
-				lifePoints = 0;
-				updateLives();
-				return;
-			}
-			noErrorsYet = false;
-			lifePoints--;
-			popupSound.play();
-			updateLives();
-			userFeedback(false, null);
-			return;
-		}
-	}, ((minutes * 60) * 1020) + (seconds * 1020) + (centiseconds * 102));*/
 	
     $(function(){
         $( ".dot" ).bind( "tapone", tapHandler );
@@ -368,7 +349,6 @@ function validate(array, userFeedback, dArray){
                         if (index >= array.length) {
 							userInput = false;
 							levelPass.play();
-							clearTimeout(counter);
 							timerPause();
                             notComplete = false;
                             playerScore += currentRound + (Math.round(currentRound * 0.1) * seconds);
@@ -380,7 +360,6 @@ function validate(array, userFeedback, dArray){
 				//Player goofed
                 } else {
 					userInput = false;
-					clearTimeout(counter);
 					timerPause();
 					noErrorsYet = false;
 					if (gamemode == 2) {
@@ -518,20 +497,6 @@ function playAgain() {
 }
 
 function resumeGame() {
-	/*counter = setTimeout(function() {
-		if (gamemode != 1) {
-			if (gamemode == 2) {
-				lifePoints = 0;
-				updateLives();
-				return;
-			}
-			noErrorsYet = false;
-			lifePoints--;
-			updateLives();
-			userFeedback(false, null);
-			return;
-		}
-	}, ((minutes * 60) * 1020) + (seconds * 1020) + (centiseconds * 102));*/
 	if (gamemode != 1) {
 		timerStart();
 	}
@@ -539,7 +504,6 @@ function resumeGame() {
 
 function pauseGame(type) {
     if (userInput) {
-        clearTimeout(counter);
         timerPause();
         if (type == 'pause') {
             openPauseScreen();
