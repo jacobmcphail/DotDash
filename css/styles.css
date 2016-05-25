@@ -73,10 +73,10 @@ html, body {
     background: dodgerblue;
 	}
 #mode-2 {
-    background: magenta;
+    background: red;
 	}
 #mode-3 {
-    background: yellow;
+    background: magenta;
 }
 
 .mode-select:hover {
@@ -263,7 +263,7 @@ input[type=checkbox] {
 }
 #badge-desc {
 	position: absolute;
-	width: 270px;
+	width: 300px;
 }
 #credits-screen {
     display:none;
