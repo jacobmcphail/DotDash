@@ -6,20 +6,20 @@ and (min-device-width: 1200px) {
     /* adapted from http://jsfiddle.net/joshnh/fxfhc/ */
 
     /* arrow for left-aligned buttons */
-    #options-button:hover:before, #scores-button:hover:before, #unpause-button:hover:before, #restart-button:hover:before,
-    #game-over-quit-button:hover:before, #tutorial-return-button:hover:before, #return-button:hover:before, #badge-return-button:hover:before{
+    #options-button:hover:before, #scores-button:hover:before, #restart-button:hover:before,
+    #quit-button:hover:before, #game-over-quit-button:hover:before, #tutorial-return-button:hover:before, #return-button:hover:before, #badge-return-button:hover:before, #game-over-leaderboard-button:hover:before{
         border-top: 8px solid white;
         border-left: 8px solid transparent;
         border-right: 8px solid transparent;
         content: '';
         position: absolute;
-        top: -10px;
+        top: -5px;
         left: 25px;
     }
 
     /* textbox for left-aligned buttons */
-    #options-button:hover:after, #scores-button:hover:after, #unpause-button:hover:after, #restart-button:hover:after,
-    #game-over-quit-button:hover:after, #tutorial-return-button:hover:after, #return-button:hover:after, #badge-return-button:hover:after{
+    #options-button:hover:after, #scores-button:hover:after, #restart-button:hover:after, #quit-button:hover:after,
+    #game-over-quit-button:hover:after, #tutorial-return-button:hover:after, #return-button:hover:after, #badge-return-button:hover:after, #game-over-leaderboard-button:hover:after{
         background: black;
         border-radius: 5px;
         border: 2px solid white;
@@ -35,20 +35,20 @@ and (min-device-width: 1200px) {
     }
 
     /* arrow for right-aligned buttons */
-    #credits-button:hover:before, #tutorial-button:hover:before, #pause-button:hover:before, #game-over-restart-button:hover:before,
-    #quit-button:hover:before, #game-over-restart-button:hover:before, #badges-button:hover:before {
+    #credits-button:hover:before, #tutorial-button:hover:before, #unpause-button:hover:before, #pause-button:hover:before, #game-over-restart-button:hover:before,
+    #game-over-restart-button:hover:before, #badges-button:hover:before {
         border-top: 8px solid white;
         border-left: 8px solid transparent;
         border-right: 8px solid transparent;
         content: '';
         position: absolute;
-        top: -10px;
+        top: -5px;
         right: 25px;
     }
 
     /* textbox for right-aligned buttons */
-    #credits-button:hover:after, #tutorial-button:hover:after, #pause-button:hover:after, #game-over-restart-button:hover:after,
-    #quit-button:hover:after, #game-over-restart-button:hover:after, #badges-button:hover:after {
+    #credits-button:hover:after, #tutorial-button:hover:after, #unpause-button:hover:after, #pause-button:hover:after, #game-over-restart-button:hover:after,
+    #game-over-restart-button:hover:after, #badges-button:hover:after {
         background: black;
         border-radius: 5px;
         border: 2px solid white;
@@ -68,8 +68,8 @@ and (min-device-width: 1200px) {
         content: 'Options';
     }
 
-    #scores-button:hover:after {
-        content: 'High Scores';
+    #scores-button:hover:after , #game-over-leaderboard-button:hover:after {
+        content: 'Leaderboards';
     }
 
     #credits-button:hover:after {
@@ -106,4 +106,5 @@ and (min-device-width: 1200px) {
     #badge-return-button:hover:after {
         content: 'Scores';
     }
+
 }

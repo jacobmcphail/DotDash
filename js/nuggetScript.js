@@ -17,11 +17,12 @@ function openScores() {
     document.getElementById('scores-screen').style.display = "block";
     document.getElementById('return-button').style.display = "block";
     document.getElementById('badges-button').style.display = "block";
-	if(document.getElementById('online-scores').style.display == 'block'){
-		printOnlineScores();
-	}
+    document.getElementById('gameover-screen').style.display = "none";
+    if(document.getElementById('online-scores').style.display == 'block'){
+        printOnlineScores();
+    }
     document.getElementById('title').innerHTML = "Scores._";
-	yesSound.play();
+    yesSound.play();
 }
 function openBadges() {
 	updateBadges();

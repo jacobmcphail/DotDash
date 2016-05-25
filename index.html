@@ -183,10 +183,10 @@
             </div>
         </div>
 		<div id="pause-screen">
-            <h1>Paused</h1>                                                                                                                                                              <!-- is this my mistake or did someone add this? -->
-            <button class="nongameplay-buttons" onclick="closePauseScreen(); resumeGame();" id="unpause-button"><img src="images/backward.png" alt="backward"/></button>
+            <h1>Paused</h1>
+            <button class="nongameplay-buttons" onclick="openConfirmation('quit')" id="quit-button"><img src="images/home.png" alt="cross"/></button>
             <button class="nongameplay-buttons" onclick="openConfirmation('restart')" id="restart-button"><img src="images/return.png" alt="return"/></button>
-            <button class="nongameplay-buttons" onclick="openConfirmation('quit')" id="quit-button"><img src="images/cross.png" alt="cross"/></button>
+            <button class="nongameplay-buttons" onclick="closePauseScreen(); resumeGame();" id="unpause-button"><img src="images/forward.png" alt="forward"/></button>
             <div id="confirmation-container">
                 <h2 id="confirm-text">confirm</h2>
                 <button class="confirm-buttons" onclick="closeConfirmation()" id="no-button"><img src="images/cross.png" alt="cross"/></button>
@@ -198,6 +198,7 @@
             <h1>GAME OVER</h1>
             <div id="final-score-container"><h2>Your score: </h2><h2 id="final-score">NULL</h2></div>
             <button class="nongameplay-buttons" id="game-over-quit-button" onclick="quitGame()"><img src="images/home.png" alt="backward"></button>
+            <button class="nongameplay-buttons" id="game-over-leaderboard-button" onclick="openScores()"><img src="images/trophy.png" alt="leaderboards"></button>
             <button class="nongameplay-buttons" id="game-over-restart-button" onclick="playAgain()"><img src="images/return.png" alt="return"></button>
         </div>
         <div id="tutorial1-screen">
