@@ -1,0 +1,84 @@
+/*
+panicStyle.css
+=========================================
+Classes related to panic mode. 
+==========================================
+*/
+div.dot.grey{
+    background: lightgrey;
+}
+div.dot.olive{
+    background: olivedrab;
+    background-image: url("../images/steve.png");
+}
+div.square{
+    width: 50px;
+    height: 50px;
+    background: blue;
+    margin-top: 10%;
+    margin-left:15%;
+
+}
+
+#socksID {
+    z-index: 1;
+    position:relative;
+}
+
+div.distraction{
+    background:#98bf21;
+    -moz-border-radius: 25px;
+    -webkit-border-radius: 25px;
+    border-radius: 25px;
+
+    left: 0px;
+    top:0px;
+    height:50px;
+    width:50px;
+	
+    z-index: 0;
+	
+    position:relative;
+}
+
+div.dot.plain {
+    background: black;
+    background-image: url("../images/madsteve.png");
+}
+
+/*Placeholder for something more interesting. Rename to something more appropriate.*/
+div.dot.mod {
+    background: lightcoral;
+    background-image: url("../images/star.png");
+}
+
+div.dot.potato {
+    background-size: 50px 50px;
+    background-image: url("../images/potato.png");
+}
+
+div.dot.crow {
+	background-size: 50px 50px;
+    background-image: url("../images/crow.png");
+}
+
+div.butter {
+    width: 50px;
+    height: 50px;
+    background: yellow;
+
+	top:-350px;
+	left:100px;
+    position:relative;
+}
+
+div.food {
+    background-image: url("../images/nosh/infestation.jpg");
+		background-repeat: no-repeat;
+	background-size: 100%;
+}
+div.food2 {
+    background-image: url("../images/nosh/glisteningslab.jpg");
+		background-repeat: no-repeat;
+	background-size: 100%;
+}

@@ -175,6 +175,9 @@ function quitGame() {
     playing = false;
     openMainMenu();
 	noSound.play();
+	
+	//**panic
+    removeDistractions
 }
 
 //Remove labels that appear over buttons on hover; toggled in options screen

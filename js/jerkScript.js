@@ -5,6 +5,10 @@ jerkScript.js
 
 //Global variables
 
+
+//**panic: distractMod holds the class name that is added by functions in panicScript
+var distractMod = "plain";
+
 /*Game mode: 
 0 = Marathon
 1 = Sudden Death
@@ -50,6 +54,8 @@ $.getScript("js/audio.js", function(){});
 $.getScript("js/leaderboard.js", function(){});
 $.getScript("js/steve.js", function(){});
 $.getScript("js/user.js", function(){});
+//**panic: Import script for panic mode-specific functions
+$.getScript("js/panicScript.js", function(){});
 
 /*File storing function*/
 function gameSetup() {
@@ -324,9 +330,13 @@ function difficulty(nodeCount) {
 
 function validate(array, userFeedback, dArray){
     var ex, wai;
+    //**panic: uncomment distractValidate to activate
+    removeDistractions();
+	//distractValidate[randomNum(2)]();
+
 	fadeOff();
 	
-    $(function(){
+	$(function(){
         $( ".dot" ).bind( "tapone", tapHandler );
         function tapHandler( event ){
 			if (!userInput) {
@@ -336,9 +346,10 @@ function validate(array, userFeedback, dArray){
 			
             if($(event.target).hasClass("selected")){
                 $( event.target ).removeClass( "selected" );
-                console.log("x: " + this.x + ", y:" + this.y);
             } else {
                 $( event.target ).removeClass( colour );
+                //**panic
+                $( event.target).removeClass(distractMod);
                 $( event.target ).addClass( "selected" );
             }
         }
@@ -405,17 +416,19 @@ function userFeedback(bool, lastNode) {
     }
     if (steveModeEnabled) {
         $(".dot").removeClass("tapped_steve");
-        $(".dot").removeClass("selected");
     } else {
         $(".dot").removeClass("selected");
     }
-    //If user is right, add the class "correct".
-    //If user is incorrect, add the class "incorrect."
+	
     $(".dot").addClass(dot);
     if (bool) {
+        //**panic
+        $(".dot").removeClass(distractMod);
         $(".dot").addClass("good_dot");
     }
     if (!bool) {
+        //**panic
+        $(".dot").removeClass(distractMod);
         $(lastNode).addClass("wrong_dot");
     }
     setTimeout(function () {
@@ -433,11 +446,16 @@ function userFeedback(bool, lastNode) {
 		
         //adjustStats(reset);
 		reset(removeDots);
+
     }, 800);
 }
 
 /* Remove dots from grid container and calls functions that resets global variables and starts a new round.*/
 function reset(removeDots) {
+	
+	//**panic
+    removeDistractions();
+	
     removeDots();
     resetVals();
     newRound(generateGrid);
@@ -455,6 +473,11 @@ function removeDots(){
 * Briefly changes the colour of each to indicate which dots should be
  * selected in which sequence.*/
 function pathDemonstration(arrayToRepeat, validate) {
+	
+	//**panic:
+	//Uncomment to activate
+	//distractDemonstrate[randomNum(4)]();
+	
     var pt;
 	var blinkTime;
 	if (currentRound >= 250) {
@@ -503,6 +526,8 @@ function pathDemonstration(arrayToRepeat, validate) {
 }
 
 function playAgain() {
+	//**panic
+    removeDistractions();
     removeDots();
     resetVals();
     play();
@@ -533,6 +558,9 @@ function gameOver() {
     document.getElementById('tutorial4-screen').style.display = "none";
     $( "#game-screen" ).fadeOut( 1500, function() {
         $('#gameover-screen').fadeIn(1500, function() {});
+		//**panic
+        removeDistractions();
+		
 		badgeChecker(playerScore, currentRound, lifePoints);
 		scoreChecker(playerScore);
 		localStorage.setItem("saveFile", JSON.stringify(localSavedFiles));
