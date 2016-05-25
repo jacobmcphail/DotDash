@@ -424,6 +424,7 @@ div.dot {
 }
 div.dot.selected {
     background: lightgoldenrodyellow;
+    box-shadow: 0 0 15px lightgoldenrodyellow;
 }
 .gamegrid{
     background-color:#000;
@@ -461,6 +462,11 @@ div.dot.black{
 div.dot.fade{
     opacity: 0.2;
 }
+
+div.dot.steve-glow {
+    background: lightgoldenrodyellow;
+    box-shadow: 0 0 15px lightgoldenrodyellow;
+}
 div.dot.steve{
     background-image: url("../images/steve.png");
 	width: 50px; /* TMP, resize image to 52x52 then remove */
@@ -468,6 +474,7 @@ div.dot.steve{
 }
 div.dot.tapped_steve{
     background-image: url("../images/madsteve.png");
+    background-color: lightgoldenrodyellow;
 	width: 50px; /* TMP, resize image to 52x52 then remove */
 	height: 50px; /* TMP, resize image to 52x52 then remove */
 }

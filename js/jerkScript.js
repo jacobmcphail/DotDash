@@ -396,6 +396,7 @@ function userFeedback(bool, lastNode) {
     }
     if (steveModeEnabled) {
         $(".dot").removeClass("tapped_steve");
+        $(".dot").removeClass("selected");
     } else {
         $(".dot").removeClass("selected");
     }
@@ -461,7 +462,7 @@ function pathDemonstration(arrayToRepeat, validate) {
                 pt = arrayToRepeat[i].pos;
 				dotArray[pt.x][pt.y].classList.remove("fade");
                 if(steveModeEnabled){
-                   dotArray[pt.x][pt.y].classList.add("magenta");
+                   dotArray[pt.x][pt.y].classList.add("steve-glow");
                    dotArray[pt.x][pt.y].classList.remove("black");
                }else{
                     dotArray[pt.x][pt.y].classList.remove(colour);
@@ -475,7 +476,7 @@ function pathDemonstration(arrayToRepeat, validate) {
                 pt = arrayToRepeat[i].pos;
 				if(steveModeEnabled){
                    dotArray[pt.x][pt.y].classList.add("black");
-                   dotArray[pt.x][pt.y].classList.remove("magenta");
+                   dotArray[pt.x][pt.y].classList.remove("steve-glow");
                }else{
                    dotArray[pt.x][pt.y].classList.remove("selected");
                     dotArray[pt.x][pt.y].classList.add(colour);
