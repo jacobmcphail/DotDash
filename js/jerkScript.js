@@ -52,6 +52,14 @@ $.getScript("js/steve.js", function(){});
 
 /*File storing function*/
 function gameSetup() {
+	//Z's changes
+	document.getElementById('splash-screen').style.display = 'block';
+	 setTimeout(function() {
+	 $('#splash-screen').fadeOut(800, function() {});
+	 $("#main-screen").fadeIn(800, function() {});
+	 $("#main-screen").css("display", "block");
+	 }, 1500);
+	
 	checkCookie();
 	localSavedFiles = JSON.parse(localStorage.getItem("saveFile"));
 	if (localSavedFiles == null) {
@@ -76,7 +84,7 @@ function gameSetup() {
 	}); 
 	$('#option-4').removeAttr('checked');
 	$("#title").text('DotDash._');
-	$("#main-screen").css("display", "block");
+	//GONE
 }
 
 function checkCookie(){

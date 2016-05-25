@@ -8,6 +8,17 @@ body {
                                   not supported by any browser */
 }
 
+/*Z's thang*/
+#splash-screen{
+    width:100%;
+    height:100%;
+    top:0;
+    left:0;
+    bottom:0;
+    width:100%;
+
+}
+
 #main-screen {
 	display: none;
 	width: 100%;
@@ -73,7 +84,7 @@ html, body {
     background: dodgerblue;
 	}
 #mode-2 {
-    background: magenta;
+    background: red;
 	}
 #mode-3 {
     background: yellow;
@@ -460,7 +471,7 @@ div.dot.black{
     background: black;
 }
 div.dot.fade{
-    opacity: 0.2;
+    opacity: 0.5;
 }
 
 div.dot.steve-glow {

@@ -41,6 +41,8 @@ function openCredits() {
 	yesSound.play();
 }
 function openMainMenu() {
+	//Z's changes
+	document.getElementById('splash-screen').style.display = 'none';
     document.getElementById('options-screen').style.display = 'none';
     document.getElementById('scores-screen').style.display = 'none';
     document.getElementById('credits-screen').style.display = 'none';
