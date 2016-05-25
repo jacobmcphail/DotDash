@@ -126,28 +126,10 @@ function badgeChecker(playerScore, currentRound, lifePoints) {
 function updateBadges() {
 	for (var bIndex = 1; bIndex <= 10; bIndex++) {
 		if (localSavedFiles[bIndex]) {
-			if (bIndex == 1)
-				document.getElementById(bIndex + "badge").src="images/steve.png";
-			else if(bIndex == 2)
-				document.getElementById(bIndex + "badge").src="images/medal.png";
-			else if(bIndex == 3)
-				document.getElementById(bIndex + "badge").src="images/badge.png";
-			else if(bIndex == 3)
-				document.getElementById(bIndex + "badge").src="images/badge1.png";
-			else if(bIndex == 3)
-				document.getElementById(bIndex + "badge").src="images/badge2.png";
-			else if(bIndex == 6)
-				document.getElementById(bIndex + "badge").src="images/medal3.png";
-			else if(bIndex == 7)
-				document.getElementById(bIndex + "badge").src="images/medal4.png";
-			else if(bIndex == 8)
-				document.getElementById(bIndex + "badge").src="images/medal5.png";
-			else if(bIndex == 9)
-				document.getElementById(bIndex + "badge").src="images/medal6.png";
-			else if(bIndex == 10)
-				document.getElementById(bIndex + "badge").src="images/medal7.png";		
-		}else 
-				document.getElementById(bIndex + "badge").src="images/locked.png";
+			document.getElementById(bIndex + "badge").src="images/medal2.png";
+		} else {
+			document.getElementById(bIndex + "badge").src="images/locked.png";
+		} 
 	} 
 }
 	
