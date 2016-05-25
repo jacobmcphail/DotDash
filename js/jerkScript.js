@@ -77,7 +77,6 @@ function gameSetup() {
 	$('#option-4').removeAttr('checked');
 	$("#title").text('DotDash._');
 	$("#main-screen").css("display", "block");
-	
 }
 
 function checkCookie(){
@@ -516,19 +515,14 @@ function pauseGame(type) {
     }
 }
 
-function splash() {
-	$("#main-screen").style.display ="block";
-	
-}
-
 function gameOver() {
     playing = false;
 	disco.pause();
 
     document.getElementById('tutorial1-screen').style.display = "none";
     document.getElementById('tutorial4-screen').style.display = "none";
-    $( "#game-screen" ).fadeOut( 800, function() {
-        $('#gameover-screen').fadeIn(800, function() {});
+    $( "#game-screen" ).fadeOut( 1500, function() {
+        $('#gameover-screen').fadeIn(1500, function() {});
 		badgeChecker(playerScore, currentRound, lifePoints);
 		scoreChecker(playerScore);
 		localStorage.setItem("saveFile", JSON.stringify(localSavedFiles));
@@ -572,13 +566,5 @@ function fadeOn(){
 function fadeOff(){
 	$(".dot").removeClass("fade");
 }
-
- $('.enter-link').click(function () {
-	
-    $(this).parent('#splash-screen').fadeOut(800);
-	$("#main-screen").fadeIn(800);
-	$("#main-screen").css("display", "block");
-	
- });
 
 
