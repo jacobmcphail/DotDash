@@ -165,7 +165,6 @@ html, body {
     padding-right: 50px;
 }
 
-
 .buttonbox {
     margin-top: 50px;
     text-align:center;
@@ -269,7 +268,6 @@ input[type=checkbox] {
 #game-screen {
     display:none;
 }
-
 #lives-bar {
     position: absolute;
     top: 10px;
@@ -607,7 +605,6 @@ div.dot.good_dot {
 	max-width: 80%;
 }
 
-
 @media screen and (max-width: 640px) {
     #confirmation-container {
         width: 80%;
@@ -634,4 +631,3 @@ div.dot.good_dot {
         color: black;
         font-size: 200%;
     }
-}
