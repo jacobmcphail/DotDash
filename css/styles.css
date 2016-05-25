@@ -337,7 +337,7 @@ input[type=checkbox] {
     display: none;
 }
 
-#gameover-screen h1, #pause-screen h1, #tutorial-screen h1 {
+#gameover-screen h1, #pause-screen h1{
     font-size: 500%;
     color: #32CD32;
 }
@@ -383,11 +383,15 @@ input[type=checkbox] {
     border-radius: 4px;
 }
 
-#final-score-container {
+#final-score-container, #badge-message-container, #highscore-message-container {
     border-radius: 4px;
     border: 3px solid white;
-    margin: auto;
+    margin: 10px auto;
     width: 40%;
+}
+
+#badge-message-container, #highscore-message-container {
+    display:none;
 }
 
 p {
@@ -650,4 +654,18 @@ div.dot.good_dot {
     #option-6-box, #option-6-label {
         display:none;
     }
+
+    #gameover-screen h1, #pause-screen h1{
+        margin-top: 10px;
+        font-size: 300%;
+        color: #32CD32;
+    }
+
+    #final-score-container, #badge-message-container, #highscore-message-container {
+        border-radius: 4px;
+        border: 3px solid white;
+        margin: 10px auto;
+        width: 80%;
+    }
+
 }

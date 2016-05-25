@@ -26,21 +26,24 @@ function scoreChecker(playerScore) {
 	switch(gamemode) {
 		case 0:
 			if (playerScore > localSavedFiles[11]) {
-				window.alert("New HighScore in marathon mode!");
+				document.getElementById('highscore-message-container').style.display = 'block';
+				document.getElementById('highscore-message').innerHTML = "New HighScore in Marathon mode!";
 				localSavedFiles[11] = playerScore;
 				return true;
 			}
 			break;
 		case 1: 
 			if (playerScore > localSavedFiles[12]) {
-				window.alert("New HighScore in no-time mode!");
+				document.getElementById('highscore-message-container').style.display = 'block';
+				document.getElementById('highscore-message').innerHTML = "New HighScore in Sudden Death mode!";
 				localSavedFiles[12] = playerScore;
 				return true;
 			}
 			break;
 		case 2:
 			if (playerScore > localSavedFiles[13]) {
-				window.alert("New HighScore in time attack mode!");
+				document.getElementById('highscore-message-container').style.display = 'block';
+				document.getElementById('highscore-message').innerHTML = "New HighScore in Time Attack mode!";
 				localSavedFiles[13] = playerScore;
 				return true;
 			}
