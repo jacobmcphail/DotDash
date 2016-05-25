@@ -22,6 +22,7 @@ function openScores() {
 	yesSound.play();
 }
 function openBadges() {
+	updateBadges();
 	$("#badge-desc").text("Unlock badges by playing the game right, wethead.");
     document.getElementById('scores-screen').style.display = 'none';
     document.getElementById('badges-screen').style.display = "block";

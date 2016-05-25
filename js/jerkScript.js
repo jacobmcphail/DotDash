@@ -527,10 +527,12 @@ function gameOver() {
     document.getElementById('tutorial4-screen').style.display = "none";
     $( "#game-screen" ).fadeOut( 1500, function() {
         $('#gameover-screen').fadeIn(1500, function() {});
-		badgeChecker(currentRound, lifePoints);
+		badgeChecker(playerScore, currentRound, lifePoints);
 		scoreChecker(playerScore);
 		localStorage.setItem("saveFile", JSON.stringify(localSavedFiles));
 		updateHighScores();
+		updateBadges();
+		onlineBadgeChecker(playerScore);
 		disco.CurrentTime=0;
 		loseSound.play();
 		if (playerScore > 0) {
