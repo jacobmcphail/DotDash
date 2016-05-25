@@ -49,6 +49,7 @@ $.getScript("js/badges.js", function(){});
 $.getScript("js/audio.js", function(){});
 $.getScript("js/leaderboard.js", function(){});
 $.getScript("js/steve.js", function(){});
+$.getScript("js/user.js", function(){});
 
 /*File storing function*/
 function gameSetup() {
