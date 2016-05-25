@@ -1,6 +1,7 @@
 // Related to movement between screens
 
 var labelsOn = true;
+var mobile = false;
 
 function openOptions() {
     document.getElementById('main-screen').style.display = 'none';
@@ -8,6 +9,7 @@ function openOptions() {
     document.getElementById('return-button').style.display = "block";
     document.getElementById('title').innerHTML = "Options._";
 	yesSound.play();
+    
 }
 function openScores() {
     document.getElementById('main-screen').style.display = 'none';
@@ -183,3 +185,5 @@ function disableLabels() {
         labelsOn = true;
 	}
 }
+
+

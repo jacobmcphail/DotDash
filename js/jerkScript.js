@@ -45,7 +45,6 @@ var colour;
 $.getScript("js/gameTimer.js", function(){});
 $.getScript("js/nuggetScript.js", function(){});
 $.getScript("js/pathGenerator.js", function(){});
-$.getScript("js/touching.js", function(){});
 $.getScript("js/badges.js", function(){});
 $.getScript("js/audio.js", function(){});
 $.getScript("js/leaderboard.js", function(){});
@@ -78,9 +77,6 @@ function gameSetup() {
 	$('#option-4').removeAttr('checked');
 	$("#title").text('DotDash._');
 	$("#main-screen").css("display", "block");
-    /*see touching.js */
-    whatDevice();
-    addTouchListeners();
 }
 
 function checkCookie(){

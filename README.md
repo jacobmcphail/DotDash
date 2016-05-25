@@ -73,7 +73,7 @@ index.html
 		1. gameTimer.js
 		2. nuggetScript.js
 		3. pathGenerator.js
-		4. touching.js
+		4. touching.js                                              ***
 		5. badges.js
 		6. audio.js
 		7. leaderboard.js

@@ -128,13 +128,15 @@ html, body {
     bottom: 30%;
     right: 15%;
 }
-#options-button, #unpause-button, #tutorial-return-button, #tutorial1-return-button, #tutorial2-return-button, #tutorial3-return-button  {
+#options-button, #unpause-button, #tutorial-return-button, #tutorial1-return-button, #tutorial2-return-button,
+#tutorial3-return-button, #game-over-quit-button {
     left: 5px;
 }
 #scores-button, #restart-button {
     left: 70px;
 }
-#credits-button, #pause-button, #quit-button, #to-tutorial2-button, #to-tutorial3-button, #to-tutorial4-button, #tutorial-end-button  {
+#credits-button, #pause-button, #quit-button, #to-tutorial2-button, #to-tutorial3-button, #to-tutorial4-button,
+#tutorial-end-button, #game-over-restart-button {
     right: 5px;
 }
 #return-button {
@@ -232,6 +234,7 @@ input[type=checkbox] {
     background-color: #32CD32;
     opacity: 1;
 }
+
 /* end for option buttons */
 
 #scores-screen {
@@ -374,13 +377,6 @@ input[type=checkbox] {
     border: 3px solid white;
     margin: auto;
     width: 40%;
-}
-
-#game-over-quit-button {
-    left: 5px;
-}
-#game-over-restart-button {
-    right: 5px;
 }
 
 p {
@@ -631,3 +627,9 @@ div.dot.good_dot {
         color: black;
         font-size: 200%;
     }
+
+
+    #option-6-box, #option-6-label {
+        display:none;
+    }
+}

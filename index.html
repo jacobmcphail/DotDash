@@ -81,8 +81,8 @@
                     <input type="checkbox" value="None" onclick="buttonSounds();steveModeToggle();" id="option-4" name="check" />
                     <label for="option-4"></label>
                 </div>
-				<h2 class="option-header">Disable Labels</h2>
-                <div class="checkbox">
+				<h2 class="option-header" id="option-6-label">Disable Labels</h2>
+                <div class="checkbox" id="option-6-box">
                     <input type="checkbox" value="None" onclick="disableLabels()" id="option-6" name="check" />
                     <label for="option-6"></label>
                 </div>
@@ -176,7 +176,7 @@
             <br/>
             <h1>GAME OVER</h1>
             <div id="final-score-container"><h2>Your score: </h2><h2 id="final-score">NULL</h2></div>
-            <button class="nongameplay-buttons" id="game-over-quit-button" onclick="quitGame()"><img src="images/backward.png" alt="backward"></button>
+            <button class="nongameplay-buttons" id="game-over-quit-button" onclick="quitGame()"><img src="images/home.png" alt="backward"></button>
             <button class="nongameplay-buttons" id="game-over-restart-button" onclick="playAgain()"><img src="images/return.png" alt="return"></button>
         </div>
         <div id="tutorial1-screen">
