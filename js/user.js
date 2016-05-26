@@ -47,13 +47,14 @@ function getUser(username) {
 
 function createAccount(){
 	var username = prompt("Enter Username");
-	if(username == null){
+	if(username == null || username.localeCompare("") == 0){
 		return;
 	}
 	var password = prompt("Enter Password");
-	if(password == null){
+	if(password == null || password.localeCompare("") == 0){
 		return;
 	}
+	if(username.length <= 15 && password.length <= 15) {
 	getUser(username).success(function (data) {
 		console.log(data);
 		if (data[0] == null) {
@@ -66,15 +67,18 @@ function createAccount(){
 		dataArray = null;
 		window.alert("Can't connect to server!");
 	});
+	} else {
+		window.alert("Username or password is to long! (Max 15)");
+	}
 }
 
 function login(){
 	var username = prompt("Enter Username");
-	if(username == null){
+	if(username == null || username.localeCompare("") == 0){
 		return;
 	}
 	var password = prompt("Enter Password");
-	if(password == null){
+	if(password == null || password.localeCompare("") == 0){
 		return;
 	}
 	activeConnection = true;
@@ -82,8 +86,6 @@ function login(){
 	getUser(username).success(function (data) {
 		$("#online-connection").text('');
 		activeConnection = false;
-		console.log(data[0]["username"]);
-		console.log(data[0]["password"]);
 		if (data[0] == null) {
 			window.alert("User not found");
 		} else if(username.localeCompare(data[0]["username"]) == 0 && password.localeCompare(data[0]["password"]) == 0){
@@ -95,7 +97,7 @@ function login(){
 			getPlayerData();
 			window.alert("Log in!");
 		} else {
-			window.alert("Incorrect password!");
+			window.alert("Incorrect password and/or username!");
 		}
 	}).fail(function () {
 		dataArray = null;

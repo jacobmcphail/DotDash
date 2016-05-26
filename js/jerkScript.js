@@ -96,7 +96,6 @@ function gameSetup() {
 	}); 
 	$('#option-3').removeAttr('checked');
 	$("#title").text('DotDash._');
-	//GONE
 }
 
 function checkCookie(){
