@@ -2,6 +2,9 @@
 var activeConnection = false;
 var playerData = [false, false, false, false, false, false, false, false, false, false, 0, 0, 0];
 
+/*
+New account creation. Sends data to create a new user record in database.
+*/
 function createUser(username, password) {
 			var j_notation =
 		{
@@ -19,17 +22,7 @@ function createUser(username, password) {
 		});
 }
 
-function checkUser(username, password, info){
-	getUser(username).success(function (data) {
-		console.log("REC: " + data);
-		info = data;
-		console.log("INF: " + info);
-	}).fail(function () {
-		info = null;
-		window.alert("Can't connect to server!");
-	});
-}
-
+/*Retrieve username and password information given username entered by user*/
 function getUser(username) {
 	var j_notation =
 		{
@@ -44,7 +37,9 @@ function getUser(username) {
 		dataType: 'json'
 	});
 }
-
+/*
+Accepts username and password to create a new account with. If the name given corresponds to an existing record, the user is not allowed to create an account. Maximum length of both username and password is 15 characters.
+*/
 function createAccount(){
 	if(!activeConnection){
 	var username = prompt("Enter Username");
@@ -78,7 +73,9 @@ function createAccount(){
 	}
 	}
 }
-
+/*
+Accepts username and password in order to retrieve user's information and update user's record in database.
+*/
 function login(){
 	var username = prompt("Enter Username");
 	if(username == null || username.localeCompare("") == 0){
@@ -100,7 +97,6 @@ function login(){
 			localSavedFiles[1] = data[0]["username"];
 			localSavedFiles[2] = data[0]["password"];
 			localStorage.setItem("saveFile", JSON.stringify(localSavedFiles));
-			console.log(localSavedFiles);
 			getPlayerData();
 			window.alert("Log in!");
 		} else {
@@ -114,7 +110,9 @@ function login(){
 	});
 }
 
-
+/*
+Sends username, passwords, badge data, and score data to update database with.
+*/
 function sendSaveData(username, password){
 		var dataSending = [];
 		for(var i = 0; i < 10; i++){
@@ -144,7 +142,9 @@ function sendSaveData(username, password){
 		dataType: 'json'
 	});
 }
-
+/*
+Given username and password, retrieves badge and score data.
+*/
 function getSaveData(username, password){
 		var j_notation =
 		{
@@ -160,7 +160,9 @@ function getSaveData(username, password){
 		dataType: 'json'
 	});
 }
-
+/*
+Updates records of user who is currently logged in.
+*/
 function updateSave(){
 	if(localSavedFiles[1] != null){
 	activeConnection = true;
@@ -175,7 +177,9 @@ function updateSave(){
 	});
 	}
 }
-
+/*
+Retrieves data associated with user who is currently logged in.
+*/
 function getPlayerData(){
 	if(localSavedFiles[1] != null){
 	activeConnection = true;
@@ -183,7 +187,6 @@ function getPlayerData(){
 	getSaveData(localSavedFiles[1], localSavedFiles[2]).success(function (data) {
 		$("#online-connection").text('');
 		activeConnection = false;
-		console.log(data);
 		if(data != null){
 			
 			playerData = $.map(data, function(el) { return el });
@@ -194,7 +197,6 @@ function getPlayerData(){
 					playerData[bIndex] = false;
 				} 
 			} 
-			console.log(playerData);
 			updateBadges();
 			updateHighScores();
 		} else {

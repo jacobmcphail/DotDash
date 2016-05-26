@@ -1,4 +1,8 @@
 <?php
+//Rejected names:	writeDB.php
+//					iAmAPartTimeWizard.php
+//					birdLoaf.php
+
 /* Handles writing records to leaderboard database */
 
 	//All headers are required to send

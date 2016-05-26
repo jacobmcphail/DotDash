@@ -1,4 +1,4 @@
-/*Handles sending data to and retrieving data from online leaderboard database. */
+/*Sends data to and retrieves data from online leaderboard database. */
 
 $(document).ready(function(){
 
@@ -21,7 +21,9 @@ $(document).ready(function(){
     });
 	
 });
-
+/*
+Checks whether the most recent score beats the player's stored personal best.
+*/
 function scoreChecker(playerScore) {
 	switch(gamemode) {
 		case 0:
@@ -54,13 +56,17 @@ function scoreChecker(playerScore) {
 	return false;
 }
 
-//Update high scores
+/*
+Updates high scores on leaderboard screen
+*/
 function updateHighScores() {
     for (var i = 10, q = 0; i < 13; i++, q++) {
 		$("#localHS-" + q).text(playerData[i]);
     }
 }
-
+/*
+Prints top 10 scores for each mode to leaderboard screen.
+*/
 function printOnlineScores() {
 	var leaderboard = document.getElementById("online-score-container");
 	var databus;
@@ -86,7 +92,9 @@ function printOnlineScores() {
 		leaderboard.innerHTML = '<br><br><br><h2>Could not get online leaderboard!</h2>';		
 	});
 }
-
+/*
+Retrieves top 10 scores for each mode from leaderboard database.
+*/
 function getData(database) {
    return $.ajax({
       type: "GET",
@@ -97,7 +105,9 @@ function getData(database) {
 	  }
 	});
 }
-
+/*
+Sends player name and score to leaderboard database to be written into a new record.
+*/
 function sendScore(gamemode, playerName, playerScore) {
 		var j_notation =
 		{

@@ -1,5 +1,5 @@
 /*
-Experimental NougatElephant branch:: panicScript.js
+panicScript.js
 BirdJerky Saturday May 21st/16
     -The basis of a new mode if we decide to implement it.
     -Could also be toggled with a global variable "distractionsOn"

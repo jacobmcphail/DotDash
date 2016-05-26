@@ -1,4 +1,4 @@
-// Related to movement between screens
+/* Related to movement between screens*/
 
 var labelsOn = true;
 var mobile = false;
@@ -42,7 +42,6 @@ function openCredits() {
 	yesSound.play();
 }
 function openMainMenu() {
-	//Z's changes
 	document.getElementById('splash-screen').style.display = 'none';
     document.getElementById('options-screen').style.display = 'none';
     document.getElementById('scores-screen').style.display = 'none';
@@ -141,7 +140,7 @@ function closePauseScreen() {
 	disco.play();
 }
 
-//Displays dialog box asking user if they would like to quit
+/*Displays dialog box asking user if they would like to quit*/
 function openConfirmation(type) {
 	yesSound.play();
     document.getElementById('confirmation-container').style.display = 'block';
@@ -183,6 +182,7 @@ function openConfirmation(type) {
 
 }
 
+/*Closes confirmation prompts*/
 function closeConfirmation() {
 	noSound.play();
     document.getElementById('confirmation-container').style.display = 'none';
@@ -194,11 +194,11 @@ function quitGame() {
     openMainMenu();
 	noSound.play();
 	
-	//**panic
+	//panic
     removeDistractions
 }
 
-//Remove labels that appear over buttons on hover; toggled in options screen
+/*Remove labels that appear over buttons on hover; toggle this option in Options screen*/
 function disableLabels() {
 	tapSound.play();
     if(labelsOn == true) {

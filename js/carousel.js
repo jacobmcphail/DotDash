@@ -1,4 +1,4 @@
-/*Main menu mode selection*/
+/*Main menu mode selection. Adapted from Bootstrap. */
 
 $(document).ready(function(){
 	// Activate Carousel	

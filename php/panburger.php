@@ -1,5 +1,9 @@
 <?php
-/* Handles writing records to leaderboard database */
+//Rejected names: 	newUser.php
+//					modernGuilt.php
+//					potatoParasol.php
+
+/* Creates a new record given a usename and a password */
 
 	//All headers are required to send
 	header("Access-Control-Allow-Origin: *");

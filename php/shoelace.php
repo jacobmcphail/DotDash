@@ -1,12 +1,17 @@
 <?php
-/* Handles reading top 10 records of each gameplay mode from leaderboard database */
+//rejected names: 	getUserPass.php
+//					partyHatOnAPimple.php
+//					breadFan.php
+
+
+/* Issues SQL command to retrieve username and password given a username entered by the user. */
 
 	//All headers are required to send
 	header("Access-Control-Allow-Origin: *");
 	header("Access-Control-Allow-Credentials: true");
 	header("Access-Control-Allow-Headers: origin, content-type, accept");
 
-	//Variable to store reference to connection to leaderboard
+	//Variable to store reference to connection to database
 	$connection = mysqli_connect("localhost","crowbotc_walnut","causticSauce292","crowbotc_DotDashLeaderboard") or die("Error " . mysqli_error($connection));
 	
 	$json = file_get_contents('php://input');
@@ -15,7 +20,7 @@
 	
 	$name = $dataArray["username"];
 
-	//Store SQL commands in variables and use to insert records into into $emparray
+	//Store SQL command in variable and use to insert records into into $descArray
     $sql_m = "SELECT username, password FROM PLAYER_REC WHERE username='$name' LIMIT 1";
     $result_m = mysqli_query($connection, $sql_m) or die("Error in Selecting " . mysqli_error($connection));
 

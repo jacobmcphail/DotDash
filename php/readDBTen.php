@@ -1,5 +1,5 @@
 <?php
-/* Handles reading top 10 records of each gameplay mode from leaderboard database */
+/* Retrieves top 10 records of each gameplay mode from leaderboard database */
 
 	//Necessary for another website to access crowbot.co database
 	header("Access-Control-Allow-Origin: *");

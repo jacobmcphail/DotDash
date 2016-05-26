@@ -1,10 +1,9 @@
-/*Handle badges that are earned within game. Events that currently 
-unlock badges are not finalized. */
+/*Handle badges earned by unlocking achievements.*/
 
+/*Displays descriptions of achievements that one can ean badges for, images of earned badges, and padlock icons for badges not yet earned. */
 $(document).ready(function(){
 	$(".badge-button").on('tapone', function(){
 		var badgeNum = parseInt(this.id);
-		console.log(badgeNum);
 		switch(badgeNum) {
 			case 0:
 			$("#badge-desc").text("Unlock Steve mode");
@@ -42,6 +41,9 @@ $(document).ready(function(){
     });
 });
 
+/*
+Sends a request to leaderboards for top 10 scores for each mode of gameplay
+*/
 function getComparingData(database){
 	  return $.ajax({
       type: "GET",
@@ -53,10 +55,12 @@ function getComparingData(database){
 	});
 }
 
+/*
+Invoked after Game Over. Depending on mode (0: Marathon, 1: Sudden Death, 2: Time Attack), checks whether the player's most recent score beats any of the scores in the corresponding top 10 leaderboard. Player is awarded with a badge if it has not already been earned.
+*/
 function onlineBadgeChecker(playerScore) {
 	var databus;
 	getComparingData(databus).success(function (data) {
-		console.log(data);
 		switch(gamemode){
 				case 0:
 					if (playerScore > data[0]["mScore"] && !playerData[7] ) {
@@ -88,7 +92,9 @@ function onlineBadgeChecker(playerScore) {
 	});
 }
 
-// Checks to see if player has unlocked any new badges
+/* 
+Invoked after Game Over. Checks whether the most recently played game entitles the user to a new badge.
+*/
 function badgeChecker(playerScore, currentRound, lifePoints) {
 		switch(gamemode){
 			case 0:
@@ -137,6 +143,9 @@ function badgeChecker(playerScore, currentRound, lifePoints) {
 		}
 }
 
+/*
+Prints either a badge icon or a padlock icon depending on whether a particular achievement has been unlocked.
+*/
 function updateBadges() {
 	for (var bIndex = 0; bIndex <= 9; bIndex++) {
 		if (playerData[bIndex]) {

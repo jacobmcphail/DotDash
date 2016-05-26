@@ -1,51 +1,63 @@
 /*
+=======================================================
 jerkScript.js
  Gameplay-related
+=======================================================
 */
 
 //Global variables
 
-
-//**panic: distractMod holds the class name that is added by functions in panicScript
-var distractMod = "plain";
-
 /*Game mode: 
-0 = Marathon
-1 = Sudden Death
-2 = Time Attack
+	0 = Marathon
+	1 = Sudden Death
+	2 = Time Attack
 */
 var gamemode;
-
 /*True when player is playing; false when Game Over. */
 var playing = false;
-
-/*Tracks whether user has made any errors. */
-var noErrorsYet = true;
-var notComplete = true;
-/*Index of array holding sequence of dots in each round; used to compare the dot
-each user selects with successive dots in the array. */
-var index = 0;
-
 /*When false, user cannot select anything. */
 var userInput = true;
-
+/*Container that holds socks. */
+var container;
 /*Grid container with dimensions determined by difficulty; each grid element holds a div container that holds a dot. */
 var socks;
-/*Container that holds the game grid. */
-var container;
 /*Dots are div elements with attributes (x- and y- coordinates) 
 Every round, dots are created, appended to socks, and stored in dotArray. */
 var dotArray = [];
-
-var playerScore = 0;
-var currentRound = 1;
-var lifePoints = 3;
-var numRows = 3;
-var numCols = 3;
-var localSavedFiles;
+/*panic: holds the class name that is added to dots in order to modify them.*/
+var distractMod = "plain";
+/*Holds possible colours of dots. Random colour chosen every round*/
 var colourArray = ["cyan","orange","green","pink","blue","purple"];
 var colour;
 
+/*
+Variables that are reset every game
+	playerScore: player's score
+	currentRound: current round of gameplay
+	lifePoints: number of lives/chances to make mistakes
+	notComplete: if true, the user has yet to replicate the path in its entirety. If false, the user has replicated the path without making a mistake.
+*/
+var playerScore;
+var currentRound;
+var lifePoints;
+var notComplete;
+
+/*
+Variables that are reset every round.
+	numRows: Number of rows in grid of dots. Maximum: 4
+	numCols: Number of columns in grid of dots. Maximum: 4
+	index: During Validate() indexes the array that holds the sequence of dots to repeat; used to compare the dot each user selects.
+	noErrorsYet: if true, the user has not yet made a mistake. If false, the player loses the round.
+*/
+var numRows;
+var numCols;
+var index;
+var noErrorsYet;
+
+/*Locally-stored files with login information and user data retrieved from database.*/
+var localSavedFiles;
+
+/*Imported JavaScript files*/
 $.getScript("js/gameTimer.js", function(){});
 $.getScript("js/nuggetScript.js", function(){});
 $.getScript("js/pathGenerator.js", function(){});
@@ -54,12 +66,10 @@ $.getScript("js/audio.js", function(){});
 $.getScript("js/leaderboard.js", function(){});
 $.getScript("js/steve.js", function(){});
 $.getScript("js/user.js", function(){});
-//**panic: Import script for panic mode-specific functions
 $.getScript("js/panicScript.js", function(){});
 
-/*File storing function*/
+/*Displays splash screen, checks for cookies, warns user if cookies are disabled, creates cookies if they don't exist, and retrieves data if user is already logged in*/
 function gameSetup() {
-	//Z's changes
     $('#title').css("display", "none");
     document.getElementById('splash-screen').style.display = 'block';
     setTimeout(function() {
@@ -71,11 +81,9 @@ function gameSetup() {
         $('#title').fadeIn(800, function() {});
     }, 1800);
 
-
     checkCookie();
 	localSavedFiles = JSON.parse(localStorage.getItem("saveFile"));
 	if (localSavedFiles == null) {
-		//Refer to SaveFileArrayIndex.txt
 		localSavedFiles = [true, null, null];
 		localStorage.setItem("saveFile", JSON.stringify(localSavedFiles));
 	} else {
@@ -110,10 +118,12 @@ function checkCookie(){
 	}
 }
 
+/*Prompts for confirmation to delete player's records.*/
 function clearSaveConfirmation() {
     popup('resetSave');
 }
 
+/*Clears data in player's records.*/
 function resetSave() {
 	playerData = [false, false, false, false, false, false, false, false, false, false, 0, 0, 0];
 	localStorage.setItem("saveFile", JSON.stringify(localSavedFiles));
@@ -129,8 +139,11 @@ function resetSave() {
     $('#overlay-popup').delay(600).fadeOut(300);
 }
 
+/*
+Invoked at the start of each game. Initializes global variables, creates the playing field.
+*/
 function initialize(gamemode, newRound, removeDots){
-    //Initialize global variables depending on mode
+
     container = document.getElementById("dot-container");
     container.classList.add("vertical-center");
     playerScore = 0;
@@ -168,13 +181,13 @@ function initialize(gamemode, newRound, removeDots){
     newRound(generateGrid);
 }
 
-//Updates score on the bottom of gameplay screen
+/*Updates score on the bottom of gameplay screen*/
 function updateScore() {
     var score = playerScore.toString();
     $('#playerScore').text(score);
 }
 
-//Manages player lives during gameplay
+/*Manages player lives during gameplay*/
 function updateLives() {
     var lifeString = '';
     for (var life = lifePoints; life > 0; life--) {
@@ -190,7 +203,6 @@ function updateLives() {
 
 /* Invoked at the start of every round. Generate a new grid and reset variables*/
 function newRound(generateGrid){
-    console.log("Current round: " + currentRound);
 	$("#timer-bar").css("background-color", "#32CD32");
 	if (playing) {
 		if (gamemode == 0) {
@@ -203,7 +215,7 @@ function newRound(generateGrid){
 
         //Create a new socks every time a new round starts
         // Socks is a grid element with a fixed number of columns that contains dots.
-        // When the game first starts up, create a new element to assign to socks.
+  
         if($('#socksID').length > 0){
             $("#socksID").remove();
         }
@@ -220,15 +232,11 @@ function newRound(generateGrid){
         if(socks.hasChildNodes()){
             removeDots();
         }
-        //Also, get rid of the old socks
-
-
 		generateGrid(createGrid,make_2D_Array, pathDemonstration);
 	}
-	
 }
 
-//Create a grid to populate with dots
+/*Create a grid to populate with dots*/
 function generateGrid(createGrid, make_2D_Array, pathDemonstration){
     createGrid(socks,numRows,numCols);
     dotArray = make_2D_Array(dotArray,numRows,numCols);
@@ -240,7 +248,7 @@ function generateGrid(createGrid, make_2D_Array, pathDemonstration){
             dotID++;
         }
     }
-   // var someGrid = new Grid(numRows,numCols);
+
     var arrayToRepeat = runPathFinder(numRows, numCols, difficulty(numRows * numCols));
     if(steveModeEnabled){
         steveify();
@@ -291,9 +299,7 @@ function createGrid(cont, nRows, nCols){
     }
 }
 
-/*Creates dot-containing div elements and stores them in a 2D array.
- * Each has an x and y attribute that can be used to reference a dot in
- * the array.*/
+/*Creates dot-containing div elements and stores them in a 2D array. Each has an x and y attribute that can be used to reference a dot in the array.*/
 function make_2D_Array(array, nRows, nCols) {
     var i, j;
     for(i=0;i<nRows;i++){
@@ -332,21 +338,17 @@ function difficulty(nodeCount) {
     return Math.round(length);
 }
 
-/* Any dot that is selected by the user has its x and y coordinates compared to
- * x and y coordinates of points in array (the array to repeat)
- * Comparison takes place every time a dot is selected.
- * If at any time the coordinates do not match, indicate to to the user
- * they done goofed, deduct a life and start a new round.
- * If the user makes no mistakes, indiciate such to the user, increment score,
-  * and start a new round*/
+/* 
+A dot selected by the user has its x and y coordinates compared to the x and y coordinates in an array of points that represents the path to repeat. Comparison takes place every time a dot is selected.
+*/
 
 function validate(array, userFeedback, dArray){
     var ex, wai;
-    //**panic: uncomment distractValidate to activate
+    //panic: uncomment distractValidate[]() to activate
     removeDistractions();
 	//distractValidate[randomNum(2)]();
 
-	fadeOff();
+	$(".dot").removeClass("fade");
 	
 	$(function(){
         $( ".dot" ).bind( "tapone", tapHandler );
@@ -360,7 +362,7 @@ function validate(array, userFeedback, dArray){
                 $( event.target ).removeClass( "selected" );
             } else {
                 $( event.target ).removeClass( colour );
-                //**panic
+                //panic
                 $( event.target).removeClass(distractMod);
                 $( event.target ).addClass( "selected" );
             }
@@ -416,8 +418,9 @@ function validate(array, userFeedback, dArray){
     }
 }
 
-/* Displays feedback to user if they got round correct or incorrect.
-* */
+/* 
+Indicates to user whether they passed a round or made a mistake.
+*/
 function userFeedback(bool, lastNode) {
     var dot;
     if (bool) {
@@ -435,12 +438,12 @@ function userFeedback(bool, lastNode) {
 	
     $(".dot").addClass(dot);
     if (bool) {
-        //**panic
+        //panic
         $(".dot").removeClass(distractMod);
         $(".dot").addClass("good_dot");
     }
     if (!bool) {
-        //**panic
+        //panic
         $(".dot").removeClass(distractMod);
         $(lastNode).addClass("wrong_dot");
     }
@@ -457,16 +460,17 @@ function userFeedback(bool, lastNode) {
         }
         $(lastNode).removeClass("selected");
 		
-        //adjustStats(reset);
 		reset(removeDots);
 
     }, 800);
 }
 
-/* Remove dots from grid container and calls functions that resets global variables and starts a new round.*/
+/* 
+Resets global variables for the start of a new round.
+*/
 function reset(removeDots) {
 	
-	//**panic
+	//panic
     removeDistractions();
 	
     removeDots();
@@ -474,20 +478,20 @@ function reset(removeDots) {
     newRound(generateGrid);
 }
 
-/* Remove all the child elements of socks, the grid container
- * */
+/* 
+Remove all the child elements of socks, the grid container
+*/
 function removeDots(){
     while(socks.hasChildNodes()){
         socks.removeChild(socks.lastChild);
     }
 }
 
-/*Takes the sequence of dots the user must repeat as an argument.
-* Briefly changes the colour of each to indicate which dots should be
- * selected in which sequence.*/
+/*
+Takes the sequence of dots the user must repeat as an argument. Briefly changes the colour of each to indicate which dots should be selected in which sequence.*/
 function pathDemonstration(arrayToRepeat, validate) {
 	
-	//**panic:
+	//panic:
 	//Uncomment to activate
 	//distractDemonstrate[randomNum(4)]();
 	
@@ -500,7 +504,7 @@ function pathDemonstration(arrayToRepeat, validate) {
 	}
     //For testing
     printPath(arrayToRepeat);
-	fadeOn();
+	$(".dot").addClass("fade");
     for (var i = 0; i < arrayToRepeat.length; i++) {
         (function (i) {
             setTimeout(function () {
@@ -539,7 +543,7 @@ function pathDemonstration(arrayToRepeat, validate) {
 }
 
 function playAgain() {
-	//**panic
+	//panic
     removeDistractions();
     removeDots();
     resetVals();
@@ -571,7 +575,7 @@ function gameOver() {
     document.getElementById('tutorial4-screen').style.display = "none";
     $( "#game-screen" ).fadeOut( 1500, function() {
         $('#gameover-screen').fadeIn(1500, function() {});
-		//**panic
+		//panic
         removeDistractions();
 		
 		badgeChecker(playerScore, currentRound, lifePoints);
@@ -587,22 +591,12 @@ function gameOver() {
 		}
 	}	
     });
-    // add final score
     document.getElementById('final-score').innerHTML = playerScore;
 }
 
+/*Resets global variables associated with user input*/
 function resetVals(){
     noErrorsYet = true;
     notComplete = true;
     index = 0;
 }
-
-function fadeOn(){
-	$(".dot").addClass("fade");
-}
-
-function fadeOff(){
-	$(".dot").removeClass("fade");
-}
-
-

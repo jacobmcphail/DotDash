@@ -9,7 +9,6 @@ var timerOn = false;
 function timerStart(){
 	if(!timerOn) {
 		timerOn = true;
-		//Calls function updateTime every 1/100th of a second
 		inter = setInterval(updateTimer,100);
 	} 
 }
