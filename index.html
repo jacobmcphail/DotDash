@@ -27,18 +27,19 @@
 <body onload="gameSetup()">
     <div id="screen">
 	<!--Z's changes-->
-		<div id = "splash-screen">
-			<p>DotDash.-</p>
-			<img src="images/dot-yellow.png" />
-			<img src="images/dot-purple.png" />
-			<img src="images/dot-magenta.png" />
-			<img src="images/dot-green.png" />
-        
-        <!--Z's change: enter-link gone-->
+        <div id = "splash-screen">
+            <p>DotDash.-</p>
+            <img src="images/dot-yellow.png" />
+            <img src="images/dot-purple.png" />
+            <img src="images/dot-magenta.png" />
+            <img src="images/dot-green.png" />
+
+            <!--Z's change: enter-link gone-->
         </div>
-	
+
         <div id="title">Loading...</div>
-		<div id="online-connection">null</div>
+        <div id="online-connection">null</div>
+
         <!-- buttons and elements used in the main menu screen -->
         <div id="main-screen">
             <div id="mode-selection-container">
@@ -78,41 +79,39 @@
         <!-- common button used to return to the main menu -->
         <button onclick="openMainMenu()" class="nongameplay-buttons" id="return-button"><img src="images/backward.png" alt="backward" /></button>
               <div id="options-screen">
-            <div class="T_container">
-                <h2 class="option-header">Music</h2>
-                <div class="checkbox">
-                    <input type="checkbox" value="None" onclick="buttonSounds();toggleMusic();" id="option-1" name="check" checked="checked"/>
-                    <label for="option-1"></label>
-                </div>
-                <h2 class="option-header">Sound Effects</h2>
-                <div class="checkbox">
-                    <input type="checkbox" value="None" onclick="buttonSounds();toggleSound();" id="option-2" name="check" checked="checked"/>
-                    <label for="option-2"></label>
-                </div>
-                <h2 class="option-header">Steve Mode</h2>
-                <div class="checkbox">
-                    <input type="checkbox" value="None" onclick="buttonSounds();steveModeToggle();" id="option-4" name="check" />
-                    <label for="option-4"></label>
-                </div>
-				<h2 class="option-header" id="option-6-label">Disable Labels</h2>
-                <div class="checkbox" id="option-6-box">
-                    <input type="checkbox" value="None" onclick="disableLabels()" id="option-6" name="check" />
-                    <label for="option-6"></label>
-                </div>
-				<div class="buttonbox">
-                    <input type="button" value="Reset Save" onclick="buttonSounds();clearSaveConfirmation();" id="option-5" name="check" />
-                    <label for="option-5"></label>
-                </div>
-				<div class="buttonbox">
-                    <input type="button" value="Create Account" onclick="buttonSounds();createAccount();" id="option-5" name="check" />
-                    <label for="option-6"></label>
-                </div>
-				<div class="buttonbox">
-                    <input type="button" value="login" onclick="buttonSounds();login();" id="option-5" name="check" />
-                    <label for="option-7"></label>
-                </div>
-            </div>
-        </div>
+                  <div class="T_container">
+                      <h2 class="option-header">Music</h2>
+                      <div class="checkbox">
+                          <input type="checkbox" value="None" onclick="buttonSounds();toggleMusic();" id="option-1" name="check" checked="checked"/>
+                          <label for="option-1"></label>
+                      </div>
+                      <h2 class="option-header">Sound Effects</h2>
+                      <div class="checkbox">
+                          <input type="checkbox" value="None" onclick="buttonSounds();toggleSound();" id="option-2" name="check" checked="checked"/>
+                          <label for="option-2"></label>
+                      </div>
+                      <h2 class="option-header">Steve Mode</h2>
+                      <div class="checkbox">
+                          <input type="checkbox" value="None" onclick="buttonSounds();steveModeToggle();" id="option-3" name="check" />
+                          <label for="option-3"></label>
+                      </div>
+                      <h2 class="option-header" id="option-4-label">Disable Labels</h2>
+                      <div class="checkbox" id="option-4-box">
+                          <input type="checkbox" value="None" onclick="disableLabels()" id="option-4" name="check" />
+                          <label for="option-4"></label>
+                      </div>
+                      <div class="buttonbox">
+                          <input type="button" value="Reset Save" onclick="buttonSounds();clearSaveConfirmation();" id="option-5" name="check" /><br/>
+                          <label for="option-5"></label>
+
+                          <input type="button" value="Create Account" onclick="buttonSounds();createAccount();" id="option-6" name="check" /><br/>
+                          <label for="option-6"></label>
+
+                          <input type="button" value="login" onclick="buttonSounds();login();" id="option-7" name="check" />
+                          <label for="option-7"></label>
+                      </div>
+                  </div>
+              </div>
         <div id="scores-screen">
 				<div id="score-tab">
 				<p class="field switch">
@@ -162,7 +161,7 @@
                 <img src="images/dot-green.png" alt="dot-green"/><p>Jenkinz</p>
                 <img src="images/dot-blue.png" alt="dot-blue"/><p>ZIA</p>
                 <img src="images/dot-purple.png" alt="dot-purple"/><p>A Sponge</p><br/>
-                <button id="steve-button" class="cawButton" onclick="buttonSounds()"><img src="images/crow.png" width="60" height="60" alt="crow"/></button>
+                <button id="steve-button" class="cawButton"><img src="images/crow.png" width="60" height="60" alt="crow"/></button>
             </div>
         </div>
         <div id="game-screen">
@@ -197,16 +196,7 @@
             <br/>
             <h1>GAME OVER</h1>
             <div id="final-score-container"><h2>Your score: </h2><h2 id="final-score">NULL</h2></div>
-			<div id="highscore-message-container"><h2 id="highscore-message">NULL</h2></div>
-			
-			<!-- bad -->
-            <div id="name-input-container">
-                <form>
-                    <input type="text" maxlength="14" name="name" id="name-input">
-                </form>
-            </div>
-			
-			<div id="highscore-message-container"><h2 id="highscore-message">NULL</h2></div>
+            <div id="highscore-message-container"><h2 id="highscore-message">NULL</h2></div>
             <div id="badge-message-container"><h2 id="badge-message">NULL</h2></div>
             <button class="nongameplay-buttons" id="game-over-quit-button" onclick="quitGame()"><img src="images/home.png" alt="backward"></button>
             <button class="nongameplay-buttons" id="game-over-leaderboard-button" onclick="openScores()"><img src="images/trophy.png" alt="leaderboards"></button>
@@ -215,27 +205,26 @@
         <div id="tutorial1-screen">
             <img class="tutorial-gif" src="images/tutorial1.gif" alt="tutorial1"/>
             <button class="nongameplay-buttons" id="tutorial-return-button" onclick="closeTutorialScreen();  resumeGame();"><img src="images/backward.png" alt="backward"></button>
-            <button class="nongameplay-buttons" id="to-tutorial2-button" onclick="openTutorial2Screen();"><img src="images/forward.png" alt="forward"></button>
+            <button class="nongameplay-buttons" id="to-tutorial2-button" onclick="nextTutorial();"><img src="images/forward.png" alt="forward"></button>
         </div>
         <div id="tutorial2-screen">
-            <img class="tutorial-gif"  src="images/untimed.gif" alt="untimed"/>
+            <img class="tutorial-gif"  src="images/marathon.gif" alt="untimed"/>
             <button class="nongameplay-buttons" id="tutorial1-return-button" onclick="openTutorialScreen();"><img src="images/backward.png" alt="backward"></button>
-            <button class="nongameplay-buttons" id="to-tutorial3-button" onclick="openTutorial3Screen();"><img src="images/forward.png" alt="forward"></button>
         </div>
         <div id="tutorial3-screen">
-            <img class="tutorial-gif" src="images/marathon.gif" alt="marathon"/>
-            <button class="nongameplay-buttons" id="tutorial2-return-button" onclick="openTutorial2Screen();"><img src="images/backward.png" alt="backward"></button>
-            <button class="nongameplay-buttons" id="to-tutorial4-button" onclick="openTutorial4Screen();"><img src="images/forward.png" alt="forward"></button>
+            <!-- change to sudden death -->
+            <img class="tutorial-gif" src="images/untimed.gif" alt="marathon"/>
+            <button class="nongameplay-buttons" id="tutorial2-return-button" onclick="openTutorialScreen();"><img src="images/backward.png" alt="backward"></button>
         </div>
         <div id="tutorial4-screen">
             <img class="tutorial-gif"  src="images/timeattack.gif" alt="timeattack"/>
-            <button class="nongameplay-buttons" id="tutorial3-return-button" onclick="openTutorial3Screen();"><img src="images/backward.png" alt="backward"></button>
-            <button class="nongameplay-buttons" id="tutorial-end-button" onclick="closeTutorialScreen(); resumeGame();"><img src="images/forward.png" alt="forward"></button>
+            <button class="nongameplay-buttons" id="tutorial3-return-button" onclick="openTutorialScreen();"><img src="images/backward.png" alt="backward"></button>
         </div>
     </div>
-	<div id="overlay-popup">
+    <div id="overlay-popup">
         <h2 id="popup-text"></h2>
         <button class="confirm-buttons" id="popup-yes-button" onclick="resetSave()"><img src="images/checkmark.png" alt="yea okay"/></button>
+        <button class="confirm-buttons" id="popup-accept-button" onclick="closePopup()"><img src="images/checkmark.png" alt="neato"/></button>
         <button class="confirm-buttons" id="popup-no-button" onclick="closePopup()"><img src="images/cross.png" alt="don't do it"/></button>
     </div>
 <!--added preloader-->

@@ -78,44 +78,60 @@ function play() {
 function openTutorialScreen() {
     document.getElementById('tutorial1-screen').style.display = "block";
     document.getElementById('tutorial2-screen').style.display = "none";
+    document.getElementById('tutorial3-screen').style.display = "none";
+    document.getElementById('tutorial4-screen').style.display = "none";
     document.getElementById('game-screen').style.display = 'none';
-	yesSound.play();
+
+    yesSound.play();
+}
+
+function nextTutorial() {
+    switch(gamemode) {
+        case 0:
+            openTutorial2Screen();
+            break;
+        case 1:
+            openTutorial3Screen();
+            break;
+        case 2:
+            openTutorial4Screen();
+            break;
+        default:
+            window.alert('YOU SHOULD NOT SEE THIS');
+    }
 }
 
 function openTutorial2Screen() {
     document.getElementById('tutorial1-screen').style.display = "none";
-    document.getElementById('tutorial3-screen').style.display = "none";
     document.getElementById('tutorial2-screen').style.display = "block";
     yesSound.play();
 }
 
 function openTutorial3Screen() {
-    document.getElementById('tutorial2-screen').style.display = "none";
+    document.getElementById('tutorial1-screen').style.display = "none";
     document.getElementById('tutorial3-screen').style.display = "block";
-    document.getElementById('tutorial4-screen').style.display = "none";
-	yesSound.play();
+    yesSound.play();
 }
 
 function openTutorial4Screen() {
-    document.getElementById('tutorial3-screen').style.display = "none";
+    document.getElementById('tutorial1-screen').style.display = "none";
     document.getElementById('tutorial4-screen').style.display = "block";
-	yesSound.play();
+    yesSound.play();
 }
 
 function closeTutorialScreen() {
     document.getElementById('tutorial4-screen').style.display = "none";
     document.getElementById('tutorial1-screen').style.display = "none";
     document.getElementById('game-screen').style.display = 'block';
-    document.getElementById('title').innerHTML = "";
-	noSound.play();
+    noSound.play();
 }
 
 function openPauseScreen() {
     document.getElementById('pause-screen').style.display = "block";
     document.getElementById('game-screen').style.display = 'none';
     document.getElementById('confirmation-container').style.display = 'none';
-	disco.pause();
-	yesSound.play();
+    disco.pause();
+    yesSound.play();
 }
 
 function closePauseScreen() {
@@ -195,17 +211,26 @@ function disableLabels() {
 }
 
 function popup(content) {
-    
+
     if (content == 'resetSave') {
         document.getElementById('popup-text').innerHTML =
             'Are you sure you want to reset your save? ' +
-            'Your high scores and badges will be lost.'
+            'Your high scores and badges will be lost.';
+
+        document.getElementById('popup-yes-button').style.display = 'block';
+        document.getElementById('popup-no-button').style.display = 'block';
+        document.getElementById('popup-accept-button').style.display = 'none';
     }
-    
+
+    else if (content == 'steve') {
+        document.getElementById('popup-text').innerHTML = "Badge Unlocked! Activated Steve mode.";
+        document.getElementById('popup-no-button').style.display = 'none';
+        document.getElementById('popup-yes-button').style.display = 'none';
+        document.getElementById('popup-accept-button').style.display = 'block';
+    }
+
     document.getElementById('overlay-popup').style.display = 'block';
-    document.getElementById('popup-yes-button').style.display = 'block';
-    document.getElementById('popup-no-button').style.display = 'block';
-    
+
 
     $('#overlay-popup').animate({
         'margin-left': '-=5px',
@@ -230,7 +255,8 @@ function popup(content) {
 }
 
 function closePopup() {
-    document.getElementById('overlay-popup').style.display = 'none';
+    $('#overlay-popup').fadeOut(300);
 }
+
 
 

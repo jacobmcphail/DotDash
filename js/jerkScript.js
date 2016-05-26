@@ -60,19 +60,19 @@ $.getScript("js/panicScript.js", function(){});
 /*File storing function*/
 function gameSetup() {
 	//Z's changes
-	$('#title').css("display", "none");
-	document.getElementById('splash-screen').style.display = 'block';
-	setTimeout(function() {
-	$('#splash-screen').fadeOut(800, function() {});
-	}, 1100);
-	
-	setTimeout(function() {
-	$("#main-screen").fadeIn(800, function() {});
-	$('#title').fadeIn(800, function() {});
-	}, 1800);
+    $('#title').css("display", "none");
+    document.getElementById('splash-screen').style.display = 'block';
+    setTimeout(function() {
+        $('#splash-screen').fadeOut(800, function() {});
+    }, 1100);
 
-	
-	checkCookie();
+    setTimeout(function() {
+        $("#main-screen").fadeIn(800, function() {});
+        $('#title').fadeIn(800, function() {});
+    }, 1800);
+
+
+    checkCookie();
 	localSavedFiles = JSON.parse(localStorage.getItem("saveFile"));
 	if (localSavedFiles == null) {
 		//Refer to SaveFileArrayIndex.txt
@@ -94,7 +94,7 @@ function gameSetup() {
 	$('input[type=checkbox]').each(function() { 
         this.checked = true; 
 	}); 
-	$('#option-4').removeAttr('checked');
+	$('#option-3').removeAttr('checked');
 	$("#title").text('DotDash._');
 	//GONE
 }

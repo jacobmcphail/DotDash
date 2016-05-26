@@ -10,19 +10,18 @@ body {
 
 /*Z's thang*/
 #splash-screen{
-	position: relative;
-	top: 40%;
-	transform: translateY(-50%);
-	text-align: center;
-	
+    position: relative;
+    top: 40%;
+    transform: translateY(-50%);
+    text-align: center;
+
 }
 
 #splash-screen p {
-	font-family: fantasy;
-	font-size: 50px;
-	color: #32CD32;
+    font-family: fantasy;
+    font-size: 50px;
+    color: #32CD32;
 }
-	
 
 #main-screen {
 	display: none;
@@ -133,13 +132,30 @@ html, body {
     margin-bottom: 25px;
 }
 
-#yes-button,#popup-yes-button {
-     left: 50px;
- }
 
 #no-button, #popup-no-button {
-     right: 50px;
- }
+    right: 50px;
+}
+
+#yes-button,#popup-yes-button {
+    left: 50px;
+}
+
+#popup-no-button {
+    right: 50px;
+    display:none;
+}
+
+#popup-yes-button {
+    left: 50px;
+    display:none;
+}
+
+#popup-accept-button {
+    display:none;
+    left: 50%;
+    margin-left: -45px;
+}
 
 
 .nongameplay-buttons:hover, .confirm-buttons:hover {
@@ -160,8 +176,7 @@ html, body {
 #scores-button, #restart-button, #game-over-leaderboard-button {
     left: 70px;
 }
-#credits-button, #pause-button, #to-tutorial2-button, #to-tutorial3-button, #to-tutorial4-button,
-#tutorial-end-button, #game-over-restart-button, #unpause-button {
+#credits-button, #pause-button, #to-tutorial2-button, #game-over-restart-button, #unpause-button {
     right: 5px;
 }
 #return-button {
@@ -193,17 +208,17 @@ html, body {
 }
 
 .buttonbox {
-    margin-top: 50px;
     text-align:center;
 }
 
-#option-5 {
+#option-5, #option-6, #option-7 {
     border: 3px solid white;
     background-color:black;
     font-family: Consolas;
     color: white;
     font-size: 120%;
     padding: 10px;
+    margin: 10px
 }
 
 /* style for option buttons -- adapted from http://cssdeck.com/labs/css-checkbox-styles */
@@ -390,7 +405,7 @@ input[type=checkbox] {
 
 #confirmation-container {
     width: 35%;
-    height: 30%;
+    padding-bottom: 100px;
     margin: auto;
     display:none;
     position: relative;
@@ -649,7 +664,7 @@ div.dot.good_dot {
     width: 350px;
     left: 50%;
     margin-left: -175px;
-    height: 250px;
+    padding-bottom: 100px;
     top: 50%;
     margin-top: -150px;
     z-index: 20;
@@ -723,5 +738,20 @@ div.dot.good_dot {
         margin: 10px auto;
         width: 80%;
     }
+
+
+    #overlay-popup {
+        display:none;
+        position: fixed;
+        padding: 10px;
+        width: 250px;
+        left: 50%;
+        margin-left: -125px;
+        height: 250px;
+        top: 50%;
+        margin-top: -150px;
+        z-index: 20;
+    }
+
 
 }
