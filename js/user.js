@@ -46,6 +46,7 @@ function getUser(username) {
 }
 
 function createAccount(){
+	if(!activeConnection){
 	var username = prompt("Enter Username");
 	if(username == null || username.localeCompare("") == 0){
 		return;
@@ -55,20 +56,26 @@ function createAccount(){
 		return;
 	}
 	if(username.length <= 15 && password.length <= 15) {
+	activeConnection = true;
+	$("#online-connection").text('Getting online data');	
 	getUser(username).success(function (data) {
-		console.log(data);
 		if (data[0] == null) {
 			createUser(username, password);
 			window.alert("Success, please try logging in now");
 		} else {
 			window.alert("Name has already been taken");
 		}
+		activeConnection = false;
+		$("#online-connection").text('');
 	}).fail(function () {
 		dataArray = null;
+		activeConnection = false;
+		$("#online-connection").text('');
 		window.alert("Can't connect to server!");
 	});
 	} else {
 		window.alert("Username or password is to long! (Max 15)");
+	}
 	}
 }
 
