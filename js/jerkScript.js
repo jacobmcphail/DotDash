@@ -576,10 +576,7 @@ function gameOver() {
 		disco.CurrentTime=0;
 		loseSound.play();
 		if (playerScore > 0) {
-		var playerName;
 		if (localSavedFiles[1] != null && localSavedFiles[2] != null) {
-			console.log("Score Sent");
-			updateSave();
 			sendScore(gamemode, localSavedFiles[1], playerScore);
 		}
 	}	

@@ -106,15 +106,28 @@ function login(){
 
 
 function sendSaveData(username, password){
+		var dataSending = [];
+		for(var i = 0; i < 10; i++){
+			if(playerData[i]){
+				dataSending[i] = 1;
+			} else {
+				dataSending[i] = 0;
+			}
+		}
+		
+		dataSending[10] = playerData[10];
+		dataSending[11] = playerData[11];
+		dataSending[12] = playerData[12];
+		
 		var j_notation =
 		{
 		"username": username,
 		"password": password,
-		"saveData": playerData,
+		"saveData": dataSending,
 		}; 
 	
    return $.ajax({
-      type: "POST",
+      type: "PUT",
       url: "http://www.crowbot.co/php/sendSave.php",
 		contentType: 'application/json',
 		data: JSON.stringify(j_notation),
