@@ -28,7 +28,7 @@
 		die('Error : ' . mysql_error());
 	} 
 	else {
-		echo "Gud Jeb!";
+		echo json_encode($name);
 	}
 ?>
 
