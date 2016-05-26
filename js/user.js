@@ -63,7 +63,6 @@ function createAccount(){
 		activeConnection = false;
 		$("#online-connection").text('');
 	}).fail(function () {
-		dataArray = null;
 		activeConnection = false;
 		$("#online-connection").text('');
 		window.alert("Can't connect to server!");
@@ -103,7 +102,6 @@ function login(){
 			window.alert("Incorrect password and/or username!");
 		}
 	}).fail(function () {
-		dataArray = null;
 		activeConnection = false;
 		$("#online-connection").text('');
 		window.alert("Can't connect to server!");
