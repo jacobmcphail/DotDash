@@ -17,56 +17,65 @@ function createUser(username, password) {
 		});
 }
 
-function checkUser(username, password){
+function checkUser(username, password, info){
 	getUser(username).success(function (data) {
-		console.log(data);
-		return data;
+		console.log("REC: " + data);
+		info = data;
+		console.log("INF: " + info);
 	}).fail(function () {
+		info = null;
 		window.alert("Can't connect to server!");
-		return null;
 	});
 }
 
 function getUser(username) {
+	var j_notation =
+		{
+		"username": username,
+		}; 
+	
    return $.ajax({
-      type: "GET",
+      type: "POST",
       url: "http://www.crowbot.co/php/shoelace.php",
-      dataType: "json",
-      data: {
-		  username : username
-	  }
+		contentType: 'application/json',
+		data: JSON.stringify(j_notation),
+		dataType: 'json'
 	});
 }
 
 function createAccount(){
 	var username = prompt("NAME NOW");
 	var password = prompt("PASSWORD");
-	var dataArray = checkUser(username, password);
-	if(dataArray == null){
-		createUser(username, password).success(function() {
-			window.alert(username, password);
-		}).fail(function () {
-			window.alert("Can't connect to server!");
-		});
-	} else {
-		window.alert("NAME TAKEN");
-	}
+	getUser(username).success(function (data) {
+		console.log(data);
+		if (data[0] == null) {
+			createUser(username, password);
+		} else {
+			window.alert("NAME TAKEN");
+		}
+	}).fail(function () {
+		dataArray = null;
+		window.alert("Can't connect to server!");
+	});
 }
 
 function login(){
 	var username = prompt("NAME NOW");
 	var password = prompt("PASSWORD");
-	var dataArray = checkUser(username, password);
-	if(dataArray == null){
-		window.alert("ERROR");
-		return;
-	}
-	if(username.localeCompare(dataArray[0]) && password.localeCompare(dataArray[1])){
-		// do things
-		window.alert(username, password);
-	} else {
-		window.alert("IT WRONG");
-	}
+	getUser(username).success(function (data) {
+		console.log(data);
+		if (data[0] == null) {
+			window.alert("IT WRONG");
+		} else if(username.localeCompare(data[0]["password"]) && password.localeCompare(data[0]["username"])){
+			// do things
+			
+		} else {
+			window.alert("IT WRONG");
+		}
+	}).fail(function () {
+		dataArray = null;
+		window.alert("Can't connect to server!");
+	});
 }
 
 
