@@ -13,6 +13,7 @@ BirdJerky Saturday May 21st/16
 	        -distractValidate[]: holds functions that can be executed during Validate()
 */
 
+
 //Array that holds references to functions that may be called during pathDemonstration()
 var distractDemonstrate = [
 	nothing,
@@ -25,32 +26,52 @@ var distractDemonstrate = [
 var distractValidate = [
 	nothing,
     changeDotColour,
-	backgroundChange
+	backgroundChange,
+	dotContainerText
 ];
-//dotContainerText, swarm
 
-
-/* Validate3: dotContainerText
-Flash words in dot container (use setInterval())
-*/
-//In progress
-function dotContainerText(){
-	var strArray = [];
-	var dCont = document.getElementById("dot-container");
-	dCont.innerHTML = "<font color='blue'>HEEYYYYYY GULL HEY</font>";
-}
-
-/* Validate4: swarm()
-Make dots the same colour as grid dots appear all over
+/* Demo5: 
+TODO: make more dots appear
 */
 function swarm(){
+	var thiscontainer = document.getElementById("dot-container");
+    var height = $("#dot-container").height();
+	var width = $("#dot-container").width();
+	console.log("height: "+ height +"width: "+width);
+	
+	var topLeft = document.createElement("div");
+	var topRight = document.createElement("div");
+	var bottomRight = document.createElement("div");
+	var bottomLeft = document.createElement("div");
+	
+	
+    topLeft.className = "distraction";
+	topLeft.id = "tl";
+	topRight.className = "distraction";
+	topRight.id = "tr";
+	bottomRight.className = "distraction";
+	bottomRight.id = "br";
+	bottomLeft.className = "distraction";
+	bottomLeft.id = "bl";
+	
+    thiscontainer.appendChild(topLeft);
+	thiscontainer.appendChild(topRight);
+	thiscontainer.appendChild(bottomRight);
+	thiscontainer.appendChild(bottomLeft);
+	
+	$("#tl").css('top','0px');
+	$("#tl").css('left','0px');
+	
+	$("#tr").css('top', '-50px');
+	$("#tr").css('left', '25x');
+	
+	$("#br").css('top','-100px');
+	$("#br").css('left', '50px');
+	
+	$("#bl").css('top','-150px');
+	$("#bl").css('left','75px');
 	
 }
-
-/* Demo5: cornerMotion()
-Makes 4 things starting in each corners of the dot container slide across clockwise to an adjacent corner.
-*/
-function cornerMotion(){}
 
 /*0. Function that does nothing*/
 function nothing(){
@@ -68,27 +89,37 @@ function nothing(){
 function diagonalAnimation() {
 
     var thiscontainer = document.getElementById("dot-container");
-    var thissocks = document.createElement("div");
-    thissocks.id = "socks";
-    thissocks.className = "distraction";
-    thiscontainer.appendChild(thissocks);
+    var dot1 = document.createElement("div");
+    dot1.id = "dot1";
+    dot1.className = "distraction";
+    thiscontainer.appendChild(dot1);
 
+	var dot2 = document.createElement("div");
+    dot2.id = "dot2";
+    dot2.className = "distraction";
+    thiscontainer.appendChild(dot2);
+
+	var dotCount = 2;
 	var speedArray = ["fast","medium","slow"];
 	
 	var disColour = colourArray[randomNum(5)];
-    $(".distraction").css('background',disColour);
+    
+	while(dotCount>0){
+	$("#dot"+dotCount).css('background',disColour);
 	
 	var topDest = signMultiplier()* randomNum(4)*100;
 	var leftDest = signMultiplier()*randomNum(2)*100;
 	
-	//Multiply each of top and left by +1/-1
-	$(".distraction").css('top',topDest + 'px');
-	$(".distraction").css('left',leftDest + 'px');
+	$("#dot"+dotCount).css('top',topDest + 'px');
+	$("#dot"+dotCount).css('left',leftDest + 'px');
 		
-	$(".distraction").animate({
+	$("#dot"+dotCount).animate({
 				top: leftDest + 'px',
 				left: topDest + 'px',
 			},speedArray[randomNum(2)]);
+
+	dotCount--;
+	}		
 }
 
 /* Demo2: dotFlash
@@ -181,7 +212,7 @@ function backgroundChange(){
 	
 	//function goes here that determines what flashes in the background
 	//Either an image or a solid colour
-	var flipCoin = randomNum(1);
+	var flipCoin = randomNum(2);
 	switch(flipCoin){
 		case 0: 
 			$(".distraction").addClass('food');
@@ -189,7 +220,7 @@ function backgroundChange(){
 			$(".distraction").addClass('food2');
 			break;		
 		default:
-			var disColour = colourArray[randomNum(5)];
+			var disColour = colourArray[randeomNum(5)];
 			$(".distraction").css('background',disColour);
 			break;	
 	}
@@ -198,8 +229,38 @@ function backgroundChange(){
 	setTimeout(function(){
 		removeDistractions();
 	},time+150);
-
 }
+
+/* Validate3: dotContainerText
+Flash words in dot container
+*/
+function dotContainerText(){
+	var strArray = ["HEEYYY","HEEYYY GULL HEY"];
+	var topPos = -170 + (signMultiplier()*50);
+	var leftPos = 200 + (signMultiplier()*25);
+	
+	
+	var dCont = document.getElementById("dot-container");
+	var textbox = document.createElement("div");
+	textbox.className = "distraction flashing";
+	dCont.appendChild(textbox);
+	
+	setInterval(function(){//target ids only, then
+		$(".flashing").css('background','black');
+		$(".flashing").css('top', topPos+'px');
+		$(".flashing").css('left',leftPos+'px');
+		textbox.innerHTML = "<font color='blue'><b>"+ strArray[0]+"</b></font>";
+		setTimeout(function(){textbox.innerHTML = "<font color='green'><b>" + strArray[1] + "</b></font>";},300);
+	},200);
+	
+}
+/*
+========================
+------------------------
+HELPER FUNCTIONS
+-------------------------
+=========================
+*/
 
 //Fill an array of strings to select from
 function messageFlash(){
@@ -386,7 +447,6 @@ function randomNum(max){
 //Not yet testeed
 function signMultiplier(){
 	var signSelector = Math.random() < 0.5 ? 1 : -1;
-	console.log("signSelector:" + signSelector);
 	return signSelector;
 }
 
