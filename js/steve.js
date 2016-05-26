@@ -15,7 +15,7 @@ $(document).ready(function(){
 
     $(".cawButton").on('tapone', function(){
         if (crowbotActive) {
-            if (!playerData[1]) {
+            if (!playerData[0]) {
                 popup('steve');
                 playerData[0] = true;
                 updateSave();
