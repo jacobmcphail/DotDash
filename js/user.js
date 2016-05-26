@@ -127,7 +127,7 @@ function sendSaveData(username, password){
 		}; 
 	
    return $.ajax({
-      type: "PUT",
+      type: "PU",
       url: "http://www.crowbot.co/php/sendSave.php",
 		contentType: 'application/json',
 		data: JSON.stringify(j_notation),

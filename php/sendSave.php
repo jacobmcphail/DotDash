@@ -8,7 +8,7 @@
 	header("Access-Control-Allow-Methods: POST, GET, OPTIONS, PUT, DELETE");
 
 	//Variable to store reference to connection to leaderboard
-	$connection = mysqli_connect("localhost","crowbotc_walnut","causticSauce292","crowbotc_DotDashLeaderboard") or die("Error " . mysqli_error($connection));
+	$con = mysqli_connect("localhost","crowbotc_walnut","causticSauce292","crowbotc_DotDashLeaderboard") or die("Error " . mysqli_error($con));
 	
 	$json = file_get_contents('php://input');
 	$dataArray = json_decode($json, true);  

@@ -88,6 +88,26 @@ index.html
 	7. Handles reading from and writing to the online leaderboard database
 	8. Steve comes. He sleeps and he waits.
 	
+localSavedFiles:
+	[0]: boolean: 1st time playing (not used); default: true
+	[1]: username
+	[2]: password
+	
+playerData:  **TO UPDATE; achievements not finalized yet**
+	Badge 0: Steve Mode 
+	Badge 1:
+	Badge 2:
+	Badge 3:
+	Badge 4:
+	Badge 5:
+	Badge 6:
+	Badge 7:
+	Badge 8:
+	Badge 9:
+	permScore = marathon top score
+	peruScore = (untimed) sudden death top score
+	pertScore = time attack top score
+	
 ==================================================
 D.	TECHNOLOGIES USED
 --------------------------------------------------
