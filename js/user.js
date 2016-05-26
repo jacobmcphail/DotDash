@@ -92,6 +92,7 @@ function login(){
 			localSavedFiles[2] = data[0]["password"];
 			localStorage.setItem("saveFile", JSON.stringify(localSavedFiles));
 			console.log(localSavedFiles);
+			getPlayerData();
 			window.alert("Log in!");
 		} else {
 			window.alert("Incorrect password!");
@@ -155,7 +156,7 @@ function updateSave(){
 	if(localSavedFiles[1] != null){
 	activeConnection = true;
 	$("#online-connection").text('Sending online data');
-	sendSaveData(localSavedFiles[1], localSavedFiles[2]).success(function () {
+	sendSaveData(localSavedFiles[1], localSavedFiles[2]).success(function (data) {
 		$("#online-connection").text('');
 		activeConnection = false;
 	}).fail(function () {
@@ -196,4 +197,5 @@ function getPlayerData(){
 		window.alert("Can't connect to server!");
 	});
 	}
+	$("#online-connection").text('');
 }
