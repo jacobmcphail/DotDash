@@ -25,26 +25,26 @@ $(document).ready(function(){
 function scoreChecker(playerScore) {
 	switch(gamemode) {
 		case 0:
-			if (playerScore > localSavedFiles[11]) {
+			if (playerScore > playerData[10]) {
 				document.getElementById('highscore-message-container').style.display = 'block';
 				document.getElementById('highscore-message').innerHTML = "New HighScore in Marathon mode!";
-				localSavedFiles[11] = playerScore;
+				playerData[10] = playerScore;
 				return true;
 			}
 			break;
 		case 1: 
-			if (playerScore > localSavedFiles[12]) {
+			if (playerScore > playerData[11]) {
 				document.getElementById('highscore-message-container').style.display = 'block';
 				document.getElementById('highscore-message').innerHTML = "New HighScore in Sudden Death mode!";
-				localSavedFiles[12] = playerScore;
+				playerData[11] = playerScore;
 				return true;
 			}
 			break;
 		case 2:
-			if (playerScore > localSavedFiles[13]) {
+			if (playerScore > playerData[12]) {
 				document.getElementById('highscore-message-container').style.display = 'block';
 				document.getElementById('highscore-message').innerHTML = "New HighScore in Time Attack mode!";
-				localSavedFiles[13] = playerScore;
+				playerData[12] = playerScore;
 				return true;
 			}
 			break;
@@ -56,8 +56,8 @@ function scoreChecker(playerScore) {
 
 //Update high scores
 function updateHighScores() {
-    for (var i = 11, q = 0; i < 14; i++, q++) {
-		$("#localHS-" + q).text(localSavedFiles[i]);
+    for (var i = 10, q = 0; i < 13; i++, q++) {
+		$("#localHS-" + q).text(playerData[i]);
     }
 }
 

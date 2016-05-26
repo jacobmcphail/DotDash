@@ -59,22 +59,22 @@ function onlineBadgeChecker(playerScore) {
 		console.log(data);
 		switch(gamemode){
 				case 0:
-					if (playerScore > data[0]["mScore"] && !localSavedFiles[8] ) {
-						localSavedFiles[8] = true;
+					if (playerScore > data[0]["mScore"] && !playerData[7] ) {
+						playerData[7] = true;
 						document.getElementById('badge-message-container').style.display = 'block';
 						document.getElementById('badge-message').innerHTML = "Badge Unlocked! Achieved top ten in Marathon mode.";
 					}
 					break;
 				case 1:
-					if (playerScore > data[1]["uScore"] && !localSavedFiles[2] ) {
-						localSavedFiles[2] = true;
+					if (playerScore > data[1]["uScore"] && !playerData[1] ) {
+						playerData[1] = true;
 						document.getElementById('badge-message-container').style.display = 'block';
 						document.getElementById('badge-message').innerHTML = "Badge Unlocked! Achieved top ten in Sudden Death mode.";
 					}
 					break;
 				case 2:
-					if (playerScore > data[2]["tScore"] && !localSavedFiles[10] ) {
-						localSavedFiles[10] = true;
+					if (playerScore > data[2]["tScore"] && !playerData[9] ) {
+						playerData[9] = true;
 						document.getElementById('badge-message-container').style.display = 'block';
 						document.getElementById('badge-message').innerHTML = "Badge Unlocked! Achieved top ten in Time Attack mode.";
 					}
@@ -82,7 +82,7 @@ function onlineBadgeChecker(playerScore) {
 				default:
 					window.alert("YOU SHOULD NOT SEE THIS!");
 		}
-		localStorage.setItem("saveFile", JSON.stringify(localSavedFiles));
+		updateSave();
 	}).fail(function () {
 			window.alert("Can't access online leaderboard!");
 	});
@@ -92,41 +92,41 @@ function onlineBadgeChecker(playerScore) {
 function badgeChecker(playerScore, currentRound, lifePoints) {
 		switch(gamemode){
 			case 0:
-				if (currentRound >= 40 && !localSavedFiles[9] ) {
-					localSavedFiles[9] = true;
+				if (currentRound >= 40 && !playerData[8] ) {
+					playerData[8] = true;
 					document.getElementById('badge-message-container').style.display = 'block';
 					document.getElementById('badge-message').innerHTML = "Badge Unlocked! Get to level 40 in Marathon mode.";
 				}
-				if (currentRound >= 60 && lifePoints >= 3 && !localSavedFiles[6] ) {
-					localSavedFiles[6] = true;
+				if (currentRound >= 60 && lifePoints >= 3 && !playerData[5] ) {
+					playerData[5] = true;
 
 					document.getElementById('badge-message-container').style.display = 'block';
 					document.getElementById('badge-message').innerHTML = "Badge Unlocked! Get to level 60 in Marathon mode with all lives.";
 				}
-				if (currentRound >= 60 && !localSavedFiles[3] ) {
-					localSavedFiles[3] = true;
+				if (currentRound >= 60 && !playerData[2] ) {
+					playerData[2] = true;
 
 					document.getElementById('badge-message-container').style.display = 'block';
 					document.getElementById('badge-message').innerHTML = "Badge Unlocked! Get to level 60 in Marathon mode.";
 				}
 				break;
 			case 1:
-				if (currentRound >= 60 && lifePoints >= 3 && !localSavedFiles[5] ) {
-					localSavedFiles[5] = true;
+				if (currentRound >= 60 && lifePoints >= 3 && !playerData[4] ) {
+					playerData[4] = true;
 
 					document.getElementById('badge-message-container').style.display = 'block';
 					document.getElementById('badge-message').innerHTML ="Badge Unlocked! Get to level 60 in Sudden Death mode.";
 				}
 				break;
 			case 2:
-				if (currentRound >= 30 && !localSavedFiles[4] ) {
-					localSavedFiles[4] = true;
+				if (currentRound >= 30 && !playerData[3] ) {
+					playerData[3] = true;
 
 					document.getElementById('badge-message-container').style.display = 'block';
 					document.getElementById('badge-message').innerHTML ="Badge Unlocked! Get to level 30 in Time Attack mode.";
 				}
-				if (currentRound >= 20 && lifePoints == -1 && !localSavedFiles[7] ) {
-					localSavedFiles[7] = true;
+				if (currentRound >= 20 && lifePoints == -1 && !playerData[6] ) {
+					playerData[6] = true;
 
 					document.getElementById('badge-message-container').style.display = 'block';
 					document.getElementById('badge-message').innerHTML ="Badge Unlocked! Get to level 20 in Time Attack mode without a mistake.";
@@ -138,8 +138,8 @@ function badgeChecker(playerScore, currentRound, lifePoints) {
 }
 
 function updateBadges() {
-	for (var bIndex = 1; bIndex <= 10; bIndex++) {
-		if (localSavedFiles[bIndex]) {
+	for (var bIndex = 0; bIndex <= 9; bIndex++) {
+		if (playerData[bIndex]) {
 			document.getElementById(bIndex + "badge").src="images/medal2.png";
 		} else {
 			document.getElementById(bIndex + "badge").src="images/locked.png";

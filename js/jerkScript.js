@@ -71,19 +71,19 @@ function gameSetup() {
 	localSavedFiles = JSON.parse(localStorage.getItem("saveFile"));
 	if (localSavedFiles == null) {
 		//Refer to SaveFileArrayIndex.txt
-		localSavedFiles = [false, false, false, false, false, false, false, false, false, false, false, 0, 0, 0];
+		localSavedFiles = [true, null, null];
 		localStorage.setItem("saveFile", JSON.stringify(localSavedFiles));
 	} else {
-		if (localSavedFiles.length != 14) {
+		if (localSavedFiles.length != 2) {
             localSavedFiles = null;
             console.log("Save Error");
             window.alert("There was a problem with your save! Creating new save file.");
-            gameSetup();
+            localSavedFiles = [true, null, null];
+			playerData = [false, false, false, false, false, false, false, false, false, false, 0, 0, 0];
+			localStorage.setItem("saveFile", JSON.stringify(localSavedFiles));
 		}
-		console.log(localSavedFiles);
 	}
-	updateBadges();
-	updateHighScores();
+	getPlayerData();
 	document.getElementById('local-scores').style.display = 'block';
 	document.getElementById('online-scores').style.display = 'none';
 	$('input[type=checkbox]').each(function() { 
@@ -109,7 +109,8 @@ function checkCookie(){
 function clearSave() {
 	var resetYes = window.confirm("Are you sure you want to reset your save? Your high scores and badges will be lost.");
 	if (resetYes) {
-		localSavedFiles = [false, false, false, false, false, false, false, false, false, false, false, 0, 0, 0];
+		localSavedFiles = [true, null, null];
+		playerData = [false, false, false, false, false, false, false, false, false, false, 0, 0, 0];
 		localStorage.setItem("saveFile", JSON.stringify(localSavedFiles));
 		updateBadges();
 		updateHighScores();	
@@ -563,7 +564,6 @@ function gameOver() {
 		
 		badgeChecker(playerScore, currentRound, lifePoints);
 		scoreChecker(playerScore);
-		localStorage.setItem("saveFile", JSON.stringify(localSavedFiles));
 		updateHighScores();
 		updateBadges();
 		onlineBadgeChecker(playerScore);
@@ -571,18 +571,9 @@ function gameOver() {
 		loseSound.play();
 		if (playerScore > 0) {
 		var playerName;
-		while(true) {
-			playerName = prompt("Submit your score by entering your name. (Max 14 Characters)");
-			if(playerName == null) {
-				break;
-			}
-			playerName = playerName.trim();
-			if (playerName.length <= 14 && playerName.length > 0){
-				break;
-			}
-		}
-		if (playerName != null && playerName.length > 0) {
+		if (localSavedFiles[1] != null && localSavedFiles[2] != null) {
 			console.log("Score Sent");
+			updateSave();
 			sendScore(gamemode, playerName, playerScore);
 		}
 	}	

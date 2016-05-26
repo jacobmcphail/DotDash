@@ -15,10 +15,10 @@ $(document).ready(function(){
 	
 	$(".cawButton").on('tapone', function(){
         if (crowbotActive) {
-			if (!localSavedFiles[1]) {
+			if (!playerData[1]) {
 				window.alert("Badge Unlocked! Activated Steve mode.");
-				localSavedFiles[1] = true;
-				localStorage.setItem("saveFile", JSON.stringify(localSavedFiles));
+				playerData[0] = true;
+				updateSave();
 				updateBadges();
 			}
 			enableSteveMode();
