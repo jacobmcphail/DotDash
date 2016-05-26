@@ -71,19 +71,19 @@ function gameSetup() {
 	localSavedFiles = JSON.parse(localStorage.getItem("saveFile"));
 	if (localSavedFiles == null) {
 		//Refer to SaveFileArrayIndex.txt
-		localSavedFiles = [false, false, false, false, false, false, false, false, false, false, false, 0, 0, 0];
+		localSavedFiles = [true, null, null];
 		localStorage.setItem("saveFile", JSON.stringify(localSavedFiles));
 	} else {
-		if (localSavedFiles.length != 14) {
+		if (localSavedFiles.length != 3) {
             localSavedFiles = null;
             console.log("Save Error");
             window.alert("There was a problem with your save! Creating new save file.");
-            gameSetup();
+            localSavedFiles = [true, null, null];
+			playerData = [false, false, false, false, false, false, false, false, false, false, 0, 0, 0];
+			localStorage.setItem("saveFile", JSON.stringify(localSavedFiles));
 		}
-		console.log(localSavedFiles);
 	}
-	updateBadges();
-	updateHighScores();
+	getPlayerData();
 	document.getElementById('local-scores').style.display = 'block';
 	document.getElementById('online-scores').style.display = 'none';
 	$('input[type=checkbox]').each(function() { 
@@ -111,10 +111,11 @@ function clearSaveConfirmation() {
 }
 
 function resetSave() {
-    localSavedFiles = [false, false, false, false, false, false, false, false, false, false, false, 0, 0, 0];
-    localStorage.setItem("saveFile", JSON.stringify(localSavedFiles));
-    updateBadges();
-    updateHighScores();
+    localSavedFiles = [true, null, null];
+	playerData = [false, false, false, false, false, false, false, false, false, false, 0, 0, 0];
+	localStorage.setItem("saveFile", JSON.stringify(localSavedFiles));
+	updateBadges();
+	updateHighScores();	
 
     document.getElementById('popup-yes-button').style.display = 'none';
     document.getElementById('popup-no-button').style.display = 'none';
@@ -421,7 +422,7 @@ function userFeedback(bool, lastNode) {
     }
     if (steveModeEnabled) {
         $(".dot").removeClass("tapped_steve");
-        $(".dot").removeClass("selected");
+		$(".dot").removeClass("selected");
     } else {
         $(".dot").removeClass("selected");
     }
@@ -569,34 +570,17 @@ function gameOver() {
 		
 		badgeChecker(playerScore, currentRound, lifePoints);
 		scoreChecker(playerScore);
-		localStorage.setItem("saveFile", JSON.stringify(localSavedFiles));
 		updateHighScores();
 		updateBadges();
 		onlineBadgeChecker(playerScore);
 		disco.CurrentTime=0;
 		loseSound.play();
-
 		if (playerScore > 0) {
-
-            // teah's stuff
-            
-
-
-        // old stuff
 		var playerName;
-		while(true) {
-			playerName = prompt("Submit your score by entering your name. (Max 14 Characters)");
-			if(playerName == null) {
-				break;
-			}
-			playerName = playerName.trim();
-			if (playerName.length <= 14 && playerName.length > 0){
-				break;
-			}
-		}
-		if (playerName != null && playerName.length > 0) {
+		if (localSavedFiles[1] != null && localSavedFiles[2] != null) {
 			console.log("Score Sent");
-			sendScore(gamemode, playerName, playerScore);
+			updateSave();
+			sendScore(gamemode, localSavedFiles[1], playerScore);
 		}
 	}	
     });

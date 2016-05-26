@@ -68,10 +68,8 @@ function play() {
     document.getElementById('title').style.display = 'none';
     document.getElementById('game-screen').style.display = 'block';
     document.getElementById('game-screen').style.opacity = '1';
-
-    document.getElementById('badge-message-container').style.display = 'none';
+	document.getElementById('badge-message-container').style.display = 'none';
     document.getElementById('highscore-message-container').style.display = 'none';
-
 	playing = true;
     initialize(gamemode, newRound, removeDots);
 	disco.play();

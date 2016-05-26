@@ -17,14 +17,15 @@
 	$pass = $dataArray["password"];
 
 	//Store SQL commands in variables and use to insert records into into $emparray
-    $sql_m = "SELECT badge0, badge1, badge2, badge3, badge4, badge5, badge6, badge7, badge8, badge9, permScore, peruScore, pertScore FROM PLAYER_REC WHERE username='$name', password='$pass' LIMIT 1";
+    $sql_m = "SELECT badge0, badge1, badge2, badge3, badge4, badge5, badge6, badge7, badge8, badge9, permScore, peruScore, pertScore FROM PLAYER_REC WHERE username='$name' AND password='$pass' LIMIT 1";
     $result_m = mysqli_query($connection, $sql_m) or die("Error in Selecting " . mysqli_error($connection));
 
 	$descArray = array();
-	
+	$descArray = mysqli_fetch_assoc($result_m);
+	/*
 	while($row = mysqli_fetch_assoc($result_m)) {
 		$descArray[] = $row;
-	}
+	} */
 	
 	//Retun the entirety of the array as a JSON string to transmit
 	echo json_encode($descArray);
