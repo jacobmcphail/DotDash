@@ -1,5 +1,4 @@
-README.txt	
-Sprint #3							May 24-27 2016
+README.txt							May 24-27 2016
 =======================================================================
 =======================================================================
 A. 	TEAM INFO
@@ -7,11 +6,11 @@ A. 	TEAM INFO
 Team Number:	#13 
 Team Name: 		The Surveyors
 
-Team Members:	Natasha Teah Elaschuk
-				Jennifer Kwan
-				Jacob Mcphail
+Team Members:	Natasha "Teah the Playa" Elaschuk
+				Jennifer "Oh no not you again" Kwan
+				Jacob "JACOBO ON THE WATER" Mcphail
 				Nikola "Gloves" Milicevic
-				Zia Minhas
+				Zia "Ex Wai Zee" Minhas
 
 =======================================================================
 B.	PROJECT OVERVIEW
@@ -29,7 +28,7 @@ Description: 	A memory game very much like Simon Says.
 		* 	Sudden Death: No time limit. Player has only 1 life.
 		*	Time Attack: Player clears as many rounds as possible under 2 minutes. Making a mistake results in a time penalty.
 	
-==================================================
+=======================================================================
 C.	CODE STRUCTURE DESCRIPTION
 -----------------------------------------------------------------------
 index.html
@@ -66,10 +65,6 @@ A. jerkScript.js
 		>	pathDemonstration(arrayToRepeat, validate)
 			-arrayToRepeat contains the dots in the sequence the user must repeat
 		>	validate(array, userFeedback, dArray)
-			-This is the function that invokes userFeedback(bool, lastNode)
-			-lastNode = the last dot selected.
-			-bool = true if the user made no mistakes
-			-bool = false if the user made a mistake
 		>	userFeedback(bool,lastNode)
 		>	reset(removeDots)
 			-resets variables that are initialized every round
@@ -79,20 +74,22 @@ A. jerkScript.js
 		1. gameTimer.js
 		2. nuggetScript.js
 		3. pathGenerator.js
-		4. touching.js                                              ***
-		5. badges.js
-		6. audio.js
-		7. leaderboard.js
-		8. steve.js
+		4. badges.js
+		5. audio.js
+		6. leaderboard.js
+		7. steve.js
+		8. user.js
+		9. panic.js
 		
 	1. Manages the countdown timers that are used in Marathon mode and Time Attack mode
 	2. Contains functions invoked by elements in index.html to hide and make visible different elements
 	3. Contains functions that randomly generate sequences of dots for the user to repeat
-	4. Makes messages appear over buttons when touched and held on mobile
-	5. Displays badges and issues alerts when user has earned a badge
-	6. Handles sound effects and music during gameplay
-	7. Handles reading from and writing to the online leaderboard database
-	8. Steve comes. He sleeps and he waits.
+	4. Displays badges and issues alerts when user has earned a badge
+	5. Handles sound effects and music during gameplay
+	6. Handles reading from and writing to the online leaderboard database
+	7. Steve comes. He sleeps and he waits.
+	8. Handles reading and writing to database containing leaderboards and user records
+	9. Unimplemented panic mode: distractions appear during pathDemonstration() and validate()
 
 -----------------------
 LOCALLY-STORED DATA
@@ -204,4 +201,4 @@ E.	ISSUES/PROBLEMS
                                     \\`-`.-'_
                                  .`-.\\__`. ``
                                     ``-.-._
-                                        `
+                                        `I'm a bird I'm a bird I'm a bird
