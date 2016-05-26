@@ -64,15 +64,6 @@ html, body {
     left: 5px;
     display: block;
 }
-#online-connection {
-    color: #fff;
-    font-family: "Consolas";
-    font-size: 30px;
-    position: absolute;
-    top: 10px;
-    right: 5px;
-    display: block;
-}
 #mode-selection-container {
 	height: 100%;
 	position: absolute;
@@ -128,13 +119,14 @@ html, body {
     margin-bottom: 25px;
 }
 
-#yes-button {
+#no-button, #popup-no-button {
     right: 50px;
 }
 
-#no-button {
+#yes-button,#popup-yes-button {
     left: 50px;
 }
+
 
 
 .nongameplay-buttons:hover, .confirm-buttons:hover {
@@ -347,7 +339,8 @@ input[type=checkbox] {
 }
 
 #gameover-screen h1, #pause-screen h1{
-    font-size: 500%;
+    margin-top: 0;
+    font-size: 400%;
     color: #32CD32;
 }
 
@@ -392,15 +385,19 @@ input[type=checkbox] {
     border-radius: 4px;
 }
 
-#final-score-container, #badge-message-container, #highscore-message-container {
+#final-score-container, #badge-message-container, #highscore-message-container, #name-input-container {
     border-radius: 4px;
     border: 3px solid white;
     margin: 10px auto;
     width: 40%;
 }
 
-#badge-message-container, #highscore-message-container {
+#badge-message-container, #highscore-message-container, #name-input-container {
     display:none;
+}
+
+#name-input {
+    
 }
 
 p {
@@ -630,6 +627,43 @@ div.dot.good_dot {
 	margin: auto;
 	width: 400px;
 	max-width: 80%;
+}
+
+#overlay-popup {
+    display:none;
+    position: fixed;
+    padding: 10px;
+    width: 350px;
+    left: 50%;
+    margin-left: -175px;
+    height: 250px;
+    top: 50%;
+    margin-top: -150px;
+    z-index: 20;
+}
+
+#overlay-popup:after {
+    position: fixed;
+    content: "";
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    background: rgba(0,0,0,0.8);
+    z-index: -2;
+}
+
+#overlay-popup:before {
+    position: absolute;
+    content: "";
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    background: black;
+    border: 4px solid white;
+    border-radius: 4px;
+    z-index: -1;
 }
 
 @media screen and (max-width: 640px) {

@@ -43,9 +43,6 @@ function updateTimer(){
 		minutes = 0;
 		noErrorsYet = false;
 		lifePoints--;
-		if(gamemode == 2){
-			lifePoints = 0;
-		}
 		updateLives();
 		userFeedback(false, null);
 		updateClock();

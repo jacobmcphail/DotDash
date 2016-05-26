@@ -20,7 +20,7 @@
 	$pass = $dataArray["password"];
 
 
-	$sql="INSERT INTO PLAYER_REC (username, password) VALUES ('$name', '$pass')";
+	$sql="INSERT INTO PLAYER_REC ('username', 'password') VALUES ('$name', '$pass')";
 
 
 	echo $sql; 

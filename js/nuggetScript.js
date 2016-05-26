@@ -68,6 +68,10 @@ function play() {
     document.getElementById('title').style.display = 'none';
     document.getElementById('game-screen').style.display = 'block';
     document.getElementById('game-screen').style.opacity = '1';
+
+    document.getElementById('badge-message-container').style.display = 'none';
+    document.getElementById('highscore-message-container').style.display = 'none';
+
 	playing = true;
     initialize(gamemode, newRound, removeDots);
 	disco.play();
@@ -190,6 +194,45 @@ function disableLabels() {
         $('head').append('<link rel="stylesheet" type="text/css"  href="css/hoverText.css"/>');
         labelsOn = true;
 	}
+}
+
+function popup(content) {
+    
+    if (content == 'resetSave') {
+        document.getElementById('popup-text').innerHTML =
+            'Are you sure you want to reset your save? ' +
+            'Your high scores and badges will be lost.'
+    }
+    
+    document.getElementById('overlay-popup').style.display = 'block';
+    document.getElementById('popup-yes-button').style.display = 'block';
+    document.getElementById('popup-no-button').style.display = 'block';
+    
+
+    $('#overlay-popup').animate({
+        'margin-left': '-=5px',
+        'margin-right': '+=5px'
+    }, 80, function() {
+        $('#overlay-popup').animate({
+            'margin-left': '+=5px',
+            'margin-right': '-=5px'
+        }, 80, function () {
+            $('#overlay-popup').animate({
+                'margin-left': '-=2px',
+                'margin-right': '+=2px'
+            }, 80, function () {
+                $('#overlay-popup').animate({
+                    'margin-left': '+=2px',
+                    'margin-right': '-=2px'
+                }, 80);
+            });
+        })
+    });
+
+}
+
+function closePopup() {
+    document.getElementById('overlay-popup').style.display = 'none';
 }
 
 

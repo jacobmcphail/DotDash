@@ -39,7 +39,7 @@
         </div>
 	
         <div id="title">Loading...</div>
-		<div id="online-connection"></div>
+
         <!-- buttons and elements used in the main menu screen -->
         <div id="main-screen">
             <div id="mode-selection-container">
@@ -101,7 +101,7 @@
                     <label for="option-6"></label>
                 </div>
 				<div class="buttonbox">
-                    <input type="button" value="Reset Save" onclick="buttonSounds();clearSave();" id="option-5" name="check" />
+                    <input type="button" value="Reset Save" onclick="buttonSounds();clearSaveConfirmation();" id="option-5" name="check" />
                     <label for="option-5"></label>
                 </div>
 				<div class="buttonbox">
@@ -140,7 +140,6 @@
             <div class="T_container">
                 <h2 id="badge-desc">Desc</h2>
                 <div class="badge-icons">
-                    <img class="badge-button" id="0badge" src="images/locked.png" alt="locked" />
                     <img class="badge-button" id="1badge" src="images/locked.png" alt="locked" />
                     <img class="badge-button" id="2badge" src="images/locked.png" alt="locked" />
                     <img class="badge-button" id="3badge" src="images/locked.png" alt="locked" />
@@ -150,6 +149,7 @@
                     <img class="badge-button" id="7badge" src="images/locked.png" alt="locked" />
                     <img class="badge-button" id="8badge" src="images/locked.png" alt="locked" />
                     <img class="badge-button" id="9badge" src="images/locked.png" alt="locked" />
+                    <img class="badge-button" id="10badge" src="images/locked.png" alt="locked" />
                 </div>
             </div>
             <button onclick="openScores()" class="nongameplay-buttons" id="badge-return-button"><img src="images/backward.png" alt="backward" /></button>
@@ -199,6 +199,14 @@
             <h1>GAME OVER</h1>
             <div id="final-score-container"><h2>Your score: </h2><h2 id="final-score">NULL</h2></div>
             <div id="highscore-message-container"><h2 id="highscore-message">NULL</h2></div>
+
+            <!-- bad -->
+            <div id="name-input-container">
+                <form>
+                    <input type="text" maxlength="14" name="name" id="name-input">
+                </form>
+            </div>
+
             <div id="badge-message-container"><h2 id="badge-message">NULL</h2></div>
             <button class="nongameplay-buttons" id="game-over-quit-button" onclick="quitGame()"><img src="images/home.png" alt="backward"></button>
             <button class="nongameplay-buttons" id="game-over-leaderboard-button" onclick="openScores()"><img src="images/trophy.png" alt="leaderboards"></button>
@@ -224,6 +232,11 @@
             <button class="nongameplay-buttons" id="tutorial3-return-button" onclick="openTutorial3Screen();"><img src="images/backward.png" alt="backward"></button>
             <button class="nongameplay-buttons" id="tutorial-end-button" onclick="closeTutorialScreen(); resumeGame();"><img src="images/forward.png" alt="forward"></button>
         </div>
+    </div>
+    <div id="overlay-popup">
+        <h2 id="popup-text"></h2>
+        <button class="confirm-buttons" id="popup-yes-button" onclick="resetSave()"><img src="images/checkmark.png" alt="yea okay"/></button>
+        <button class="confirm-buttons" id="popup-no-button" onclick="closePopup()"><img src="images/cross.png" alt="don't do it"/></button>
     </div>
 <!--added preloader-->
 <div id="preload">
