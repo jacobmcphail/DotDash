@@ -574,7 +574,7 @@ function gameOver() {
 		if (localSavedFiles[1] != null && localSavedFiles[2] != null) {
 			console.log("Score Sent");
 			updateSave();
-			sendScore(gamemode, playerName, playerScore);
+			sendScore(gamemode, localSavedFiles[1], playerScore);
 		}
 	}	
     });
