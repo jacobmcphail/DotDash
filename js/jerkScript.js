@@ -60,12 +60,17 @@ $.getScript("js/panicScript.js", function(){});
 /*File storing function*/
 function gameSetup() {
 	//Z's changes
+	$('#title').css("display", "none");
 	document.getElementById('splash-screen').style.display = 'block';
-	 setTimeout(function() {
-	 $('#splash-screen').fadeOut(800, function() {});
-	 $("#main-screen").fadeIn(800, function() {});
-	 $("#main-screen").css("display", "block");
-	 }, 1500);
+	setTimeout(function() {
+	$('#splash-screen').fadeOut(800, function() {});
+	}, 1100);
+	
+	setTimeout(function() {
+	$("#main-screen").fadeIn(800, function() {});
+	$('#title').fadeIn(800, function() {});
+	}, 1800);
+
 	
 	checkCookie();
 	localSavedFiles = JSON.parse(localStorage.getItem("saveFile"));
