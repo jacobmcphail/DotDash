@@ -119,6 +119,10 @@ function resetSave() {
     localSavedFiles = [true, null, null];
 	playerData = [false, false, false, false, false, false, false, false, false, false, 0, 0, 0];
 	localStorage.setItem("saveFile", JSON.stringify(localSavedFiles));
+	//@@@MAKING IT SO RESET SAVE CLEARS DATABASE TOO
+	sendSaveData(localSavedFiles[1], localSavedFiles[2]);
+	updateSave();
+	
 	updateBadges();
 	updateHighScores();	
 
