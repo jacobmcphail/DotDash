@@ -6,34 +6,34 @@ $(document).ready(function(){
 		var badgeNum = parseInt(this.id);
 		console.log(badgeNum);
 		switch(badgeNum) {
-			case 1:
+			case 0:
 			$("#badge-desc").text("Unlock Steve mode");
 			break;
-			case 2: 
+			case 1: 
 			$("#badge-desc").text("Achieved top ten in Sudden Death mode");
 			break;
-			case 3:
+			case 2:
 			$("#badge-desc").text("Get to level 60 in Marathon mode");
 			break;
-			case 4:
+			case 3:
 			$("#badge-desc").text("Get to level 30 in Time Attack mode");
 			break;
-			case 5:
+			case 4:
 			$("#badge-desc").text("Get to level 60 in Sudden Death mode");
 			break;
-			case 6:
+			case 5:
 			$("#badge-desc").text("Get to level 60 in Marathon mode with all lives");
 			break;
-			case 7:
+			case 6:
 			$("#badge-desc").text("Get to level 20 in Time Attack mode without a mistake");
 			break;
-			case 8:
+			case 7:
 			$("#badge-desc").text("Achieved top ten in Marathon mode");
 			break;
-			case 9:
+			case 8:
 			$("#badge-desc").text("Get to level 40 in marathon mode");
 			break;
-			case 10:
+			case 9:
 			$("#badge-desc").text("Achieved top ten in Time Attack mode");
 			break;
 			default:
