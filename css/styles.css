@@ -202,6 +202,13 @@ html, body {
     width: 305px;
 }
 
+.O_container {
+    margin-top: 90px;
+    margin-left: auto;
+    margin-right: auto;
+    width: 305px;
+}
+
 .option-header {
     float: left;
     padding-right: 50px;
@@ -217,7 +224,6 @@ html, body {
     font-family: Consolas;
     color: white;
     font-size: 120%;
-    padding: 10px;
     margin: 10px
 }
 
