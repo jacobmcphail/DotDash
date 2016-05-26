@@ -258,5 +258,7 @@ function closePopup() {
     $('#overlay-popup').fadeOut(300);
 }
 
+$('.cawButton').click(function() {tapSound.play() });
+
 
 
