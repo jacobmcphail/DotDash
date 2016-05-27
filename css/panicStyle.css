@@ -4,13 +4,7 @@ panicStyle.css
 Classes related to panic mode. 
 ==========================================
 */
-div.dot.grey{
-    background: lightgrey;
-}
-div.dot.olive{
-    background: olivedrab;
-    background-image: url("../images/steve.png");
-}
+
 div.square{
     width: 50px;
     height: 50px;
@@ -44,26 +38,38 @@ div.flashing{
 	font-weight: bold;
 	color: red;
 }
-
-div.dot.plain {
+div.dot.star {
+    background: lightcoral;
+    background-image: url("../images/star.png");
+}
+div.dot.music {
+    background: violet;
+    background-image: url("../images/musicOn.png");
+}
+div.dot.madSteve {
     background: black;
     background-image: url("../images/madsteve.png");
 }
 
-/*Placeholder for something more interesting. Rename to something more appropriate.*/
-div.dot.mod {
-    background: lightcoral;
-    background-image: url("../images/star.png");
-}
-
-div.dot.potato {
-    background-size: 50px 50px;
-    background-image: url("../images/potato.png");
-}
-
 div.dot.crow {
 	background-size: 50px 50px;
+	background-position:center;
     background-image: url("../images/crow.png");
+}
+div.dot.lime {
+	background: #66FF00;
+}
+div.dot.blueish{
+    background: #3366FF;
+}
+div.dot.yellow{
+    background: yellow;
+}
+div.dot.dark{
+    background: #080808;
+}
+div.dot.violet{
+    background: #3300CC;
 }
 
 div.butter {
@@ -115,4 +121,7 @@ div.affirmative1 {
 }
 div.cool1 {
     background-image: url("../images/Nosh/crystals.jpg");
+}
+div.ohno1 {
+	background-image: url("../images/Nosh/lennyface.jpg");
 }
