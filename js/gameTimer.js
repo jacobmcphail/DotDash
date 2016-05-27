@@ -9,7 +9,6 @@ var timerOn = false;
 function timerStart(){
 	if(!timerOn) {
 		timerOn = true;
-		//Calls function updateTime every 1/100th of a second
 		inter = setInterval(updateTimer,100);
 	} 
 }
@@ -43,6 +42,9 @@ function updateTimer(){
 		minutes = 0;
 		noErrorsYet = false;
 		lifePoints--;
+		if(gamemode == 2){
+			lifePoints = 0;
+		}
 		updateLives();
 		userFeedback(false, null);
 		updateClock();
@@ -50,6 +52,25 @@ function updateTimer(){
 	} 
 	updateClock();
 } 
+
+function timerReduce(){
+		centiseconds--;
+	if(centiseconds < 0){
+		seconds--;
+		centiseconds = 9;
+	} 
+	if(seconds < 0){
+		minutes--;
+		seconds = 59;
+	} 
+	if (minutes < 0) {
+		timerPause();
+		centiseconds = 0;
+		seconds = 0;
+		minutes = 0;
+	} 
+	updateClock();
+}
 
 function updateClock() {
 	if (minutes > 0) {

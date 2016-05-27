@@ -1,0 +1,127 @@
+/*
+panicStyle.css
+=========================================
+Classes related to panic mode. 
+==========================================
+*/
+
+div.square{
+    width: 50px;
+    height: 50px;
+    background: blue;
+    margin-top: 10%;
+    margin-left:15%;
+}
+
+#socksID {
+    z-index: 1;
+    position:relative;
+}
+
+div.distraction{
+    background:#98bf21;
+    -moz-border-radius: 25px;
+    -webkit-border-radius: 25px;
+    border-radius: 25px;
+
+    left: 0px;
+    top:0px;
+    height:50px;
+    width:50px;
+	
+    z-index: 0;
+	
+    position:relative;
+}
+
+div.flashing{
+	font-weight: bold;
+	color: red;
+}
+div.dot.star {
+    background: lightcoral;
+    background-image: url("../images/star.png");
+}
+div.dot.music {
+    background: violet;
+    background-image: url("../images/musicOn.png");
+}
+div.dot.madSteve {
+    background: black;
+    background-image: url("../images/madsteve.png");
+}
+
+div.dot.crow {
+	background-size: 50px 50px;
+	background-position:center;
+    background-image: url("../images/crow.png");
+}
+div.dot.lime {
+	background: #66FF00;
+}
+div.dot.blueish{
+    background: #3366FF;
+}
+div.dot.yellow{
+    background: yellow;
+}
+div.dot.dark{
+    background: #080808;
+}
+div.dot.violet{
+    background: #3300CC;
+}
+
+div.butter {
+    width: 50px;
+    height: 50px;
+    background: yellow;
+
+	top:-350px;
+	left:100px;
+    position:relative;
+}
+/*----------------------------
+related to changeBackground()
+----------------------------*/
+div.bgDistract {
+	background-color: black;
+	background-repeat: no-repeat;
+	background-size: 100%;
+}
+div.food 1{
+    background-image: url("../images/Nosh/infestation.jpg");
+}
+div.food2 {
+    background-image: url("../images/Nosh/cancerousgrowth.jpg");
+}
+div.food3 {
+    background-image: url("../images/Nosh/drowningfamily.jpg");
+}
+div.food4 {
+    background-image: url("../images/Nosh/plasticsteak.jpg");
+}
+div.food5 {
+    background-image: url("../images/Nosh/glisteningslab.jpg");
+}
+div.animal1 {
+    background-image: url("../images/Nosh/flapjack.jpg");
+}
+div.animal2{
+    background-image: url("../images/Nosh/hairyfish.jpg");
+}
+div.animal3 {
+    background-image: url("../images/Nosh/rainbowfrog.jpg");
+}
+div.animal4{
+    background-image: url("../images/Nosh/mongoose.jpg");
+}
+div.affirmative1 {
+    background-image: url("../images/Nosh/exceptionnel.jpg");
+}
+div.cool1 {
+    background-image: url("../images/Nosh/crystals.jpg");
+}
+div.ohno1 {
+	background-image: url("../images/Nosh/lennyface.jpg");
+}

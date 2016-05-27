@@ -7,21 +7,21 @@ var crowbotActive = false;
 $(document).ready(function(){
 	
 	//return scores to normal after Steve Mode is disabled
-    $("#option-4").on('tapone', function(){
+    $("#option-3").on('tapone', function(){
         if(!steveModeEnabled){
             updateHighScores();
         }
     });
-	
-	$(".cawButton").on('tapone', function(){
+
+    $(".cawButton").on('tapone', function(){
         if (crowbotActive) {
-			if (!localSavedFiles[1]) {
-				window.alert("Badge Unlocked! Activated Steve mode.");
-				localSavedFiles[1] = true;
-				localStorage.setItem("saveFile", JSON.stringify(localSavedFiles));
-				updateBadges();
-			}
-			enableSteveMode();
+            if (!playerData[0]) {
+                popup('steve');
+                playerData[0] = true;
+                updateSave();
+                updateBadges();
+            }
+            enableSteveMode();
         }
     });
 	

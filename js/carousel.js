@@ -1,4 +1,4 @@
-/*Main menu mode selection*/
+/*Main menu mode selection. Adapted from Bootstrap. */
 
 $(document).ready(function(){
 	// Activate Carousel	
@@ -32,7 +32,6 @@ $(document).ready(function(){
 		} else {
 			gamemode = 2;
 		}
-        console.log("mode selected: " + mode + ":" + gamemode);
     });
 	
 });

@@ -8,6 +8,20 @@ body {
                                   not supported by any browser */
 }
 
+#splash-screen{
+    position: relative;
+    top: 40%;
+    transform: translateY(-50%);
+    text-align: center;
+
+}
+
+#splash-screen p {
+    font-family: fantasy;
+    font-size: 50px;
+    color: #32CD32;
+}
+
 #main-screen {
 	display: none;
 	width: 100%;
@@ -53,6 +67,15 @@ html, body {
     left: 5px;
     display: block;
 }
+#online-connection {
+    color: #fff;
+    font-family: "Consolas";
+    font-size: 30px;
+    position: absolute;
+    top: 10px;
+    right: 5px;
+    display: block;
+}
 #mode-selection-container {
 	height: 100%;
 	position: absolute;
@@ -73,7 +96,7 @@ html, body {
     background: dodgerblue;
 	}
 #mode-2 {
-    background: magenta;
+    background: red;
 	}
 #mode-3 {
     background: yellow;
@@ -108,12 +131,37 @@ html, body {
     margin-bottom: 25px;
 }
 
-#yes-button {
+
+#no-button, #popup-no-button {
     right: 50px;
 }
 
-#no-button {
+#yes-button,#popup-yes-button, #submit-login-button, #submit-signup-button {
     left: 50px;
+}
+
+#popup-no-button, #close-login-button, #close-signup-button {
+    right: 50px;
+    display:none;
+}
+
+#popup-yes-button {
+    left: 50px;
+    display:none;
+}
+
+#popup-accept-button {
+    display:none;
+    left: 50%;
+    margin-left: -45px;
+}
+
+#popup-login {
+    display:none;
+}
+
+#popup-signup {
+    display: none;
 }
 
 
@@ -128,13 +176,14 @@ html, body {
     bottom: 30%;
     right: 15%;
 }
-#options-button, #unpause-button, #tutorial-return-button, #tutorial1-return-button, #tutorial2-return-button, #tutorial3-return-button  {
+#options-button, #tutorial-return-button, #tutorial1-return-button, #tutorial2-return-button,
+#tutorial3-return-button, #game-over-quit-button, #quit-button {
     left: 5px;
 }
-#scores-button, #restart-button {
+#scores-button, #restart-button, #game-over-leaderboard-button {
     left: 70px;
 }
-#credits-button, #pause-button, #quit-button, #to-tutorial2-button, #to-tutorial3-button, #to-tutorial4-button, #tutorial-end-button  {
+#credits-button, #pause-button, #to-tutorial2-button, #game-over-restart-button, #unpause-button {
     right: 5px;
 }
 #return-button {
@@ -160,10 +209,34 @@ html, body {
     width: 305px;
 }
 
+.O_container {
+    margin-top: 90px;
+    margin-left: auto;
+    margin-right: auto;
+    width: 305px;
+}
+
 .option-header {
     float: left;
     padding-right: 50px;
 }
+
+.buttonbox {
+    text-align:center;
+}
+
+#option-5, #option-6, #option-7 {
+    border: 3px solid white;
+    background-color:black;
+    font-family: Consolas;
+    color: white;
+    font-size: 120%;
+    margin: 10px
+}
+#option-5:hover, #option-6:hover, #option-7:hover {
+
+    transform:scale(1.1,1.1);
+ }
 
 /* style for option buttons -- adapted from http://cssdeck.com/labs/css-checkbox-styles */
 input[type=checkbox] {
@@ -199,13 +272,6 @@ input[type=checkbox] {
     background: black;
 }
 
-.buttonbox {
-	width: 28px;
-	height: 28px;
-	margin: 20px 0px 20px 230px;
-	position: relative;
-}
-
 .checkbox label:after {
     opacity: 0;
     content: '';
@@ -225,6 +291,7 @@ input[type=checkbox] {
     background-color: #32CD32;
     opacity: 1;
 }
+
 /* end for option buttons */
 
 #scores-screen {
@@ -300,7 +367,6 @@ input[type=checkbox] {
     font-size: 220%;
 }
 #dot-container {
-    height: 400px;
     width: 400px;
 	position: absolute;
 	top: 50%;
@@ -317,8 +383,9 @@ input[type=checkbox] {
     display: none;
 }
 
-#gameover-screen h1, #pause-screen h1, #tutorial-screen h1 {
-    font-size: 500%;
+#gameover-screen h1, #pause-screen h1{
+    margin-top: 0;
+    font-size: 400%;
     color: #32CD32;
 }
 
@@ -355,7 +422,7 @@ input[type=checkbox] {
 
 #confirmation-container {
     width: 35%;
-    height: 30%;
+    padding-bottom: 100px;
     margin: auto;
     display:none;
     position: relative;
@@ -363,18 +430,27 @@ input[type=checkbox] {
     border-radius: 4px;
 }
 
-#final-score-container {
+#final-score-container, #badge-message-container, #highscore-message-container, #name-input-container {
     border-radius: 4px;
     border: 3px solid white;
-    margin: auto;
+    margin: 10px auto;
     width: 40%;
 }
 
-#game-over-quit-button {
-    left: 5px;
+
+#badge-message-container, #highscore-message-container, #name-input-container {
+    display:none;
 }
-#game-over-restart-button {
-    right: 5px;
+
+#badge-img-container img {
+    display: inline-block;
+    width: 70px;
+    height: 50px;
+    padding: 4px;
+}
+
+#badge-img-container {
+    text-align:center;
 }
 
 p {
@@ -399,6 +475,31 @@ h2 {
     margin: 0;
 }
 
+h3 {
+    color: white;
+    text-align: left;
+    font-family: "Consolas";
+    margin: 0 0 0 10%;
+    float: left;
+}
+
+h4 {
+	color: white;
+    text-align: center;
+    font-family: "Consolas";
+    margin: 0 0 0 10%;
+    float: left;
+}
+.username-display{
+	color: white;
+    text-align: center;
+    font-family: "Consolas";
+    margin: 0 0 0 10%;
+    float: left;
+}
+
+
+
 table {
     color: white;
     font-family: "Consolas";
@@ -407,6 +508,9 @@ table {
 
 div#preload { display: none; }
 
+/*
+Game playing field: dots 
+*/
 div.dot {
     width: 52px;
     height: 52px;
@@ -422,6 +526,7 @@ div.dot {
 }
 div.dot.selected {
     background: lightgoldenrodyellow;
+    box-shadow: 0 0 15px lightgoldenrodyellow;
 }
 .gamegrid{
     background-color:#000;
@@ -457,7 +562,12 @@ div.dot.black{
     background: black;
 }
 div.dot.fade{
-    opacity: 0.2;
+    opacity: 0.5;
+}
+
+div.dot.steve-glow {
+    background: lightgoldenrodyellow;
+    box-shadow: 0 0 15px lightgoldenrodyellow;
 }
 div.dot.steve{
     background-image: url("../images/steve.png");
@@ -466,6 +576,7 @@ div.dot.steve{
 }
 div.dot.tapped_steve{
     background-image: url("../images/madsteve.png");
+    background-color: lightgoldenrodyellow;
 	width: 50px; /* TMP, resize image to 52x52 then remove */
 	height: 50px; /* TMP, resize image to 52x52 then remove */
 }
@@ -485,10 +596,6 @@ div.dot.good_dot {
     max-width: 75px;
     padding-right: 5px;
     margin: 10px 15px;
-
-    /*background: violet;border-width: thick;
-    border-style: solid;
-    border-color: white;*/
 }
 
 .row-centered {
@@ -597,4 +704,116 @@ div.dot.good_dot {
 	margin: auto;
 	width: 400px;
 	max-width: 80%;
+}
+
+#overlay-popup {
+    display:none;
+    position: fixed;
+    padding: 10px;
+    width: 350px;
+    left: 50%;
+    margin-left: -175px;
+    padding-bottom: 100px;
+    top: 50%;
+    margin-top: -150px;
+    z-index: 20;
+}
+
+#overlay-popup:after {
+    position: fixed;
+    content: "";
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    background: rgba(0,0,0,0.8);
+    z-index: -2;
+}
+
+#overlay-popup:before {
+    position: absolute;
+    content: "";
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    background: black;
+    border: 4px solid white;
+    border-radius: 4px;
+    z-index: -1;
+}
+
+.text-input {
+    margin: auto;
+}
+
+input[type=text], input[type=password] {
+    border: 2px solid white;
+    border-radius: 3px;
+}
+
+input[type=text]:focus, input[type=password]:focus {
+    border: 2px solid #32CD32;
+}
+
+@media screen and (max-width: 640px) {
+    #confirmation-container {
+        width: 80%;
+        height: 30%;
+        margin: auto;
+        display: none;
+        position: relative;
+        border: 4px solid white;
+        border-radius: 4px;
+    }
+
+    #score-bar {
+        position: absolute;
+        bottom: 5px;
+        margin-left: 10px;
+        background-color: #32CD32;
+        width: 40%;
+        height: 45px;
+        text-align: center;
+        max-width: 150px;
+    }
+
+    #score-bar p {
+        color: black;
+        font-size: 200%;
+    }
+
+
+    #option-6-box, #option-6-label {
+        display:none;
+    }
+
+    #gameover-screen h1, #pause-screen h1{
+        margin-top: 10px;
+        font-size: 300%;
+        color: #32CD32;
+    }
+
+    #final-score-container, #badge-message-container, #highscore-message-container {
+        border-radius: 4px;
+        border: 3px solid white;
+        margin: 10px auto;
+        width: 80%;
+    }
+
+
+    #overlay-popup {
+        display:none;
+        position: fixed;
+        padding: 10px;
+        width: 250px;
+        left: 50%;
+        margin-left: -125px;
+        height: 250px;
+        top: 50%;
+        margin-top: -150px;
+        z-index: 20;
+    }
+
+
 }

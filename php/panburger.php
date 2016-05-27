@@ -1,9 +1,9 @@
 <?php
-//Rejected names:	writeDB.php
-//					iAmAPartTimeWizard.php
-//					birdLoaf.php
+//Rejected names: 	newUser.php
+//					modernGuilt.php
+//					potatoParasol.php
 
-/* Handles writing records to leaderboard database */
+/* Creates a new record given a usename and a password */
 
 	//All headers are required to send
 	header("Access-Control-Allow-Origin: *");
@@ -20,28 +20,12 @@
 
 	//Decoded JSON string is an array. 
 	//Store the gameplay mode, name, and score in variables.
-	$mode = $dataArray["mode"];
-	$name = $dataArray["player_name"];
-	$score = $dataArray["player_score"];
+	$name = $dataArray["username"];
+	$pass = $dataArray["password"];
 
-	/*Depending on mode, generate a different SQL command and store in $sql
-	0: marathon
-	1: no timer
-	2: time attack
-	*/
-	switch ($mode) {
-		case 0:
-			$sql="INSERT INTO MARATHON_HISCORE (mName, mScore) VALUES ('$name', '$score')";
-			break;
-		case 1:
-			$sql="INSERT INTO UNTIMED_HISCORE (uName, uScore) VALUES ('$name', '$score')";
-			break;
-		case 2:
-			$sql="INSERT INTO TIMEATTACK_HISCORE (tName, tScore) VALUES ('$name', '$score')";
-			break;
-		default:
-			echo "You should not see this";
-	}
+
+	$sql="INSERT INTO PLAYER_REC (username, password) VALUES ('$name', '$pass')";
+
 
 	echo $sql; 
 

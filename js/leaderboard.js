@@ -1,4 +1,4 @@
-/*Handles sending data to and retrieving data from online leaderboard database. */
+/*Sends data to and retrieves data from online leaderboard database. */
 
 $(document).ready(function(){
 
@@ -21,27 +21,32 @@ $(document).ready(function(){
     });
 	
 });
-
+/*
+Checks whether the most recent score beats the player's stored personal best.
+*/
 function scoreChecker(playerScore) {
 	switch(gamemode) {
 		case 0:
-			if (playerScore > localSavedFiles[11]) {
-				window.alert("New HighScore in marathon mode!");
-				localSavedFiles[11] = playerScore;
+			if (playerScore > playerData[10]) {
+				document.getElementById('highscore-message-container').style.display = 'block';
+				document.getElementById('highscore-message').innerHTML = "New HighScore in Marathon mode!";
+				playerData[10] = playerScore;
 				return true;
 			}
 			break;
 		case 1: 
-			if (playerScore > localSavedFiles[12]) {
-				window.alert("New HighScore in no-time mode!");
-				localSavedFiles[12] = playerScore;
+			if (playerScore > playerData[11]) {
+				document.getElementById('highscore-message-container').style.display = 'block';
+				document.getElementById('highscore-message').innerHTML = "New HighScore in Sudden Death mode!";
+				playerData[11] = playerScore;
 				return true;
 			}
 			break;
 		case 2:
-			if (playerScore > localSavedFiles[13]) {
-				window.alert("New HighScore in time attack mode!");
-				localSavedFiles[13] = playerScore;
+			if (playerScore > playerData[12]) {
+				document.getElementById('highscore-message-container').style.display = 'block';
+				document.getElementById('highscore-message').innerHTML = "New HighScore in Time Attack mode!";
+				playerData[12] = playerScore;
 				return true;
 			}
 			break;
@@ -51,19 +56,22 @@ function scoreChecker(playerScore) {
 	return false;
 }
 
-//Update high scores
+/*
+Updates high scores on leaderboard screen
+*/
 function updateHighScores() {
-    for (var i = 11, q = 0; i < 14; i++, q++) {
-		$("#localHS-" + q).text(localSavedFiles[i]);
+    for (var i = 10, q = 0; i < 13; i++, q++) {
+		$("#localHS-" + q).text(playerData[i]);
     }
 }
-
+/*
+Prints top 10 scores for each mode to leaderboard screen.
+*/
 function printOnlineScores() {
 	var leaderboard = document.getElementById("online-score-container");
 	var databus;
 	leaderboard.innerHTML = '<br><br><br><br><br><h2>Loading...</h2>';
 	getData(databus).success(function (data) {
-		console.log(data);
 		leaderboard.innerHTML = '<h1>Leaderboard</h1>';
 		leaderboard.innerHTML += '<h2>Marathon</h2>';
 		var indexDB = 0;
@@ -83,7 +91,9 @@ function printOnlineScores() {
 		leaderboard.innerHTML = '<br><br><br><h2>Could not get online leaderboard!</h2>';		
 	});
 }
-
+/*
+Retrieves top 10 scores for each mode from leaderboard database.
+*/
 function getData(database) {
    return $.ajax({
       type: "GET",
@@ -94,7 +104,9 @@ function getData(database) {
 	  }
 	});
 }
-
+/*
+Sends player name and score to leaderboard database to be written into a new record.
+*/
 function sendScore(gamemode, playerName, playerScore) {
 		var j_notation =
 		{
