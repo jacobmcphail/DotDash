@@ -100,31 +100,31 @@ Invoked after Game Over. Checks whether the most recently played game entitles t
 function badgeChecker(currentRound, allLives) {
 	switch(gamemode){
 		case 0:
-			if (currentRound >=2 && !playerData[8] ) {
+			if (currentRound >= 40 && !playerData[8] ) {
 				playerData[8] = true;
 				achievements.push("Badge Unlocked! Get to level 40 in Marathon mode.");
 			}
-			if (currentRound >= 2 && allLives && !playerData[5] ) {
+			if (currentRound >= 60 && allLives && !playerData[5] ) {
 				playerData[5] = true;
 				achievements.push("Badge Unlocked! Get to level 60 in Marathon mode with all lives.");
 			}
-			if (currentRound >= 2 && !playerData[2] ) {
+			if (currentRound >= 60 && !playerData[2] ) {
 				playerData[2] = true;
 				achievements.push("Badge Unlocked! Get to level 60 in Marathon mode.");
 			}
 			break;
 		case 1:
-			if (currentRound >= 2 && !playerData[4] ) {
+			if (currentRound >= 60 && !playerData[4] ) {
 				playerData[4] = true;
 				achievements.push("Badge Unlocked! Get to level 60 in Sudden Death mode.");
 			}
 			break;
 		case 2:
-			if (currentRound >= 2 && !playerData[3] ) {
+			if (currentRound >= 30 && !playerData[3] ) {
 				playerData[3] = true;
 				achievements.push("Badge Unlocked! Get to level 30 in Time Attack mode.");
 			}
-			if (currentRound >= 2 && allLives && !playerData[6] ) {
+			if (currentRound >= 20 && allLives && !playerData[6] ) {
 				playerData[6] = true;
 				achievements.push("Badge Unlocked! Get to level 20 in Time Attack mode without a mistake.");
 			}
