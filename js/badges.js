@@ -73,7 +73,7 @@ function onlineBadgeChecker(playerScore) {
 				}
 				break;
 			case 1:
-				if (playerScore > data[1]["uScore"] || !playerData[1] || true ) {
+				if (playerScore > data[1]["uScore"] && !playerData[1]) {
 					playerData[1] = true;
 					achievements.push("Badge Unlocked! Achieved top ten in Sudden Death mode.");
 				}
