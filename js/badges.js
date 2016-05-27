@@ -4,7 +4,7 @@ var achievements = new Array();
 var onlineBadgeLoaded = false;
 var offlineBadgeLoaded = false;
 
-/*Displays descriptions of achievements that one can ean badges for, images of earned badges, and padlock icons for badges not yet earned. */
+/*Displays descriptions of achievements that one can earn badges for, images of earned badges, and padlock icons for badges not yet earned. */
 $(document).ready(function(){
 	$(".badge-button").on('tapone', function(){
 		var badgeNum = parseInt(this.id);

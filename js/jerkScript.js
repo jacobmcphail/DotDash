@@ -36,6 +36,7 @@ Variables that are reset every game
 	currentRound: current round of gameplay
 	lifePoints: number of lives/chances to make mistakes
 	notComplete: if true, the user has yet to replicate the path in its entirety. If false, the user has replicated the path without making a mistake.
+	allLives: value for no mistake badges
 */
 var playerScore;
 var currentRound;
@@ -506,8 +507,7 @@ function pathDemonstration(arrayToRepeat, validate) {
 	} else {
 		blinkTime = (500 - (currentRound * 2))
 	}
-    //For testing
-    //printPath(arrayToRepeat);
+
 	$(".dot").addClass("fade");
     for (var i = 0; i < arrayToRepeat.length; i++) {
         (function (i) {
@@ -575,11 +575,9 @@ function gameOver() {
     playing = false;
     disco.pause();
 
-    //document.getElementById('tutorial1-screen').style.display = "none";
-    //document.getElementById('tutorial4-screen').style.display = "none";
     $( "#game-screen" ).fadeOut( 1500, function() {
         $('#gameover-screen').fadeIn(1500, function() {});
-        //panic
+		
         removeDistractions();
 
         scoreChecker(playerScore);
