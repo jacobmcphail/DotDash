@@ -388,7 +388,11 @@ function validate(array, userFeedback, dArray){
 							levelPass.play();
 							timerPause();
                             notComplete = false;
-                            playerScore += currentRound*300 + (Math.round(currentRound * 0.1) * seconds);
+							if(gamemode == 2){
+								playerScore += currentRound + (Math.round(currentRound * 0.1) * (minutes * 10));
+							} else {
+								playerScore += currentRound + (Math.round(currentRound * 0.1) * (seconds));
+							}
                             updateScore();
                             currentRound++;
                             userFeedback(true, dArray[ex][wai]);
