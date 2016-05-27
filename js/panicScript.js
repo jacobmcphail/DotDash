@@ -2,8 +2,6 @@
 panicScript.js
 BirdJerky Saturday May 21st/16
 ==============================
-    -The basis of a new mode if we decide to implement it.
-    -Could also be toggled with a global variable "distractionsOn"
     -Find function calls by ctrl+f-ing "//**panic" in jerkScript.js
 		-uncommenting calls to distractDemonstrate and distractValidate functions produces effects that can be seen in all modes of gameplay.
 	BASICS:
@@ -14,19 +12,24 @@ BirdJerky Saturday May 21st/16
 			holds functions that can be executed during Validate()
 */
 
+var panicMode = true;
+
 var distractDemonstrate = [
-	nothing,
+	changeDotColour,
     diagonalAnimation,
 	dotFlash,
 	messageFlash,
-	rainButter
+	rainButter,
+	backgroundChange
 ];
 
 var distractValidate = [
-	nothing,
+	dotFlash,
     changeDotColour,
-	backgroundChange,
-	dotContainerText
+	backgroundChangeImage,
+	dotContainerText,
+	diagonalAnimation,
+	messageFlash
 ];
 
 var timer1 = 0;
@@ -37,10 +40,9 @@ var interval1 = 0;
 //***distractDemonstrate Functions***//
 //----------------------------------//
 
-/* Demo1: diagonalAnimation
+/*
+2 dots fly at vary speeds in varying directions
 */
-
-//TODO: add while loop so function can create 1-3 flying objects that all go in different directions
 function diagonalAnimation() {
 
     var thiscontainer = document.getElementById("dot-container");
@@ -109,7 +111,6 @@ function dotFlash(){
 	
 	if(Math.random()*10>8){
 		dotFlash();
-		console.log("dotFlash() called itself");
 	}
 	
 }
@@ -124,33 +125,62 @@ Adds a class to a dot/multiple dots to change its colour or add an image
 function changeDotColour() {
 
     var ptArr;
-	var modArray = ["mod","plain","crow","potato"];
+	var modArray = ["star","music","madSteve","crow","lime","blueish" ,"yellow", "dark", "violet"];
 	
 	ptArr = Math.random() < 0.5 ? selectSingle() : selectMultiple();
     
-    var modSelector = randomNum(3);
+    var modSelector = randomNum(7);
 	
 	distractMod = modArray[modSelector];
-   
+   console.log("distractMod: " + distractMod);
 	var i;
 	for(i = 0; i < ptArr.length; i++){
         var x = ptArr[i].x;
         var y = ptArr[i].y;
         dotArray[x][y].classList.add(distractMod);
+		//console.log("Selector: " + modSelector);
     }
+}
+/*Changes the colour of the background*/
+function backgroundChange(){
+	var time = ((Math.random())+5) *100;
+	var thiscontainer = document.getElementById("dot-container");
+	
+    var thissocks = document.createElement("div");
+    thissocks.id = "socks";
+    thissocks.className = "distraction bgDistract";
+    
+	timer1 = setTimeout(function(){
 
+		thiscontainer.appendChild(thissocks);
+		$(".distraction").css('width','100%');
+		$(".distraction").css('height','100%');
+		$(".distraction").css('position','absolute');	
+		$(".distraction").css('-moz-border-radius','0px');
+		$(".distraction").css('-webkit-border-radius','0px');
+		$(".distraction").css('border-radius','0px');
+	
+	
+		var disColour = colourArray[randomNum(5)];
+		$(".distraction").css('background',disColour);
+		
+	},time);
+	
+	timer2 = setTimeout(function(){
+		removeDistractions();
+	},time+150);
 }
 
-/* Validate2. backgroundChange
+/*
 Make an image flash in the background after a delay
 */
 
-function backgroundChange(){
+function backgroundChangeImage(){
 	
 	var imageArray = [
-		"food1", "food2", "food3", "food4", "food5",
-		"animal1", "animal2", "animal3", "animal4",
-		"affirmative1", "cool1"
+		"food1", "food3", "food5",
+		"animal1","animal3",
+		"affirmative1", "cool1", "ohno1"
 		];
 	
 	var time = ((Math.random())+5) *100;
@@ -170,18 +200,8 @@ function backgroundChange(){
 		$(".distraction").css('-webkit-border-radius','0px');
 		$(".distraction").css('border-radius','0px');
 	
-		var flipCoin = randomNum(1);
-		console.log("Background Selector: " + flipCoin);
+		$(".distraction").addClass(imageArray[randomNum(11)]);
 		
-		switch(flipCoin){
-			case 1: 
-				$(".distraction").addClass(imageArray[randomNum(10)]);
-				break;
-			default:
-				var disColour = colourArray[randomNum(5)];
-				$(".distraction").css('background',disColour);
-				break;	
-		}
 	},time);
 	
 	timer2 = setTimeout(function(){
@@ -193,7 +213,7 @@ function backgroundChange(){
 Flash words behind the dot container
 */
 function dotContainerText(){
-	var strArray = ["HEEYYY GULL HEY", "Rutabega", "Beard of Stars", "DEEP FRY EVERYTHING", "The Controllersphere", "IT HURTS"];
+	var strArray = ["GET TO THE CHOPPER", "RutabAaAga", "Beard of Stars", "DEEP FRY EVERYTHING", "The Controllersphere", "IT HURTS"];
 	var string = strArray[randomNum(5)];
 	
 	var topPos = -170 + (signMultiplier()*50);
@@ -319,7 +339,7 @@ function selectSingle(){
     var y = Math.floor(Math.random()*numCols);
     var dotCoords = new Point(x,y);
     dotCoordsArray.push(dotCoords);
-	return dotCoordsArray; //return ARRAY of points with only one point
+	return dotCoordsArray;
 }
 
 //Helper function.
@@ -369,15 +389,7 @@ function selectMultiple(){
                 dotCoordsArray.push(new Point(nodeArray[i].pos.x,nodeArray[i].pos.y));
             }
             break;
-        case 4:     //I don't know what this is 
-            for(i = 0; i<numRows/2; i++){
-                for(j = 0; j<numCols; j++){
-                    dotCoordsArray.push(new Point(i,j));
-                }
-            }
-            break;
-        case 5:     
-		//Randomly select a single row
+        case 4:     //Randomly select a single row
 		var rowIndex = randomNum(numRows-1);
             for(i = 0; i<numRows; i++){
                 for(j = 0; j<numCols; j++){
@@ -388,8 +400,7 @@ function selectMultiple(){
                 }
             }
             break;
-		case 6:     
-		//Randomly select a single column
+		case 5:     //Randomly select a single column
 		var colIndex = randomNum(numCols-1);
             for(i = 0; i<numRows; i++){
                 for(j = 0; j<numCols; j++){
@@ -401,6 +412,12 @@ function selectMultiple(){
             }
             break;
         default:
+		var nodeArray = [];
+            var length = Math.floor(Math.random()*(numCols*numRows - 2));
+            nodeArray = runPathFinder(numRows, numCols, 6, true);
+            for(i=0;i<nodeArray.length;i++){
+                dotCoordsArray.push(new Point(nodeArray[i].pos.x,nodeArray[i].pos.y));
+            }
             break;
     }
 
@@ -425,6 +442,7 @@ function signMultiplier(){
 //Call this not only when a round ends but when you leave to the main menu or Game Over
 function removeDistractions(){
     $(".distraction").remove();
+	$(".dot").removeClass(distractMod);
 	if(timer1!=null){
 		clearTimeout(timer1);
 	}

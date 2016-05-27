@@ -345,9 +345,11 @@ A dot selected by the user has its x and y coordinates compared to the x and y c
 
 function validate(array, userFeedback, dArray){
     var ex, wai;
-    //**panic: uncomment to activate
-    removeDistractions();
-	//distractValidate[randomNum(3)]();
+    //**panic
+    if(panicMode){
+		removeDistractions();
+		distractValidate[randomNum(5)]();
+	}
 
 	$(".dot").removeClass("fade");
 	
@@ -501,9 +503,10 @@ function removeDots(){
 Takes the sequence of dots the user must repeat as an argument. Briefly changes the colour of each to indicate which dots should be selected in which sequence.*/
 function pathDemonstration(arrayToRepeat, validate) {
 	
-	//**panic: Uncomment to activate
-	//distractDemonstrate[randomNum(4)]();
-	
+	//**panic
+	if(panicMode){
+		distractDemonstrate[randomNum(4)]();
+	}
     var pt;
 	var blinkTime;
 	if (currentRound >= 250) {
