@@ -17,7 +17,6 @@ div.square{
     background: blue;
     margin-top: 10%;
     margin-left:15%;
-
 }
 
 #socksID {
@@ -39,6 +38,11 @@ div.distraction{
     z-index: 0;
 	
     position:relative;
+}
+
+div.flashing{
+	font-weight: bold;
+	color: red;
 }
 
 div.dot.plain {
@@ -71,14 +75,44 @@ div.butter {
 	left:100px;
     position:relative;
 }
-
-div.food {
-    background-image: url("../images/nosh/infestation.jpg");
-		background-repeat: no-repeat;
+/*----------------------------
+related to changeBackground()
+----------------------------*/
+div.bgDistract {
+	background-color: black;
+	background-repeat: no-repeat;
 	background-size: 100%;
 }
+div.food 1{
+    background-image: url("../images/Nosh/infestation.jpg");
+}
 div.food2 {
-    background-image: url("../images/nosh/glisteningslab.jpg");
-		background-repeat: no-repeat;
-	background-size: 100%;
+    background-image: url("../images/Nosh/cancerousgrowth.jpg");
+}
+div.food3 {
+    background-image: url("../images/Nosh/drowningfamily.jpg");
+}
+div.food4 {
+    background-image: url("../images/Nosh/plasticsteak.jpg");
+}
+div.food5 {
+    background-image: url("../images/Nosh/glisteningslab.jpg");
+}
+div.animal1 {
+    background-image: url("../images/Nosh/flapjack.jpg");
+}
+div.animal2{
+    background-image: url("../images/Nosh/hairyfish.jpg");
+}
+div.animal3 {
+    background-image: url("../images/Nosh/rainbowfrog.jpg");
+}
+div.animal4{
+    background-image: url("../images/Nosh/mongoose.jpg");
+}
+div.affirmative1 {
+    background-image: url("../images/Nosh/exceptionnel.jpg");
+}
+div.cool1 {
+    background-image: url("../images/Nosh/crystals.jpg");
 }

@@ -196,7 +196,10 @@
             <h1>GAME OVER</h1>
             <div id="final-score-container"><h2>Your score: </h2><h2 id="final-score">NULL</h2></div>
             <div id="highscore-message-container"><h2 id="highscore-message">NULL</h2></div>
-            <div id="badge-message-container"><h2 id="badge-message">NULL</h2></div>
+            <div id="badge-message-container">
+                <h2 id="badge-message">NULL</h2>
+                <div id="badge-img-container"></div>
+            </div>
             <button class="nongameplay-buttons" id="game-over-quit-button" onclick="quitGame()"><img src="images/home.png" alt="backward"></button>
             <button class="nongameplay-buttons" id="game-over-leaderboard-button" onclick="openScores()"><img src="images/trophy.png" alt="leaderboards"></button>
             <button class="nongameplay-buttons" id="game-over-restart-button" onclick="playAgain()"><img src="images/return.png" alt="return"></button>

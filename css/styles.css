@@ -8,7 +8,6 @@ body {
                                   not supported by any browser */
 }
 
-/*Z's thang*/
 #splash-screen{
     position: relative;
     top: 40%;
@@ -438,12 +437,20 @@ input[type=checkbox] {
     width: 40%;
 }
 
+
 #badge-message-container, #highscore-message-container, #name-input-container {
     display:none;
 }
 
-#name-input {
-	
+#badge-img-container img {
+    display: inline-block;
+    width: 70px;
+    height: 50px;
+    padding: 4px;
+}
+
+#badge-img-container {
+    text-align:center;
 }
 
 p {
@@ -486,6 +493,9 @@ table {
 
 div#preload { display: none; }
 
+/*
+Game playing field: dots 
+*/
 div.dot {
     width: 52px;
     height: 52px;
@@ -571,10 +581,6 @@ div.dot.good_dot {
     max-width: 75px;
     padding-right: 5px;
     margin: 10px 15px;
-
-    /*background: violet;border-width: thick;
-    border-style: solid;
-    border-color: white;*/
 }
 
 .row-centered {

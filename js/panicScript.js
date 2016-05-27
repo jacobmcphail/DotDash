@@ -1,20 +1,19 @@
 /*
 panicScript.js
 BirdJerky Saturday May 21st/16
+==============================
     -The basis of a new mode if we decide to implement it.
     -Could also be toggled with a global variable "distractionsOn"
-    -Modifications in jerkScript and nuggetScript can be found by ctrl+f'-ing "//**panic"
-        -As of now, these effects can be seen in all modes of gameplay.
+    -Find function calls by ctrl+f-ing "//**panic" in jerkScript.js
+		-uncommenting calls to distractDemonstrate and distractValidate functions produces effects that can be seen in all modes of gameplay.
 	BASICS:
-	-If distractions are on:
-	    -depending on the number of rounds completed, Math.random() generates a number within a range
-	    -The number returned indexes an ARRAY OF FUNCTIONS:
-	        -distractDemonstrate[]: holds functions that can be executed during pathDemonstrate
-	        -distractValidate[]: holds functions that can be executed during Validate()
+	-Random number generated returns a number that indexes an ARRAY OF FUNCTIONS defined here:
+		-distractDemonstrate[]: 
+			holds functions that can be executed during pathDemonstrate
+		-distractValidate[]: 
+			holds functions that can be executed during Validate()
 */
 
-
-//Array that holds references to functions that may be called during pathDemonstration()
 var distractDemonstrate = [
 	nothing,
     diagonalAnimation,
@@ -22,7 +21,7 @@ var distractDemonstrate = [
 	messageFlash,
 	rainButter
 ];
-//Array that holds references to functions that may be called during Validate()
+
 var distractValidate = [
 	nothing,
     changeDotColour,
@@ -30,57 +29,13 @@ var distractValidate = [
 	dotContainerText
 ];
 
-/* Demo5: 
-TODO: make more dots appear
-*/
-function swarm(){
-	var thiscontainer = document.getElementById("dot-container");
-    var height = $("#dot-container").height();
-	var width = $("#dot-container").width();
-	console.log("height: "+ height +"width: "+width);
-	
-	var topLeft = document.createElement("div");
-	var topRight = document.createElement("div");
-	var bottomRight = document.createElement("div");
-	var bottomLeft = document.createElement("div");
-	
-	
-    topLeft.className = "distraction";
-	topLeft.id = "tl";
-	topRight.className = "distraction";
-	topRight.id = "tr";
-	bottomRight.className = "distraction";
-	bottomRight.id = "br";
-	bottomLeft.className = "distraction";
-	bottomLeft.id = "bl";
-	
-    thiscontainer.appendChild(topLeft);
-	thiscontainer.appendChild(topRight);
-	thiscontainer.appendChild(bottomRight);
-	thiscontainer.appendChild(bottomLeft);
-	
-	$("#tl").css('top','0px');
-	$("#tl").css('left','0px');
-	
-	$("#tr").css('top', '-50px');
-	$("#tr").css('left', '25x');
-	
-	$("#br").css('top','-100px');
-	$("#br").css('left', '50px');
-	
-	$("#bl").css('top','-150px');
-	$("#bl").css('left','75px');
-	
-}
-
-/*0. Function that does nothing*/
-function nothing(){
-}
+var timer1 = 0;
+var timer2 = 0;
+var interval1 = 0;
 
 //------------------------------------//
 //***distractDemonstrate Functions***//
 //----------------------------------//
-
 
 /* Demo1: diagonalAnimation
 */
@@ -123,9 +78,9 @@ function diagonalAnimation() {
 }
 
 /* Demo2: dotFlash
+A single dot appears in a random place
 */
 
-//A single dot appears in a random place
 function dotFlash(){
 	var time = ((Math.random()*2)+5) *100;
 	var thiscontainer = document.getElementById("dot-container");
@@ -136,8 +91,8 @@ function dotFlash(){
 	var thissocks = document.createElement("div");
 	thissocks.id = "socks";
 	thissocks.className = "distraction";
-			
-	setTimeout(function(){
+	
+	timer1 = setTimeout(function(){
 
 		thiscontainer.appendChild(thissocks);
 		
@@ -147,8 +102,8 @@ function dotFlash(){
 		$(".distraction").css('left',leftPos+'px');
 	
 		},time);
-		
-	setTimeout(function(){
+	
+	timer2 = setTimeout(function(){
 		removeDistractions();
 	},time + 200);
 	
@@ -163,14 +118,14 @@ function dotFlash(){
 //***distractValidate Functions***//
 //--------------------------------//
 
-/* Validate1. changeDotColour
+/* Validate1. changeDotColour()
+Adds a class to a dot/multiple dots to change its colour or add an image
 */
 function changeDotColour() {
 
     var ptArr;
 	var modArray = ["mod","plain","crow","potato"];
 	
-	//Select either a single dot or an assortment of multiple dots
 	ptArr = Math.random() < 0.5 ? selectSingle() : selectMultiple();
     
     var modSelector = randomNum(3);
@@ -187,20 +142,25 @@ function changeDotColour() {
 }
 
 /* Validate2. backgroundChange
+Make an image flash in the background after a delay
 */
-//Make an image flash in the background after a delay
-//TODO: save images in an array (from an image array) - change css property background-url
 
 function backgroundChange(){
+	
+	var imageArray = [
+		"food1", "food2", "food3", "food4", "food5",
+		"animal1", "animal2", "animal3", "animal4",
+		"affirmative1", "cool1"
+		];
 	
 	var time = ((Math.random())+5) *100;
 	var thiscontainer = document.getElementById("dot-container");
 	
     var thissocks = document.createElement("div");
     thissocks.id = "socks";
-    thissocks.className = "distraction";
-    		
-	setTimeout(function(){
+    thissocks.className = "distraction bgDistract";
+    
+	timer1 = setTimeout(function(){
 
 		thiscontainer.appendChild(thissocks);
 		$(".distraction").css('width','100%');
@@ -210,32 +170,32 @@ function backgroundChange(){
 		$(".distraction").css('-webkit-border-radius','0px');
 		$(".distraction").css('border-radius','0px');
 	
-	//function goes here that determines what flashes in the background
-	//Either an image or a solid colour
-	var flipCoin = randomNum(2);
-	switch(flipCoin){
-		case 0: 
-			$(".distraction").addClass('food');
-		case 1: 
-			$(".distraction").addClass('food2');
-			break;		
-		default:
-			var disColour = colourArray[randeomNum(5)];
-			$(".distraction").css('background',disColour);
-			break;	
-	}
-		},time);
+		var flipCoin = randomNum(1);
+		console.log("Background Selector: " + flipCoin);
 		
-	setTimeout(function(){
+		switch(flipCoin){
+			case 1: 
+				$(".distraction").addClass(imageArray[randomNum(10)]);
+				break;
+			default:
+				var disColour = colourArray[randomNum(5)];
+				$(".distraction").css('background',disColour);
+				break;	
+		}
+	},time);
+	
+	timer2 = setTimeout(function(){
 		removeDistractions();
 	},time+150);
 }
 
 /* Validate3: dotContainerText
-Flash words in dot container
+Flash words behind the dot container
 */
 function dotContainerText(){
-	var strArray = ["HEEYYY","HEEYYY GULL HEY"];
+	var strArray = ["HEEYYY GULL HEY", "Rutabega", "Beard of Stars", "DEEP FRY EVERYTHING", "The Controllersphere", "IT HURTS"];
+	var string = strArray[randomNum(5)];
+	
 	var topPos = -170 + (signMultiplier()*50);
 	var leftPos = 200 + (signMultiplier()*25);
 	
@@ -245,27 +205,30 @@ function dotContainerText(){
 	textbox.className = "distraction flashing";
 	dCont.appendChild(textbox);
 	
-	setInterval(function(){//target ids only, then
+	interval1 = setInterval(function(){
 		$(".flashing").css('background','black');
 		$(".flashing").css('top', topPos+'px');
 		$(".flashing").css('left',leftPos+'px');
-		textbox.innerHTML = "<font color='blue'><b>"+ strArray[0]+"</b></font>";
-		setTimeout(function(){textbox.innerHTML = "<font color='green'><b>" + strArray[1] + "</b></font>";},300);
+		textbox.innerHTML =  string;
+		
+		timer1 = setTimeout(function(){textbox.innerHTML = "<font color='black'>" + string + "</font>";},300);
 	},200);
 	
 }
-/*
-========================
-------------------------
-HELPER FUNCTIONS
--------------------------
-=========================
-*/
 
-//Fill an array of strings to select from
+/*Briefly flashes a message in a box*/
 function messageFlash(){
 	var time = ((Math.random()*2)+5) *100;
-	var stringArray = ["Sausage wings", "You fetishize the archetype", "Help I'm trapped in a box", "Think like a fish", "Suction cups for eyes"];
+	var stringArray = [
+		"Hey hey Billy can you deep fry Daddy's shirt?", 
+		"I've never seen a man eat so many chicken wings", 
+		"Help I'm trapped in a box", 
+		"Think like a fish", 
+		"Suction cups for eyes", 
+		"Fish don't swim well", 
+		"I'm a bird I'm a bird I'm a bird",
+		"I am Skeleton Jelly"
+	];
 	
 	var thiscontainer = document.getElementById("dot-container");
 	
@@ -277,7 +240,7 @@ function messageFlash(){
 	var leftPos = 100 + signMultiplier()*randomNum(2)*100
     var disColour = colourArray[randomNum(5)];
 	
-	setTimeout(function(){
+	timer1 = setTimeout(function(){
 	
 		thiscontainer.appendChild(thissocks);		
 		$(".distraction").css('background',disColour);
@@ -288,8 +251,8 @@ function messageFlash(){
 		$(".distraction").css('left', leftPos + 'px');
 	
 		},time);
-		
-	setTimeout(function(){
+	
+	timer2 = setTimeout(function(){
 		removeDistractions();
 	},time + 200);
 }
@@ -299,11 +262,11 @@ One slow, one fast, one medium*/
 
 function rainButter(){
 	var speedArray = ["fast","medium","slow"];
-	var topDest = 100;	
-	var leftPos = (randomNum(3)*100) +50;
+	var topDest = 200;	
+	var leftPos = ((randomNum(3)+1)*100) +50;
 	var thiscontainer = document.getElementById("dot-container");
 	
-	var leftDisplacement = signMultiplier() * (randomNum(1)*100) + 50;
+	var leftDisplacement = signMultiplier() * ((randomNum(1)+1)*100) + 50;
 	var rightDisplacement = -1 * leftDisplacement + 25;
 	
     var fastButter = document.createElement("div");
@@ -338,11 +301,17 @@ function rainButter(){
 			
 	$("#slowButter").animate({
 				top: topDest + 'px',
-			},speedArray[1]);
+			},speedArray[2]);
 }
 
+/*
+========================
+------------------------
+HELPER FUNCTIONS
+-------------------------
+=========================
+*/
 
-//Helper function
 //Randomly selects a single random dot to be changed.
 function selectSingle(){
     var dotCoordsArray = [];
@@ -358,14 +327,16 @@ function selectSingle(){
 function selectMultiple(){
    
 	var patternSelector = randomNum(6);
-	console.log("selectMultiple() patternSelector: " + patternSelector);
-	
     var i,j;
     var dotCoordsArray = [];
 
     switch(patternSelector){
-        case 0:
-            console.log("case 0: nothing happens");
+        case 0:	//All dots
+			for(i=0; i<numRows; i++){
+                for(j=0; j<numCols; j++){
+					dotCoordsArray.push(new Point(i,j));
+                }
+            }
             break;
         case 1:   //X-pattern
             var left = 0, right = numCols-1;
@@ -454,4 +425,18 @@ function signMultiplier(){
 //Call this not only when a round ends but when you leave to the main menu or Game Over
 function removeDistractions(){
     $(".distraction").remove();
+	if(timer1!=null){
+		clearTimeout(timer1);
+	}
+	if(timer2!=null){
+		clearTimeout(timer2);
+	}
+	if(interval1!=null){
+		clearInterval(interval1);
+	}
+}
+
+
+/*0. Function that does nothing*/
+function nothing(){
 }

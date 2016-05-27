@@ -89,7 +89,7 @@ function gameSetup() {
 	} else {
 		if (localSavedFiles.length != 3) {
             localSavedFiles = null;
-            console.log("Save Error");
+            //console.log("Save Error");
             window.alert("There was a problem with your save! Creating new save file.");
             localSavedFiles = [true, null, null];
 			playerData = [false, false, false, false, false, false, false, false, false, false, 0, 0, 0];
@@ -113,7 +113,6 @@ function checkCookie(){
         cookieEnabled=(document.cookie.indexOf("testcookie")!=-1)? true : false;
     }
     if (!cookieEnabled) {
-	console.log("NO COOKIES");
 	window.alert("WARNING: Cookies must be enabled to play this game. Enable cookies then refresh the game.");
 	}
 }
@@ -344,9 +343,9 @@ A dot selected by the user has its x and y coordinates compared to the x and y c
 
 function validate(array, userFeedback, dArray){
     var ex, wai;
-    //panic: uncomment distractValidate[]() to activate
+    //**panic: uncomment to activate
     removeDistractions();
-	//distractValidate[randomNum(2)]();
+	//distractValidate[randomNum(3)]();
 
 	$(".dot").removeClass("fade");
 	
@@ -387,7 +386,7 @@ function validate(array, userFeedback, dArray){
 							levelPass.play();
 							timerPause();
                             notComplete = false;
-                            playerScore += currentRound + (Math.round(currentRound * 0.1) * seconds);
+                            playerScore += currentRound*300 + (Math.round(currentRound * 0.1) * seconds);
                             updateScore();
                             currentRound++;
                             userFeedback(true, dArray[ex][wai]);
@@ -472,7 +471,6 @@ function reset(removeDots) {
 	
 	//panic
     removeDistractions();
-	
     removeDots();
     resetVals();
     newRound(generateGrid);
@@ -491,8 +489,7 @@ function removeDots(){
 Takes the sequence of dots the user must repeat as an argument. Briefly changes the colour of each to indicate which dots should be selected in which sequence.*/
 function pathDemonstration(arrayToRepeat, validate) {
 	
-	//panic:
-	//Uncomment to activate
+	//**panic: Uncomment to activate
 	//distractDemonstrate[randomNum(4)]();
 	
     var pt;
@@ -503,7 +500,7 @@ function pathDemonstration(arrayToRepeat, validate) {
 		blinkTime = (500 - (currentRound * 2))
 	}
     //For testing
-    printPath(arrayToRepeat);
+    //printPath(arrayToRepeat);
 	$(".dot").addClass("fade");
     for (var i = 0; i < arrayToRepeat.length; i++) {
         (function (i) {
@@ -569,33 +566,42 @@ function pauseGame(type) {
 
 function gameOver() {
     playing = false;
-	disco.pause();
+    disco.pause();
 
-    document.getElementById('tutorial1-screen').style.display = "none";
-    document.getElementById('tutorial4-screen').style.display = "none";
+    //document.getElementById('tutorial1-screen').style.display = "none";
+    //document.getElementById('tutorial4-screen').style.display = "none";
     $( "#game-screen" ).fadeOut( 1500, function() {
         $('#gameover-screen').fadeIn(1500, function() {});
-		//panic
+        //panic
         removeDistractions();
-		
-		badgeChecker(playerScore, currentRound, lifePoints);
-		scoreChecker(playerScore);
-		updateHighScores();
-		updateBadges();
-		onlineBadgeChecker(playerScore);
-		disco.CurrentTime=0;
-		loseSound.play();
-		if (playerScore > 0) {
-		if (localSavedFiles[1] != null && localSavedFiles[2] != null) {
-			sendScore(gamemode, localSavedFiles[1], playerScore);
-		}
-	}	
+
+        scoreChecker(playerScore);
+        updateHighScores();
+        updateBadges();
+
+        badgeChecker(currentRound, lifePoints);
+        onlineBadgeChecker(playerScore);
+        displayBadges();
+
+        disco.CurrentTime=0;
+        loseSound.play();
+        if (playerScore > 0) {
+            if (localSavedFiles[1] != null && localSavedFiles[2] != null) {
+                sendScore(gamemode, localSavedFiles[1], playerScore);
+            }
+        }
     });
     document.getElementById('final-score').innerHTML = playerScore;
 }
 
 /*Resets global variables associated with user input*/
 function resetVals(){
+    achievements = [];
+    document.getElementById('highscore-message-container').style.display = 'none';
+    document.getElementById('badge-message-container').style.display = 'none';
+    offlineBadgeLoaded = false;
+    onlineBadgeLoaded = true;
+    $('#badge-img-container').empty();
     noErrorsYet = true;
     notComplete = true;
     index = 0;

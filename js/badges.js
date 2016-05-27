@@ -1,5 +1,9 @@
 /*Handle badges earned by unlocking achievements.*/
 
+var achievements = new Array();
+var onlineBadgeLoaded = false;
+var offlineBadgeLoaded = false;
+
 /*Displays descriptions of achievements that one can ean badges for, images of earned badges, and padlock icons for badges not yet earned. */
 $(document).ready(function(){
 	$(".badge-button").on('tapone', function(){
@@ -62,85 +66,74 @@ function onlineBadgeChecker(playerScore) {
 	var databus;
 	getComparingData(databus).success(function (data) {
 		switch(gamemode){
-				case 0:
-					if (playerScore > data[0]["mScore"] && !playerData[7] ) {
-						playerData[7] = true;
-						document.getElementById('badge-message-container').style.display = 'block';
-						document.getElementById('badge-message').innerHTML = "Badge Unlocked! Achieved top ten in Marathon mode.";
-					}
-					break;
-				case 1:
-					if (playerScore > data[1]["uScore"] && !playerData[1] ) {
-						playerData[1] = true;
-						document.getElementById('badge-message-container').style.display = 'block';
-						document.getElementById('badge-message').innerHTML = "Badge Unlocked! Achieved top ten in Sudden Death mode.";
-					}
-					break;
-				case 2:
-					if (playerScore > data[2]["tScore"] && !playerData[9] ) {
-						playerData[9] = true;
-						document.getElementById('badge-message-container').style.display = 'block';
-						document.getElementById('badge-message').innerHTML = "Badge Unlocked! Achieved top ten in Time Attack mode.";
-					}
-					break;
-				default:
-					window.alert("YOU SHOULD NOT SEE THIS!");
+			case 0:
+				if (playerScore > data[0]["mScore"] && !playerData[7] ) {
+					playerData[7] = true;
+					achievements.push("Badge Unlocked! Achieved top ten in Marathon mode.");
+				}
+				break;
+			case 1:
+				if (playerScore > data[1]["uScore"] && !playerData[1] ) {
+					playerData[1] = true;
+					achievements.push("Badge Unlocked! Achieved top ten in Sudden Death mode.");
+				}
+				break;
+			case 2:
+				if (playerScore > data[2]["tScore"] && !playerData[9] ) {
+					playerData[9] = true;
+					achievements.push("Badge Unlocked! Achieved top ten in Time Attack mode.");
+				}
+				break;
+			default:
+				window.alert("YOU SHOULD NOT SEE THIS!");
 		}
 		updateSave();
+		onlineBadgeLoaded = true;
+		alert('doing this' + onlineBadgeLoaded);
 	}).fail(function () {
-			window.alert("Can't access online leaderboard!");
+		window.alert("Can't access online leaderboard!");
 	});
 }
 
 /* 
 Invoked after Game Over. Checks whether the most recently played game entitles the user to a new badge.
 */
-function badgeChecker(playerScore, currentRound, lifePoints) {
-		switch(gamemode){
-			case 0:
-				if (currentRound >= 40 && !playerData[8] ) {
-					playerData[8] = true;
-					document.getElementById('badge-message-container').style.display = 'block';
-					document.getElementById('badge-message').innerHTML = "Badge Unlocked! Get to level 40 in Marathon mode.";
-				}
-				if (currentRound >= 60 && lifePoints >= 3 && !playerData[5] ) {
-					playerData[5] = true;
-
-					document.getElementById('badge-message-container').style.display = 'block';
-					document.getElementById('badge-message').innerHTML = "Badge Unlocked! Get to level 60 in Marathon mode with all lives.";
-				}
-				if (currentRound >= 60 && !playerData[2] ) {
-					playerData[2] = true;
-
-					document.getElementById('badge-message-container').style.display = 'block';
-					document.getElementById('badge-message').innerHTML = "Badge Unlocked! Get to level 60 in Marathon mode.";
-				}
-				break;
-			case 1:
-				if (currentRound >= 60 && lifePoints >= 3 && !playerData[4] ) {
-					playerData[4] = true;
-
-					document.getElementById('badge-message-container').style.display = 'block';
-					document.getElementById('badge-message').innerHTML ="Badge Unlocked! Get to level 60 in Sudden Death mode.";
-				}
-				break;
-			case 2:
-				if (currentRound >= 30 && !playerData[3] ) {
-					playerData[3] = true;
-
-					document.getElementById('badge-message-container').style.display = 'block';
-					document.getElementById('badge-message').innerHTML ="Badge Unlocked! Get to level 30 in Time Attack mode.";
-				}
-				if (currentRound >= 20 && lifePoints == -1 && !playerData[6] ) {
-					playerData[6] = true;
-
-					document.getElementById('badge-message-container').style.display = 'block';
-					document.getElementById('badge-message').innerHTML ="Badge Unlocked! Get to level 20 in Time Attack mode without a mistake.";
-				}
-				break;
-			default:
-				window.alert("YOU SHOULD NOT SEE THIS!");
-		}
+function badgeChecker(currentRound, lifePoints) {
+	switch(gamemode){
+		case 0:
+			if (currentRound >=2 && !playerData[8] ) {
+				playerData[8] = true;
+				achievements.push("Badge Unlocked! Get to level 40 in Marathon mode.");
+			}
+			if (currentRound >= 2 && lifePoints >= 3 && !playerData[5] ) {
+				playerData[5] = true;
+				achievements.push("Badge Unlocked! Get to level 60 in Marathon mode with all lives.");
+			}
+			if (currentRound >= 2 && !playerData[2] ) {
+				playerData[2] = true;
+				achievements.push("Badge Unlocked! Get to level 60 in Marathon mode.");
+			}
+			break;
+		case 1:
+			if (currentRound >= 2 && !playerData[4] ) {
+				playerData[4] = true;
+				achievements.push("Badge Unlocked! Get to level 60 in Sudden Death mode.");
+			}
+			break;
+		case 2:
+			if (currentRound >= 2 && !playerData[3] ) {
+				playerData[3] = true;
+				achievements.push("Badge Unlocked! Get to level 30 in Time Attack mode.");
+			}
+			if (currentRound >= 2 && lifePoints == -1 && !playerData[6] ) {
+				playerData[6] = true;
+				achievements.push("Badge Unlocked! Get to level 20 in Time Attack mode without a mistake.");
+			}
+			break;
+		default:
+			window.alert("YOU SHOULD NOT SEE THIS!");
+	}
+	offlineBadgeLoaded = true;
 }
 
 /*
@@ -155,4 +148,40 @@ function updateBadges() {
 		} 
 	} 
 }
+
+
+function displayBadges() {
+	if (onlineBadgeLoaded == false || offlineBadgeLoaded == false) {
+		setTimeout(function () {
+			displayBadges();
+		}, 500);
+	} else {
+
+		var num = achievements.length;
+		if (num > 0) {
+
+			document.getElementById('badge-message-container').style.display = 'block';
+			document.getElementById('badge-message').innerHTML = 'Badges Unlocked!';
+
+			var badgeimg = [];
+
+			for (var i = 0; i < num; i++) {
+				addImages(i);
+			}
+
+			function addImages(n) {
+				badgeimg[n] = new Image();
+				badgeimg[n].src = "images/medal2.png";
+				badgeimg[n].onclick = function () {
+					document.getElementById('badge-message').innerHTML = "" + achievements[n];
+				};
+			}
+
+			for (var j = 0; j < num; j++) {
+				document.getElementById('badge-img-container').appendChild(badgeimg[j]);
+			}
+		}
+	}
+}
+
 	

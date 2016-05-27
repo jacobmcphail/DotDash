@@ -53,6 +53,8 @@ function openMainMenu() {
     document.getElementById('game-screen').style.display = 'none';
     document.getElementById('title').style.display = 'block';
     document.getElementById('pause-screen').style.display = 'none';
+    document.getElementById('highscore-message-container').style.display = 'none';
+    document.getElementById('badge-message-container').style.display = 'none';
 	
 	disco.pause();
 	disco.currentTime=0;
