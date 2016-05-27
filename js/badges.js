@@ -165,16 +165,16 @@ function displayBadges() {
 
 			var badgeimg = [];
 
-			for (var i = 0; i < num; i++) {
-				addImages(i);
-			}
-
 			function addImages(n) {
 				badgeimg[n] = new Image();
 				badgeimg[n].src = "images/medal2.png";
 				badgeimg[n].onclick = function () {
 					document.getElementById('badge-message').innerHTML = "" + achievements[n];
 				};
+			}
+			
+			for (var i = 0; i < num; i++) {
+				addImages(i);
 			}
 
 			for (var j = 0; j < num; j++) {

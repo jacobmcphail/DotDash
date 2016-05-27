@@ -32,6 +32,7 @@ $(document).ready(function(){
 		} else {
 			gamemode = 2;
 		}
+		play();
     });
 	
 });
