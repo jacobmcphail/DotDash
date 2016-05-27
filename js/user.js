@@ -9,7 +9,7 @@ function createUser(username, password) {
 			var j_notation =
 		{
 		"username": username,
-		"password": password, 
+		"password": password
 		}; 
 
 
@@ -37,75 +37,112 @@ function getUser(username) {
 		dataType: 'json'
 	});
 }
+
+function setupCreateAccount() {
+	popup('signup');
+}
+
 /*
 Accepts username and password to create a new account with. If the name given corresponds to an existing record, the user is not allowed to create an account. Maximum length of both username and password is 15 characters.
 */
 function createAccount(){
 	if(!activeConnection){
-	var username = prompt("Enter Username");
-	if(username == null || username.localeCompare("") == 0){
-		return;
-	}
-	var password = prompt("Enter Password");
-	if(password == null || password.localeCompare("") == 0){
-		return;
-	}
-	if(username.length <= 15 && password.length <= 15) {
-	activeConnection = true;
-	$("#online-connection").text('Getting online data');	
-	getUser(username).success(function (data) {
-		if (data[0] == null) {
-			createUser(username, password);
-			window.alert("Success, please try logging in now");
+
+		var validUsername;
+		var validPassword;
+
+		var username = document.getElementById("username-input-create").value;
+		if(username == null || username.localeCompare("") == 0){
+			shakePopup();
 		} else {
-			window.alert("Name has already been taken");
+			validUsername = true;
 		}
-		activeConnection = false;
-		$("#online-connection").text('');
-	}).fail(function () {
-		activeConnection = false;
-		$("#online-connection").text('');
-		window.alert("Can't connect to server!");
-	});
-	} else {
-		window.alert("Username or password is to long! (Max 15)");
-	}
+
+		var password = document.getElementById("password-input-create").value;
+		if(password == null || password.localeCompare("") == 0){
+			shakePopup();
+		} else {
+			validPassword = true;
+		}
+
+
+		if (validPassword && validUsername) {
+			activeConnection = true;
+			$("#online-connection").text('Getting online data');
+			getUser(username).success(function (data) {
+				if (data[0] == null) {
+					createUser(username, password);
+					popupAlert("Success! Please try logging in now", "close")
+				} else {
+					popupAlert("Name has already been taken", "signup");
+				}
+				activeConnection = false;
+				$("#online-connection").text('');
+			}).fail(function () {
+				activeConnection = false;
+				$("#online-connection").text('');
+				popupAlert("Can't connect to server!", "close");
+			});
+		}
 	}
 }
+
+
+function setupLogin() {
+
+	popup('login');
+}
+
+
 /*
 Accepts username and password in order to retrieve user's information and update user's record in database.
 */
 function login(){
-	var username = prompt("Enter Username");
+
+	var validUsername;
+	var validPassword;
+
+	var username = document.getElementById("username-input-login").value;
 	if(username == null || username.localeCompare("") == 0){
-		return;
+		shakePopup();
+	} else {
+		validUsername = true;
 	}
-	var password = prompt("Enter Password");
+
+	var password = document.getElementById("password-input-login").value;
 	if(password == null || password.localeCompare("") == 0){
-		return;
+		shakePopup();
+	} else {
+		validPassword = true;
 	}
-	activeConnection = true;
-	$("#online-connection").text('Getting online data');
-	getUser(username).success(function (data) {
-		$("#online-connection").text('');
-		activeConnection = false;
-		if (data[0] == null) {
-			window.alert("User not found");
-		} else if(username.localeCompare(data[0]["username"]) == 0 && password.localeCompare(data[0]["password"]) == 0){
-			localSavedFiles[0] = false;
-			localSavedFiles[1] = data[0]["username"];
-			localSavedFiles[2] = data[0]["password"];
-			localStorage.setItem("saveFile", JSON.stringify(localSavedFiles));
-			getPlayerData();
-			window.alert("Log in!");
-		} else {
-			window.alert("Incorrect password and/or username!");
-		}
-	}).fail(function () {
-		activeConnection = false;
-		$("#online-connection").text('');
-		window.alert("Can't connect to server!");
-	});
+
+	if (validUsername && validPassword) {
+		activeConnection = true;
+		$("#online-connection").text('Getting online data');
+		getUser(username).success(function (data) {
+			$("#online-connection").text('');
+			activeConnection = false;
+			if (data[0] == null) {
+
+				popupAlert("User not found", "login");
+
+
+			} else if (username.localeCompare(data[0]["username"]) == 0 && password.localeCompare(data[0]["password"]) == 0) {
+				localSavedFiles[0] = false;
+				localSavedFiles[1] = data[0]["username"];
+				localSavedFiles[2] = data[0]["password"];
+				localStorage.setItem("saveFile", JSON.stringify(localSavedFiles));
+				getPlayerData();
+				popupAlert("Logged in!", "close");
+			} else {
+				popupAlert("Incorrect username and/or password", "login");
+			}
+		}).fail(function () {
+			activeConnection = false;
+			$("#online-connection").text('');
+			window.alert("Can't connect to server!");
+		});
+	}
 }
 
 /*

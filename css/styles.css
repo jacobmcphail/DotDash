@@ -137,11 +137,11 @@ html, body {
     right: 50px;
 }
 
-#yes-button,#popup-yes-button {
+#yes-button,#popup-yes-button, #submit-login-button, #submit-signup-button {
     left: 50px;
 }
 
-#popup-no-button {
+#popup-no-button, #close-login-button, #close-signup-button {
     right: 50px;
     display:none;
 }
@@ -155,6 +155,14 @@ html, body {
     display:none;
     left: 50%;
     margin-left: -45px;
+}
+
+#popup-login {
+    display:none;
+}
+
+#popup-signup {
+    display: none;
 }
 
 
@@ -226,6 +234,10 @@ html, body {
     font-size: 120%;
     margin: 10px
 }
+#option-5:hover, #option-6:hover, #option-7:hover {
+
+    transform:scale(1.1,1.1);
+ }
 
 /* style for option buttons -- adapted from http://cssdeck.com/labs/css-checkbox-styles */
 input[type=checkbox] {
@@ -455,6 +467,16 @@ h2 {
     font-family: "Consolas";
     margin: 0;
 }
+
+h3 {
+    color: white;
+    text-align: left;
+    font-family: "Consolas";
+    margin: 0 0 0 10%;
+    float: left;
+}
+
+
 
 table {
     color: white;
@@ -698,6 +720,19 @@ div.dot.good_dot {
     border: 4px solid white;
     border-radius: 4px;
     z-index: -1;
+}
+
+.text-input {
+    margin: auto;
+}
+
+input[type=text], input[type=password] {
+    border: 2px solid white;
+    border-radius: 3px;
+}
+
+input[type=text]:focus, input[type=password]:focus {
+    border: 2px solid #32CD32;
 }
 
 @media screen and (max-width: 640px) {

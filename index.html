@@ -103,10 +103,10 @@
                           <input type="button" value="Reset Save" onclick="buttonSounds();clearSaveConfirmation();" id="option-5" name="check" /><br/>
                           <label for="option-5"></label>
 
-                          <input type="button" value="Create Account" onclick="buttonSounds();createAccount();" id="option-6" name="check" /><br/>
+                          <input type="button" value="Create Account" onclick="buttonSounds();setupCreateAccount();" id="option-6" name="check" /><br/>
                           <label for="option-6"></label>
 
-                          <input type="button" value="login" onclick="buttonSounds();login();" id="option-7" name="check" />
+                          <input type="button" value="Login" onclick="buttonSounds();setupLogin();" id="option-7" name="check" />
                           <label for="option-7"></label>
                       </div>
                   </div>
@@ -225,6 +225,33 @@
         <button class="confirm-buttons" id="popup-yes-button" onclick="resetSave()"><img src="images/checkmark.png" alt="yea okay"/></button>
         <button class="confirm-buttons" id="popup-accept-button" onclick="closePopup()"><img src="images/checkmark.png" alt="neato"/></button>
         <button class="confirm-buttons" id="popup-no-button" onclick="closePopup()"><img src="images/cross.png" alt="don't do it"/></button>
+
+        <form id="popup-signup" action="javascript: createAccount();">
+
+            <div class="text-input"><br/>
+                <h3>Username: &nbsp&nbsp </h3>
+                  <input type="text" name="username-input" id="username-input-create" maxlength="15"/>
+            </div><br/>
+            <div class="text-input">
+                <h3>Password: &nbsp&nbsp</h3>
+                <input type="password" name="password-input" id="password-input-create" maxlength="15"/><br/>
+            </div>
+            <button type="submit" value="Submit" class="confirm-buttons" id="submit-signup-button"><img src="images/checkmark.png"></button>
+            <button type="reset" onclick="closePopup()" class="confirm-buttons" id="close-signup-button"><img src="images/cross.png"></button>
+        </form>
+
+        <form id="popup-login" action="javascript: login();">
+            <div class="text-input"><br/>
+                <h3>Username: &nbsp&nbsp </h3>
+                <input type="text" name="username-input" id="username-input-login" maxlength="15"/>
+            </div><br/>
+            <div class="text-input">
+                <h3>Password: &nbsp&nbsp </h3>
+                 <input type="password" name="password-input" id="password-input-login"  maxlength="15"/><br/>
+            </div>
+            <button type="submit" value="Submit" class="confirm-buttons" id="submit-login-button"><img src="images/checkmark.png"></button>
+            <button type="reset" onclick="closePopup()" class="confirm-buttons" id="close-login-button"><img src="images/cross.png"></button>
+        </form>
     </div>
 <!--added preloader-->
 <div id="preload">

@@ -216,17 +216,33 @@ function popup(content) {
         document.getElementById('popup-text').innerHTML =
             'Are you sure you want to reset your save? ' +
             'Your high scores and badges will be lost.';
-
         document.getElementById('popup-yes-button').style.display = 'block';
         document.getElementById('popup-no-button').style.display = 'block';
         document.getElementById('popup-accept-button').style.display = 'none';
-    }
-
-    else if (content == 'steve') {
+    } else if (content == 'steve') {
         document.getElementById('popup-text').innerHTML = "Badge Unlocked! Activated Steve mode.";
         document.getElementById('popup-no-button').style.display = 'none';
         document.getElementById('popup-yes-button').style.display = 'none';
         document.getElementById('popup-accept-button').style.display = 'block';
+    } else if (content == 'login') {
+        document.getElementById('popup-text').innerHTML = "Log In";
+        document.getElementById('popup-no-button').style.display = 'none';
+        document.getElementById('popup-signup').style.display = 'none';
+        document.getElementById('submit-signup-button').style.display = 'none';
+        document.getElementById('close-signup-button').style.display = 'none';
+        document.getElementById('popup-yes-button').style.display = 'none';
+        document.getElementById('popup-login').style.display = 'block';
+        document.getElementById('submit-login-button').style.display = 'block';
+        document.getElementById('close-login-button').style.display = 'block';
+    } else if (content == 'signup') {
+        document.getElementById('popup-text').innerHTML = "Sign Up";
+        document.getElementById('popup-no-button').style.display = 'none';
+        document.getElementById('popup-yes-button').style.display = 'none';
+        document.getElementById('popup-signup').style.display = 'block';
+        document.getElementById('submit-login-button').style.display = 'none';
+        document.getElementById('close-login-button').style.display = 'none';
+        document.getElementById('submit-signup-button').style.display = 'block';
+        document.getElementById('close-signup-button').style.display = 'block';
     }
 
     document.getElementById('overlay-popup').style.display = 'block';
@@ -255,10 +271,62 @@ function popup(content) {
 }
 
 function closePopup() {
-    $('#overlay-popup').fadeOut(300);
+    $('#overlay-popup').fadeOut(300, function() {
+        popupCloseEverything();
+        $('.cawButton').click(function() {tapSound.play() });
+    });
 }
 
-$('.cawButton').click(function() {tapSound.play() });
+function popupCloseEverything() {
+    document.getElementById('popup-no-button').style.display = 'none';
+    document.getElementById('popup-yes-button').style.display = 'none';
+    document.getElementById('popup-accept-button').style.display = 'none';
+    document.getElementById('popup-signup').style.display = 'none';
+    document.getElementById('popup-login').style.display = 'none';
+    document.getElementById('submit-login-button').style.display = 'none';
+    document.getElementById('close-login-button').style.display = 'none';
+    document.getElementById('submit-signup-button').style.display = 'none';
+    document.getElementById('close-signup-button').style.display = 'none';
+    document.getElementById('popup-text').innerHTML = "";
+
+}
+
+function shakePopup() {
+    $('#overlay-popup').animate({
+        'margin-left': '-=5px',
+        'margin-right': '+=5px'
+    }, 40, function() {
+        $('#overlay-popup').animate({
+            'margin-left': '+=5px',
+            'margin-right': '-=5px'
+        }, 40, function () {
+            $('#overlay-popup').animate({
+                'margin-left': '-=2px',
+                'margin-right': '+=2px'
+            }, 40, function () {
+                $('#overlay-popup').animate({
+                    'margin-left': '+=2px',
+                    'margin-right': '-=2px'
+                }, 40);
+            });
+        })
+    });
+}
+
+function popupAlert(message, type) {
+    popupCloseEverything();
+    document.getElementById('popup-text').innerHTML = message;
+
+    setTimeout(function(){
+        if (type == 'login') {
+            popup('login');
+        } else if (type == 'signup') {
+            popup('signup');
+        } else if (type == 'close') {
+            closePopup();
+        }
+    }, 1000);
+}
 
 
 
