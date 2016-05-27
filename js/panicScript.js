@@ -15,7 +15,7 @@ BirdJerky Saturday May 21st/16
 var panicMode = true;
 
 var distractDemonstrate = [
-	changeDotColour,
+	backgroundChangeImage,
     diagonalAnimation,
 	dotFlash,
 	messageFlash,
@@ -109,10 +109,6 @@ function dotFlash(){
 		removeDistractions();
 	},time + 200);
 	
-	if(Math.random()*10>8){
-		dotFlash();
-	}
-	
 }
 
 //--------------------------------//
@@ -132,7 +128,6 @@ function changeDotColour() {
     var modSelector = randomNum(7);
 	
 	distractMod = modArray[modSelector];
-   console.log("distractMod: " + distractMod);
 	var i;
 	for(i = 0; i < ptArr.length; i++){
         var x = ptArr[i].x;
