@@ -144,6 +144,7 @@ function resetSave() {
 Invoked at the start of each game. Initializes global variables, creates the playing field.
 */
 function initialize(gamemode, newRound, removeDots){
+	resetVals();
     container = document.getElementById("dot-container");
     container.classList.add("vertical-center");
     playerScore = 0;
@@ -612,8 +613,9 @@ function resetVals(){
     document.getElementById('highscore-message-container').style.display = 'none';
     document.getElementById('badge-message-container').style.display = 'none';
     offlineBadgeLoaded = false;
-    onlineBadgeLoaded = true;
+    onlineBadgeLoaded = false;
     $('#badge-img-container').empty();
+	achievements = [];
     noErrorsYet = true;
     notComplete = true;
     index = 0;

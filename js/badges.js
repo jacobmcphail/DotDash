@@ -157,6 +157,7 @@ function displayBadges() {
 		}, 500);
 	} else {
 		var num = achievements.length;
+		console.log(num + achievements);
 		if (num > 0) {
 			
 			document.getElementById('badge-message-container').style.display = 'block';
@@ -182,7 +183,6 @@ function displayBadges() {
 		}
 		onlineBadgeLoaded = false;
 		offlineBadgeLoaded = false;
-		achievements = [];
 	}
 }
 
