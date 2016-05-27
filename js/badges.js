@@ -1,6 +1,6 @@
 /*Handle badges earned by unlocking achievements.*/
 
-var achievements = new Array();
+var achievements = [];
 var onlineBadgeLoaded = false;
 var offlineBadgeLoaded = false;
 
@@ -73,7 +73,7 @@ function onlineBadgeChecker(playerScore) {
 				}
 				break;
 			case 1:
-				if (playerScore > data[1]["uScore"] && !playerData[1] ) {
+				if (playerScore > data[1]["uScore"] || !playerData[1] || true ) {
 					playerData[1] = true;
 					achievements.push("Badge Unlocked! Achieved top ten in Sudden Death mode.");
 				}
@@ -90,6 +90,7 @@ function onlineBadgeChecker(playerScore) {
 		updateSave();
 		onlineBadgeLoaded = true;
 	}).fail(function () {
+		onlineBadgeLoaded = true;
 		window.alert("Can't access online leaderboard!");
 	});
 }
@@ -155,10 +156,9 @@ function displayBadges() {
 			displayBadges();
 		}, 500);
 	} else {
-
 		var num = achievements.length;
 		if (num > 0) {
-
+			
 			document.getElementById('badge-message-container').style.display = 'block';
 			document.getElementById('badge-message').innerHTML = 'Badges Unlocked!';
 
@@ -180,6 +180,9 @@ function displayBadges() {
 				document.getElementById('badge-img-container').appendChild(badgeimg[j]);
 			}
 		}
+		onlineBadgeLoaded = false;
+		offlineBadgeLoaded = false;
+		achievements = [];
 	}
 }
 

@@ -144,7 +144,6 @@ function resetSave() {
 Invoked at the start of each game. Initializes global variables, creates the playing field.
 */
 function initialize(gamemode, newRound, removeDots){
-
     container = document.getElementById("dot-container");
     container.classList.add("vertical-center");
     playerScore = 0;
@@ -592,7 +591,9 @@ function gameOver() {
 
 
         badgeChecker(currentRound, allLives);
+		console.log(achievements);
         onlineBadgeChecker(playerScore);
+		console.log(achievements);
         displayBadges();
 
         disco.CurrentTime=0;
@@ -608,7 +609,6 @@ function gameOver() {
 
 /*Resets global variables associated with user input*/
 function resetVals(){
-    achievements = [];
     document.getElementById('highscore-message-container').style.display = 'none';
     document.getElementById('badge-message-container').style.display = 'none';
     offlineBadgeLoaded = false;

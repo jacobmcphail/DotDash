@@ -12,6 +12,7 @@ function openOptions() {
     
 }
 function openScores() {
+	updateHighScores();
     document.getElementById('main-screen').style.display = 'none';
     document.getElementById('badges-screen').style.display = 'none';
     document.getElementById('scores-screen').style.display = "block";
@@ -197,7 +198,7 @@ function quitGame() {
 	noSound.play();
 	
 	//panic
-    removeDistractions
+    removeDistractions();
 }
 
 /*Remove labels that appear over buttons on hover; toggle this option in Options screen*/
