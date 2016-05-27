@@ -142,10 +142,28 @@ Prints either a badge icon or a padlock icon depending on whether a particular a
 function updateBadges() {
 	for (var bIndex = 0; bIndex <= 9; bIndex++) {
 		if (playerData[bIndex]) {
+			if([bIndex] == 0)
+			document.getElementById(bIndex + "badge").src="images/steve.png";
+			if([bIndex] == 1)
+				document.getElementById(bIndex + "badge").src="images/badge2.png";
+			 else if([bIndex] == 2)
+				document.getElementById(bIndex + "badge").src="images/badge.png";
+			 else if([bIndex] == 3)
+				document.getElementById(bIndex + "badge").src="images/sheriff.png";
+			 else if([bIndex] == 4)
+				document.getElementById(bIndex + "badge").src="images/notes.png";
+			 else if([bIndex] == 5)
+				document.getElementById(bIndex + "badge").src="images/shield.png";
+			 else if([bIndex] == 6)
+				document.getElementById(bIndex + "badge").src="images/safebox.png";
+			 else if([bIndex] == 7)
+				document.getElementById(bIndex + "badge").src="images/investment.png";
+			 else if([bIndex] == 8)
+				document.getElementById(bIndex + "badge").src="images/medal.png";
+			 else if([bIndex] == 9)
 			document.getElementById(bIndex + "badge").src="images/medal2.png";
-		} else {
+		}else
 			document.getElementById(bIndex + "badge").src="images/locked.png";
-		} 
 	} 
 }
 

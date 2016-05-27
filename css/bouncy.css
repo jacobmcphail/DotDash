@@ -1,0 +1,231 @@
+			/* keyframes definition for WebKit browsers */
+
+@-webkit-keyframes travel-1 {
+  from { left: 5%;     }
+  to   { left: 75%; }
+}
+
+@-webkit-keyframes travel-2 {
+  from { left: 10%;     }
+  to   { left: 80%; }
+}
+
+@-webkit-keyframes travel-3 {
+  from { left: 15%;     }
+  to   { left: 95%; }
+}
+
+@-webkit-keyframes bounce-1 {
+  from, to  {
+    bottom: 10%;
+    -webkit-animation-timing-function: ease-out;
+  }
+  50% {
+    bottom: 70%;
+    -webkit-animation-timing-function: ease-in;
+  }
+}
+
+@-webkit-keyframes bounce-2 {
+  from, to  {
+    bottom: 5%;
+    -webkit-animation-timing-function: ease-out;
+  }
+  50% {
+    bottom: 60%;
+    -webkit-animation-timing-function: ease-in;
+  }
+}
+
+
+
+/*JEN!!! to rotate if needed*/
+@-webkit-keyframes spin {
+  from {                                     }
+  to   { -webkit-transform: rotateZ(360deg); }
+}
+
+/* keyframes definition for other browsers */
+
+@keyframes travel-1 {
+ from { left: 5%;     }
+  to   { left: 75%; }
+}
+
+@keyframes travel-2 {
+  from { left: 10%;     }
+  to   { left: 80%; }
+}
+
+@keyframes travel-3 {
+  from { left: 15%;     }
+  to   { left: 95%; }
+}
+
+@keyframes bounce-1 {
+  from, to  {
+    bottom: 5%;
+    animation-timing-function: ease-out;
+  }
+  50% {
+    bottom: 60%;
+    animation-timing-function: ease-in;
+  }
+}
+
+@keyframes bounce-2 {
+  from, to  {
+    bottom: 5%;
+    -webkit-animation-timing-function: ease-out;
+  }
+  50% {
+    bottom: 60%;
+    -webkit-animation-timing-function: ease-in;
+  }
+}
+
+@keyframes spin {
+  from {
+    -moz-transform: rotate(0);
+    -o-transform: rotate(0);
+    -ms-transform: rotate(0);
+    transform: rotate(0);
+  }
+  to {
+    -moz-transform: rotate(360deg);
+    -o-transform: rotate(360deg);
+    -ms-transform: rotate(360deg);
+    transform: rotate(360deg);
+  }
+}
+
+/* styles for the stage and animated elements */
+
+#stage {
+  position: relative;
+  margin: 1em auto;
+  width: 660px;
+  height: 240px;
+  border: 2px solid #666;
+  background: #cff;
+}
+
+.traveler-1{
+  position: absolute;
+  width: 100%;
+  height: 100%;
+
+  -webkit-animation-name: travel-1;
+  -webkit-animation-timing-function: linear;
+  -webkit-animation-iteration-count: infinite;
+  -webkit-animation-direction: alternate;
+  -webkit-animation-duration: 4.8s;
+
+  animation-name: travel-1;
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+  animation-direction: alternate;
+  animation-duration: 4.8s;
+}
+
+.traveler-2 {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+
+  -webkit-animation-name: travel-2;
+  -webkit-animation-timing-function: linear;
+  -webkit-animation-iteration-count: infinite;
+  -webkit-animation-direction: alternate;
+  -webkit-animation-duration: 7s;
+
+  animation-name: travel-2;
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+  animation-direction: alternate;
+  animation-duration: 7s;
+}
+
+.traveler-3 {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+
+  -webkit-animation-name: travel-3;
+  -webkit-animation-timing-function: linear;
+  -webkit-animation-iteration-count: infinite;
+  -webkit-animation-direction: alternate;
+  -webkit-animation-duration: 6s;
+
+  animation-name: travel-3;	
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+  animation-direction: alternate;
+  animation-duration: 6s;
+}
+
+
+
+.bouncer-1 {
+  position: absolute;
+  width: 40px;
+  height: 40px;
+  border-radius: 20px;
+
+
+  -webkit-animation-name: bounce-1, spin;
+  -webkit-animation-iteration-count: infinite;
+  -webkit-animation-duration: 4.2s;
+
+  animation-name: bounce-1, spin;
+  animation-iteration-count: infinite;
+  animation-duration: 4.2s;
+}
+
+.bouncer-2{
+	position: absolute;
+	width: 40px;
+	height: 40px;
+	border-radius: 20px;
+
+
+	-webkit-animation-name: bounce-2, spin;
+	-webkit-animation-iteration-count: infinite;
+	-webkit-animation-duration: 6s;
+
+	animation-name: bounce-2, spin;
+	animation-iteration-count: infinite;
+	animation-duration: 6s;
+}
+
+.bouncer-3{
+	position: absolute;
+	width: 40px;
+	height: 40px;
+	border-radius: 20px;
+
+
+	-webkit-animation-name: bounce-2, spin;
+	-webkit-animation-iteration-count: infinite;
+	-webkit-animation-duration: 7s;
+
+	animation-name: bounce-2, spin;
+	animation-iteration-count: infinite;
+	animation-duration: 7s;
+}
+
+.bouncer-4{
+	position: absolute;
+	width: 40px;
+	height: 40px;
+	border-radius: 20px;
+
+
+	-webkit-animation-name: bounce-1, spin;
+	-webkit-animation-iteration-count: infinite;
+	-webkit-animation-duration: 9s;
+
+	animation-name: bounce-1, spin;
+	animation-iteration-count: infinite;
+	animation-duration: 9s;
+}

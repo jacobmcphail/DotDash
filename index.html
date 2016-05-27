@@ -19,6 +19,7 @@
 		<link rel="stylesheet" type="text/css" href="css/panicStyle.css"/>
 		<link rel="stylesheet" href="css/carousel.css">
 		<link rel="stylesheet" type="text/css" href="css/hoverText.css"/>
+		<link rel="stylesheet" type="text/css" href="css/bouncy.css"/>
 		
         <title>DotDash._</title>
     </head>
@@ -26,12 +27,29 @@
 <body onload="gameSetup()">
     <div id="screen">
 	<!--Z's changes-->
+        <!--Z's changes-->
         <div id = "splash-screen">
-            <p>DotDash.-</p>
-            <img src="images/dot-yellow.png" />
-            <img src="images/dot-purple.png" />
-            <img src="images/dot-magenta.png" />
-            <img src="images/dot-green.png" />
+			<p>DotDash.-</p>
+			<img src="images/dot-yellow.png" /> 
+			<img src="images/dot-purple.png" /> 
+			<img src="images/dot-magenta.png" /> 
+			<img src="images/dot-green.png" /> 
+				<div class="traveler-1">
+					<div class="bouncer-1">
+						<img src="images/dot-yellow.png" /> </div>
+				</div>
+				<div class="traveler-2"> 
+					<div class="bouncer-2"> 
+						<img src="images/dot-purple.png" /> </div>
+				</div>
+				<div class="traveler-1">
+					<div class="bouncer-3">
+						<img src="images/dot-magenta.png" /> </div>
+				</div>
+				<div class="traveler-2"> 
+					<div class="bouncer-4">
+						<img src="images/dot-green.png" /> </div>
+				</div>
 
         </div>
 
@@ -143,6 +161,26 @@
         <div id="badges-screen">
             <div class="T_container">
                 <h2 id="badge-desc">Desc</h2>
+				<div class="traveler-1">
+				<div class="bouncer-1">
+					<img src="images/steve.png" alt="steve"/></div>
+			</div>
+			<div class="traveler-2"> 
+				<div class="bouncer-2"><img src="images/badge1.png" alt="badge1" /></div>
+			</div>
+			<div class="traveler-3">
+				<div class="bouncer-3"><img src="images/sheriff.png" alt="sheriff" /> </div>
+			</div>
+			<div class="traveler-1">
+				<div class="bouncer-4">
+				<img src="images/medal.png" alt="medal"/></div>
+			</div>
+			<div class="traveler-2"> 
+				<div class="bouncer-1"><img src="images/safebox.png" alt="safebox" /> </div>
+			</div>
+			<div class="traveler-3">
+				<div class="bouncer-2"><img src="images/notes.png" alt="notes" /> </div>
+			</div>
                 <div class="badge-icons">
                     <img class="badge-button" id="0badge" src="images/locked.png" alt="locked" />
                     <img class="badge-button" id="1badge" src="images/locked.png" alt="locked" />
@@ -162,6 +200,18 @@
             <div class="T_container" id="credits-container">
                 <h2>created by:</h2>
                 <h2><b>THE SURVEYORS</b></h2>
+				
+				<div class="traveler-1">
+					<div class="bouncer-1">
+					<img src="images/crow.png" width="60" height="60" alt="crow"/></div>
+				</div>
+				<div class="traveler-2"> 
+					<div class="bouncer-2"><img src="images/dot-green.png" alt="dot-green" /> </div>
+				</div>
+				<div class="traveler-3">
+					<div class="bouncer-3"><img src="images/dot-blue.png" alt="dot-blue" /> </div>
+				</div>
+				
                 <img src="images/dot-magenta.png" alt="dot-magenta"/><p>Jake Superior</p>
                 <img src="images/dot-yellow.png" alt="dot-yellow"/><p>Frisky Dingo</p>
                 <img src="images/dot-green.png" alt="dot-green"/><p>Jenkinz</p>
@@ -188,6 +238,18 @@
             </div>
         </div>
 		<div id="pause-screen">
+			<div class="traveler-1">
+				<div class="bouncer-1">
+				<img src="images/crow.png" width="60" height="60" alt="crow"/></div>
+			</div>
+			<div class="traveler-2"> 
+				<div class="bouncer-2"><img src="images/dot-green.png" alt="dot-green" /> </div>
+			</div>
+			<div class="traveler-3">
+					<div class="bouncer-3"><img src="images/dot-blue.png" alt="dot-blue" /> </div>
+			</div>
+		
+		
             <h1>Paused</h1>
             <button class="nongameplay-buttons" onclick="openConfirmation('quit')" id="quit-button"><img src="images/home.png" alt="cross"/></button>
             <button class="nongameplay-buttons" onclick="openConfirmation('restart')" id="restart-button"><img src="images/return.png" alt="return"/></button>
