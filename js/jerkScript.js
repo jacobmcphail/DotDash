@@ -106,6 +106,10 @@ function gameSetup() {
 	$('#option-3').removeAttr('checked');
 	$('#option-P').removeAttr('checked');
 	$("#title").text('DotDash._');
+	
+	if(localSavedFiles[1]!=null){
+		$(".username-display").text("Current user: " + localSavedFiles[1]);
+	}
 }
 
 function checkCookie(){

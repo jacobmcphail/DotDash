@@ -237,7 +237,7 @@
         <button class="confirm-buttons" id="popup-no-button" onclick="closePopup()"><img src="images/cross.png" alt="don't do it"/></button>
 
         <form id="popup-signup" action="javascript: createAccount();">
-
+			<div class = "username-display"></div>
             <div class="text-input"><br/>
                 <h3>Username: &nbsp&nbsp </h3>
                   <input type="text" name="username-input" id="username-input-create" maxlength="15"/>
@@ -251,6 +251,7 @@
         </form>
 
         <form id="popup-login" action="javascript: login();">
+		<div class = "username-display"></div>
             <div class="text-input"><br/>
                 <h3>Username: &nbsp&nbsp </h3>
                 <input type="text" name="username-input" id="username-input-login" maxlength="15"/>

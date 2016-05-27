@@ -483,6 +483,21 @@ h3 {
     float: left;
 }
 
+h4 {
+	color: white;
+    text-align: center;
+    font-family: "Consolas";
+    margin: 0 0 0 10%;
+    float: left;
+}
+.username-display{
+	color: white;
+    text-align: center;
+    font-family: "Consolas";
+    margin: 0 0 0 10%;
+    float: left;
+}
+
 
 
 table {

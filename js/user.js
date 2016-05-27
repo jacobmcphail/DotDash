@@ -72,7 +72,8 @@ function createAccount(){
 			getUser(username).success(function (data) {
 				if (data[0] == null) {
 					createUser(username, password);
-					popupAlert("Success! Please try logging in now", "close")
+					popupAlert("Success! Please try logging in now", "close");
+					$(".username-display").text("Current user: " + localSavedFiles[1]);
 				} else {
 					popupAlert("Name has already been taken", "signup");
 				}
@@ -134,6 +135,8 @@ function login(){
 				localStorage.setItem("saveFile", JSON.stringify(localSavedFiles));
 				getPlayerData();
 				popupAlert("Logged in!", "close");
+				
+				$(".username-display").text("Current user: " + localSavedFiles[1]);
 			} else {
 				popupAlert("Incorrect username and/or password", "login");
 			}
