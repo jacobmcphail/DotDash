@@ -32,7 +32,6 @@ $(document).ready(function(){
 		} else {
 			gamemode = 2;
 		}
-        console.log("mode selected: " + mode + ":" + gamemode);
     });
 	
 });

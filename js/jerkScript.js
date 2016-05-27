@@ -41,6 +41,7 @@ var playerScore;
 var currentRound;
 var lifePoints;
 var notComplete;
+var allLives;
 
 /*
 Variables that are reset every round.
@@ -89,7 +90,6 @@ function gameSetup() {
 	} else {
 		if (localSavedFiles.length != 3) {
             localSavedFiles = null;
-            //console.log("Save Error");
             window.alert("There was a problem with your save! Creating new save file.");
             localSavedFiles = [true, null, null];
 			playerData = [false, false, false, false, false, false, false, false, false, false, 0, 0, 0];
@@ -155,6 +155,7 @@ function initialize(gamemode, newRound, removeDots){
 	numCols = 3;
 	playing = true;
 	userInput = false;
+	allLives = true;
 	if (gamemode == 1) {
 		document.getElementById('timer-bar').style.visibility='hidden';
 		lifePoints = 1;
@@ -399,14 +400,20 @@ function validate(array, userFeedback, dArray){
 					noErrorsYet = false;
 					if (gamemode == 2) {
 						$("#timer-bar").css("background-color", "red");
+						if(currentRound < 20){
+							allLives = false;
+						}
 						//Deducting time from the timer
 						for (var c = 0; c < 200; c++) {
-							updateTimer();
+							timerReduce();
 						}
-						if ((seconds + minutes) <= 0) {
+						if ((seconds + minutes + centiseconds) <= 0) {
 						lifePoints = 0;
 						}
 					} else {
+						if(currentRound < 60){
+							allLives = false;
+						}
 	                    lifePoints--;					
 					}
                     updateLives();
@@ -576,10 +583,9 @@ function gameOver() {
         removeDistractions();
 
         scoreChecker(playerScore);
-        updateHighScores();
-        updateBadges();
 
-        badgeChecker(currentRound, lifePoints);
+
+        badgeChecker(currentRound, allLives);
         onlineBadgeChecker(playerScore);
         displayBadges();
 

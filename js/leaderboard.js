@@ -72,7 +72,6 @@ function printOnlineScores() {
 	var databus;
 	leaderboard.innerHTML = '<br><br><br><br><br><h2>Loading...</h2>';
 	getData(databus).success(function (data) {
-		console.log(data);
 		leaderboard.innerHTML = '<h1>Leaderboard</h1>';
 		leaderboard.innerHTML += '<h2>Marathon</h2>';
 		var indexDB = 0;

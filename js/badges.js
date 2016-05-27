@@ -89,7 +89,6 @@ function onlineBadgeChecker(playerScore) {
 		}
 		updateSave();
 		onlineBadgeLoaded = true;
-		alert('doing this' + onlineBadgeLoaded);
 	}).fail(function () {
 		window.alert("Can't access online leaderboard!");
 	});
@@ -98,14 +97,14 @@ function onlineBadgeChecker(playerScore) {
 /* 
 Invoked after Game Over. Checks whether the most recently played game entitles the user to a new badge.
 */
-function badgeChecker(currentRound, lifePoints) {
+function badgeChecker(currentRound, allLives) {
 	switch(gamemode){
 		case 0:
 			if (currentRound >=2 && !playerData[8] ) {
 				playerData[8] = true;
 				achievements.push("Badge Unlocked! Get to level 40 in Marathon mode.");
 			}
-			if (currentRound >= 2 && lifePoints >= 3 && !playerData[5] ) {
+			if (currentRound >= 2 && allLives && !playerData[5] ) {
 				playerData[5] = true;
 				achievements.push("Badge Unlocked! Get to level 60 in Marathon mode with all lives.");
 			}
@@ -125,7 +124,7 @@ function badgeChecker(currentRound, lifePoints) {
 				playerData[3] = true;
 				achievements.push("Badge Unlocked! Get to level 30 in Time Attack mode.");
 			}
-			if (currentRound >= 2 && lifePoints == -1 && !playerData[6] ) {
+			if (currentRound >= 2 && allLives && !playerData[6] ) {
 				playerData[6] = true;
 				achievements.push("Badge Unlocked! Get to level 20 in Time Attack mode without a mistake.");
 			}

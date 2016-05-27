@@ -53,6 +53,25 @@ function updateTimer(){
 	updateClock();
 } 
 
+function timerReduce(){
+		centiseconds--;
+	if(centiseconds < 0){
+		seconds--;
+		centiseconds = 9;
+	} 
+	if(seconds < 0){
+		minutes--;
+		seconds = 59;
+	} 
+	if (minutes < 0) {
+		timerPause();
+		centiseconds = 0;
+		seconds = 0;
+		minutes = 0;
+	} 
+	updateClock();
+}
+
 function updateClock() {
 	if (minutes > 0) {
 		if (seconds < 10) {
