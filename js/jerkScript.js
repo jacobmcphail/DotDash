@@ -104,6 +104,7 @@ function gameSetup() {
         this.checked = true; 
 	}); 
 	$('#option-3').removeAttr('checked');
+	$('#option-P').removeAttr('checked');
 	$("#title").text('DotDash._');
 }
 

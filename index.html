@@ -88,11 +88,19 @@
                           <input type="checkbox" value="None" onclick="buttonSounds();toggleSound();" id="option-2" name="check" checked="checked"/>
                           <label for="option-2"></label>
                       </div>
-                      <h2 class="option-header">Steve Mode</h2>
+					  <h2 class="option-header">Steve Mode</h2>
                       <div class="checkbox">
-                          <input type="checkbox" value="None" onclick="buttonSounds();steveModeToggle();" id="option-3" name="check" />
+                        <input type="checkbox" value="None" onclick="buttonSounds();steveModeToggle();" id="option-3" name="check" />
                           <label for="option-3"></label>
                       </div>
+						<!--NEW BUTTON for toggling panic mode-->
+					 <h2 class="option-header">Distractions On</h2>
+                      <div class="checkbox">
+                        <input type="checkbox" value="None" onclick="buttonSounds();panicToggle();" id="option-P" name="check" />
+                          <label for="option-3"></label>
+                      </div>
+					  
+					  
                       <h2 class="option-header" id="option-4-label">Disable Labels</h2>
                       <div class="checkbox" id="option-4-box">
                           <input type="checkbox" value="None" onclick="disableLabels()" id="option-4" name="check" />

@@ -12,7 +12,7 @@ BirdJerky Saturday May 21st/16
 			holds functions that can be executed during Validate()
 */
 
-var panicMode = true;
+var panicMode = false;
 
 var distractDemonstrate = [
 	backgroundChangeImage,
@@ -452,4 +452,12 @@ function removeDistractions(){
 
 /*0. Function that does nothing*/
 function nothing(){
+}
+
+function panicToggle() {
+	if (panicMode){
+		panicMode = false;
+	} else {
+		panicMode = true;
+	}
 }
